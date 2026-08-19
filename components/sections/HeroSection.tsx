@@ -70,7 +70,7 @@ export default function HeroSection() {
         className="absolute inset-0"
       >
         <Image
-          src="/images/hero-bottle.jpg"
+          src="/images/hero-bottle3.jpeg"
           alt="Khayal signature perfume bottle in golden light"
           fill
           priority
