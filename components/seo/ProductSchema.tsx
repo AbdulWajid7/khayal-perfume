@@ -25,7 +25,7 @@ export default function ProductSchema({ product }: { product: ProductDetails }) 
       availability: variant.availableForSale
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
-      url: `https://khayal.com/shop/${product.handle}`,
+      url: `https://khayalparfum.com/shop/${product.handle}`,
     })),
   };
 

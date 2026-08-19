@@ -3,7 +3,7 @@ import { getProducts } from "@/lib/shopify";
 import { getBlogPosts } from "@/lib/sanity";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://khayal.com";
+  const baseUrl = "https://khayalparfum.com";
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },

@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       description,
       images: post.coverImage?.asset?.url ? [{ url: post.coverImage.asset.url }] : undefined,
     },
-    alternates: { canonical: `https://khayal.com/journal/${slug}` },
+    alternates: { canonical: `https://khayalparfum.com/journal/${slug}` },
   };
 }
 
@@ -55,9 +55,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <Breadcrumb items={breadcrumbItems} />
         <BreadcrumbSchema
           items={[
-            { name: "Home", url: "https://khayal.com/" },
-            { name: "Journal", url: "https://khayal.com/journal" },
-            { name: post.title, url: `https://khayal.com/journal/${slug}` },
+            { name: "Home", url: "https://khayalparfum.com/" },
+            { name: "Journal", url: "https://khayalparfum.com/journal" },
+            { name: post.title, url: `https://khayalparfum.com/journal/${slug}` },
           ]}
         />
         <BlogPostSchema post={post} />
