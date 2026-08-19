@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+  <defs>
+    <linearGradient id="bgS" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050505"/>
+      <stop offset="45%" stop-color="#0d0a06"/>
+      <stop offset="100%" stop-color="#1a1610"/>
+    </linearGradient>
+    <radialGradient id="glowS" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#050505" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glassS" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1c1a16"/>
+      <stop offset="40%" stop-color="#2e281c"/>
+      <stop offset="60%" stop-color="#42371f"/>
+      <stop offset="100%" stop-color="#110f0b"/>
+    </linearGradient>
+    <linearGradient id="capS" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f5d76e"/>
+      <stop offset="50%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#8a6d1f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bgS)"/>
+  <rect width="800" height="1000" fill="url(#glowS)"/>
+
+  <ellipse cx="400" cy="720" rx="130" ry="20" fill="#000000" opacity="0.5"/>
+
+  <rect x="330" y="330" width="140" height="380" rx="16" fill="url(#glassS)" stroke="#4a3d24" stroke-width="1.5"/>
+  <rect x="345" y="380" width="30" height="310" fill="#ffffff" opacity="0.06"/>
+
+  <rect x="368" y="260" width="64" height="80" fill="url(#glassS)" stroke="#4a3d24" stroke-width="1.5"/>
+  <rect x="356" y="212" width="88" height="58" rx="10" fill="url(#capS)"/>
+  <rect x="356" y="212" width="88" height="12" rx="10" fill="#f5d76e" opacity="0.6"/>
+
+  <rect x="358" y="470" width="84" height="60" rx="3" fill="#050505" stroke="#d4af37" stroke-width="1" opacity="0.9"/>
+  <text x="400" y="497" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" fill="#d4af37" text-anchor="middle" letter-spacing="2">KHAYAL</text>
+  <text x="400" y="513" font-family="ui-sans-serif, system-ui, sans-serif" font-size="7" fill="#8b7355" text-anchor="middle" letter-spacing="1.5">EAU DE PARFUM</text>
+
+  <text x="400" y="850" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" fill="#8b7355" text-anchor="middle" letter-spacing="6">KHAYAL</text>
+</svg>
