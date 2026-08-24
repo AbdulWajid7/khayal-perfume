@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart, type CartItem } from "@/hooks/useCart";
 
 function formatPrice(amount: number, currencyCode: string) {
-  return new Intl.NumberFormat("en-IN", {
+  return new Intl.NumberFormat("en-PK", {
     style: "currency",
     currency: currencyCode,
   }).format(amount);

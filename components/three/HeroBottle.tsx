@@ -18,7 +18,7 @@ function Aura() {
     <mesh ref={meshRef} position={[0, 0, -1.2]}>
       <circleGeometry args={[2.6, 64]} />
       <meshBasicMaterial
-        color="#d4af37"
+        color="#aa6779"
         transparent
         opacity={0.14}
         side={THREE.DoubleSide}
@@ -44,14 +44,14 @@ function Bottle() {
       {/* Warm backlight disc just behind the bottle */}
       <mesh position={[0, 0, -0.95]}>
         <circleGeometry args={[1.35, 64]} />
-        <meshBasicMaterial color="#f5d76e" transparent opacity={0.18} side={THREE.DoubleSide} />
+        <meshBasicMaterial color="#cca2a3" transparent opacity={0.18} side={THREE.DoubleSide} />
       </mesh>
 
       {/* Bottle body — lighter glass so it reads against midnight */}
       <mesh position={[0, -0.15, 0]}>
         <cylinderGeometry args={[0.68, 0.76, 1.85, 48]} />
         <meshPhysicalMaterial
-          color="#c9a86c"
+          color="#c98fa0"
           transmission={0.9}
           roughness={0.1}
           thickness={1.2}
@@ -59,7 +59,7 @@ function Bottle() {
           metalness={0.05}
           clearcoat={1}
           clearcoatRoughness={0.05}
-          attenuationColor="#d4af37"
+          attenuationColor="#aa6779"
           attenuationDistance={2}
         />
       </mesh>
@@ -68,11 +68,11 @@ function Bottle() {
       <mesh position={[0, -0.32, 0]}>
         <cylinderGeometry args={[0.56, 0.65, 1.35, 48]} />
         <meshPhysicalMaterial
-          color="#f5d76e"
+          color="#cca2a3"
           transmission={0.5}
           roughness={0.25}
           thickness={0.8}
-          emissive="#d4af37"
+          emissive="#aa6779"
           emissiveIntensity={0.55}
         />
       </mesh>
@@ -81,7 +81,7 @@ function Bottle() {
       <mesh position={[0, 0.85, 0]}>
         <cylinderGeometry args={[0.24, 0.26, 0.5, 32]} />
         <meshPhysicalMaterial
-          color="#c9a86c"
+          color="#c98fa0"
           transmission={0.9}
           roughness={0.1}
           thickness={0.6}
@@ -93,23 +93,23 @@ function Bottle() {
       {/* Cap */}
       <mesh position={[0, 1.28, 0]}>
         <cylinderGeometry args={[0.34, 0.34, 0.36, 32]} />
-        <meshStandardMaterial color="#d4af37" metalness={0.95} roughness={0.18} />
+        <meshStandardMaterial color="#aa6779" metalness={0.95} roughness={0.18} />
       </mesh>
       <mesh position={[0, 1.48, 0]}>
         <cylinderGeometry args={[0.35, 0.35, 0.04, 32]} />
-        <meshStandardMaterial color="#f5d76e" metalness={0.95} roughness={0.15} />
+        <meshStandardMaterial color="#cca2a3" metalness={0.95} roughness={0.15} />
       </mesh>
 
       {/* Front label */}
       <mesh position={[0, -0.18, 0.7]} rotation={[0, 0, 0]}>
         <planeGeometry args={[0.6, 0.38]} />
-        <meshStandardMaterial color="#050505" emissive="#d4af37" emissiveIntensity={0.25} />
+        <meshStandardMaterial color="#2b141b" emissive="#aa6779" emissiveIntensity={0.25} />
       </mesh>
 
       {/* Label type line */}
       <mesh position={[0, -0.18, 0.71]}>
         <planeGeometry args={[0.42, 0.02]} />
-        <meshBasicMaterial color="#d4af37" transparent opacity={0.8} />
+        <meshBasicMaterial color="#aa6779" transparent opacity={0.8} />
       </mesh>
     </group>
   );
@@ -119,10 +119,10 @@ function Lights() {
   return (
     <>
       <ambientLight intensity={0.55} />
-      <directionalLight position={[2, 5, 6]} intensity={2.2} color="#fff4d6" />
-      <pointLight position={[-4, -1, 3]} intensity={1.4} color="#f5d76e" />
-      <pointLight position={[4, 1, 3]} intensity={1.2} color="#d4af37" />
-      <pointLight position={[0, 3, -2]} intensity={0.9} color="#8b7355" />
+      <directionalLight position={[2, 5, 6]} intensity={2.2} color="#f6dfe4" />
+      <pointLight position={[-4, -1, 3]} intensity={1.4} color="#cca2a3" />
+      <pointLight position={[4, 1, 3]} intensity={1.2} color="#aa6779" />
+      <pointLight position={[0, 3, -2]} intensity={0.9} color="#744250" />
     </>
   );
 }

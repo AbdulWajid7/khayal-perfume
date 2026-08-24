@@ -1,4 +1,4 @@
-import { getBlogPosts } from "@/lib/sanity";
+import { getBlogPosts } from "@/lib/blog";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,11 +27,11 @@ export default async function JournalPage() {
               key={post._id}
               className="group bg-charcoal border border-border-subtle rounded-xl overflow-hidden"
             >
-              <Link href={`/journal/${post.slug.current}`} aria-label={`Read ${post.title}`}>
+              <Link href={`/journal/${post.slug}`} aria-label={`Read ${post.title}`}>
                 <div className="relative aspect-[16/10] overflow-hidden bg-midnight">
-                  {post.coverImage?.asset?.url ? (
+                  {post.coverImage?.url ? (
                     <Image
-                      src={post.coverImage.asset.url}
+                      src={post.coverImage.url}
                       alt={post.coverImage.alt || post.title}
                       fill
                       className="object-cover transition-transform duration-[400ms] group-hover:scale-[1.03]"
@@ -45,11 +45,11 @@ export default async function JournalPage() {
               </Link>
               <div className="p-5">
                 <h2 className="text-parchment text-xl font-medium leading-snug">
-                  <Link href={`/journal/${post.slug.current}`}>{post.title}</Link>
+                  <Link href={`/journal/${post.slug}`}>{post.title}</Link>
                 </h2>
                 <p className="mt-2 text-warm-taupe text-sm line-clamp-2">{post.excerpt}</p>
                 <p className="mt-4 text-warm-taupe text-xs">
-                  {new Date(post.publishedAt).toLocaleDateString("en-IN", {
+                  {new Date(post.publishedAt).toLocaleDateString("en-PK", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -58,6 +58,9 @@ export default async function JournalPage() {
               </div>
             </article>
           ))}
+          {posts.length === 0 && (
+            <p className="text-warm-taupe col-span-full">No journal posts yet.</p>
+          )}
         </div>
       </div>
     </section>

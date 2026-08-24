@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getProducts } from "@/lib/shopify";
-import { getBlogPosts } from "@/lib/sanity";
+import { getBlogPosts } from "@/lib/blog";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://khayalparfum.com";
+  const baseUrl = "https://www.khayalparfum.com";
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/`, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${baseUrl}/journal/${post.slug.current}`,
+    url: `${baseUrl}/journal/${post.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.6,

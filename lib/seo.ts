@@ -1,28 +1,28 @@
 import type { Metadata } from "next";
 
 export const defaultMetadata: Metadata = {
-  metadataBase: new URL("https://khayalparfum.com"),
+  metadataBase: new URL("https://www.khayalparfum.com"),
   title: {
     template: "%s | Khayal Parfum — Luxury Perfumes & Attars",
     default:
-      "Khayal Parfum — Buy Luxury Oud, Musk & Attar Perfumes Online in India",
+      "Khayal Parfum — Buy Luxury Oud, Musk & Attar Perfumes Online in Pakistan",
   },
   description:
-    "Shop Khayal Parfum, a luxury niche fragrance house crafting long-lasting oud, musk, and attar perfumes in India. Explore unisex eau de parfums made with rare botanicals — free shipping, authentic ingredients.",
+    "Shop Khayal Parfum, a luxury niche fragrance house crafting long-lasting oud, musk, and attar perfumes in Pakistan. Explore unisex eau de parfums made with rare botanicals — nationwide delivery, authentic ingredients.",
   keywords: [
     "khayal parfum",
-    "luxury perfume online india",
+    "luxury perfume online pakistan",
     "niche fragrance brand",
-    "oud perfume online",
-    "attar perfume online india",
+    "oud perfume online pakistan",
+    "attar perfume online pakistan",
     "unisex perfume",
     "long lasting perfume",
     "premium eau de parfum",
-    "buy perfume online",
+    "buy perfume online pakistan",
   ],
   openGraph: {
     type: "website",
-    locale: "en_IN",
+    locale: "en_PK",
     siteName: "Khayal Parfum",
     title: "Khayal Parfum — Luxury Oud, Musk & Attar Perfumes",
     description:
@@ -64,7 +64,7 @@ export function productMetadata({
   image: string;
   handle: string;
 }): Metadata {
-  const url = `https://khayalparfum.com/shop/${handle}`;
+  const url = `https://www.khayalparfum.com/shop/${handle}`;
   return {
     title: `${title} | Khayal Perfumes`,
     description: description.length > 160 ? `${description.slice(0, 157)}...` : description,

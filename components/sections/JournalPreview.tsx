@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import RevealMask from "@/components/ui/RevealMask";
-import type { BlogPostCard } from "@/types/blog";
+import type { BlogPost } from "@/lib/blog";
 
 interface JournalPreviewProps {
-  posts: BlogPostCard[];
+  posts: BlogPost[];
 }
 
 export default function JournalPreview({ posts }: JournalPreviewProps) {
@@ -34,11 +34,11 @@ export default function JournalPreview({ posts }: JournalPreviewProps) {
           {posts.map((post, index) => (
             <Reveal key={post._id} delay={index * 0.1}>
               <article className="group bg-midnight border border-border-subtle rounded-xl overflow-hidden transition-colors duration-300 hover:border-oud-gold/40">
-                <Link href={`/journal/${post.slug.current}`} aria-label={`Read ${post.title}`}>
+                <Link href={`/journal/${post.slug}`} aria-label={`Read ${post.title}`}>
                   <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-charcoal via-[#151310] to-midnight">
-                    {post.coverImage?.asset?.url ? (
+                    {post.coverImage?.url ? (
                       <Image
-                        src={post.coverImage.asset.url}
+                        src={post.coverImage.url}
                         alt={post.coverImage.alt || post.title}
                         fill
                         className="object-cover transition-transform duration-[500ms] group-hover:scale-[1.05]"
@@ -73,13 +73,13 @@ export default function JournalPreview({ posts }: JournalPreviewProps) {
                     <span>{post.readTime ? `${post.readTime} min read` : "5 min read"}</span>
                   </div>
                   <h3 className="text-parchment text-xl font-medium leading-snug line-clamp-2">
-                    <Link href={`/journal/${post.slug.current}`}>{post.title}</Link>
+                    <Link href={`/journal/${post.slug}`}>{post.title}</Link>
                   </h3>
                   <p className="mt-2 text-warm-taupe text-sm leading-relaxed line-clamp-2">
                     {post.excerpt}
                   </p>
                   <p className="mt-4 text-warm-taupe text-xs">
-                    {new Date(post.publishedAt).toLocaleDateString("en-IN", {
+                    {new Date(post.publishedAt).toLocaleDateString("en-PK", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",

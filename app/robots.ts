@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "*", allow: "/" },
       { userAgent: "*", disallow: "/api/" },
     ],
-    sitemap: "https://khayalparfum.com/sitemap.xml",
+    sitemap: "https://www.khayalparfum.com/sitemap.xml",
   };
 }

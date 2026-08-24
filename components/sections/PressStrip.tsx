@@ -1,10 +1,10 @@
 import Reveal from "@/components/ui/Reveal";
 
 const trustPoints = [
-  { label: "Free Shipping", detail: "On orders above ₹15,000" },
+  { label: "Free Shipping", detail: "On orders above Rs. 15,000" },
   { label: "Secure Checkout", detail: "Encrypted payments" },
   { label: "Authentic Guarantee", detail: "100% genuine ingredients" },
-  { label: "Small-Batch Craft", detail: "Hand-poured in India" },
+  { label: "Small-Batch Craft", detail: "Hand-poured in Pakistan" },
 ];
 
 export default function PressStrip() {

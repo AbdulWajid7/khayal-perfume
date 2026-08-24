@@ -6,8 +6,8 @@ import * as THREE from "three";
 
 const MIST_COUNT = 1800;
 const BLOOM_COUNT = 400;
-const GOLD_COLOR = "#d4af37";
-const AMBER_COLOR = "#b8860b";
+const GOLD_COLOR = "#aa6779";
+const AMBER_COLOR = "#744250";
 
 function createParticleTexture() {
   const canvas = document.createElement("canvas");
@@ -15,9 +15,9 @@ function createParticleTexture() {
   canvas.height = 64;
   const ctx = canvas.getContext("2d")!;
   const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-  gradient.addColorStop(0, "rgba(212, 175, 55, 0.7)");
-  gradient.addColorStop(0.35, "rgba(212, 175, 55, 0.25)");
-  gradient.addColorStop(0.7, "rgba(184, 134, 11, 0.05)");
+  gradient.addColorStop(0, "rgba(170, 103, 121, 0.7)");
+  gradient.addColorStop(0.35, "rgba(170, 103, 121, 0.25)");
+  gradient.addColorStop(0.7, "rgba(116, 66, 80, 0.05)");
   gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, 64, 64);

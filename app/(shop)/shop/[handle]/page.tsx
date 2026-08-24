@@ -55,7 +55,7 @@ function buildFaqItems(product: { title: string; longevity: string }): FAQItem[]
     {
       question: `What is included when I order ${product.title}?`,
       answer:
-        "Your order includes the bottle you select, a signature Khayal presentation box, and complimentary shipping on orders above ₹15,000.",
+        "Your order includes the bottle you select, a signature Khayal presentation box, and complimentary shipping on orders above Rs. 15,000.",
     },
   ];
 }
@@ -88,9 +88,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <Breadcrumb items={breadcrumbItems} />
         <BreadcrumbSchema
           items={[
-            { name: "Home", url: "https://khayalparfum.com/" },
-            { name: "Shop", url: "https://khayalparfum.com/shop" },
-            { name: product.title, url: `https://khayalparfum.com/shop/${product.handle}` },
+            { name: "Home", url: "https://www.khayalparfum.com/" },
+            { name: "Shop", url: "https://www.khayalparfum.com/shop" },
+            { name: product.title, url: `https://www.khayalparfum.com/shop/${product.handle}` },
           ]}
         />
         <ProductSchema product={product} />

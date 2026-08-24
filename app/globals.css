@@ -2,13 +2,13 @@
 
 @theme {
   /* Brand palette — custom override from user selection */
-  --color-midnight: #050505;
-  --color-oud-gold: #d4af37;
-  --color-gold-bright: #f5d76e;
-  --color-parchment: #e8e0d4;
-  --color-warm-taupe: #8b7355;
-  --color-charcoal: #1a1a1a;
-  --color-border-subtle: #2a2a2a;
+  --color-midnight: #3e1c26;
+  --color-oud-gold: #aa6779;
+  --color-gold-bright: #cca2a3;
+  --color-parchment: #eeddcc;
+  --color-warm-taupe: #744250;
+  --color-charcoal: #2b141b;
+  --color-border-subtle: #47232c;
 
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -17,13 +17,13 @@
 
 :root {
   --font-inter: var(--font-inter);
-  --midnight: #050505;
-  --oud-gold: #d4af37;
-  --gold-bright: #f5d76e;
-  --parchment: #e8e0d4;
-  --warm-taupe: #8b7355;
-  --charcoal: #1a1a1a;
-  --border-subtle: #2a2a2a;
+  --midnight: #3e1c26;
+  --oud-gold: #aa6779;
+  --gold-bright: #cca2a3;
+  --parchment: #eeddcc;
+  --warm-taupe: #744250;
+  --charcoal: #2b141b;
+  --border-subtle: #47232c;
 }
 
 html {
@@ -62,7 +62,7 @@ body {
 
 /* Selection color */
 ::selection {
-  background-color: rgba(212, 175, 55, 0.25);
+  background-color: rgba(170, 103, 121, 0.25);
   color: var(--parchment);
 }
 

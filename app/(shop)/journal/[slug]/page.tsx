@@ -2,9 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { PortableText } from "@portabletext/react";
-import { getBlogPost, getBlogPosts } from "@/lib/sanity";
-import { markdownToHtml, truncateText } from "@/lib/utils";
+import { getBlogPost, getBlogPosts } from "@/lib/blog";
+import { truncateText } from "@/lib/utils";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import BlogPostSchema from "@/components/seo/BlogPostSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
@@ -19,6 +18,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   if (!post) return {};
 
   const description = post.metaDescription || truncateText(post.excerpt, 160);
+  const canonical = post.canonicalUrl || `https://www.khayalparfum.com/journal/${post.slug}`;
 
   return {
     title: post.metaTitle || post.title,
@@ -26,9 +26,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     openGraph: {
       title: post.metaTitle || post.title,
       description,
-      images: post.coverImage?.asset?.url ? [{ url: post.coverImage.asset.url }] : undefined,
+      images: post.ogImage ? [post.ogImage] : post.coverImage?.url ? [post.coverImage.url] : undefined,
     },
-    alternates: { canonical: `https://khayalparfum.com/journal/${slug}` },
+    robots: {
+      index: !post.noIndex,
+      follow: !post.noFollow,
+    },
+    alternates: { canonical },
   };
 }
 
@@ -40,8 +44,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const allPosts = await getBlogPosts();
-  const relatedPosts = allPosts.filter((p) => p.slug.current !== slug).slice(0, 3);
+  const allPosts = await getBlogPosts(0);
+  const relatedPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
@@ -55,9 +59,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <Breadcrumb items={breadcrumbItems} />
         <BreadcrumbSchema
           items={[
-            { name: "Home", url: "https://khayalparfum.com/" },
-            { name: "Journal", url: "https://khayalparfum.com/journal" },
-            { name: post.title, url: `https://khayalparfum.com/journal/${slug}` },
+            { name: "Home", url: "https://www.khayalparfum.com/" },
+            { name: "Journal", url: "https://www.khayalparfum.com/journal" },
+            { name: post.title, url: `https://www.khayalparfum.com/journal/${slug}` },
           ]}
         />
         <BlogPostSchema post={post} />
@@ -71,7 +75,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <span>{post.readTime ? `${post.readTime} min read` : "5 min read"}</span>
           <span aria-hidden="true">·</span>
           <span>
-            {new Date(post.publishedAt).toLocaleDateString("en-IN", {
+            {new Date(post.publishedAt).toLocaleDateString("en-PK", {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -83,10 +87,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {post.title}
         </h1>
 
-        {post.coverImage?.asset?.url && (
+        {post.coverImage?.url && (
           <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden rounded-xl border border-border-subtle">
             <Image
-              src={post.coverImage.asset.url}
+              src={post.coverImage.url}
               alt={post.coverImage.alt || post.title}
               fill
               className="object-cover"
@@ -96,15 +100,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         )}
 
-        <div className="mt-10 prose prose-invert max-w-none text-warm-taupe text-base leading-relaxed [&>h1]:text-parchment [&>h1]:text-2xl [&>h1]:font-medium [&>h1]:mt-10 [&>h1]:mb-4 [&>h2]:text-parchment [&>h2]:text-xl [&>h2]:font-medium [&>h2]:mt-8 [&>h2]:mb-3 [&>h3]:text-parchment [&>h3]:text-lg [&>h3]:font-medium [&>h3]:mt-6 [&>h3]:mb-2 [&>p]:mb-4 [&>hr]:border-border-subtle [&>hr]:my-10 [&_a]:text-oud-gold">
-          {post.rawContent ? (
-            <div
-              dangerouslySetInnerHTML={{ __html: markdownToHtml(post.rawContent) }}
-            />
-          ) : (
-            <PortableText value={post.content} />
-          )}
-        </div>
+        <div
+          className="mt-10 prose prose-invert max-w-none text-warm-taupe text-base leading-relaxed [&>h1]:text-parchment [&>h1]:text-2xl [&>h1]:font-medium [&>h1]:mt-10 [&>h1]:mb-4 [&>h2]:text-parchment [&>h2]:text-xl [&>h2]:font-medium [&>h2]:mt-8 [&>h2]:mb-3 [&>h3]:text-parchment [&>h3]:text-lg [&>h3]:font-medium [&>h3]:mt-6 [&>h3]:mb-2 [&>p]:mb-4 [&>hr]:border-border-subtle [&>hr]:my-10 [&_a]:text-oud-gold [&_img]:rounded-xl"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
 
         <div className="mt-12 pt-8 border-t border-border-subtle flex items-center gap-4">
           <div className="h-10 w-10 rounded-full bg-oud-gold flex items-center justify-center text-midnight text-sm font-medium">
@@ -123,7 +122,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {relatedPosts.map((related) => (
                 <Link
                   key={related._id}
-                  href={`/journal/${related.slug.current}`}
+                  href={`/journal/${related.slug}`}
                   className="group"
                 >
                   <p className="text-warm-taupe text-xs mb-2">

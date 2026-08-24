@@ -1,11 +1,15 @@
-import type { PortableTextBlock } from "@portabletext/types";
-
 export interface BlogPost {
   _id: string;
   title: string;
   slug: { current: string };
   metaTitle?: string;
   metaDescription?: string;
+  focusKeyword?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
+  noFollow?: boolean;
+  ogImage?: string;
+  schemaType?: string;
   publishedAt: string;
   updatedAt?: string;
   excerpt: string;
@@ -16,7 +20,7 @@ export interface BlogPost {
     };
     alt?: string;
   };
-  content: PortableTextBlock[];
+  content: string;
   rawContent?: string;
   tags?: string[];
   readTime?: number;

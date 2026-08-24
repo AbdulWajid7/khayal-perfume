@@ -111,7 +111,7 @@ const FALLBACK_BLOG_POSTS: Record<string, { post: BlogPost; filename: string }> 
       publishedAt: "2026-08-01T00:00:00Z",
       excerpt:
         "Discover why oud remains the soul of luxury perfumery and how Khayal transforms raw resin into liquid imagination.",
-      content: [],
+      content: "",
       tags: ["Ingredients"],
       readTime: 8,
     },
@@ -128,7 +128,7 @@ const FALLBACK_BLOG_POSTS: Record<string, { post: BlogPost; filename: string }> 
       publishedAt: "2026-08-05T00:00:00Z",
       excerpt:
         "A practical guide to finding a fragrance that feels like an extension of your personality, mood, and memory.",
-      content: [],
+      content: "",
       tags: ["Scent Guides"],
       readTime: 6,
     },
@@ -145,7 +145,7 @@ const FALLBACK_BLOG_POSTS: Record<string, { post: BlogPost; filename: string }> 
       publishedAt: "2026-08-08T00:00:00Z",
       excerpt:
         "Why perfume is the most intimate gift you can give, and how to select one that carries meaning beyond the bottle.",
-      content: [],
+      content: "",
       tags: ["Gifting"],
       readTime: 5,
     },

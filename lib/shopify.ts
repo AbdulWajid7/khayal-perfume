@@ -47,7 +47,7 @@ const MOCK_PRODUCTS: Product[] = [
       "A majestic oud composition for evening rituals. Deep, resinous, and unmistakably luxurious.",
     descriptionHtml:
       "<p>A majestic oud composition for evening rituals. Deep, resinous, and unmistakably luxurious.</p>",
-    priceRange: { minVariantPrice: { amount: "18500.0", currencyCode: "INR" } },
+    priceRange: { minVariantPrice: { amount: "18500.0", currencyCode: "PKR" } },
     featuredImage: {
       url: "/images/products/oud-imperial.svg",
       altText: "Khayal Oud Imperial perfume bottle",
@@ -59,14 +59,14 @@ const MOCK_PRODUCTS: Product[] = [
       {
         id: "gid://shopify/ProductVariant/101",
         title: "50ml",
-        price: { amount: "18500.0", currencyCode: "INR" },
+        price: { amount: "18500.0", currencyCode: "PKR" },
         availableForSale: true,
         sku: "OUD-IMP-50",
       },
       {
         id: "gid://shopify/ProductVariant/102",
         title: "100ml",
-        price: { amount: "29500.0", currencyCode: "INR" },
+        price: { amount: "29500.0", currencyCode: "PKR" },
         availableForSale: true,
         sku: "OUD-IMP-100",
       },
@@ -87,14 +87,14 @@ const MOCK_PRODUCTS: Product[] = [
     handle: "musk-al-khayal",
     description: "Soft white musk wrapped in velvety florals. Intimate, clean, and quietly seductive.",
     descriptionHtml: "<p>Soft white musk wrapped in velvety florals. Intimate, clean, and quietly seductive.</p>",
-    priceRange: { minVariantPrice: { amount: "12500.0", currencyCode: "INR" } },
+    priceRange: { minVariantPrice: { amount: "12500.0", currencyCode: "PKR" } },
     featuredImage: { url: "/images/products/musk-al-khayal.svg", altText: "Musk Al-Khayal perfume bottle" },
     images: [{ url: "/images/products/musk-al-khayal.svg", altText: "Musk Al-Khayal perfume bottle" }],
     variants: [
       {
         id: "gid://shopify/ProductVariant/201",
         title: "50ml",
-        price: { amount: "12500.0", currencyCode: "INR" },
+        price: { amount: "12500.0", currencyCode: "PKR" },
         availableForSale: true,
         sku: "MSK-ALK-50",
       },
@@ -115,14 +115,14 @@ const MOCK_PRODUCTS: Product[] = [
     handle: "rose-and-smoke",
     description: "Damascus rose suspended over smoldering incense. A floral with a dark soul.",
     descriptionHtml: "<p>Damascus rose suspended over smoldering incense. A floral with a dark soul.</p>",
-    priceRange: { minVariantPrice: { amount: "15500.0", currencyCode: "INR" } },
+    priceRange: { minVariantPrice: { amount: "15500.0", currencyCode: "PKR" } },
     featuredImage: { url: "/images/products/rose-smoke.svg", altText: "Rose and Smoke perfume bottle" },
     images: [{ url: "/images/products/rose-smoke.svg", altText: "Rose and Smoke perfume bottle" }],
     variants: [
       {
         id: "gid://shopify/ProductVariant/301",
         title: "50ml",
-        price: { amount: "15500.0", currencyCode: "INR" },
+        price: { amount: "15500.0", currencyCode: "PKR" },
         availableForSale: true,
         sku: "ROS-SMK-50",
       },
@@ -143,14 +143,14 @@ const MOCK_PRODUCTS: Product[] = [
     handle: "sandalwood-nocturne",
     description: "Creamy Mysore sandalwood under moonlight. Warm, meditative, and endlessly wearable.",
     descriptionHtml: "<p>Creamy Mysore sandalwood under moonlight. Warm, meditative, and endlessly wearable.</p>",
-    priceRange: { minVariantPrice: { amount: "14000.0", currencyCode: "INR" } },
+    priceRange: { minVariantPrice: { amount: "14000.0", currencyCode: "PKR" } },
     featuredImage: { url: "/images/products/sandalwood-nocturne.svg", altText: "Sandalwood Nocturne perfume bottle" },
     images: [{ url: "/images/products/sandalwood-nocturne.svg", altText: "Sandalwood Nocturne perfume bottle" }],
     variants: [
       {
         id: "gid://shopify/ProductVariant/401",
         title: "50ml",
-        price: { amount: "14000.0", currencyCode: "INR" },
+        price: { amount: "14000.0", currencyCode: "PKR" },
         availableForSale: true,
         sku: "SND-NOC-50",
       },

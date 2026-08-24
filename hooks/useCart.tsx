@@ -180,7 +180,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(() => {
-    const currencyCode = state.items[0]?.currencyCode || "INR";
+    const currencyCode = state.items[0]?.currencyCode || "PKR";
     const subtotal = state.items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
