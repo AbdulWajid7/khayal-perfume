@@ -26,10 +26,15 @@ export type BlogPost = {
 };
 
 export async function getBlogPosts(limit = 0, onlyPublished = true): Promise<BlogPost[]> {
-  await dbConnect();
-  const query = onlyPublished ? ({ status: "published" } as const) : {};
-  const posts = await Post.find(query).sort({ publishedAt: -1 }).limit(limit || 0).lean();
-  return (toJSON(posts) as unknown as IPost[]).map(mapPost);
+  try {
+    await dbConnect();
+    const query = onlyPublished ? ({ status: "published" } as const) : {};
+    const posts = await Post.find(query).sort({ publishedAt: -1 }).limit(limit || 0).lean();
+    return (toJSON(posts) as unknown as IPost[]).map(mapPost);
+  } catch (error) {
+    console.error("getBlogPosts error:", error);
+    return [];
+  }
 }
 
 export async function getLatestPosts(count = 3): Promise<BlogPost[]> {
@@ -37,10 +42,15 @@ export async function getLatestPosts(count = 3): Promise<BlogPost[]> {
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  await dbConnect();
-  const post = await Post.findOne({ slug, status: "published" } as const).lean();
-  if (!post) return null;
-  return mapPost(toJSON(post) as unknown as IPost);
+  try {
+    await dbConnect();
+    const post = await Post.findOne({ slug, status: "published" } as const).lean();
+    if (!post) return null;
+    return mapPost(toJSON(post) as unknown as IPost);
+  } catch (error) {
+    console.error("getBlogPost error:", error);
+    return null;
+  }
 }
 
 export async function getBlogPostById(id: string): Promise<BlogPost | null> {

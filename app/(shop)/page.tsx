@@ -1,3 +1,8 @@
+import HeroSection from "@/components/sections/HeroSection";
+import PressStrip from "@/components/sections/PressStrip";
+import FeaturedCollection from "@/components/sections/FeaturedCollection";
+import BrandStoryTeaser from "@/components/sections/BrandStoryTeaser";
+import IngredientsGallery from "@/components/sections/IngredientsGallery";
 import JournalPreview from "@/components/sections/JournalPreview";
 import ScentFinderCTA from "@/components/sections/ScentFinderCTA";
 import { getProducts } from "@/lib/shopify";
@@ -8,6 +13,11 @@ export default async function HomePage() {
 
   return (
     <>
+      <HeroSection />
+      <PressStrip />
+      <FeaturedCollection products={products} />
+      <BrandStoryTeaser />
+      <IngredientsGallery />
       <JournalPreview posts={posts} />
       <ScentFinderCTA />
     </>
