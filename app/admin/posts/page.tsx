@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPostsForAdmin } from "@/lib/admin";
+import { getPostsForAdmin } from "@/lib/admin/data";
 
 export default async function PostsListPage() {
   const posts = await getPostsForAdmin();

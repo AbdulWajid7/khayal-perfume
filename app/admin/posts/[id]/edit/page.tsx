@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import PostForm from "@/components/admin/PostForm";
-import { getPostById } from "@/lib/admin";
+import { getPostById } from "@/lib/admin/data";
 
 export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
