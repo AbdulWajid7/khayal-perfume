@@ -1,17 +1,27 @@
+"use client";
+
+import { useActionState } from "react";
 import { login } from "@/lib/session";
 
-export const metadata = {
-  title: "Admin Login | Khayal",
-};
+const initialState: { error?: string } = {};
 
 export default function LoginPage() {
+  const [state, formAction, isPending] = useActionState(login, initialState);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-midnight px-4">
       <form
-        action={login as unknown as (formData: FormData) => void | Promise<void>}
+        action={formAction}
         className="w-full max-w-md p-8 rounded-2xl border border-border-subtle bg-charcoal space-y-6"
       >
         <h1 className="text-parchment text-2xl font-medium">Khayal Admin</h1>
+
+        {state?.error && (
+          <div className="p-3 rounded bg-red-900/30 text-red-100 text-sm break-words">
+            {state.error}
+          </div>
+        )}
+
         <div>
           <label className="block text-parchment text-sm font-medium mb-1">Email</label>
           <input
@@ -32,9 +42,10 @@ export default function LoginPage() {
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-2 rounded bg-oud-gold text-midnight font-medium hover:opacity-90"
+          disabled={isPending}
+          className="w-full px-4 py-2 rounded bg-oud-gold text-midnight font-medium hover:opacity-90 disabled:opacity-50"
         >
-          Sign In
+          {isPending ? "Signing In..." : "Sign In"}
         </button>
       </form>
     </div>
