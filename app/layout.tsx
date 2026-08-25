@@ -4,6 +4,7 @@ import "./globals.css";
 import { defaultMetadata } from "@/lib/seo";
 import { CartProvider } from "@/hooks/useCart";
 import LoadIntro from "@/components/ui/LoadIntro";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="antialiased bg-midnight text-parchment">
         <LoadIntro />
         <CartProvider>{children}</CartProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
