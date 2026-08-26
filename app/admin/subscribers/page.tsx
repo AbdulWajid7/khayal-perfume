@@ -10,22 +10,22 @@ export default async function SubscribersListPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-parchment text-2xl font-medium">Newsletter Subscribers</h1>
-        <span className="text-warm-taupe text-sm">
+        <h1 className="font-serif-display text-ink text-3xl font-medium">Newsletter Subscribers</h1>
+        <span className="text-stone text-sm">
           {subscribers.length} subscriber{subscribers.length !== 1 ? "s" : ""}
         </span>
       </div>
 
       {activeEmails && (
-        <div className="border border-border-subtle rounded-xl p-4 bg-charcoal space-y-3">
-          <h2 className="text-parchment text-sm font-medium">Active email list (for campaigns)</h2>
-          <p className="text-warm-taupe text-xs break-all font-mono">{activeEmails}</p>
+        <div className="bg-pure border border-border rounded-2xl p-4 space-y-3 shadow-sm">
+          <h2 className="text-ink text-sm font-medium">Active email list (for campaigns)</h2>
+          <p className="text-stone text-xs break-all font-mono">{activeEmails}</p>
         </div>
       )}
 
-      <div className="border border-border-subtle rounded-xl overflow-hidden bg-charcoal">
+      <div className="bg-pure border border-border rounded-2xl overflow-hidden shadow-sm">
         <table className="w-full text-left text-sm">
-          <thead className="bg-midnight text-warm-taupe">
+          <thead className="bg-cream-dark text-stone">
             <tr>
               <th className="px-4 py-3 font-medium">Email</th>
               <th className="px-4 py-3 font-medium">Source</th>
@@ -35,21 +35,21 @@ export default async function SubscribersListPage() {
           </thead>
           <tbody>
             {subscribers.map((subscriber) => (
-              <tr key={subscriber._id} className="border-t border-border-subtle">
-                <td className="px-4 py-3 text-parchment">{subscriber.email}</td>
-                <td className="px-4 py-3 text-warm-taupe capitalize">{subscriber.source}</td>
+              <tr key={subscriber._id} className="border-t border-border">
+                <td className="px-4 py-3 text-ink">{subscriber.email}</td>
+                <td className="px-4 py-3 text-stone capitalize">{subscriber.source}</td>
                 <td className="px-4 py-3">
                   <span
-                    className={`px-2 py-0.5 rounded text-xs ${
+                    className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
                       subscriber.subscribed
-                        ? "bg-green-900/40 text-green-100"
-                        : "bg-amber-900/40 text-amber-100"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-amber-100 text-amber-700"
                     }`}
                   >
                     {subscriber.subscribed ? "Active" : "Unsubscribed"}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-warm-taupe">
+                <td className="px-4 py-3 text-stone">
                   {new Date(subscriber.createdAt).toLocaleDateString("en-PK", {
                     year: "numeric",
                     month: "short",
@@ -60,7 +60,7 @@ export default async function SubscribersListPage() {
             ))}
             {subscribers.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-8 text-center text-warm-taupe">
+                <td colSpan={4} className="px-4 py-8 text-center text-stone">
                   No subscribers yet.
                 </td>
               </tr>

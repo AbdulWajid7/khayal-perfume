@@ -193,3 +193,27 @@ body {
   color: transparent;
   animation: shimmer 4s linear infinite;
 }
+
+.input-admin {
+  width: 100%;
+  background-color: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ink);
+  transition: border-color 0.2s ease;
+}
+
+.input-admin::placeholder {
+  color: var(--stone-light);
+}
+
+.input-admin:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.input-admin:disabled {
+  opacity: 0.6;
+}

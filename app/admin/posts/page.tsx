@@ -7,18 +7,18 @@ export default async function PostsListPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-parchment text-2xl font-medium">Journal Posts</h1>
+        <h1 className="font-serif-display text-ink text-3xl font-medium">Journal Posts</h1>
         <Link
           href="/admin/posts/new"
-          className="px-4 py-2 rounded bg-oud-gold text-midnight text-sm font-medium hover:opacity-90"
+          className="inline-flex items-center justify-center bg-gold text-pure rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-gold-light transition-colors"
         >
           + New Post
         </Link>
       </div>
 
-      <div className="border border-border-subtle rounded-xl overflow-hidden bg-charcoal">
+      <div className="bg-pure border border-border rounded-2xl overflow-hidden shadow-sm">
         <table className="w-full text-left text-sm">
-          <thead className="bg-midnight text-warm-taupe">
+          <thead className="bg-cream-dark text-stone">
             <tr>
               <th className="px-4 py-3 font-medium">Title</th>
               <th className="px-4 py-3 font-medium">Slug</th>
@@ -29,21 +29,21 @@ export default async function PostsListPage() {
           </thead>
           <tbody>
             {posts.map((post) => (
-              <tr key={post._id} className="border-t border-border-subtle">
-                <td className="px-4 py-3 text-parchment">{post.title}</td>
-                <td className="px-4 py-3 text-warm-taupe">{post.slug}</td>
+              <tr key={post._id} className="border-t border-border">
+                <td className="px-4 py-3 text-ink font-medium">{post.title}</td>
+                <td className="px-4 py-3 text-stone">{post.slug}</td>
                 <td className="px-4 py-3">
                   <span
-                    className={`px-2 py-0.5 rounded text-xs ${
+                    className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
                       post.status === "published"
-                        ? "bg-green-900/40 text-green-100"
-                        : "bg-amber-900/40 text-amber-100"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-amber-100 text-amber-700"
                     }`}
                   >
                     {post.status}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-warm-taupe">
+                <td className="px-4 py-3 text-stone">
                   {new Date(post.publishedAt).toLocaleDateString("en-PK", {
                     year: "numeric",
                     month: "short",
@@ -53,7 +53,7 @@ export default async function PostsListPage() {
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/admin/posts/${post._id}/edit`}
-                    className="text-oud-gold hover:underline"
+                    className="text-gold text-xs hover:text-gold-light"
                   >
                     Edit
                   </Link>
@@ -62,7 +62,7 @@ export default async function PostsListPage() {
             ))}
             {posts.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-warm-taupe">
+                <td colSpan={5} className="px-4 py-8 text-center text-stone">
                   No posts yet. Create your first one.
                 </td>
               </tr>

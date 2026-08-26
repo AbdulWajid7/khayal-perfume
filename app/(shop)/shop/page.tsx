@@ -1,4 +1,4 @@
-import { getProducts } from "@/lib/shopify";
+import { getProducts } from "@/lib/products";
 import ProductCard from "@/components/ui/ProductCard";
 
 export const metadata = {

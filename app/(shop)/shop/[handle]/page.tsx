@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProduct, getProductRecommendations } from "@/lib/shopify";
+import { getProduct, getProductRecommendations } from "@/lib/products";
 import { productMetadata } from "@/lib/seo";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import ScentPyramid from "@/components/ui/ScentPyramid";

@@ -8,9 +8,8 @@ import IngredientsGallery from "@/components/sections/IngredientsGallery";
 import JournalPreview from "@/components/sections/JournalPreview";
 import Testimonials from "@/components/sections/Testimonials";
 import ScentFinderCTA from "@/components/sections/ScentFinderCTA";
-import { getProducts } from "@/lib/shopify";
+import { getProducts, getBestsellerProducts } from "@/lib/products";
 import { getLatestPosts } from "@/lib/blog";
-import { getBestsellerProducts } from "@/lib/demo-products";
 
 export default async function HomePage() {
   const [products, posts, bestsellers] = await Promise.all([
