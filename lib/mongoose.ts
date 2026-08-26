@@ -24,11 +24,21 @@ export async function dbConnect() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI as string, { bufferCommands: false });
+    cached.promise = mongoose
+      .connect(MONGODB_URI as string, { bufferCommands: false })
+      .catch((err) => {
+        cached.promise = null;
+        throw err;
+      });
   }
 
-  cached.conn = await cached.promise;
-  return cached.conn;
+  try {
+    cached.conn = await cached.promise;
+    return cached.conn;
+  } catch (err) {
+    cached.conn = null;
+    throw err;
+  }
 }
 
 export function toJSON<T>(doc: mongoose.Document<T> | mongoose.FlattenMaps<T> | null): T | null {

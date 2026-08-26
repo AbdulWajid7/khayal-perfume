@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Reveal from "@/components/ui/Reveal";
 import ProductCard from "@/components/ui/ProductCard";
 import type { Product } from "@/types/product";
 
@@ -83,23 +84,25 @@ export default function BestSellers({ products }: BestSellersProps) {
   return (
     <section className="py-20 md:py-28 bg-cream-dark border-y border-border">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
-          <div>
-            <span className="eyebrow">Limited Time</span>
-            <h2 className="mt-3 font-serif-display text-ink text-[32px] md:text-[40px] font-medium tracking-tight">
-              Best Sellers
-            </h2>
-            <p className="mt-2 text-stone max-w-md">
-              Our most-loved fragrances, now with exclusive seasonal savings.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="text-sm text-stone">
-              <span className="text-sale font-medium">Sale ends in</span>
+        <Reveal>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+            <div>
+              <span className="eyebrow">Limited Time</span>
+              <h2 className="mt-3 font-serif-display text-ink text-[32px] md:text-[40px] font-medium tracking-tight">
+                Best Sellers
+              </h2>
+              <p className="mt-2 text-stone max-w-md">
+                Our most-loved fragrances, now with exclusive seasonal savings.
+              </p>
             </div>
-            <Countdown />
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="text-sm text-stone">
+                <span className="text-sale font-medium">Sale ends in</span>
+              </div>
+              <Countdown />
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         <motion.div
           variants={containerVariants}

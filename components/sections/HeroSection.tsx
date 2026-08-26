@@ -28,7 +28,7 @@ export default function HeroSection() {
         className="absolute inset-0"
       >
         <Image
-          src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=1920&q=80"
+          src="/images/homepage.png"
           alt="Khayal perfume collection in golden light"
           fill
           priority
@@ -39,7 +39,7 @@ export default function HeroSection() {
 
       {/* Soft light overlay for legibility */}
       <div
-        className="absolute inset-0 z-[1] bg-gradient-to-r from-cream/95 via-cream/75 to-cream/30"
+        className="absolute inset-0 z-[1] bg-gradient-to-r from-cream/15 to-cream/0"
         aria-hidden="true"
       />
       <div

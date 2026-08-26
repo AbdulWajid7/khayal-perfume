@@ -13,7 +13,7 @@ export default function BrandStoryTeaser() {
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-cream border border-border">
               <Parallax strength={10}>
                 <Image
-                  src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=1200&q=80"
+                  src="/images/brand-story.png"
                   alt="A sculptural Khayal perfume bottle in soft light"
                   fill
                   className="object-cover"

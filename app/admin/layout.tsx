@@ -16,6 +16,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <Link href="/admin/posts" className="hover:text-oud-gold transition">
               Journal Posts
             </Link>
+            <Link href="/admin/subscribers" className="hover:text-oud-gold transition">
+              Subscribers
+            </Link>
             {session && (
               <div className="flex items-center gap-4">
                 <span className="text-warm-taupe">{session.name}</span>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Reveal from "@/components/ui/Reveal";
 
 const categories = [
   {
@@ -10,21 +11,21 @@ const categories = [
     description: "Bold, structured, and commanding.",
     href: "/shop?category=men",
     image:
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&q=80",
+      "/images/category-men.png",
   },
   {
     title: "Women",
     description: "Floral, luminous, and unforgettable.",
     href: "/shop?category=women",
     image:
-      "https://images.unsplash.com/photo-1541643600914-78b084683601?w=800&q=80",
+      "/images/category-women.png",
   },
   {
     title: "Unisex",
     description: "For anyone who wears intention.",
     href: "/shop?category=unisex",
     image:
-      "https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800&q=80",
+      "/images/category-unisex.png",
   },
 ];
 
@@ -48,7 +49,7 @@ export default function CategoryGrid() {
   return (
     <section className="py-20 md:py-28 bg-cream">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <div className="text-center max-w-2xl mx-auto mb-12">
+        <Reveal className="text-center max-w-2xl mx-auto mb-12">
           <span className="eyebrow">Shop by Collection</span>
           <h2 className="mt-3 font-serif-display text-ink text-[32px] md:text-[40px] font-medium tracking-tight">
             Find Your Signature
@@ -56,7 +57,7 @@ export default function CategoryGrid() {
           <p className="mt-4 text-stone">
             Explore our curated collections for every mood, moment, and memory.
           </p>
-        </div>
+        </Reveal>
 
         <motion.div
           variants={containerVariants}
@@ -69,7 +70,7 @@ export default function CategoryGrid() {
             <motion.div key={category.title} variants={itemVariants}>
               <Link
                 href={category.href}
-                className="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-cream-dark"
+                className="group relative block aspect-[2/3] overflow-hidden rounded-2xl bg-cream-dark"
               >
                 <Image
                   src={category.image}

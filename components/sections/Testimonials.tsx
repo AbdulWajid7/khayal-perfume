@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Reveal from "@/components/ui/Reveal";
 
 const testimonials = [
   {
@@ -63,12 +64,12 @@ export default function Testimonials() {
   return (
     <section className="py-20 md:py-28 bg-cream">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <Reveal className="text-center max-w-2xl mx-auto mb-14">
           <span className="eyebrow">What They Say</span>
           <h2 className="mt-3 font-serif-display text-ink text-[32px] md:text-[40px] font-medium tracking-tight">
             Loved by Fragrance Collectors
           </h2>
-        </div>
+        </Reveal>
 
         <motion.div
           variants={containerVariants}
