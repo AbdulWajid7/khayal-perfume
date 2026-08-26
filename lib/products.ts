@@ -60,8 +60,8 @@ function mapIProductToProduct(doc: IProduct): ProductType {
     tags: doc.tags || [],
     productType: doc.category,
     vendor: "Khayal",
-    publishedAt: doc.createdAt,
-    updatedAt: doc.updatedAt,
+    publishedAt: doc.createdAt as string,
+    updatedAt: doc.updatedAt as string,
   };
 }
 

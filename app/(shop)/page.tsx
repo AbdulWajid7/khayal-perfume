@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import HeroSection from "@/components/sections/HeroSection";
 import PressStrip from "@/components/sections/PressStrip";
 import CategoryGrid from "@/components/sections/CategoryGrid";

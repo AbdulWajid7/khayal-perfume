@@ -12,6 +12,8 @@ import ProductSchema from "@/components/seo/ProductSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import FAQSchema from "@/components/seo/FAQSchema";
 
+export const dynamic = "force-dynamic";
+
 interface ProductPageProps {
   params: Promise<{ handle: string }>;
 }
