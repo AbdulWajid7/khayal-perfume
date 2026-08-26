@@ -23,47 +23,47 @@ const QUESTIONS: QuizQuestion[] = [
     id: "occasion",
     title: "When do you reach for a fragrance?",
     options: [
-      { label: "Everyday, morning to evening", tags: ["daily", "office"] },
-      { label: "Evening occasions & date nights", tags: ["evening", "date night"] },
-      { label: "Special celebrations only", tags: ["special", "evening"] },
+      { label: "Everyday, morning to evening", tags: ["daily", "office", "Daily"] },
+      { label: "Evening occasions & date nights", tags: ["evening", "date night", "Evening"] },
+      { label: "Special celebrations only", tags: ["special", "evening", "Special Occasion"] },
     ],
   },
   {
     id: "mood",
     title: "Which mood pulls you in?",
     options: [
-      { label: "Bold & magnetic", tags: ["oriental woody", "woody", "oud"] },
-      { label: "Warm & comforting", tags: ["floral musk", "musk", "vanilla"] },
-      { label: "Fresh & radiant", tags: ["woody", "fresh"] },
-      { label: "Romantic & sensual", tags: ["oriental floral", "rose", "floral"] },
+      { label: "Bold & magnetic", tags: ["oriental woody", "woody", "oud", "Oud", "Oriental"] },
+      { label: "Warm & comforting", tags: ["floral musk", "musk", "vanilla", "Musk", "Woody"] },
+      { label: "Fresh & radiant", tags: ["woody", "fresh", "Citrus"] },
+      { label: "Romantic & sensual", tags: ["oriental floral", "rose", "floral", "Floral"] },
     ],
   },
   {
     id: "note",
     title: "Which note calls to you first?",
     options: [
-      { label: "Oud & amber", tags: ["oud", "amber", "saffron"] },
-      { label: "Rose & florals", tags: ["rose", "jasmine", "floral"] },
-      { label: "Musk & vanilla", tags: ["musk", "vanilla", "cashmere"] },
-      { label: "Sandalwood & woods", tags: ["sandalwood", "vetiver", "woody"] },
+      { label: "Oud & amber", tags: ["oud", "amber", "saffron", "Oud", "Oriental"] },
+      { label: "Rose & florals", tags: ["rose", "jasmine", "floral", "Floral"] },
+      { label: "Musk & vanilla", tags: ["musk", "vanilla", "cashmere", "Musk"] },
+      { label: "Sandalwood & woods", tags: ["sandalwood", "vetiver", "woody", "Woody"] },
     ],
   },
   {
     id: "longevity",
     title: "How long should it linger?",
     options: [
-      { label: "A soft veil, 6–8 hours", tags: ["8-10 hours"] },
+      { label: "A soft veil, 6–8 hours", tags: ["8-10 hours", "6-8 hours"] },
       { label: "All day, 8–10 hours", tags: ["8-10 hours", "9-11 hours"] },
-      { label: "A long-lasting statement, 10+ hours", tags: ["10-12 hours", "9-11 hours"] },
+      { label: "A long-lasting statement, 10+ hours", tags: ["10-12 hours", "9-11 hours", "12+ hours"] },
     ],
   },
   {
     id: "recipient",
     title: "Who is this fragrance for?",
     options: [
-      { label: "Just for me", tags: ["unisex"] },
-      { label: "A gift for someone bold", tags: ["oud", "woody"] },
-      { label: "A gift for someone romantic", tags: ["rose", "floral"] },
+      { label: "Just for me", tags: ["unisex", "Unisex"] },
+      { label: "A gift for someone bold", tags: ["oud", "woody", "Men"] },
+      { label: "A gift for someone romantic", tags: ["rose", "floral", "Women"] },
     ],
   },
 ];
@@ -86,8 +86,12 @@ function buildSearchableText(product: Product): string {
   } catch {
     // ignore malformed scent notes
   }
+  // Also include separate note fields used by demo products
+  const top = getMetafield(product, "scent_notes_top") || "";
+  const heart = getMetafield(product, "scent_notes_heart") || "";
+  const base = getMetafield(product, "scent_notes_base") || "";
 
-  return [scentFamily, occasion, longevity, notesText, product.tags.join(" ")]
+  return [scentFamily, occasion, longevity, notesText, top, heart, base, product.tags.join(" ")]
     .join(" ")
     .toLowerCase();
 }
@@ -151,9 +155,9 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
   return (
     <div className="mx-auto max-w-2xl">
       {/* Progress bar */}
-      <div className="h-px w-full bg-border-subtle mb-10 overflow-hidden">
+      <div className="h-px w-full bg-border mb-10 overflow-hidden">
         <motion.div
-          className="h-full bg-oud-gold"
+          className="h-full bg-gold"
           animate={{ width: `${progress * 100}%` }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         />
@@ -172,7 +176,7 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
             <span className="eyebrow">
               Question {step + 1} of {QUESTIONS.length}
             </span>
-            <h2 className="mt-3 text-parchment text-[28px] md:text-[36px] font-medium tracking-[0.02em] leading-tight">
+            <h2 className="mt-3 font-serif-display text-ink text-[28px] md:text-[36px] font-medium tracking-tight leading-tight">
               {currentQuestion.title}
             </h2>
 
@@ -182,10 +186,10 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
                   key={option.label}
                   type="button"
                   onClick={() => selectOption(currentQuestion, option)}
-                  className="group text-left border border-border-subtle rounded-xl px-5 py-4 text-parchment text-sm font-medium tracking-wide bg-charcoal hover:border-oud-gold hover:bg-oud-gold/5 transition-colors"
+                  className="group text-left border border-border rounded-xl px-5 py-4 text-ink text-sm font-medium tracking-wide bg-pure hover:border-gold hover:bg-gold/5 transition-colors"
                 >
                   {option.label}
-                  <span className="block mt-2 text-oud-gold text-xs opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="block mt-2 text-gold text-xs opacity-0 group-hover:opacity-100 transition-opacity">
                     Select →
                   </span>
                 </button>
@@ -196,7 +200,7 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
               <button
                 type="button"
                 onClick={goBack}
-                className="mt-8 text-warm-taupe text-sm hover:text-oud-gold transition-colors"
+                className="mt-8 text-stone text-sm hover:text-gold transition-colors"
               >
                 ← Back
               </button>
@@ -212,11 +216,11 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
             <span className="eyebrow">Your Match</span>
             {result ? (
               <>
-                <h2 className="mt-3 text-parchment text-[28px] md:text-[36px] font-medium tracking-[0.02em] leading-tight">
+                <h2 className="mt-3 font-serif-display text-ink text-[28px] md:text-[36px] font-medium tracking-tight leading-tight">
                   {result.title}
                 </h2>
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-6 items-start">
-                  <div className="relative aspect-[4/5] w-full max-w-[160px] overflow-hidden rounded-xl border border-border-subtle bg-midnight">
+                  <div className="relative aspect-[4/5] w-full max-w-[160px] overflow-hidden rounded-xl border border-border bg-cream-dark">
                     {result.featuredImage && (
                       <Image
                         src={result.featuredImage.url}
@@ -228,8 +232,8 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
                     )}
                   </div>
                   <div>
-                    <p className="text-warm-taupe text-base leading-relaxed">{result.description}</p>
-                    <p className="mt-4 text-oud-gold text-lg tabular-nums">
+                    <p className="text-stone text-base leading-relaxed">{result.description}</p>
+                    <p className="mt-4 text-gold text-lg tabular-nums">
                       {formatPrice(
                         Number.parseFloat(result.priceRange.minVariantPrice.amount),
                         result.priceRange.minVariantPrice.currencyCode
@@ -238,14 +242,14 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
                     <div className="mt-6 flex flex-wrap gap-4">
                       <Link
                         href={`/shop/${result.handle}`}
-                        className="inline-flex items-center justify-center bg-oud-gold text-midnight rounded-lg px-6 py-3 text-sm font-medium hover:opacity-90 transition-opacity"
+                        className="inline-flex items-center justify-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors"
                       >
                         Shop This Fragrance
                       </Link>
                       <button
                         type="button"
                         onClick={restart}
-                        className="inline-flex items-center justify-center border border-warm-taupe/50 text-parchment rounded-lg px-6 py-3 text-sm font-medium hover:border-oud-gold hover:text-oud-gold transition-colors"
+                        className="inline-flex items-center justify-center border border-stone/50 text-ink rounded-lg px-6 py-3 text-sm font-medium hover:border-gold hover:text-gold transition-colors"
                       >
                         Retake the Quiz
                       </button>
@@ -254,7 +258,7 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
                 </div>
               </>
             ) : (
-              <p className="mt-4 text-warm-taupe text-base">
+              <p className="mt-4 text-stone text-base">
                 We couldn&apos;t find a match just yet — please try again.
               </p>
             )}

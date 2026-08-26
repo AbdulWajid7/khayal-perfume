@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/hooks/useCart";
 
 const navLinks = [
   { label: "Shop", href: "/shop" },
-  { label: "Story", href: "/story" },
+  { label: "Men", href: "/shop?category=men" },
+  { label: "Women", href: "/shop?category=women" },
+  { label: "Unisex", href: "/shop?category=unisex" },
   { label: "Journal", href: "/journal" },
-  { label: "Scent Finder", href: "/scent-finder" },
+  { label: "Story", href: "/story" },
 ];
 
 function SearchIcon({ className }: { className?: string }) {
@@ -100,51 +103,78 @@ function CloseIcon({ className }: { className?: string }) {
 
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { openCart, totalItems } = useCart();
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 20);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-      <header className="fixed top-8 left-0 right-0 z-50 h-16 bg-midnight/80 border-b border-border-subtle backdrop-blur-sm">
+      <header
+        className={[
+          "fixed top-8 left-0 right-0 z-50 h-20 transition-all duration-300",
+          scrolled
+            ? "bg-pure/95 border-b border-border shadow-sm backdrop-blur-md"
+            : "bg-transparent",
+        ].join(" ")}
+      >
         <nav className="mx-auto max-w-7xl h-full px-4 md:px-8 lg:px-12 flex items-center justify-between">
           <Link
             href="/"
-            className="text-parchment text-base font-medium tracking-[4px] uppercase"
+            className="flex items-center gap-3"
             aria-label="Khayal home"
           >
-            KHAYAL
+            <div className="relative h-12 w-12 rounded-full overflow-hidden shadow-md">
+              <Image
+                src="/images/logo.png"
+                alt="Khayal Perfume"
+                fill
+                className="object-cover"
+                sizes="48px"
+                priority
+              />
+            </div>
+            <span className="hidden sm:block text-ink text-sm font-medium tracking-[0.2em] uppercase">
+              Khayal
+            </span>
           </Link>
 
-          <ul className="hidden md:flex items-center gap-9">
+          <ul className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="group relative text-parchment text-sm font-normal tracking-wide transition-colors duration-200"
+                  className="link-hover-gold text-ink text-[13px] font-medium tracking-wide uppercase transition-colors hover:text-gold"
                 >
                   {link.label}
-                  <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-oud-gold transition-all duration-300 group-hover:w-full" />
                 </Link>
               </li>
             ))}
           </ul>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <button
               type="button"
               aria-label="Search"
-              className="text-parchment hover:text-oud-gold transition-colors p-1"
+              className="text-ink hover:text-gold transition-colors p-1"
             >
               <SearchIcon />
             </button>
             <button
               type="button"
               aria-label="Open cart"
-              className="relative text-parchment hover:text-oud-gold transition-colors p-1"
+              className="relative text-ink hover:text-gold transition-colors p-1"
               onClick={openCart}
             >
               <BagIcon />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-oud-gold text-midnight text-[10px] font-medium px-1">
+                <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold text-pure text-[10px] font-medium px-1">
                   {totalItems}
                 </span>
               )}
@@ -152,7 +182,7 @@ export default function Navigation() {
             <button
               type="button"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              className="md:hidden text-parchment hover:text-oud-gold transition-colors p-1"
+              className="lg:hidden text-ink hover:text-gold transition-colors p-1"
               onClick={() => setMobileOpen(true)}
             >
               <MenuIcon />
@@ -169,7 +199,7 @@ export default function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[60] bg-midnight/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-[60] bg-ink/20 backdrop-blur-sm lg:hidden"
               onClick={() => setMobileOpen(false)}
               aria-hidden="true"
             />
@@ -178,19 +208,19 @@ export default function Navigation() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="fixed top-0 right-0 bottom-0 z-[70] w-full max-w-sm bg-midnight border-l border-border-subtle md:hidden"
+              className="fixed top-0 right-0 bottom-0 z-[70] w-full max-w-sm bg-pure border-l border-border lg:hidden"
               role="dialog"
               aria-modal="true"
               aria-label="Mobile navigation"
             >
-              <div className="flex items-center justify-between h-16 px-6 border-b border-border-subtle">
-                <span className="text-parchment text-base font-medium tracking-[4px] uppercase">
-                  KHAYAL
+              <div className="flex items-center justify-between h-20 px-6 border-b border-border">
+                <span className="text-ink text-sm font-medium tracking-[0.2em] uppercase">
+                  Khayal
                 </span>
                 <button
                   type="button"
                   aria-label="Close menu"
-                  className="text-parchment hover:text-oud-gold transition-colors p-1"
+                  className="text-ink hover:text-gold transition-colors p-1"
                   onClick={() => setMobileOpen(false)}
                 >
                   <CloseIcon />
@@ -206,7 +236,7 @@ export default function Navigation() {
                   >
                     <Link
                       href={link.href}
-                      className="block text-parchment text-2xl font-medium tracking-wide hover:text-oud-gold transition-colors"
+                      className="block text-ink text-2xl font-serif-display font-medium tracking-wide hover:text-gold transition-colors"
                       onClick={() => setMobileOpen(false)}
                     >
                       {link.label}

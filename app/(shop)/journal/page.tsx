@@ -12,12 +12,12 @@ export default async function JournalPage() {
   const posts = await getBlogPosts();
 
   return (
-    <section className="pt-32 pb-16 md:pt-40 md:pb-24">
+    <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <h1 className="text-parchment text-[40px] font-medium tracking-[0.02em]">
+        <h1 className="font-serif-display text-ink text-[40px] font-medium tracking-tight">
           The Journal
         </h1>
-        <p className="mt-2 text-warm-taupe text-base">
+        <p className="mt-2 text-stone text-base">
           Stories, guides, and the art of fragrance
         </p>
 
@@ -25,30 +25,30 @@ export default async function JournalPage() {
           {posts.map((post) => (
             <article
               key={post._id}
-              className="group bg-charcoal border border-border-subtle rounded-xl overflow-hidden"
+              className="group bg-pure border border-border rounded-2xl overflow-hidden transition-all hover:shadow-md hover:border-gold/30"
             >
               <Link href={`/journal/${post.slug}`} aria-label={`Read ${post.title}`}>
-                <div className="relative aspect-[16/10] overflow-hidden bg-midnight">
+                <div className="relative aspect-[16/10] overflow-hidden bg-cream-dark">
                   {post.coverImage?.url ? (
                     <Image
                       src={post.coverImage.url}
                       alt={post.coverImage.alt || post.title}
                       fill
-                      className="object-cover transition-transform duration-[400ms] group-hover:scale-[1.03]"
+                      className="object-cover transition-transform duration-400 group-hover:scale-[1.03]"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       loading="lazy"
                     />
                   ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-charcoal to-midnight" aria-hidden="true" />
+                    <div className="h-full w-full bg-gradient-to-br from-cream-dark to-cream" aria-hidden="true" />
                   )}
                 </div>
               </Link>
               <div className="p-5">
-                <h2 className="text-parchment text-xl font-medium leading-snug">
+                <h2 className="text-ink text-xl font-medium leading-snug">
                   <Link href={`/journal/${post.slug}`}>{post.title}</Link>
                 </h2>
-                <p className="mt-2 text-warm-taupe text-sm line-clamp-2">{post.excerpt}</p>
-                <p className="mt-4 text-warm-taupe text-xs">
+                <p className="mt-2 text-stone text-sm line-clamp-2">{post.excerpt}</p>
+                <p className="mt-4 text-stone-light text-xs">
                   {new Date(post.publishedAt).toLocaleDateString("en-PK", {
                     year: "numeric",
                     month: "long",
@@ -59,7 +59,7 @@ export default async function JournalPage() {
             </article>
           ))}
           {posts.length === 0 && (
-            <p className="text-warm-taupe col-span-full">No journal posts yet.</p>
+            <p className="text-stone col-span-full">No journal posts yet.</p>
           )}
         </div>
       </div>

@@ -11,12 +11,12 @@ export default async function ScentFinderPage() {
   const products = await getProducts();
 
   return (
-    <section className="pt-32 pb-16 md:pt-40 md:pb-24 min-h-[60vh]">
+    <section className="pt-32 pb-16 md:pt-40 md:pb-24 min-h-[60vh] bg-cream">
       <div className="mx-auto max-w-2xl px-4 md:px-8 lg:px-12 text-center mb-14">
-        <h1 className="text-parchment text-[40px] font-medium tracking-[0.02em]">
+        <h1 className="font-serif-display text-ink text-[40px] font-medium tracking-tight">
           Find Your Signature Scent
         </h1>
-        <p className="mt-6 text-warm-taupe text-base leading-relaxed">
+        <p className="mt-6 text-stone text-base leading-relaxed">
           Answer five simple questions about mood, occasion, and intensity, and we&apos;ll match
           you with the Khayal fragrance that feels like an extension of yourself.
         </p>

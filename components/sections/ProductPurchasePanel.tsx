@@ -11,16 +11,28 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
   const selectedVariant =
     product.variants.find((variant) => variant.id === selectedId) || product.variants[0];
 
+  const comparePrice = product.compareAtPriceRange
+    ? Number.parseFloat(product.compareAtPriceRange.maxVariantPrice.amount)
+    : undefined;
+  const minPrice = Number.parseFloat(product.priceRange.minVariantPrice.amount);
+
   return (
     <div>
-      <p className="text-oud-gold text-2xl font-medium tabular-nums">
-        {selectedVariant
-          ? formatPrice(
-              Number.parseFloat(selectedVariant.price.amount),
-              selectedVariant.price.currencyCode
-            )
-          : "—"}
-      </p>
+      <div className="flex items-center gap-3">
+        <p className="text-gold text-2xl font-medium tabular-nums">
+          {selectedVariant
+            ? formatPrice(
+                Number.parseFloat(selectedVariant.price.amount),
+                selectedVariant.price.currencyCode
+              )
+            : "—"}
+        </p>
+        {comparePrice && comparePrice > minPrice && (
+          <p className="text-stone-light text-xl line-through tabular-nums">
+            {formatPrice(comparePrice, product.compareAtPriceRange?.maxVariantPrice.currencyCode || product.priceRange.minVariantPrice.currencyCode)}
+          </p>
+        )}
+      </div>
 
       <div className="mt-6">
         <VariantSelector

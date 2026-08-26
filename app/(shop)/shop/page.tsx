@@ -11,12 +11,12 @@ export default async function ShopPage() {
   const products = await getProducts();
 
   return (
-    <section className="pt-32 pb-16 md:pt-40 md:pb-24">
+    <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <h1 className="text-parchment text-[40px] font-medium tracking-[0.02em]">
+        <h1 className="font-serif-display text-ink text-[40px] font-medium tracking-tight">
           The Collection
         </h1>
-        <p className="mt-2 text-warm-taupe text-base max-w-2xl">
+        <p className="mt-2 text-stone text-base max-w-2xl">
           Every Khayal fragrance is a composition of rare ingredients, slow craft, and
           imagination.
         </p>

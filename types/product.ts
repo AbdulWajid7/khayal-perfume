@@ -39,6 +39,9 @@ export interface Product {
   priceRange: {
     minVariantPrice: ShopifyMoney;
   };
+  compareAtPriceRange?: {
+    maxVariantPrice: ShopifyMoney;
+  };
   featuredImage: ShopifyImage | null;
   images: ShopifyImage[];
   variants: ProductVariant[];

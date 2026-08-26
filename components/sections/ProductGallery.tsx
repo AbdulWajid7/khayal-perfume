@@ -16,7 +16,7 @@ export default function ProductGallery({
 
   return (
     <div>
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-border-subtle bg-charcoal">
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-cream-dark">
         {activeImage ? (
           <Image
             src={activeImage.url}
@@ -27,7 +27,7 @@ export default function ProductGallery({
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         ) : (
-          <div className="h-full w-full bg-charcoal" aria-hidden="true" />
+          <div className="h-full w-full bg-cream-dark" aria-hidden="true" />
         )}
       </div>
 
@@ -40,8 +40,8 @@ export default function ProductGallery({
               onClick={() => setActiveIndex(index)}
               aria-label={`View image ${index + 1} of ${title}`}
               className={[
-                "relative aspect-square overflow-hidden rounded-lg border transition-colors",
-                index === activeIndex ? "border-oud-gold" : "border-border-subtle hover:border-warm-taupe",
+                "relative aspect-square overflow-hidden rounded-xl border transition-colors",
+                index === activeIndex ? "border-gold" : "border-border hover:border-gold/50",
               ].join(" ")}
             >
               <Image

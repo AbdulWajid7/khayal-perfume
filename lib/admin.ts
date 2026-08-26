@@ -25,6 +25,10 @@ function getString(formData: FormData, name: string) {
   return formData.get(name)?.toString().trim() || "";
 }
 
+function toIsoString(value: string | Date): string {
+  return typeof value === "string" ? value : value.toISOString();
+}
+
 function getTags(formData: FormData) {
   return getString(formData, "tags")
     .split(",")
@@ -117,7 +121,7 @@ export async function updatePost(id: string, formData: FormData) {
   post.noFollow = formData.get("noFollow") === "on";
   post.ogImage = getString(formData, "ogImage") || undefined;
   post.schemaType = (getString(formData, "schemaType") || "BlogPosting") as IPost["schemaType"];
-  post.publishedAt = new Date(getString(formData, "publishedAt") || post.publishedAt.toISOString());
+  post.publishedAt = new Date(getString(formData, "publishedAt") || toIsoString(post.publishedAt));
   post.excerpt = excerpt;
 
   const coverImageUrl = getString(formData, "coverImageUrl");

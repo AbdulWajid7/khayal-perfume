@@ -12,7 +12,7 @@ export interface IPost {
   noFollow: boolean;
   ogImage?: string;
   schemaType: "Article" | "BlogPosting" | "NewsArticle";
-  publishedAt: Date;
+  publishedAt: Date | string;
   excerpt: string;
   coverImage?: {
     url: string;
@@ -22,9 +22,9 @@ export interface IPost {
   tags: string[];
   readTime: number;
   status: "draft" | "published";
-  authorId: mongoose.Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
+  authorId: mongoose.Types.ObjectId | string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
 
 const PostSchema = new Schema(

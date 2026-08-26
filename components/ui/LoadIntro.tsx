@@ -18,7 +18,7 @@ export default function LoadIntro() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] bg-midnight pointer-events-none"
+          className="fixed inset-0 z-[100] bg-cream pointer-events-none"
           aria-hidden="true"
         />
       )}

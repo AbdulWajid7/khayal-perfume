@@ -41,7 +41,7 @@ export default function SocialIcons({ className = "" }: { className?: string }) 
           target="_blank"
           rel="noopener noreferrer"
           aria-label={social.label}
-          className="text-warm-taupe hover:text-oud-gold transition-colors"
+          className="text-stone hover:text-gold transition-colors"
         >
           <span className="block h-5 w-5">{social.icon}</span>
         </a>

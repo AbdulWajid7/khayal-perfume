@@ -16,7 +16,7 @@ export default function NewsletterForm() {
 
   if (status === "submitted") {
     return (
-      <p className="text-oud-gold text-sm">
+      <p className="text-gold text-sm font-medium">
         Thank you — you&apos;ll hear from us soon.
       </p>
     );
@@ -34,11 +34,11 @@ export default function NewsletterForm() {
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder="your@email.com"
-        className="flex-1 bg-midnight border border-border-subtle rounded-lg px-4 py-2.5 text-sm text-parchment placeholder:text-warm-taupe focus:border-oud-gold focus:outline-none transition-colors"
+        className="flex-1 bg-pure border border-border rounded-lg px-4 py-3 text-sm text-ink placeholder:text-stone-light focus:border-gold focus:outline-none transition-colors"
       />
       <button
         type="submit"
-        className="inline-flex items-center justify-center bg-oud-gold text-midnight rounded-lg px-6 py-2.5 text-sm font-medium hover:opacity-90 transition-opacity"
+        className="inline-flex items-center justify-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors"
       >
         Subscribe
       </button>

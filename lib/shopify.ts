@@ -8,6 +8,10 @@ import type {
   ProductVariant,
   ProductMetafield,
 } from "@/types/product";
+import {
+  getAllDemoProducts,
+  getDemoProductByHandle,
+} from "@/lib/demo-products";
 
 const storeDomain = process.env.SHOPIFY_STORE_DOMAIN;
 const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
@@ -37,142 +41,14 @@ const client = hasCredentials
     })
   : null;
 
-// Fallback mock data when Shopify credentials are not configured
-const MOCK_PRODUCTS: Product[] = [
-  {
-    id: "gid://shopify/Product/1",
-    title: "Khayal Oud Imperial",
-    handle: "khayal-oud-imperial",
-    description:
-      "A majestic oud composition for evening rituals. Deep, resinous, and unmistakably luxurious.",
-    descriptionHtml:
-      "<p>A majestic oud composition for evening rituals. Deep, resinous, and unmistakably luxurious.</p>",
-    priceRange: { minVariantPrice: { amount: "18500.0", currencyCode: "PKR" } },
-    featuredImage: {
-      url: "/images/products/oud-imperial.svg",
-      altText: "Khayal Oud Imperial perfume bottle",
-    },
-    images: [
-      { url: "/images/products/oud-imperial.svg", altText: "Khayal Oud Imperial perfume bottle" },
-    ],
-    variants: [
-      {
-        id: "gid://shopify/ProductVariant/101",
-        title: "50ml",
-        price: { amount: "18500.0", currencyCode: "PKR" },
-        availableForSale: true,
-        sku: "OUD-IMP-50",
-      },
-      {
-        id: "gid://shopify/ProductVariant/102",
-        title: "100ml",
-        price: { amount: "29500.0", currencyCode: "PKR" },
-        availableForSale: true,
-        sku: "OUD-IMP-100",
-      },
-    ],
-    metafields: [
-      { namespace: "custom", key: "scent_notes", value: JSON.stringify({ top: ["Saffron", "Bergamot"], heart: ["Oud", "Rose"], base: ["Amber", "Sandalwood"] }) },
-      { namespace: "custom", key: "longevity", value: "10-12 hours" },
-      { namespace: "custom", key: "occasion", value: "Evening, Special" },
-      { namespace: "custom", key: "scent_family", value: "Oriental Woody" },
-    ],
-    tags: ["Oud", "Unisex", "Evening"],
-    productType: "Eau de Parfum",
-    vendor: "Khayal",
-  },
-  {
-    id: "gid://shopify/Product/2",
-    title: "Musk Al-Khayal",
-    handle: "musk-al-khayal",
-    description: "Soft white musk wrapped in velvety florals. Intimate, clean, and quietly seductive.",
-    descriptionHtml: "<p>Soft white musk wrapped in velvety florals. Intimate, clean, and quietly seductive.</p>",
-    priceRange: { minVariantPrice: { amount: "12500.0", currencyCode: "PKR" } },
-    featuredImage: { url: "/images/products/musk-al-khayal.svg", altText: "Musk Al-Khayal perfume bottle" },
-    images: [{ url: "/images/products/musk-al-khayal.svg", altText: "Musk Al-Khayal perfume bottle" }],
-    variants: [
-      {
-        id: "gid://shopify/ProductVariant/201",
-        title: "50ml",
-        price: { amount: "12500.0", currencyCode: "PKR" },
-        availableForSale: true,
-        sku: "MSK-ALK-50",
-      },
-    ],
-    metafields: [
-      { namespace: "custom", key: "scent_notes", value: JSON.stringify({ top: ["Pear", "White Pepper"], heart: ["Musk", "Jasmine"], base: ["Cashmere Wood", "Vanilla"] }) },
-      { namespace: "custom", key: "longevity", value: "8-10 hours" },
-      { namespace: "custom", key: "occasion", value: "Daily, Office" },
-      { namespace: "custom", key: "scent_family", value: "Floral Musk" },
-    ],
-    tags: ["Musk", "Unisex", "Daily"],
-    productType: "Eau de Parfum",
-    vendor: "Khayal",
-  },
-  {
-    id: "gid://shopify/Product/3",
-    title: "Rose & Smoke",
-    handle: "rose-and-smoke",
-    description: "Damascus rose suspended over smoldering incense. A floral with a dark soul.",
-    descriptionHtml: "<p>Damascus rose suspended over smoldering incense. A floral with a dark soul.</p>",
-    priceRange: { minVariantPrice: { amount: "15500.0", currencyCode: "PKR" } },
-    featuredImage: { url: "/images/products/rose-smoke.svg", altText: "Rose and Smoke perfume bottle" },
-    images: [{ url: "/images/products/rose-smoke.svg", altText: "Rose and Smoke perfume bottle" }],
-    variants: [
-      {
-        id: "gid://shopify/ProductVariant/301",
-        title: "50ml",
-        price: { amount: "15500.0", currencyCode: "PKR" },
-        availableForSale: true,
-        sku: "ROS-SMK-50",
-      },
-    ],
-    metafields: [
-      { namespace: "custom", key: "scent_notes", value: JSON.stringify({ top: ["Lychee", "Cardamom"], heart: ["Damascus Rose", "Olibanum"], base: ["Leather", "Patchouli"] }) },
-      { namespace: "custom", key: "longevity", value: "9-11 hours" },
-      { namespace: "custom", key: "occasion", value: "Date Night, Special" },
-      { namespace: "custom", key: "scent_family", value: "Oriental Floral" },
-    ],
-    tags: ["Floral", "Rose", "Evening"],
-    productType: "Eau de Parfum",
-    vendor: "Khayal",
-  },
-  {
-    id: "gid://shopify/Product/4",
-    title: "Sandalwood Nocturne",
-    handle: "sandalwood-nocturne",
-    description: "Creamy Mysore sandalwood under moonlight. Warm, meditative, and endlessly wearable.",
-    descriptionHtml: "<p>Creamy Mysore sandalwood under moonlight. Warm, meditative, and endlessly wearable.</p>",
-    priceRange: { minVariantPrice: { amount: "14000.0", currencyCode: "PKR" } },
-    featuredImage: { url: "/images/products/sandalwood-nocturne.svg", altText: "Sandalwood Nocturne perfume bottle" },
-    images: [{ url: "/images/products/sandalwood-nocturne.svg", altText: "Sandalwood Nocturne perfume bottle" }],
-    variants: [
-      {
-        id: "gid://shopify/ProductVariant/401",
-        title: "50ml",
-        price: { amount: "14000.0", currencyCode: "PKR" },
-        availableForSale: true,
-        sku: "SND-NOC-50",
-      },
-    ],
-    metafields: [
-      { namespace: "custom", key: "scent_notes", value: JSON.stringify({ top: ["Nutmeg", "Pink Pepper"], heart: ["Sandalwood", "Iris"], base: ["Vetiver", "Benzoin"] }) },
-      { namespace: "custom", key: "longevity", value: "8-10 hours" },
-      { namespace: "custom", key: "occasion", value: "Daily, Evening" },
-      { namespace: "custom", key: "scent_family", value: "Woody" },
-    ],
-    tags: ["Woody", "Sandalwood", "Daily"],
-    productType: "Eau de Parfum",
-    vendor: "Khayal",
-  },
-];
+const demoProducts = getAllDemoProducts();
 
 export function getMockProducts(): Product[] {
-  return MOCK_PRODUCTS;
+  return demoProducts;
 }
 
 export async function getProducts(): Promise<Product[]> {
-  if (!client) return MOCK_PRODUCTS;
+  if (!client) return demoProducts;
 
   const { data, errors } = await client.request(`
     query GetProducts($first: Int!) {
@@ -205,7 +81,7 @@ export async function getProducts(): Promise<Product[]> {
 
   if (errors) {
     console.error("Shopify getProducts error:", errors);
-    return MOCK_PRODUCTS;
+    return demoProducts;
   }
 
   return (data?.products?.nodes || []).map(mapShopifyProduct);
@@ -213,7 +89,7 @@ export async function getProducts(): Promise<Product[]> {
 
 export async function getProduct(handle: string): Promise<ProductDetails | null> {
   if (!client) {
-    const found = MOCK_PRODUCTS.find((p) => p.handle === handle);
+    const found = getDemoProductByHandle(handle);
     return found ? addDerivedFields(found) : null;
   }
 
@@ -246,7 +122,7 @@ export async function getProduct(handle: string): Promise<ProductDetails | null>
 
   if (errors || !data?.product) {
     console.error("Shopify getProduct error:", errors);
-    const found = MOCK_PRODUCTS.find((p) => p.handle === handle);
+    const found = getDemoProductByHandle(handle);
     return found ? addDerivedFields(found) : null;
   }
 
@@ -255,7 +131,7 @@ export async function getProduct(handle: string): Promise<ProductDetails | null>
 
 export async function getProductRecommendations(productId: string): Promise<Product[]> {
   if (!client) {
-    return MOCK_PRODUCTS.filter((p) => p.id !== productId).slice(0, 4);
+    return demoProducts.filter((p) => p.id !== productId).slice(0, 4);
   }
 
   const { data, errors } = await client.request(`
@@ -285,7 +161,7 @@ export async function getProductRecommendations(productId: string): Promise<Prod
 
   if (errors) {
     console.error("Shopify getProductRecommendations error:", errors);
-    return MOCK_PRODUCTS.filter((p) => p.id !== productId).slice(0, 4);
+    return demoProducts.filter((p) => p.id !== productId).slice(0, 4);
   }
 
   return (data?.productRecommendations || []).map(mapShopifyProduct);
@@ -387,7 +263,18 @@ function addDerivedFields(product: Product): ProductDetails {
     const raw = getMeta("custom", "scent_notes");
     if (raw) scentNotes = JSON.parse(raw);
   } catch {
-    // ignore parse errors
+    // ignore parse errors, fall back to separate note fields
+  }
+
+  if (
+    (!scentNotes.top.length && !scentNotes.heart.length && !scentNotes.base.length) ||
+    (getMeta("custom", "scent_notes_top") || getMeta("custom", "scent_notes_heart") || getMeta("custom", "scent_notes_base"))
+  ) {
+    scentNotes = {
+      top: getMeta("custom", "scent_notes_top")?.split(",").map((s) => s.trim()).filter(Boolean) || [],
+      heart: getMeta("custom", "scent_notes_heart")?.split(",").map((s) => s.trim()).filter(Boolean) || [],
+      base: getMeta("custom", "scent_notes_base")?.split(",").map((s) => s.trim()).filter(Boolean) || [],
+    };
   }
 
   return {

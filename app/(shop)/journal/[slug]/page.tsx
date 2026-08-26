@@ -54,7 +54,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   ];
 
   return (
-    <article className="pt-32 pb-16 md:pt-40 md:pb-24">
+    <article className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream">
       <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12">
         <Breadcrumb items={breadcrumbItems} />
         <BreadcrumbSchema
@@ -66,9 +66,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         />
         <BlogPostSchema post={post} />
 
-        <div className="flex items-center gap-3 text-warm-taupe text-xs mb-4">
+        <div className="flex items-center gap-3 text-stone text-xs mb-4">
           {post.tags?.[0] && (
-            <span className="px-2 py-0.5 border border-border-subtle rounded-md">
+            <span className="px-2 py-0.5 border border-border rounded-md">
               {post.tags[0]}
             </span>
           )}
@@ -83,12 +83,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </span>
         </div>
 
-        <h1 className="text-parchment text-[32px] md:text-[40px] font-medium tracking-[0.02em] leading-tight">
+        <h1 className="font-serif-display text-ink text-[32px] md:text-[40px] font-medium tracking-tight leading-tight">
           {post.title}
         </h1>
 
         {post.coverImage?.url && (
-          <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden rounded-xl border border-border-subtle">
+          <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden rounded-2xl border border-border">
             <Image
               src={post.coverImage.url}
               alt={post.coverImage.alt || post.title}
@@ -101,23 +101,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         )}
 
         <div
-          className="mt-10 prose prose-invert max-w-none text-warm-taupe text-base leading-relaxed [&>h1]:text-parchment [&>h1]:text-2xl [&>h1]:font-medium [&>h1]:mt-10 [&>h1]:mb-4 [&>h2]:text-parchment [&>h2]:text-xl [&>h2]:font-medium [&>h2]:mt-8 [&>h2]:mb-3 [&>h3]:text-parchment [&>h3]:text-lg [&>h3]:font-medium [&>h3]:mt-6 [&>h3]:mb-2 [&>p]:mb-4 [&>hr]:border-border-subtle [&>hr]:my-10 [&_a]:text-oud-gold [&_img]:rounded-xl"
+          className="mt-10 prose max-w-none text-stone text-base leading-relaxed [&>h1]:text-ink [&>h1]:text-2xl [&>h1]:font-medium [&>h1]:mt-10 [&>h1]:mb-4 [&>h2]:text-ink [&>h2]:text-xl [&>h2]:font-medium [&>h2]:mt-8 [&>h2]:mb-3 [&>h3]:text-ink [&>h3]:text-lg [&>h3]:font-medium [&>h3]:mt-6 [&>h3]:mb-2 [&>p]:mb-4 [&>hr]:border-border [&>hr]:my-10 [&_a]:text-gold [&_img]:rounded-xl"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
 
-        <div className="mt-12 pt-8 border-t border-border-subtle flex items-center gap-4">
-          <div className="h-10 w-10 rounded-full bg-oud-gold flex items-center justify-center text-midnight text-sm font-medium">
+        <div className="mt-12 pt-8 border-t border-border flex items-center gap-4">
+          <div className="h-10 w-10 rounded-full bg-gold flex items-center justify-center text-pure text-sm font-medium">
             K
           </div>
           <div>
-            <p className="text-parchment text-sm font-medium">The Khayal Journal</p>
-            <p className="text-warm-taupe text-xs">Notes on scent, craft, and imagination</p>
+            <p className="text-ink text-sm font-medium">The Khayal Journal</p>
+            <p className="text-stone text-xs">Notes on scent, craft, and imagination</p>
           </div>
         </div>
 
         {relatedPosts.length > 0 && (
-          <div className="mt-16 pt-10 border-t border-border-subtle">
-            <h2 className="text-parchment text-xl font-medium mb-6">More From the Journal</h2>
+          <div className="mt-16 pt-10 border-t border-border">
+            <h2 className="font-serif-display text-ink text-xl font-medium mb-6">More From the Journal</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {relatedPosts.map((related) => (
                 <Link
@@ -125,10 +125,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   href={`/journal/${related.slug}`}
                   className="group"
                 >
-                  <p className="text-warm-taupe text-xs mb-2">
+                  <p className="text-stone text-xs mb-2">
                     {related.tags?.[0] || "Journal"}
                   </p>
-                  <h3 className="text-parchment text-sm font-medium leading-snug group-hover:text-oud-gold transition-colors">
+                  <h3 className="text-ink text-sm font-medium leading-snug group-hover:text-gold transition-colors">
                     {related.title}
                   </h3>
                 </Link>

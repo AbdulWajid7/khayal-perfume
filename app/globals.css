@@ -1,7 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand palette — custom override from user selection */
+  /* Light luxury palette */
+  --color-cream: #FAF9F7;
+  --color-cream-dark: #F5F0E8;
+  --color-pure: #FFFFFF;
+  --color-ink: #1A1A1A;
+  --color-stone: #6B6B6B;
+  --color-stone-light: #9A9A9A;
+  --color-gold: #BFA15F;
+  --color-gold-light: #D4B46A;
+  --color-gold-pale: #E8D5A8;
+  --color-plum: #7A3B9A;
+  --color-plum-light: #9B59B6;
+  --color-plum-pale: #F3EAF7;
+  --color-sale: #B91C1C;
+  --color-border: #E8E4DC;
+  --color-border-light: #F0EDE6;
+
+  /* Legacy aliases kept for dark admin pages */
   --color-midnight: #3e1c26;
   --color-oud-gold: #aa6779;
   --color-gold-bright: #cca2a3;
@@ -13,17 +30,27 @@
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, "Times New Roman", serif;
 }
 
 :root {
   --font-inter: var(--font-inter);
-  --midnight: #3e1c26;
-  --oud-gold: #aa6779;
-  --gold-bright: #cca2a3;
-  --parchment: #eeddcc;
-  --warm-taupe: #744250;
-  --charcoal: #2b141b;
-  --border-subtle: #47232c;
+  --font-playfair: var(--font-playfair);
+  --cream: #FAF9F7;
+  --cream-dark: #F5F0E8;
+  --pure: #FFFFFF;
+  --ink: #1A1A1A;
+  --stone: #6B6B6B;
+  --stone-light: #9A9A9A;
+  --gold: #BFA15F;
+  --gold-light: #D4B46A;
+  --gold-pale: #E8D5A8;
+  --plum: #7A3B9A;
+  --plum-light: #9B59B6;
+  --plum-pale: #F3EAF7;
+  --sale: #B91C1C;
+  --border: #E8E4DC;
+  --border-light: #F0EDE6;
 }
 
 html {
@@ -31,11 +58,11 @@ html {
 }
 
 body {
-  background-color: var(--midnight);
-  color: var(--parchment);
+  background-color: var(--cream);
+  color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -56,14 +83,14 @@ body {
 
 /* Focus ring for accessibility */
 :focus-visible {
-  outline: 2px solid var(--oud-gold);
+  outline: 2px solid var(--gold);
   outline-offset: 2px;
 }
 
 /* Selection color */
 ::selection {
-  background-color: rgba(170, 103, 121, 0.25);
-  color: var(--parchment);
+  background-color: rgba(191, 161, 95, 0.25);
+  color: var(--ink);
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -92,11 +119,39 @@ body {
   font-size: 12px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--oud-gold);
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.eyebrow-plum {
+  color: var(--plum);
 }
 
 .tabular {
   font-variant-numeric: tabular-nums;
+}
+
+/* Serif headings */
+.font-serif-display {
+  font-family: var(--font-serif);
+}
+
+/* Elegant underline link hover */
+.link-hover-gold {
+  position: relative;
+}
+.link-hover-gold::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background-color: var(--gold);
+  transition: width 0.3s ease;
+}
+.link-hover-gold:hover::after {
+  width: 100%;
 }
 
 /* Marquee animation for announcement bar */
@@ -111,4 +166,30 @@ body {
 
 .animate-marquee {
   animation: marquee 28s linear infinite;
+}
+
+/* Subtle shimmer for gold text */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--gold) 0%,
+    var(--gold-light) 25%,
+    var(--gold-pale) 50%,
+    var(--gold-light) 75%,
+    var(--gold) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
 }

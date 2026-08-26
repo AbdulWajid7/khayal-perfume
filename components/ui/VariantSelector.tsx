@@ -14,7 +14,7 @@ export default function VariantSelector({ variants, selectedId, onSelect }: Vari
 
   return (
     <div>
-      <p className="text-warm-taupe text-xs uppercase tracking-[0.15em] mb-3">Size</p>
+      <p className="text-stone text-xs uppercase tracking-[0.15em] mb-3">Size</p>
       <div className="flex flex-wrap gap-3" role="radiogroup" aria-label="Select size">
         {variants.map((variant) => {
           const isSelected = variant.id === selectedId;
@@ -29,8 +29,8 @@ export default function VariantSelector({ variants, selectedId, onSelect }: Vari
               className={[
                 "rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors tabular-nums",
                 isSelected
-                  ? "bg-oud-gold text-midnight border-oud-gold"
-                  : "bg-transparent text-parchment border-border-subtle hover:border-oud-gold",
+                  ? "bg-gold text-pure border-gold"
+                  : "bg-transparent text-ink border-border hover:border-gold",
                 !variant.availableForSale ? "opacity-40 cursor-not-allowed" : "",
               ].join(" ")}
             >

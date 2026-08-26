@@ -23,15 +23,15 @@ const ingredients = [
 
 export default function IngredientsGallery() {
   return (
-    <section className="py-20 md:py-32 bg-midnight border-t border-border-subtle">
+    <section className="py-20 md:py-28 bg-cream">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="eyebrow">The Materials</span>
-            <RevealMask as="h2" className="mt-3 text-parchment text-[32px] md:text-[40px] font-medium tracking-[0.02em]">
+            <RevealMask as="h2" className="mt-3 font-serif-display text-ink text-[32px] md:text-[40px] font-medium tracking-tight">
               Rare Ingredients, Patiently Sourced
             </RevealMask>
-            <p className="mt-4 text-warm-taupe text-base">
+            <p className="mt-4 text-stone text-base">
               Every Khayal fragrance begins with materials chosen for character, not convenience.
             </p>
           </div>
@@ -44,7 +44,7 @@ export default function IngredientsGallery() {
               delay={index * 0.1}
               className={index === 1 ? "md:translate-y-10" : undefined}
             >
-              <div className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-border-subtle">
+              <div className="group relative aspect-[4/5] overflow-hidden rounded-2xl border border-border">
                 <Parallax strength={8}>
                   <Image
                     src={ingredient.image}
@@ -55,10 +55,10 @@ export default function IngredientsGallery() {
                     loading="lazy"
                   />
                 </Parallax>
-                <div className="absolute inset-0 bg-gradient-to-t from-midnight via-midnight/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-parchment text-xl font-medium">{ingredient.title}</h3>
-                  <p className="mt-2 text-warm-taupe text-sm leading-relaxed">
+                  <h3 className="font-serif-display text-pure text-2xl font-medium">{ingredient.title}</h3>
+                  <p className="mt-2 text-pure/80 text-sm leading-relaxed">
                     {ingredient.description}
                   </p>
                 </div>

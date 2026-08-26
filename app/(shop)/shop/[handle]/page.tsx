@@ -83,7 +83,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   ];
 
   return (
-    <div className="pt-32 pb-16 md:pt-40 md:pb-24">
+    <div className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <Breadcrumb items={breadcrumbItems} />
         <BreadcrumbSchema
@@ -100,15 +100,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <ProductGallery images={images} title={product.title} />
 
           <div>
-            <h1 className="text-parchment text-[32px] font-medium tracking-[0.02em]">
+            <h1 className="font-serif-display text-ink text-[32px] font-medium tracking-tight">
               {product.title}
             </h1>
             {product.scentFamily && (
-              <p className="mt-2 text-warm-taupe text-sm uppercase tracking-[0.15em]">
+              <p className="mt-2 text-stone text-sm uppercase tracking-[0.15em]">
                 {product.scentFamily}
               </p>
             )}
-            <p className="mt-4 text-warm-taupe text-base leading-relaxed">
+            <p className="mt-4 text-stone text-base leading-relaxed">
               {product.description}
             </p>
 
@@ -116,7 +116,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <ProductPurchasePanel product={product} />
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-warm-taupe">
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone">
               <span>Free Shipping</span>
               <span aria-hidden="true">·</span>
               <span>Secure Checkout</span>
@@ -135,12 +135,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
 
         <div className="mt-16 max-w-3xl">
-          <h2 className="text-parchment text-2xl font-medium mb-4">About This Fragrance</h2>
+          <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">About This Fragrance</h2>
           <div
-            className="prose prose-invert text-warm-taupe text-base leading-relaxed [&>p]:mb-4"
+            className="prose text-stone text-base leading-relaxed [&>p]:mb-4"
             dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
           />
-          <p className="text-warm-taupe text-base leading-relaxed mt-4">
+          <p className="text-stone text-base leading-relaxed mt-4">
             {product.title} is composed as part of the Khayal collection — a house built on
             imagination, rare ingredients, and patient craft. Every bottle is finished by hand and
             packaged in our signature presentation box, ready to gift or to keep. Whether worn
@@ -155,7 +155,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
 
         <div className="mt-16 max-w-3xl">
-          <h2 className="text-parchment text-2xl font-medium mb-4">Frequently Asked Questions</h2>
+          <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">Frequently Asked Questions</h2>
           <FAQAccordion items={faqItems} />
         </div>
 

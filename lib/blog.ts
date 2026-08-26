@@ -60,6 +60,11 @@ export async function getBlogPostById(id: string): Promise<BlogPost | null> {
   return mapPost(toJSON(post) as unknown as IPost);
 }
 
+function toIsoString(value: string | Date): string {
+  if (typeof value === "string") return value;
+  return value.toISOString();
+}
+
 function mapPost(post: IPost): BlogPost {
   const id = post._id.toString();
   const authorId = post.authorId.toString();
@@ -75,8 +80,8 @@ function mapPost(post: IPost): BlogPost {
     noFollow: post.noFollow,
     ogImage: post.ogImage,
     schemaType: post.schemaType,
-    publishedAt: post.publishedAt.toISOString(),
-    updatedAt: post.updatedAt.toISOString(),
+    publishedAt: toIsoString(post.publishedAt),
+    updatedAt: toIsoString(post.updatedAt),
     excerpt: post.excerpt,
     coverImage: post.coverImage,
     content: post.content,
@@ -84,6 +89,6 @@ function mapPost(post: IPost): BlogPost {
     readTime: post.readTime || 5,
     status: post.status,
     authorId,
-    createdAt: post.createdAt.toISOString(),
+    createdAt: toIsoString(post.createdAt),
   };
 }

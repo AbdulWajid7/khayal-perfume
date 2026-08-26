@@ -15,8 +15,8 @@ export default function ScentPyramid({ notes }: ScentPyramidProps) {
   if (!hasNotes) return null;
 
   return (
-    <div className="border border-border-subtle rounded-xl p-6 bg-charcoal">
-      <h3 className="text-parchment text-sm font-medium uppercase tracking-[0.15em] mb-6">
+    <div className="border border-border rounded-2xl p-6 bg-pure">
+      <h3 className="text-ink text-sm font-medium uppercase tracking-[0.15em] mb-6">
         Scent Pyramid
       </h3>
       <div className="space-y-5">
@@ -25,14 +25,14 @@ export default function ScentPyramid({ notes }: ScentPyramidProps) {
           if (!items?.length) return null;
           return (
             <div key={tier.key} className="flex flex-col sm:flex-row sm:items-baseline gap-2">
-              <span className="text-warm-taupe text-xs uppercase tracking-[0.15em] w-28 flex-shrink-0">
+              <span className="text-stone text-xs uppercase tracking-[0.15em] w-28 flex-shrink-0">
                 {tier.label}
               </span>
               <div className="flex flex-wrap gap-2">
                 {items.map((note) => (
                   <span
                     key={note}
-                    className="text-parchment text-sm bg-midnight border border-border-subtle rounded-md px-3 py-1"
+                    className="text-ink text-sm bg-cream border border-border rounded-md px-3 py-1"
                   >
                     {note}
                   </span>

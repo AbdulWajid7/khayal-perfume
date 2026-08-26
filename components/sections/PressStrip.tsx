@@ -9,16 +9,16 @@ const trustPoints = [
 
 export default function PressStrip() {
   return (
-    <section className="border-y border-border-subtle bg-charcoal">
+    <section className="border-y border-border bg-cream-dark">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12 py-10">
         <Reveal>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {trustPoints.map((point) => (
               <div key={point.label} className="text-center md:text-left">
-                <p className="text-parchment text-sm font-medium tracking-wide">
+                <p className="text-ink text-sm font-medium tracking-wide">
                   {point.label}
                 </p>
-                <p className="mt-1 text-warm-taupe text-xs">{point.detail}</p>
+                <p className="mt-1 text-stone text-xs">{point.detail}</p>
               </div>
             ))}
           </div>
