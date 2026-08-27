@@ -18,7 +18,7 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
     editorProps: {
       attributes: {
         class:
-          "prose prose-invert max-w-none min-h-[300px] p-4 rounded-lg bg-charcoal border border-border-subtle focus:outline-none focus:ring-1 focus:ring-oud-gold text-parchment",
+          "prose max-w-none min-h-[300px] p-4 rounded-lg bg-pure border border-border focus:outline-none focus:ring-1 focus:ring-gold text-ink",
       },
     },
     onUpdate: ({ editor }) => {
@@ -38,10 +38,10 @@ export default function TiptapEditor({ value, onChange }: TiptapEditorProps) {
     <button
       type="button"
       onClick={action}
-      className={`px-3 py-1 text-xs rounded border border-border-subtle transition ${
+      className={`px-3 py-1 text-xs rounded border border-border transition ${
         active
-          ? "bg-oud-gold text-midnight"
-          : "bg-charcoal text-parchment hover:bg-midnight"
+          ? "bg-gold text-pure"
+          : "bg-pure text-ink hover:bg-cream-dark hover:text-gold"
       }`}
     >
       {label}

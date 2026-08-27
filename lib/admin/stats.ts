@@ -3,7 +3,7 @@
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { requireAuth } from "@/lib/auth";
 import { Product } from "@/models/Product";
-import { Order } from "@/models/Order";
+import { Order, type IOrder } from "@/models/Order";
 import { Subscriber } from "@/models/Subscriber";
 import { Post } from "@/models/Post";
 import { User } from "@/models/User";
@@ -20,6 +20,8 @@ export interface DashboardStats {
   totalAdmins: number;
   ordersByDay: { date: string; count: number; revenue: number }[];
   revenueByMonth: { month: string; revenue: number }[];
+  ordersByStatus: { status: string; count: number }[];
+  recentOrders: IOrder[];
 }
 
 export async function getDashboardStats(): Promise<DashboardStats> {
@@ -39,6 +41,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     totalAdmins,
     ordersByDay,
     revenueByMonth,
+    ordersByStatus,
+    recentOrders,
   ] = await Promise.all([
     Product.countDocuments(),
     Product.countDocuments({ status: "active" }),
@@ -53,6 +57,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     User.countDocuments(),
     getOrdersByDay(),
     getRevenueByMonth(),
+    getOrdersByStatus(),
+    getRecentOrders(),
   ]);
 
   return {
@@ -67,6 +73,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     totalAdmins,
     ordersByDay,
     revenueByMonth,
+    ordersByStatus,
+    recentOrders,
   };
 }
 
@@ -126,4 +134,19 @@ async function getRevenueByMonth() {
     month,
     revenue,
   }));
+}
+
+async function getOrdersByStatus(): Promise<{ status: string; count: number }[]> {
+  const statuses = ["pending", "processing", "shipped", "delivered", "cancelled"];
+  const docs = await Order.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]);
+  const map = new Map(docs.map((d: any) => [d._id, d.count]));
+  return statuses.map((status) => ({
+    status,
+    count: map.get(status) || 0,
+  }));
+}
+
+async function getRecentOrders(): Promise<IOrder[]> {
+  const orders = await Order.find().sort({ createdAt: -1 }).limit(6).lean();
+  return toJSON(orders) as unknown as IOrder[];
 }
