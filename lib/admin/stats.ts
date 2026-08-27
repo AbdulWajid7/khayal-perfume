@@ -139,7 +139,8 @@ async function getRevenueByMonth() {
 async function getOrdersByStatus(): Promise<{ status: string; count: number }[]> {
   const statuses = ["pending", "processing", "shipped", "delivered", "cancelled"];
   const docs = await Order.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]);
-  const map = new Map(docs.map((d: any) => [d._id, d.count]));
+  const typedDocs = docs as { _id: string; count: number }[];
+  const map = new Map(typedDocs.map((d) => [d._id, d.count]));
   return statuses.map((status) => ({
     status,
     count: map.get(status) || 0,
