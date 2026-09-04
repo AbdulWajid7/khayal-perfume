@@ -1,5 +1,7 @@
 import ScentQuiz from "@/components/sections/ScentQuiz";
-import { getProducts } from "@/lib/shopify";
+import { getProducts } from "@/lib/products";
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: "Find Your Signature Scent",

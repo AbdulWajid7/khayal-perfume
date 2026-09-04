@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
-import { getProducts } from "@/lib/shopify";
+import { getProducts } from "@/lib/products";
 import { getBlogPosts } from "@/lib/blog";
+
+export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.khayalparfum.com";
@@ -21,14 +23,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
     url: `${baseUrl}/shop/${product.handle}`,
-    lastModified: new Date(),
+    lastModified: product.updatedAt ? new Date(product.updatedAt) : new Date(),
     changeFrequency: "weekly",
     priority: 0.8,
   }));
 
   const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${baseUrl}/journal/${post.slug}`,
-    lastModified: new Date(),
+    lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(),
     changeFrequency: "monthly",
     priority: 0.6,
   }));
