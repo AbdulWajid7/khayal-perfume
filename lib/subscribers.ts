@@ -19,12 +19,17 @@ export async function subscribeToNewsletter(
     return { ok: false, message: "Please enter a valid email address." };
   }
 
-  await dbConnect();
-  await Subscriber.findOneAndUpdate(
-    { email: sanitized },
-    { email: sanitized, source, subscribed: true },
-    { upsert: true, new: true }
-  );
+  try {
+    await dbConnect();
+    await Subscriber.findOneAndUpdate(
+      { email: sanitized },
+      { email: sanitized, source, subscribed: true },
+      { upsert: true, new: true }
+    );
+  } catch (error) {
+    console.error("subscribeToNewsletter error:", error);
+    return { ok: false, message: "Something went wrong. Please try again later." };
+  }
 
   return { ok: true, message: "Thank you for subscribing." };
 }

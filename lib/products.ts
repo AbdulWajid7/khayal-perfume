@@ -83,39 +83,59 @@ function addDerivedFields(product: ProductType): ProductDetails {
 }
 
 export async function getBestsellerProducts(): Promise<ProductType[]> {
-  await dbConnect();
-  const products = await Product.find({
-    status: "active",
-    tags: { $in: ["Bestseller"] },
-  })
-    .sort({ createdAt: -1 })
-    .lean();
-  const data = toJSON(products) || [];
-  return data.map(mapIProductToProduct);
+  try {
+    await dbConnect();
+    const products = await Product.find({
+      status: "active",
+      tags: { $in: ["Bestseller"] },
+    })
+      .sort({ createdAt: -1 })
+      .lean();
+    const data = toJSON(products) || [];
+    return data.map(mapIProductToProduct);
+  } catch (error) {
+    console.error("getBestsellerProducts error:", error);
+    return [];
+  }
 }
 
 export async function getProducts(): Promise<ProductType[]> {
-  await dbConnect();
-  const products = await Product.find({ status: "active" }).sort({ createdAt: -1 }).lean();
-  const data = toJSON(products) || [];
-  return data.map(mapIProductToProduct);
+  try {
+    await dbConnect();
+    const products = await Product.find({ status: "active" }).sort({ createdAt: -1 }).lean();
+    const data = toJSON(products) || [];
+    return data.map(mapIProductToProduct);
+  } catch (error) {
+    console.error("getProducts error:", error);
+    return [];
+  }
 }
 
 export async function getProduct(handle: string): Promise<ProductDetails | null> {
-  await dbConnect();
-  const product = await Product.findOne({ handle, status: "active" }).lean();
-  if (!product) return null;
-  const data = toJSON(product);
-  if (!data) return null;
-  return addDerivedFields(mapIProductToProduct(data));
+  try {
+    await dbConnect();
+    const product = await Product.findOne({ handle, status: "active" }).lean();
+    if (!product) return null;
+    const data = toJSON(product);
+    if (!data) return null;
+    return addDerivedFields(mapIProductToProduct(data));
+  } catch (error) {
+    console.error("getProduct error:", error);
+    return null;
+  }
 }
 
 export async function getProductRecommendations(productId: string): Promise<ProductType[]> {
-  await dbConnect();
-  const products = await Product.find({ status: "active", _id: { $ne: productId } })
-    .sort({ createdAt: -1 })
-    .limit(4)
-    .lean();
-  const data = toJSON(products) || [];
-  return data.map(mapIProductToProduct);
+  try {
+    await dbConnect();
+    const products = await Product.find({ status: "active", _id: { $ne: productId } })
+      .sort({ createdAt: -1 })
+      .limit(4)
+      .lean();
+    const data = toJSON(products) || [];
+    return data.map(mapIProductToProduct);
+  } catch (error) {
+    console.error("getProductRecommendations error:", error);
+    return [];
+  }
 }
