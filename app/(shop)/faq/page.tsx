@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import FAQAccordion from "@/components/ui/FAQAccordion";
+import FAQSchema from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "FAQ | Khayal Parfum",
@@ -53,6 +54,7 @@ const items = [
 export default function FAQPage() {
   return (
     <section className="py-20 md:py-28 bg-cream">
+      <FAQSchema items={items} />
       <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12">
         <span className="eyebrow">Support</span>
         <h1 className="mt-3 font-serif-display text-ink text-3xl md:text-5xl font-medium tracking-tight">

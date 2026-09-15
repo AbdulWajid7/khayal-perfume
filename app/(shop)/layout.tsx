@@ -5,6 +5,7 @@ import AnnouncementBar from "@/components/ui/AnnouncementBar";
 import SmoothScrollProvider from "@/components/ui/SmoothScrollProvider";
 import PageTransition from "@/components/ui/PageTransition";
 import NewsletterPopup from "@/components/ui/NewsletterPopup";
+import OrganizationSchema from "@/components/seo/OrganizationSchema";
 
 export default function ShopLayout({
   children,
@@ -13,6 +14,7 @@ export default function ShopLayout({
 }>) {
   return (
     <SmoothScrollProvider>
+      <OrganizationSchema />
       <AnnouncementBar />
       <Navigation />
       <main>
