@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
-import { trackMarketing } from "@/lib/analytics";
 
 const categories = [
   {
@@ -48,15 +47,15 @@ const itemVariants = {
 
 export default function CategoryGrid() {
   return (
-    <section className="bg-noir py-24 text-ivory md:py-32">
-      <div className="mx-auto max-w-7xl px-5 md:px-10 lg:px-14">
-        <Reveal className="mb-12 max-w-2xl md:mb-16">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-champagne">Three expressions</span>
-          <h2 className="mt-4 font-serif-display text-4xl font-medium tracking-tight md:text-6xl">
+    <section className="py-20 md:py-28 bg-cream">
+      <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
+        <Reveal className="text-center max-w-2xl mx-auto mb-12">
+          <span className="eyebrow">Shop by Collection</span>
+          <h2 className="mt-3 font-serif-display text-ink text-[32px] md:text-[40px] font-medium tracking-tight">
             Find Your Signature
           </h2>
-          <p className="mt-5 max-w-lg text-sm leading-7 text-ivory/55 md:text-base">
-            Explore KHAYAL by the way you want your fragrance to feel.
+          <p className="mt-4 text-stone">
+            Explore our curated collections for every mood, moment, and memory.
           </p>
         </Reveal>
 
@@ -65,31 +64,30 @@ export default function CategoryGrid() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 gap-3 md:grid-cols-3"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           {categories.map((category) => (
             <motion.div key={category.title} variants={itemVariants}>
               <Link
                 href={category.href}
-                onClick={() => trackMarketing("collection_select", { collection_name: category.title.toLowerCase() })}
-                className="group relative block aspect-[4/5] overflow-hidden bg-purple-panel focus-visible:outline-champagne md:aspect-[3/5]"
+                className="group relative block aspect-[2/3] overflow-hidden rounded-2xl bg-cream-dark"
               >
                 <Image
                   src={category.image}
                   alt={category.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.045] group-focus-visible:scale-[1.045]"
+                  className="object-cover transition-all duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-2"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/15 to-transparent transition-opacity duration-500 group-hover:opacity-90" />
-                <div className="absolute inset-0 flex flex-col justify-end p-7 md:p-8">
-                  <h3 className="font-serif-display text-ivory text-3xl md:text-4xl font-medium transition-transform duration-500 md:group-hover:-translate-y-1">
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/20 to-transparent transition-opacity duration-500 group-hover:from-ink/80" />
+                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+                  <h3 className="font-serif-display text-pure text-3xl md:text-4xl font-medium transition-transform duration-500 group-hover:-translate-y-1">
                     {category.title}
                   </h3>
-                  <p className="mt-2 max-w-xs text-sm text-ivory/70 transition-all duration-500 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-visible:translate-y-0 md:group-focus-visible:opacity-100">
+                  <p className="mt-2 text-pure/80 text-sm max-w-xs transition-all duration-500 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
                     {category.description}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-champagne">
+                  <span className="mt-4 inline-flex items-center text-gold text-sm font-medium gap-2">
                     Explore
                     <svg
                       width="16"

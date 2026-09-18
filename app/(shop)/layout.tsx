@@ -2,7 +2,7 @@ import Navigation from "@/components/ui/Navigation";
 import Footer from "@/components/ui/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
 import AnnouncementBar from "@/components/ui/AnnouncementBar";
-import MotionProvider from "@/components/motion/MotionProvider";
+import SmoothScrollProvider from "@/components/ui/SmoothScrollProvider";
 import PageTransition from "@/components/ui/PageTransition";
 import NewsletterPopup from "@/components/ui/NewsletterPopup";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
@@ -14,17 +14,17 @@ export default function ShopLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <MotionProvider>
+    <SmoothScrollProvider>
       <OrganizationSchema />
       <AnnouncementBar />
       <Navigation />
-      <main className="public-dark-shell">
+      <main>
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
       <CartDrawer />
       <NewsletterPopup />
       <WhatsAppButton />
-    </MotionProvider>
+    </SmoothScrollProvider>
   );
 }

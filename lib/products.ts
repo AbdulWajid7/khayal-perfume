@@ -22,28 +22,14 @@ function mapVariants(variants: { id: string; title: string; price: number; avail
   }));
 }
 
-function deriveMetafields(doc: IProduct): ProductMetafield[] {
+function deriveMetafields(category: string, tags: string[]): ProductMetafield[] {
   const metafields: ProductMetafield[] = [];
-  const values: Record<string, string | undefined> = {
-    scent_family: doc.category,
-    scent_notes_top: doc.scentNotes?.top?.join(", "),
-    scent_notes_heart: doc.scentNotes?.heart?.join(", "),
-    scent_notes_base: doc.scentNotes?.base?.join(", "),
-    longevity: doc.longevity,
-    occasion: doc.occasion,
-    day_night: doc.dayNight,
-    season: doc.season,
-    intensity: doc.intensity,
-    accent_color: doc.accentColor,
-    background_color: doc.backgroundColor,
-    story_image: doc.storyImage,
-    transparent_bottle_image: doc.transparentBottleImage,
-    three_d_model_url: doc.threeDModelUrl,
-  };
-  Object.entries(values).forEach(([key, value]) => {
-    if (value) metafields.push({ namespace: "custom", key, value });
-  });
-  if (doc.tags.length) metafields.push({ namespace: "custom", key: "tags", value: doc.tags.join(", ") });
+  if (category) {
+    metafields.push({ namespace: "custom", key: "scent_family", value: category });
+  }
+  if (tags.length) {
+    metafields.push({ namespace: "custom", key: "tags", value: tags.join(", ") });
+  }
   return metafields;
 }
 
@@ -70,7 +56,7 @@ function mapIProductToProduct(doc: IProduct): ProductType {
     featuredImage,
     images,
     variants,
-    metafields: deriveMetafields(doc),
+    metafields: deriveMetafields(doc.category, doc.tags || []),
     tags: doc.tags || [],
     productType: doc.category,
     vendor: "Khayal",
@@ -93,14 +79,6 @@ function addDerivedFields(product: ProductType): ProductDetails {
     longevity: getMeta("custom", "longevity") || "",
     occasion: getMeta("custom", "occasion") || "",
     scentFamily: getMeta("custom", "scent_family") || product.productType || "",
-    dayNight: getMeta("custom", "day_night"),
-    season: getMeta("custom", "season"),
-    intensity: getMeta("custom", "intensity"),
-    accentColor: getMeta("custom", "accent_color"),
-    backgroundColor: getMeta("custom", "background_color"),
-    storyImage: getMeta("custom", "story_image"),
-    transparentBottleImage: getMeta("custom", "transparent_bottle_image"),
-    threeDModelUrl: getMeta("custom", "three_d_model_url"),
   };
 }
 

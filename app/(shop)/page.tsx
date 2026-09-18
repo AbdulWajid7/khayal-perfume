@@ -1,35 +1,28 @@
 export const dynamic = "force-dynamic";
 
 import HeroSection from "@/components/sections/HeroSection";
-import CampaignBanner from "@/components/sections/CampaignBanner";
+import PressStrip from "@/components/sections/PressStrip";
 import CategoryGrid from "@/components/sections/CategoryGrid";
-import FeaturedProduct from "@/components/sections/FeaturedProduct";
 import BestSellers from "@/components/sections/BestSellers";
-import MemoryStory from "@/components/sections/MemoryStory";
-import TrustSection from "@/components/sections/TrustSection";
+import BrandStoryTeaser from "@/components/sections/BrandStoryTeaser";
 import JournalPreview from "@/components/sections/JournalPreview";
 import ScentFinderCTA from "@/components/sections/ScentFinderCTA";
-import { homepageCampaign } from "@/lib/campaign";
-import { getProducts, getBestsellerProducts } from "@/lib/products";
+import { getBestsellerProducts } from "@/lib/products";
 import { getLatestPosts } from "@/lib/blog";
 
 export default async function HomePage() {
-  const [products, posts, bestsellers] = await Promise.all([
-    getProducts(),
+  const [posts, bestsellers] = await Promise.all([
     getLatestPosts(3),
     getBestsellerProducts(),
   ]);
-  const featured = bestsellers[0] || products[0];
 
   return (
     <>
       <HeroSection />
-      <CampaignBanner campaign={homepageCampaign} />
+      <PressStrip />
       <CategoryGrid />
-      {featured && <FeaturedProduct product={featured} />}
-      {bestsellers.length > 1 && <BestSellers products={bestsellers} />}
-      <MemoryStory />
-      <TrustSection />
+      {bestsellers.length > 0 && <BestSellers products={bestsellers} />}
+      <BrandStoryTeaser />
       {posts.length > 0 && <JournalPreview posts={posts} />}
       <ScentFinderCTA />
     </>

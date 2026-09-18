@@ -17,12 +17,6 @@
   --color-sale: #B91C1C;
   --color-border: #E8E4DC;
   --color-border-light: #F0EDE6;
-  --color-noir: #0C0910;
-  --color-purple-deep: #160D20;
-  --color-purple-panel: #21152C;
-  --color-champagne: #D8BD83;
-  --color-ivory: #F4EFE6;
-  --color-ash: #A59DA9;
 
   /* Legacy aliases kept for dark admin pages */
   --color-midnight: #3e1c26;
@@ -57,12 +51,6 @@
   --sale: #B91C1C;
   --border: #E8E4DC;
   --border-light: #F0EDE6;
-  --noir: #0C0910;
-  --purple-deep: #160D20;
-  --purple-panel: #21152C;
-  --champagne: #D8BD83;
-  --ivory: #F4EFE6;
-  --ash: #A59DA9;
 }
 
 html {
@@ -248,59 +236,6 @@ body {
 
 .btn-sweep:hover::before {
   transform: translateY(0);
-}
-
-.btn-premium-solid,
-.btn-premium-ghost {
-  display: inline-flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(216, 189, 131, 0.7);
-  padding: 0.75rem 1.35rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  transition: background-color 0.28s ease, color 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
-}
-
-.btn-premium-solid {
-  background: var(--champagne);
-  color: var(--noir);
-}
-
-.btn-premium-ghost {
-  background: rgba(12, 9, 16, 0.28);
-  color: var(--ivory);
-  backdrop-filter: blur(6px);
-}
-
-.btn-premium-solid:hover,
-.btn-premium-ghost:hover {
-  transform: translateY(-2px);
-}
-
-.btn-premium-solid:hover {
-  background: var(--ivory);
-  border-color: var(--ivory);
-}
-
-.btn-premium-ghost:hover {
-  background: rgba(244, 239, 230, 0.1);
-  border-color: var(--champagne);
-}
-
-.public-dark-shell {
-  background: var(--noir);
-  color: var(--ivory);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .btn-premium-solid:hover,
-  .btn-premium-ghost:hover {
-    transform: none;
-  }
 }
 
 .input-admin {

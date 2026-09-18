@@ -45,14 +45,11 @@ export default function RootLayout({
             />
           </noscript>
         )}
-        <ConsentProvider>
-          <Suspense fallback={null}>
-            <AnalyticsProvider />
-          </Suspense>
-          <LoadIntro />
-          <CartProvider>{children}</CartProvider>
-          <ConsentBanner />
-        </ConsentProvider>
+        <Suspense fallback={null}>
+          <AnalyticsProvider />
+        </Suspense>
+        <LoadIntro />
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );

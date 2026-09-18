@@ -27,17 +27,6 @@ export interface IProduct {
   category: string;
   tags: string[];
   variants: IVariant[];
-  scentNotes?: { top?: string[]; heart?: string[]; base?: string[] };
-  longevity?: string;
-  occasion?: string;
-  dayNight?: string;
-  season?: string;
-  intensity?: string;
-  accentColor?: string;
-  backgroundColor?: string;
-  storyImage?: string;
-  transparentBottleImage?: string;
-  threeDModelUrl?: string;
   createdAt: Date | string;
   updatedAt: Date | string;
 }
@@ -72,21 +61,6 @@ const ProductSchema = new Schema(
     category: { type: String, default: "Unisex" },
     tags: { type: [String], default: [] },
     variants: { type: [VariantSchema], default: [] },
-    scentNotes: {
-      top: { type: [String], default: [] },
-      heart: { type: [String], default: [] },
-      base: { type: [String], default: [] },
-    },
-    longevity: { type: String },
-    occasion: { type: String },
-    dayNight: { type: String },
-    season: { type: String },
-    intensity: { type: String },
-    accentColor: { type: String },
-    backgroundColor: { type: String },
-    storyImage: { type: String },
-    transparentBottleImage: { type: String },
-    threeDModelUrl: { type: String },
   },
   { timestamps: true }
 );

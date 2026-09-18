@@ -3,70 +3,132 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { trackMarketing } from "@/lib/analytics";
-import { motionTokens } from "@/lib/motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "9%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 48]);
+  const prefersReducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
-    <section ref={sectionRef} className="relative isolate min-h-[760px] overflow-hidden bg-noir text-ivory md:min-h-[820px]" aria-labelledby="home-hero-title">
+    <section
+      ref={sectionRef}
+      className="relative h-[calc(100vh-32px)] min-h-[640px] flex items-center overflow-hidden"
+    >
+      {/* Full-bleed editorial photograph */}
       <motion.div
-        style={reduceMotion ? undefined : { y: imageY }}
-        initial={reduceMotion ? false : { filter: "brightness(.68) blur(3px)", scale: 1.025 }}
-        animate={reduceMotion ? undefined : { filter: "brightness(1) blur(0px)", scale: 1 }}
-        transition={{ duration: motionTokens.duration.cinematic, ease: motionTokens.ease.standard }}
-        className="absolute inset-0 -top-[4%] h-[108%]"
+        style={prefersReducedMotion ? undefined : { y: imageY, scale: imageScale }}
+        className="absolute inset-0"
       >
         <Image
           src="/images/homepage.png"
-          alt="KHAYAL perfume collection illuminated in warm golden light"
+          alt="Khayal perfume collection in golden light"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[62%_center] md:object-center"
+          className="object-cover object-center"
         />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-r from-noir via-noir/72 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-noir via-transparent to-noir/35" />
-      <div className="grain-overlay opacity-[0.035]" aria-hidden="true" />
 
-      <motion.div style={reduceMotion ? undefined : { y: contentY }} className="relative mx-auto flex min-h-[760px] max-w-7xl items-end px-5 pb-20 pt-36 md:min-h-[820px] md:items-center md:px-10 md:pb-0 lg:px-14">
+      {/* Soft light overlay for legibility */}
+      <div
+        className="absolute inset-0 z-[1] bg-gradient-to-r from-cream/15 to-cream/0"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 z-[1] bg-gradient-to-t from-cream via-transparent to-cream/40"
+        aria-hidden="true"
+      />
+
+      {/* Ambient drifting mist */}
+      {!prefersReducedMotion && <div className="hero-mist z-[2]" aria-hidden="true" />}
+
+      <motion.div
+        style={prefersReducedMotion ? undefined : { y: contentY, opacity: contentOpacity }}
+        className="relative z-10 w-full mx-auto max-w-7xl px-4 md:px-8 lg:px-12 pt-20"
+      >
         <div className="max-w-2xl">
-          <motion.p initial={reduceMotion ? false : { y: 12 }} animate={{ y: 0 }} transition={{ duration: 0.7 }} className="text-[11px] font-medium uppercase tracking-[0.34em] text-champagne">
-            Khayal Parfum · Karachi
+          <motion.span
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2 border border-gold/50 rounded-full px-4 py-1.5 text-[11px] tracking-[0.2em] uppercase text-gold mb-6"
+          >
+            Crafted in Karachi
+          </motion.span>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="font-serif-display text-ink text-[44px] md:text-[64px] lg:text-[80px] font-medium tracking-tight leading-[1.02]"
+          >
+            Some fragrances
+            <br />
+            <span className="text-gold-shimmer">become memories.</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-5 text-stone text-lg md:text-xl font-light max-w-md"
+          >
+            Khayal means a thought, a memory, a feeling that stays with you. Premium
+            perfumes and attars — made in Karachi, delivered across Pakistan.
           </motion.p>
-          <h1 id="home-hero-title" className="mt-5 font-serif-display text-[3.3rem] font-medium leading-[0.94] tracking-[-0.035em] text-ivory sm:text-6xl md:text-[5.7rem]">
-            <motion.span initial={reduceMotion ? false : { y: 22 }} animate={{ y: 0 }} transition={{ duration: 0.9, delay: 0.08 }} className="block">
-              Imagination,
-            </motion.span>
-            <motion.span initial={reduceMotion ? false : { y: 22 }} animate={{ y: 0 }} transition={{ duration: 0.9, delay: 0.16 }} className="block text-champagne">
-              Bottled.
-            </motion.span>
-          </h1>
-          <motion.p initial={reduceMotion ? false : { y: 16 }} animate={{ y: 0 }} transition={{ duration: 0.8, delay: 0.24 }} className="mt-6 max-w-md text-base leading-7 text-ivory/72 md:text-lg">
-            Fragrances created to become part of your memory.
-          </motion.p>
-          <motion.div initial={reduceMotion ? false : { y: 16 }} animate={{ y: 0 }} transition={{ duration: 0.8, delay: 0.32 }} className="mt-8 flex flex-wrap gap-3">
-            <Link href="/shop" onClick={() => trackMarketing("hero_primary_cta_click", { cta: "shop_fragrances" })} className="btn-premium-solid">
-              Shop Fragrances
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-9 flex flex-col sm:flex-row items-start gap-4"
+          >
+            <Link
+              href="/shop"
+              className="btn-sweep inline-flex items-center justify-center bg-gold text-pure rounded-lg px-8 py-4 text-sm font-medium"
+            >
+              Shop Now
             </Link>
-            <Link href="/story" onClick={() => trackMarketing("hero_secondary_cta_click", { cta: "discover_khayal" })} className="btn-premium-ghost">
-              Discover KHAYAL
+            <Link
+              href="/story"
+              className="inline-flex items-center justify-center border border-ink/30 text-ink rounded-lg px-8 py-4 text-sm font-medium hover:border-gold hover:text-gold transition-colors"
+            >
+              Discover the Craft
             </Link>
           </motion.div>
         </div>
       </motion.div>
 
-      <div className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-center text-[9px] uppercase tracking-[0.3em] text-ivory/50" aria-hidden="true">
-        <span>Scroll to discover</span>
-        <span className="mx-auto mt-3 block h-10 w-px bg-gradient-to-b from-champagne to-transparent" />
-      </div>
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-stone"
+        aria-hidden="true"
+      >
+        <span className="text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+        <motion.svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <path d="M12 5v14M19 12l-7 7-7-7" />
+        </motion.svg>
+      </motion.div>
     </section>
   );
 }

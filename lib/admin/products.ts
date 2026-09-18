@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Product, type IProduct } from "@/models/Product";
 import { requireAuth } from "@/lib/auth";
-import DOMPurify from "isomorphic-dompurify";
 
 export async function getProducts(): Promise<IProduct[]> {
   const session = await requireAuth(["admin", "editor"]);
@@ -39,7 +38,7 @@ export async function createProduct(formData: FormData) {
     title,
     handle,
     description: getString(formData, "description"),
-    descriptionHtml: sanitizeProductHtml(getString(formData, "descriptionHtml")),
+    descriptionHtml: getString(formData, "descriptionHtml"),
     price: Number(getString(formData, "price") || "0"),
     compareAtPrice: getNumber(formData, "compareAtPrice"),
     cost: getNumber(formData, "cost"),
@@ -53,21 +52,6 @@ export async function createProduct(formData: FormData) {
       .filter(Boolean),
     category: getString(formData, "category") || "Unisex",
     tags: getTags(formData),
-    scentNotes: {
-      top: getList(formData, "topNotes"),
-      heart: getList(formData, "heartNotes"),
-      base: getList(formData, "baseNotes"),
-    },
-    longevity: getString(formData, "longevity") || undefined,
-    occasion: getString(formData, "occasion") || undefined,
-    dayNight: getString(formData, "dayNight") || undefined,
-    season: getString(formData, "season") || undefined,
-    intensity: getString(formData, "intensity") || undefined,
-    accentColor: getString(formData, "accentColor") || undefined,
-    backgroundColor: getString(formData, "backgroundColor") || undefined,
-    storyImage: getString(formData, "storyImage") || undefined,
-    transparentBottleImage: getString(formData, "transparentBottleImage") || undefined,
-    threeDModelUrl: getString(formData, "threeDModelUrl") || undefined,
   });
 
   revalidatePath("/admin/inventory");
@@ -89,7 +73,7 @@ export async function updateProduct(id: string, formData: FormData) {
   product.title = getString(formData, "title") || product.title;
   product.handle = handle;
   product.description = getString(formData, "description") || product.description;
-  product.descriptionHtml = sanitizeProductHtml(getString(formData, "descriptionHtml")) || product.descriptionHtml;
+  product.descriptionHtml = getString(formData, "descriptionHtml") || product.descriptionHtml;
   product.price = Number(getString(formData, "price") || product.price);
   product.compareAtPrice = getNumber(formData, "compareAtPrice", product.compareAtPrice);
   product.cost = getNumber(formData, "cost", product.cost);
@@ -103,21 +87,6 @@ export async function updateProduct(id: string, formData: FormData) {
     .filter(Boolean);
   product.category = getString(formData, "category") || product.category;
   product.tags = getTags(formData, product.tags);
-  product.scentNotes = {
-    top: getList(formData, "topNotes", product.scentNotes?.top),
-    heart: getList(formData, "heartNotes", product.scentNotes?.heart),
-    base: getList(formData, "baseNotes", product.scentNotes?.base),
-  };
-  product.longevity = getString(formData, "longevity") || product.longevity;
-  product.occasion = getString(formData, "occasion") || product.occasion;
-  product.dayNight = getString(formData, "dayNight") || product.dayNight;
-  product.season = getString(formData, "season") || product.season;
-  product.intensity = getString(formData, "intensity") || product.intensity;
-  product.accentColor = getString(formData, "accentColor") || product.accentColor;
-  product.backgroundColor = getString(formData, "backgroundColor") || product.backgroundColor;
-  product.storyImage = getString(formData, "storyImage") || product.storyImage;
-  product.transparentBottleImage = getString(formData, "transparentBottleImage") || product.transparentBottleImage;
-  product.threeDModelUrl = getString(formData, "threeDModelUrl") || product.threeDModelUrl;
 
   await product.save();
 
@@ -146,17 +115,6 @@ function getNumber(formData: FormData, name: string, fallback?: number): number 
 }
 
 function getTags(formData: FormData, fallback: string[] = []) {
-  return getList(formData, "tags", fallback);
-}
-
-function getList(formData: FormData, name: string, fallback: string[] = []) {
-  const value = getString(formData, name);
-  return value ? value.split(",").map((item) => item.trim()).filter(Boolean) : fallback;
-}
-
-function sanitizeProductHtml(value: string) {
-  return DOMPurify.sanitize(value, {
-    ALLOWED_TAGS: ["p", "br", "strong", "em", "h2", "h3", "ul", "ol", "li", "blockquote"],
-    ALLOWED_ATTR: [],
-  });
+  const value = getString(formData, "tags");
+  return value ? value.split(",").map((t) => t.trim()).filter(Boolean) : fallback;
 }

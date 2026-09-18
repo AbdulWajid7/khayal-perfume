@@ -46,17 +46,7 @@ export type MarketingEvent =
   | "coupon_apply"
   | "review_submit"
   | "fragrance_quiz_start"
-  | "fragrance_quiz_answer"
   | "fragrance_quiz_complete"
-  | "fragrance_quiz_product_click"
-  | "promotion_view"
-  | "promotion_click"
-  | "hero_primary_cta_click"
-  | "hero_secondary_cta_click"
-  | "product_story_start"
-  | "product_story_complete"
-  | "scent_note_section_view"
-  | "collection_select"
   | "out_of_stock_interest";
 
 const enabled = process.env.NODE_ENV === "production" || process.env.NEXT_PUBLIC_ANALYTICS_TESTING === "true";
