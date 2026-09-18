@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { subscribeToNewsletter } from "@/lib/subscribers";
+import { trackMarketing } from "@/lib/analytics";
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -16,6 +17,7 @@ export default function NewsletterForm() {
     try {
       const res = await subscribeToNewsletter(email, "footer");
       if (res.ok) {
+        trackMarketing("newsletter_signup", { lead_type: "newsletter", placement: "footer" });
         setStatus("success");
         setEmail("");
       } else {
@@ -44,6 +46,7 @@ export default function NewsletterForm() {
       <input
         id="newsletter-email"
         type="email"
+        data-clarity-mask="true"
         required
         disabled={status === "submitting"}
         value={email}

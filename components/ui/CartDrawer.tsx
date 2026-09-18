@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart, type CartItem } from "@/hooks/useCart";
+import { cartToAnalyticsItems, trackCommerce, trackMarketing } from "@/lib/analytics";
+import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 
 function formatPrice(amount: number, currencyCode: string) {
   return new Intl.NumberFormat("en-PK", {
@@ -69,7 +71,13 @@ function CartLineItem({ item }: { item: CartItem }) {
         type="button"
         aria-label={`Remove ${item.title} from cart`}
         className="self-start text-stone hover:text-gold transition-colors text-xs"
-        onClick={() => removeItem(item.id)}
+        onClick={() => {
+          trackCommerce("remove_from_cart", {
+            value: item.price * item.quantity,
+            items: cartToAnalyticsItems([item]),
+          });
+          removeItem(item.id);
+        }}
       >
         Remove
       </button>
@@ -80,6 +88,19 @@ function CartLineItem({ item }: { item: CartItem }) {
 export default function CartDrawer() {
   const { items, isOpen, closeCart, subtotal, currencyCode, checkoutUrl } = useCart();
   const drawerRef = useRef<HTMLDivElement>(null);
+  const trackedOpen = useRef(false);
+  const remainingForFreeShipping = Math.max(0, siteConfig.freeShippingThreshold - subtotal);
+
+  useEffect(() => {
+    if (isOpen && items.length > 0 && !trackedOpen.current) {
+      trackCommerce("view_cart", {
+        value: subtotal,
+        items: cartToAnalyticsItems(items),
+      });
+      trackedOpen.current = true;
+    }
+    if (!isOpen) trackedOpen.current = false;
+  }, [isOpen, items, subtotal]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -173,9 +194,32 @@ export default function CartDrawer() {
                       {formatPrice(subtotal, currencyCode)}
                     </span>
                   </div>
+                  <div className="mb-4">
+                    <div className="h-1.5 overflow-hidden rounded-full bg-cream-dark">
+                      <div
+                        className="h-full rounded-full bg-gold transition-[width] duration-500"
+                        style={{ width: `${Math.min(100, (subtotal / siteConfig.freeShippingThreshold) * 100)}%` }}
+                      />
+                    </div>
+                    <p className="mt-2 text-center text-xs text-stone">
+                      {remainingForFreeShipping === 0
+                        ? "You qualify for free delivery across Pakistan."
+                        : `Add ${formatPrice(remainingForFreeShipping, "PKR")} more for free delivery.`}
+                    </p>
+                  </div>
                   {checkoutUrl ? (
                     <a
                       href={checkoutUrl}
+                      onClick={() => {
+                        const analyticsItems = cartToAnalyticsItems(items);
+                        trackCommerce("begin_checkout", {
+                          value: subtotal,
+                          items: analyticsItems,
+                          content_ids: analyticsItems.map((item) => item.item_id),
+                          content_type: "product",
+                          contents: analyticsItems.map((item) => ({ id: item.item_id, quantity: item.quantity, item_price: item.price })),
+                        });
+                      }}
                       className="block w-full text-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors"
                     >
                       Checkout
@@ -186,11 +230,20 @@ export default function CartDrawer() {
                       disabled
                       className="w-full bg-gold/60 text-pure/80 rounded-lg px-6 py-3 text-sm font-medium cursor-not-allowed"
                     >
-                      Checkout (configure Shopify checkout)
+                      Online checkout coming soon
                     </button>
                   )}
+                  <a
+                    href={getWhatsAppUrl(`Assalamualaikum, I need help with my KHAYAL cart. ${siteConfig.url}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackMarketing("whatsapp_click", { placement: "cart" })}
+                    className="mt-3 block text-center text-xs text-gold hover:underline"
+                  >
+                    Need help? Chat with us on WhatsApp
+                  </a>
                   <p className="text-stone text-xs text-center mt-3">
-                    Shipping & taxes calculated at checkout.
+                    Free delivery across Pakistan on orders of PKR {siteConfig.freeShippingThreshold.toLocaleString("en-PK")} or more.
                   </p>
                 </div>
               </>

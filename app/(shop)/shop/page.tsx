@@ -1,5 +1,6 @@
 import { getProducts } from "@/lib/products";
 import ProductCard from "@/components/ui/ProductCard";
+import ProductListTracker from "@/components/analytics/ProductListTracker";
 
 export const metadata = {
   title: "The Collection",
@@ -14,6 +15,7 @@ export default async function ShopPage() {
 
   return (
     <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream">
+      <ProductListTracker products={products} listName="The Collection" />
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <h1 className="font-serif-display text-ink text-[40px] font-medium tracking-tight">
           The Collection

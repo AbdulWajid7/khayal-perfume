@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { siteConfig } from "@/lib/site-config";
 import { getProduct, getProductRecommendations } from "@/lib/products";
 import { productMetadata } from "@/lib/seo";
 import Breadcrumb from "@/components/ui/Breadcrumb";
@@ -57,7 +58,7 @@ function buildFaqItems(product: { title: string; longevity: string }): FAQItem[]
     {
       question: `What is included when I order ${product.title}?`,
       answer:
-        "Your order includes the bottle you select, a signature Khayal presentation box, and complimentary shipping on orders above Rs. 5,000.",
+        `Your order includes the bottle you select, a separate tester, a signature KHAYAL presentation box, and free delivery on orders of PKR ${siteConfig.freeShippingThreshold.toLocaleString("en-PK")} or more.`,
     },
   ];
 }
@@ -119,7 +120,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone">
-              <span>Free Shipping</span>
+              <span>Free delivery from PKR {siteConfig.freeShippingThreshold.toLocaleString("en-PK")}</span>
               <span aria-hidden="true">·</span>
               <span>Secure Checkout</span>
               <span aria-hidden="true">·</span>

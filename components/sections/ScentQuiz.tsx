@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { trackMarketing } from "@/lib/analytics";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/types/product";
 
@@ -123,6 +124,7 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const [answers, setAnswers] = useState<Record<string, QuizOption>>({});
+  const started = useRef(false);
 
   const isComplete = step >= QUESTIONS.length;
   const progress = Math.min(step, QUESTIONS.length) / QUESTIONS.length;
@@ -134,7 +136,21 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
   }, [isComplete, answers, products]);
 
   function selectOption(question: QuizQuestion, option: QuizOption) {
-    setAnswers((prev) => ({ ...prev, [question.id]: option }));
+    if (!started.current) {
+      trackMarketing("fragrance_quiz_start", { quiz_name: "signature_scent" });
+      started.current = true;
+    }
+    const nextAnswers = { ...answers, [question.id]: option };
+    if (step === QUESTIONS.length - 1) {
+      const selectedTags = Object.values(nextAnswers).flatMap((answer) => answer.tags);
+      const match = products.length > 0 ? matchProduct(products, selectedTags) : null;
+      trackMarketing("fragrance_quiz_complete", {
+        quiz_name: "signature_scent",
+        result_item_id: match?.id,
+        result_item_name: match?.title,
+      });
+    }
+    setAnswers(nextAnswers);
     setDirection(1);
     setStep((prev) => prev + 1);
   }

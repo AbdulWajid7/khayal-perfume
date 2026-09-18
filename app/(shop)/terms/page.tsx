@@ -39,17 +39,14 @@ export default function TermsPage() {
           <div>
             <h2 className="text-ink text-lg font-medium mb-3">3. Shipping & Delivery</h2>
             <p>
-              Delivery times vary by location. We aim to dispatch orders within 1–2 business days.
-              Shipping costs, if any, are shown at checkout before payment.
+              Karachi orders are expected within 24 hours after confirmation; other cities in Pakistan are expected within 3–4 working days. Delivery times may be affected by public holidays, weather, courier delays or remote-area service availability. Delivery is free on orders of PKR 5,000 or more.
             </p>
           </div>
 
           <div>
             <h2 className="text-ink text-lg font-medium mb-3">4. Returns & Refunds</h2>
             <p>
-              Damaged or incorrect items can be returned within 7 days of delivery. For hygiene
-              reasons, opened fragrances can only be returned if they are defective. Refunds are
-              processed to the original payment method.
+              Every fragrance order includes a separate tester. For fragrance preference requests, contact KHAYAL on the delivery day while the full-size bottle remains unopened, unused and sealed. Incorrect or damaged products must be reported within 24 hours with clear photographs or an unboxing video. After verification, KHAYAL will arrange the appropriate exchange. Opened, used or unsealed full-size bottles cannot be returned for preference reasons, and no refund is automatic before eligibility is verified.
             </p>
           </div>
 

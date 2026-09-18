@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
+import { productToAnalyticsItem, trackCommerce } from "@/lib/analytics";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/types/product";
 
@@ -28,13 +29,18 @@ export default function ProductCard({ product }: ProductCardProps) {
   const badge = getMetafield(product, "badge");
   const isSale = comparePrice && comparePrice > minPrice;
 
+  function trackSelection() {
+    const item = productToAnalyticsItem(product);
+    trackCommerce("select_item", { item_list_name: "product_collection", items: [item] });
+  }
+
   return (
     <article
       className="group relative bg-pure rounded-xl overflow-hidden border border-border transition-all duration-300 hover:shadow-lg hover:border-gold/30"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Link href={`/shop/${product.handle}`} aria-label={`View ${product.title}`}>
+      <Link href={`/shop/${product.handle}`} aria-label={`View ${product.title}`} onClick={trackSelection}>
         <div className="relative aspect-[4/5] overflow-hidden bg-cream-dark">
           {image ? (
             <>
@@ -85,7 +91,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       <div className="p-4">
-        <Link href={`/shop/${product.handle}`}>
+        <Link href={`/shop/${product.handle}`} onClick={trackSelection}>
           <h3 className="text-ink text-base font-medium tracking-wide line-clamp-1">
             {product.title}
           </h3>

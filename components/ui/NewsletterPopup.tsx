@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { subscribeToNewsletter } from "@/lib/subscribers";
+import { trackMarketing } from "@/lib/analytics";
 
 const STORAGE_KEY = "khayal-newsletter-dismissed";
 
@@ -35,6 +36,7 @@ export default function NewsletterPopup() {
     try {
       const res = await subscribeToNewsletter(email, "popup");
       if (res.ok) {
+        trackMarketing("newsletter_signup", { lead_type: "newsletter", placement: "popup" });
         setSubmitted(true);
         setTimeout(() => close(), 2000);
       } else {
@@ -108,7 +110,7 @@ export default function NewsletterPopup() {
                   </svg>
                 </div>
                 <h3 className="font-serif-display text-ink text-2xl font-medium">Thank you</h3>
-                <p className="mt-2 text-stone text-sm">Your 20% discount code is on its way.</p>
+                <p className="mt-2 text-stone text-sm">You&apos;re now part of the Khayal Circle.</p>
               </div>
             ) : (
               <>
@@ -116,10 +118,10 @@ export default function NewsletterPopup() {
                   Signup for Emails
                 </p>
                 <h3 className="mt-4 font-serif-display text-ink text-3xl md:text-4xl font-medium leading-tight">
-                  Get 20% Discount Shipped to Your Inbox
+                  Join the Khayal Circle
                 </h3>
                 <p className="mt-4 text-stone text-sm leading-relaxed">
-                  Let&apos;s Subscribe to our newsletter and we will ship 20% discount code today.
+                  Receive new fragrance stories, launches, and early access by email.
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-8 space-y-3 text-left">
@@ -129,6 +131,7 @@ export default function NewsletterPopup() {
                   <input
                     id="popup-email"
                     type="email"
+                    data-clarity-mask="true"
                     required
                     disabled={busy}
                     value={email}

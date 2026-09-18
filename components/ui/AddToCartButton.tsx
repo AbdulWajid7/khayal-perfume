@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useCart } from "@/hooks/useCart";
+import { productToAnalyticsItem, trackCommerce } from "@/lib/analytics";
 import type { Product } from "@/types/product";
 
 interface AddToCartButtonProps {
@@ -37,6 +38,16 @@ export default function AddToCartButton({
       price: Number.parseFloat(selectedVariant.price.amount),
       currencyCode: selectedVariant.price.currencyCode,
       image: product.featuredImage?.url,
+    });
+    const item = productToAnalyticsItem(product, quantity, selectedVariant.id);
+    trackCommerce("add_to_cart", {
+      value: item.price * item.quantity,
+      items: [item],
+      content_ids: [item.item_id],
+      content_name: item.item_name,
+      content_type: "product",
+      content_category: item.item_category,
+      contents: [{ id: item.item_id, quantity: item.quantity, item_price: item.price }],
     });
     // Brief artificial delay for tactile feedback
     await new Promise((resolve) => setTimeout(resolve, 250));

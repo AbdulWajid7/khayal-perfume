@@ -15,6 +15,8 @@ export default function OrganizationSchema() {
         },
         description:
           "Khayal Parfum is a luxury niche fragrance house crafting long-lasting oud, musk, and attar perfumes in Pakistan.",
+        email: "official@khayalparfum.com",
+        telephone: "+923202704617",
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "customer service",

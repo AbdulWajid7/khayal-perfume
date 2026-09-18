@@ -22,7 +22,7 @@ const items = [
   {
     question: "Do you ship across Pakistan?",
     answer:
-      "Yes. We ship to all major cities and towns in Pakistan through trusted courier partners. Cash on delivery and online payment options are available at checkout.",
+      "Yes. Karachi orders are expected within 24 hours after confirmation. Other cities in Pakistan are expected within 3–4 working days. Delivery may be affected by holidays, weather, courier delays or remote-area availability. Delivery is free on orders of PKR 5,000 or more.",
   },
   {
     question: "How long do Khayal fragrances last?",
@@ -37,7 +37,7 @@ const items = [
   {
     question: "What is your return policy?",
     answer:
-      "If your order arrives damaged or incorrect, contact us within 7 days of delivery for a replacement or refund. For hygiene reasons, we cannot accept returns of opened fragrances unless they are defective.",
+      "Every fragrance order includes a separate tester. If the fragrance is unsuitable, contact KHAYAL on the same day of delivery while the full-size bottle remains unopened, unused and sealed. For damaged or incorrect products, notify us within 24 hours with clear photos or an unboxing video. After verification, we will arrange the appropriate exchange; requests do not qualify for an automatic refund.",
   },
   {
     question: "Can I order samples?",

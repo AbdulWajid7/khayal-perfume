@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Order, type IOrder } from "@/models/Order";
 import { requireAuth } from "@/lib/auth";
+import { calculateShipping } from "@/lib/shipping";
 
 export async function getOrders(): Promise<IOrder[]> {
   const session = await requireAuth(["admin", "editor"]);
@@ -27,7 +28,11 @@ export async function createOrder(formData: FormData) {
   await dbConnect();
 
   const orderNumber = getString(formData, "orderNumber") || generateOrderNumber();
-  const total = Number(getString(formData, "total") || "0");
+  const requestedTotal = Number(getString(formData, "total") || "0");
+  const subtotal = Number(getString(formData, "subtotal") || requestedTotal);
+  const discount = Math.max(0, Number(getString(formData, "discount") || "0"));
+  const shipping = calculateShipping(subtotal, Number(getString(formData, "shipping") || "0"));
+  const total = Math.max(0, subtotal + shipping - discount);
 
   await Order.create({
     orderNumber,
@@ -39,9 +44,9 @@ export async function createOrder(formData: FormData) {
       city: getString(formData, "customerCity"),
     },
     items: parseItems(getString(formData, "items")),
-    subtotal: Number(getString(formData, "subtotal") || total),
-    shipping: Number(getString(formData, "shipping") || "0"),
-    discount: Number(getString(formData, "discount") || "0"),
+    subtotal,
+    shipping,
+    discount,
     total,
     status: (getString(formData, "status") as IOrder["status"]) || "pending",
     paymentStatus: (getString(formData, "paymentStatus") as IOrder["paymentStatus"]) || "pending",

@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import NewsletterForm from "./NewsletterForm";
 import SocialIcons from "./SocialIcons";
+import TrackedContactLink from "./TrackedContactLink";
+import { siteConfig } from "@/lib/site-config";
 
 const shopLinks = [
   { label: "The Collection", href: "/shop" },
@@ -14,7 +16,6 @@ const companyLinks = [
   { label: "Our Story", href: "/story" },
   { label: "Journal", href: "/journal" },
   { label: "Scent Finder", href: "/scent-finder" },
-  { label: "Contact", href: "mailto:official@khayalparfum.com" },
 ];
 
 const supportLinks = [
@@ -61,8 +62,16 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-4 text-sm text-stone leading-relaxed max-w-sm">
-              Luxury niche perfumes and attars, crafted for those who seek the extraordinary. Each scent is a journey from imagination to bottle.
+              Some fragrances become memories. Premium perfumes and attars crafted in Karachi and delivered across Pakistan.
             </p>
+            <div className="mt-4 flex flex-col gap-1 text-sm">
+              <TrackedContactLink href={`mailto:${siteConfig.email}`} event="email_click" className="text-stone hover:text-gold">
+                {siteConfig.email}
+              </TrackedContactLink>
+              <TrackedContactLink href={`tel:+${siteConfig.whatsappNumber}`} event="phone_click" className="text-stone hover:text-gold">
+                {siteConfig.phoneDisplay}
+              </TrackedContactLink>
+            </div>
             <div className="mt-6">
               <SocialIcons />
             </div>

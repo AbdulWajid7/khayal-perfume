@@ -1,5 +1,7 @@
+import { siteConfig } from "@/lib/site-config";
+
 const messages = [
-  "Complimentary shipping on orders above Rs. 5,000",
+  `Free delivery across Pakistan on orders of PKR ${siteConfig.freeShippingThreshold.toLocaleString("en-PK")} or more`,
   "Nationwide delivery across Pakistan",
   "Crafted in Karachi",
   "Some fragrances become memories",

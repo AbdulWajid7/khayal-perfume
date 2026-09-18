@@ -1,7 +1,8 @@
 import Reveal from "@/components/ui/Reveal";
+import { siteConfig } from "@/lib/site-config";
 
 const trustPoints = [
-  { label: "Free Shipping", detail: "On orders above Rs. 5,000" },
+  { label: "Free Shipping", detail: `On orders of PKR ${siteConfig.freeShippingThreshold.toLocaleString("en-PK")} or more` },
   { label: "Secure Checkout", detail: "Encrypted payments" },
   { label: "Nationwide Delivery", detail: "All across Pakistan" },
   { label: "Crafted in Karachi", detail: "Founded by Abdul Wajid" },
