@@ -57,7 +57,7 @@ function buildFaqItems(product: { title: string; longevity: string }): FAQItem[]
     {
       question: `What is included when I order ${product.title}?`,
       answer:
-        "Your order includes the bottle you select, a signature Khayal presentation box, and complimentary shipping on orders above Rs. 15,000.",
+        "Your order includes the bottle you select, a signature Khayal presentation box, and complimentary shipping on orders above Rs. 5,000.",
     },
   ];
 }

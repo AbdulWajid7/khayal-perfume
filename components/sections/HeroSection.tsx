@@ -47,6 +47,9 @@ export default function HeroSection() {
         aria-hidden="true"
       />
 
+      {/* Ambient drifting mist */}
+      {!prefersReducedMotion && <div className="hero-mist z-[2]" aria-hidden="true" />}
+
       <motion.div
         style={prefersReducedMotion ? undefined : { y: contentY, opacity: contentOpacity }}
         className="relative z-10 w-full mx-auto max-w-7xl px-4 md:px-8 lg:px-12 pt-20"
@@ -58,18 +61,18 @@ export default function HeroSection() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="inline-flex items-center gap-2 border border-gold/50 rounded-full px-4 py-1.5 text-[11px] tracking-[0.2em] uppercase text-gold mb-6"
           >
-            End of Season Sale
+            Crafted in Karachi
           </motion.span>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif-display text-ink text-[48px] md:text-[72px] lg:text-[88px] font-medium tracking-tight leading-[0.95]"
+            className="font-serif-display text-ink text-[44px] md:text-[64px] lg:text-[80px] font-medium tracking-tight leading-[1.02]"
           >
-            Imagination,
+            Some fragrances
             <br />
-            <span className="text-gold-shimmer">Bottled.</span>
+            <span className="text-gold-shimmer">become memories.</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -77,7 +80,8 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="mt-5 text-stone text-lg md:text-xl font-light max-w-md"
           >
-            Discover niche perfumes and attars crafted for those who seek the extraordinary.
+            Khayal means a thought, a memory, a feeling that stays with you. Premium
+            perfumes and attars — made in Karachi, delivered across Pakistan.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -87,7 +91,7 @@ export default function HeroSection() {
           >
             <Link
               href="/shop"
-              className="inline-flex items-center justify-center bg-gold text-pure rounded-lg px-8 py-4 text-sm font-medium hover:bg-gold-light transition-colors"
+              className="btn-sweep inline-flex items-center justify-center bg-gold text-pure rounded-lg px-8 py-4 text-sm font-medium"
             >
               Shop Now
             </Link>

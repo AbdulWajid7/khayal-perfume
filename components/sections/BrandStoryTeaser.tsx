@@ -29,17 +29,19 @@ export default function BrandStoryTeaser() {
                 01
               </span>
               <RevealMask as="h2" className="mt-4 font-serif-display text-ink text-[36px] md:text-[44px] font-medium tracking-tight leading-tight">
-                Born from Imagination
+                A Thought, Bottled
               </RevealMask>
               <p className="mt-6 text-stone text-base leading-relaxed">
-                Khayal is not merely a fragrance house — it is a quiet rebellion against the
-                ordinary. Every scent begins as a vision: a midnight conversation, a forgotten
-                memory, a golden thread of oud rising through cold air. We compose with rare
-                resins, hand-picked blooms, and the patience of artisans who believe luxury should
-                whisper, not shout.
+                Khayal began in Karachi with one idea: fragrance is more than a pleasant smell
+                — it can bring back memories, emotions, and the thought of someone special.
+                Khayal itself means a thought, a memory, a feeling that stays with you.
               </p>
               <p className="mt-4 text-stone text-base leading-relaxed">
-                Our perfumes are made for the moments when you want to feel unforgettably yourself.
+                Founded by Abdul Wajid, the house crafts premium fragrances that people in
+                Pakistan can connect with emotionally — while keeping them within reach.
+              </p>
+              <p className="mt-4 font-serif-display text-gold text-lg italic">
+                Some fragrances become memories.
               </p>
               <div className="mt-8">
                 <Link

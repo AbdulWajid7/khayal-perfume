@@ -13,7 +13,7 @@ const steps = [
     number: "01",
     title: "Sourcing the Extraordinary",
     description:
-      "Every Khayal fragrance begins with rare, honest materials. Aged agarwood from Assam, Taif rose, Mysore sandalwood, and white musk are chosen not for convenience, but for character.",
+      "Every Khayal fragrance begins with honest materials. Rich oud, rose, sandalwood, and white musk are chosen not for convenience, but for character.",
   },
   {
     number: "02",
@@ -56,7 +56,7 @@ const steps = [
 const values = [
   {
     title: "Craft",
-    description: "Hand-blended, small-batch compositions that prioritize quality over volume.",
+    description: "Compositions built with patience, detail, and care — quality over volume.",
   },
   {
     title: "Longevity",
@@ -89,9 +89,26 @@ export default function StoryPage() {
             Our Story
           </RevealMask>
           <p className="mt-6 text-stone text-lg leading-relaxed max-w-2xl mx-auto">
-            Khayal is a quiet rebellion against the ordinary. We believe luxury should whisper, not
-            shout — and that the right fragrance can turn an everyday moment into a memory.
+            Khayal means a thought, a memory, a feeling that stays with you. Founded in Karachi,
+            we craft premium fragrances made to become memories.
           </p>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-20 bg-cream">
+        <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12 text-center">
+          <Reveal>
+            <span className="eyebrow">The Founder</span>
+            <blockquote className="mt-6 font-serif-display text-ink text-xl md:text-2xl font-medium leading-relaxed">
+              &ldquo;I started Khayal because fragrance is more than just a pleasant smell — it can
+              bring back memories, emotions, and thoughts of someone special. I wanted to create
+              premium fragrances that people in Pakistan could connect with emotionally, while
+              keeping them affordable.&rdquo;
+            </blockquote>
+            <p className="mt-6 text-stone text-sm tracking-[0.2em] uppercase">
+              — Abdul Wajid, Founder · Karachi
+            </p>
+          </Reveal>
         </div>
       </section>
 
@@ -165,7 +182,7 @@ export default function StoryPage() {
               visible moment on your skin.&rdquo;
             </blockquote>
             <p className="mt-6 text-stone text-sm tracking-[0.2em] uppercase">
-              — The Khayal Atelier
+              — Abdul Wajid, Founder
             </p>
           </Reveal>
         </div>

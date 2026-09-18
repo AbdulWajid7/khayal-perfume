@@ -18,6 +18,8 @@ function getMetafield(product: Product, key: string): string | undefined {
 export default function ProductCard({ product }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
   const image = product.featuredImage || product.images[0];
+  const hoverImage =
+    product.images.length > 1 ? product.images[1] : null;
   const minPrice = Number.parseFloat(product.priceRange.minVariantPrice.amount);
   const comparePrice = product.compareAtPriceRange
     ? Number.parseFloat(product.compareAtPriceRange.maxVariantPrice.amount)
@@ -35,14 +37,27 @@ export default function ProductCard({ product }: ProductCardProps) {
       <Link href={`/shop/${product.handle}`} aria-label={`View ${product.title}`}>
         <div className="relative aspect-[4/5] overflow-hidden bg-cream-dark">
           {image ? (
-            <Image
-              src={image.url}
-              alt={image.altText || product.title}
-              fill
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              loading="lazy"
-            />
+            <>
+              <Image
+                src={image.url}
+                alt={image.altText || product.title}
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                loading="lazy"
+              />
+              {hoverImage && (
+                <Image
+                  src={hoverImage.url}
+                  alt={hoverImage.altText || product.title}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="object-cover opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-105"
+                  loading="lazy"
+                  aria-hidden="true"
+                />
+              )}
+            </>
           ) : (
             <div className="h-full w-full bg-cream-dark" aria-hidden="true" />
           )}

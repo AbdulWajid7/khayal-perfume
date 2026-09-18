@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -104,11 +104,16 @@ function CloseIcon({ className }: { className?: string }) {
 export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
   const { openCart, totalItems } = useCart();
 
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 20);
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      setHidden(y > 140 && y > lastY.current);
+      lastY.current = y;
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -122,6 +127,7 @@ export default function Navigation() {
           scrolled
             ? "bg-pure/95 border-b border-border shadow-sm backdrop-blur-md"
             : "bg-transparent",
+          hidden && !mobileOpen ? "-translate-y-full opacity-0" : "translate-y-0",
         ].join(" ")}
       >
         <nav className="mx-auto max-w-7xl h-full px-4 md:px-8 lg:px-12 flex items-center justify-between">

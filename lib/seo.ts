@@ -8,7 +8,7 @@ export const defaultMetadata: Metadata = {
       "Khayal Parfum — Buy Luxury Oud, Musk & Attar Perfumes Online in Pakistan",
   },
   description:
-    "Shop Khayal Parfum, a luxury niche fragrance house crafting long-lasting oud, musk, and attar perfumes in Pakistan. Explore unisex eau de parfums made with rare botanicals — nationwide delivery, authentic ingredients.",
+    "Some fragrances become memories. Khayal Parfum crafts premium perfumes and attars in Karachi — long-lasting oud, musk, and rose compositions delivered nationwide across Pakistan.",
   keywords: [
     "khayal parfum",
     "luxury perfume online pakistan",
@@ -26,7 +26,7 @@ export const defaultMetadata: Metadata = {
     siteName: "Khayal Parfum",
     title: "Khayal Parfum — Luxury Oud, Musk & Attar Perfumes",
     description:
-      "Discover Khayal Parfum's collection of long-lasting oud, musk, and attar eau de parfums. Crafted with rare botanicals for a truly luxurious scent.",
+      "Some fragrances become memories. Premium perfumes and attars crafted in Karachi, delivered across Pakistan.",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Khayal Parfum — Luxury Perfumes" }],
   },
   twitter: {

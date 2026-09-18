@@ -1,10 +1,10 @@
 import Reveal from "@/components/ui/Reveal";
 
 const trustPoints = [
-  { label: "Free Shipping", detail: "On orders above Rs. 15,000" },
+  { label: "Free Shipping", detail: "On orders above Rs. 5,000" },
   { label: "Secure Checkout", detail: "Encrypted payments" },
-  { label: "Authentic Guarantee", detail: "100% genuine ingredients" },
-  { label: "Small-Batch Craft", detail: "Hand-poured in Pakistan" },
+  { label: "Nationwide Delivery", detail: "All across Pakistan" },
+  { label: "Crafted in Karachi", detail: "Founded by Abdul Wajid" },
 ];
 
 export default function PressStrip() {

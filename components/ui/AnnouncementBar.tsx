@@ -1,8 +1,8 @@
 const messages = [
-  "Complimentary shipping on all orders above ₹15,000",
-  "New — Sandalwood Nocturne now available",
-  "Sample sets ship in 48 hours",
-  "Handcrafted in small batches",
+  "Complimentary shipping on orders above Rs. 5,000",
+  "Nationwide delivery across Pakistan",
+  "Crafted in Karachi",
+  "Some fragrances become memories",
 ];
 
 export default function AnnouncementBar() {
