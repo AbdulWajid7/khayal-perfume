@@ -58,6 +58,14 @@ export interface ProductDetails extends Product {
   longevity: string;
   occasion: string;
   scentFamily: string;
+  dayNight?: string;
+  season?: string;
+  intensity?: string;
+  accentColor?: string;
+  backgroundColor?: string;
+  storyImage?: string;
+  transparentBottleImage?: string;
+  threeDModelUrl?: string;
 }
 
 export interface CartLineInput {

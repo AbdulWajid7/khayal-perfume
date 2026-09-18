@@ -1,28 +1,11 @@
 import { siteConfig } from "@/lib/site-config";
 
-const messages = [
-  `Free delivery across Pakistan on orders of PKR ${siteConfig.freeShippingThreshold.toLocaleString("en-PK")} or more`,
-  "Nationwide delivery across Pakistan",
-  "Crafted in Karachi",
-  "Some fragrances become memories",
-];
-
 export default function AnnouncementBar() {
-  const loop = [...messages, ...messages];
-
   return (
-    <div className="fixed top-0 left-0 right-0 z-[51] h-8 bg-cream-dark border-b border-border overflow-hidden">
-      <div className="flex h-full items-center whitespace-nowrap animate-marquee">
-        {loop.map((message, index) => (
-          <span
-            key={`${message}-${index}`}
-            className="text-ink text-[11px] font-medium tracking-[0.15em] uppercase px-10"
-          >
-            <span className="text-gold mr-2">✦</span>
-            {message}
-          </span>
-        ))}
-      </div>
+    <div className="fixed inset-x-0 top-0 z-[51] flex h-8 items-center justify-center border-b border-white/10 bg-purple-deep px-4 text-center text-[9px] font-medium uppercase tracking-[0.16em] text-ivory/75 sm:text-[10px] sm:tracking-[0.22em]">
+      Free delivery across Pakistan on PKR {siteConfig.freeShippingThreshold.toLocaleString("en-PK")}+
+      <span className="mx-2 text-champagne" aria-hidden="true">·</span>
+      Karachi delivery within 24 hours
     </div>
   );
 }

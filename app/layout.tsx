@@ -5,6 +5,8 @@ import { defaultMetadata } from "@/lib/seo";
 import { CartProvider } from "@/hooks/useCart";
 import LoadIntro from "@/components/ui/LoadIntro";
 import AnalyticsProvider from "@/components/analytics/AnalyticsProvider";
+import { ConsentProvider } from "@/components/analytics/ConsentProvider";
+import ConsentBanner from "@/components/ui/ConsentBanner";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -43,11 +45,14 @@ export default function RootLayout({
             />
           </noscript>
         )}
-        <Suspense fallback={null}>
-          <AnalyticsProvider />
-        </Suspense>
-        <LoadIntro />
-        <CartProvider>{children}</CartProvider>
+        <ConsentProvider>
+          <Suspense fallback={null}>
+            <AnalyticsProvider />
+          </Suspense>
+          <LoadIntro />
+          <CartProvider>{children}</CartProvider>
+          <ConsentBanner />
+        </ConsentProvider>
       </body>
     </html>
   );

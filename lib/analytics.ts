@@ -3,12 +3,12 @@
 import type { CartItem } from "@/hooks/useCart";
 import type { Product } from "@/types/product";
 import { siteConfig } from "@/lib/site-config";
+import { hasConsent } from "@/lib/consent";
 
 declare global {
   interface Window {
     dataLayer: Record<string, unknown>[];
     gtag?: (...args: unknown[]) => void;
-    fbq?: (...args: unknown[]) => void;
   }
 }
 
@@ -46,7 +46,17 @@ export type MarketingEvent =
   | "coupon_apply"
   | "review_submit"
   | "fragrance_quiz_start"
+  | "fragrance_quiz_answer"
   | "fragrance_quiz_complete"
+  | "fragrance_quiz_product_click"
+  | "promotion_view"
+  | "promotion_click"
+  | "hero_primary_cta_click"
+  | "hero_secondary_cta_click"
+  | "product_story_start"
+  | "product_story_complete"
+  | "scent_note_section_view"
+  | "collection_select"
   | "out_of_stock_interest";
 
 const enabled = process.env.NODE_ENV === "production" || process.env.NEXT_PUBLIC_ANALYTICS_TESTING === "true";
@@ -59,12 +69,12 @@ function pushDataLayer(event: string, params: Record<string, unknown> = {}) {
 }
 
 function sendGA4(event: string, params: Record<string, unknown> = {}) {
-  if (!enabled || !siteConfig.analytics.ga4Id || typeof window === "undefined") return;
+  if (!enabled || !siteConfig.analytics.ga4Id || typeof window === "undefined" || !hasConsent("analytics")) return;
   window.gtag?.("event", event, params);
 }
 
 function sendMeta(event: string, params: Record<string, unknown> = {}, eventId?: string) {
-  if (!enabled || !siteConfig.analytics.metaPixelId || typeof window === "undefined") return;
+  if (!enabled || !siteConfig.analytics.metaPixelId || typeof window === "undefined" || !hasConsent("marketing")) return;
   window.fbq?.("track", event, params, eventId ? { eventID: eventId } : undefined);
 }
 
