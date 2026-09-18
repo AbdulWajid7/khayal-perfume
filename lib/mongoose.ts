@@ -25,7 +25,7 @@ export async function dbConnect() {
 
   if (!cached.promise) {
     cached.promise = mongoose
-      .connect(MONGODB_URI as string, { bufferCommands: false })
+      .connect(MONGODB_URI as string, { bufferCommands: false, dbName: "khayal" })
       .catch((err) => {
         cached.promise = null;
         throw err;
