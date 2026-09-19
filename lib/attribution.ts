@@ -7,8 +7,6 @@ import { sanitizeAttribution } from "@/lib/attribution-shared";
 const ATTRIBUTION_COOKIE = "khayal-attribution";
 const ATTRIBUTION_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
-export type { AttributionData };
-
 export async function captureAttribution(searchParams?: Record<string, string | string[] | undefined>): Promise<AttributionData> {
   const cookieStore = await cookies();
   const raw = cookieStore.get(ATTRIBUTION_COOKIE)?.value;
