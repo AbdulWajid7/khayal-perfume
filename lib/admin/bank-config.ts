@@ -11,8 +11,13 @@ export async function getBankTransferConfig(): Promise<IBankTransferConfig | nul
 }
 
 export async function getEnabledBankTransferConfig(): Promise<IBankTransferConfig | null> {
-  const config = await getBankTransferConfig();
-  return config && config.enabled ? config : null;
+  try {
+    const config = await getBankTransferConfig();
+    return config && config.enabled ? config : null;
+  } catch (error) {
+    console.error("getEnabledBankTransferConfig error:", error);
+    return null;
+  }
 }
 
 export async function upsertBankTransferConfig(formData: FormData) {
