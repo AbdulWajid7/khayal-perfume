@@ -58,6 +58,27 @@ function BagIcon({ className }: { className?: string }) {
   );
 }
 
+function UserIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </svg>
+  );
+}
+
 function MenuIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -123,10 +144,10 @@ export default function Navigation() {
     <>
       <header
         className={[
-          "fixed top-8 left-0 right-0 z-50 h-20 transition-all duration-300",
+          "fixed top-8 left-0 right-0 z-50 h-20 transition-all duration-300 backdrop-blur-xl",
           scrolled
-            ? "bg-pure/95 border-b border-border shadow-sm backdrop-blur-md"
-            : "bg-transparent",
+            ? "bg-pure/80 border-b border-border shadow-[0_8px_30px_rgba(26,26,26,0.06)]"
+            : "bg-cream/40 border-b border-transparent",
           hidden && !mobileOpen ? "-translate-y-full opacity-0" : "translate-y-0",
         ].join(" ")}
       >
@@ -146,17 +167,17 @@ export default function Navigation() {
                 priority
               />
             </div>
-            <span className="hidden sm:block text-ink text-sm font-medium tracking-[0.2em] uppercase">
+            <span className="hidden sm:block font-serif-display text-ink text-base font-medium tracking-[0.3em] uppercase">
               Khayal
             </span>
           </Link>
 
-          <ul className="hidden lg:flex items-center gap-8">
+          <ul className="hidden lg:flex items-center gap-9">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="link-hover-gold text-ink text-[13px] font-medium tracking-wide uppercase transition-colors hover:text-gold"
+                  className="link-hover-gold text-ink text-[11px] font-medium tracking-[0.22em] uppercase transition-colors hover:text-gold"
                 >
                   {link.label}
                 </Link>
@@ -165,13 +186,20 @@ export default function Navigation() {
           </ul>
 
           <div className="flex items-center gap-5">
-            <button
-              type="button"
-              aria-label="Search"
+            <Link
+              href="/scent-finder"
+              aria-label="Find your scent"
               className="text-ink hover:text-gold transition-colors p-1"
             >
               <SearchIcon />
-            </button>
+            </Link>
+            <Link
+              href="/track-order"
+              aria-label="Track your order"
+              className="hidden sm:block text-ink hover:text-gold transition-colors p-1"
+            >
+              <UserIcon />
+            </Link>
             <button
               type="button"
               aria-label="Open cart"

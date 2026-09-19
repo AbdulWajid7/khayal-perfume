@@ -217,6 +217,21 @@ body {
   animation: mist-drift 18s ease-in-out infinite;
 }
 
+/* Slow cinematic Ken Burns drift for the hero photograph */
+@keyframes ken-burns {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(-1.2%, -1.5%, 0);
+  }
+}
+
+.hero-kenburns {
+  animation: ken-burns 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
 /* Gold fill-sweep button — colour rises from the bottom on hover */
 .btn-sweep {
   position: relative;
