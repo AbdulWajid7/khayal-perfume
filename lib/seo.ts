@@ -36,6 +36,14 @@ export const defaultMetadata: Metadata = {
       "Discover Khayal Parfum's collection of long-lasting oud, musk, and attar eau de parfums.",
     images: ["/og-image.jpg"],
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: "/favicon.ico",
+  },
   robots: {
     index: true,
     follow: true,

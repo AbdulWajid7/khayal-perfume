@@ -50,7 +50,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-3">
               <div className="relative h-12 w-12 rounded-full overflow-hidden shadow-md">
                 <Image
-                  src="/images/logo.png"
+                  src="/logo.png"
                   alt="Khayal Perfume"
                   fill
                   className="object-cover"

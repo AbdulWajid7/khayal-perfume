@@ -11,7 +11,7 @@ export default function OrganizationSchema() {
         url: baseUrl,
         logo: {
           "@type": "ImageObject",
-          url: `${baseUrl}/images/logo.png`,
+          url: `${baseUrl}/logo.png`,
         },
         description:
           "Khayal Parfum is a luxury niche fragrance house crafting long-lasting oud, musk, and attar perfumes in Pakistan.",
