@@ -4,7 +4,7 @@ import CartDrawer from "@/components/ui/CartDrawer";
 import AnnouncementBar from "@/components/ui/AnnouncementBar";
 import SmoothScrollProvider from "@/components/ui/SmoothScrollProvider";
 import PageTransition from "@/components/ui/PageTransition";
-import NewsletterPopup from "@/components/ui/NewsletterPopup";
+import WelcomePopup from "@/components/marketing/WelcomePopup";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import OrganizationSchema from "@/components/seo/OrganizationSchema";
 
@@ -23,7 +23,7 @@ export default function ShopLayout({
       </main>
       <Footer />
       <CartDrawer />
-      <NewsletterPopup />
+      <WelcomePopup />
       <WhatsAppButton />
     </SmoothScrollProvider>
   );

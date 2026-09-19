@@ -118,9 +118,12 @@ export default async function AdminDashboardPage() {
   ];
 
   const statusColors: Record<string, string> = {
-    pending: "bg-amber-100 text-amber-700",
+    pending_confirmation: "bg-amber-100 text-amber-700",
+    payment_review: "bg-orange-100 text-orange-700",
+    confirmed: "bg-emerald-100 text-emerald-700",
     processing: "bg-blue-100 text-blue-700",
-    shipped: "bg-purple-100 text-purple-700",
+    packed: "bg-indigo-100 text-indigo-700",
+    dispatched: "bg-purple-100 text-purple-700",
     delivered: "bg-green-100 text-green-700",
     cancelled: "bg-red-100 text-red-700",
   };
@@ -199,8 +202,8 @@ export default async function AdminDashboardPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-ink text-sm">{formatCurrency(order.total)}</p>
-                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium ${statusColors[order.status] || "bg-stone/10 text-stone"}`}>
-                    {order.status}
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium ${statusColors[order.orderStatus] || "bg-stone/10 text-stone"}`}>
+                    {order.orderStatus}
                   </span>
                 </div>
               </div>

@@ -12,7 +12,8 @@ function sanitizeEmail(email: string): string {
 
 export async function subscribeToNewsletter(
   email: string,
-  source: string = "popup"
+  source: string = "popup",
+  pagePath: string = ""
 ): Promise<{ ok: boolean; message: string }> {
   const sanitized = sanitizeEmail(email);
   if (!emailRegex.test(sanitized)) {
@@ -22,13 +23,21 @@ export async function subscribeToNewsletter(
   try {
     await dbConnect();
     await Subscriber.findOneAndUpdate(
-      { email: sanitized },
-      { email: sanitized, source, subscribed: true },
-      { upsert: true, new: true }
+      { normalizedEmail: sanitized },
+      {
+        email: sanitized,
+        normalizedEmail: sanitized,
+        source,
+        subscribed: true,
+        consentAt: new Date(),
+        consentSource: source,
+        signupPage: pagePath,
+      },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
     );
   } catch (error) {
     console.error("subscribeToNewsletter error:", error);
-    return { ok: false, message: "Something went wrong. Please try again later." };
+    return { ok: false, message: "Something went wrong. Please try again later." }
   }
 
   return { ok: true, message: "Thank you for subscribing." };

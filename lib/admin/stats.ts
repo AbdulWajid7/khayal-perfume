@@ -50,7 +50,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       $expr: { $lte: ["$stock", { $ifNull: ["$lowStockThreshold", 5] }] },
     }),
     Order.countDocuments(),
-    Order.countDocuments({ status: "pending" }),
+    Order.countDocuments({ orderStatus: { $in: ["pending_confirmation", "payment_review"] } }),
     Order.aggregate([{ $group: { _id: null, total: { $sum: "$total" } } }]),
     Subscriber.countDocuments(),
     Post.countDocuments(),
@@ -111,7 +111,7 @@ async function getRevenueByMonth() {
   start.setMonth(start.getMonth() - 5);
   start.setDate(1);
   start.setHours(0, 0, 0, 0);
-  const orders = await Order.find({ createdAt: { $gte: start }, status: { $ne: "cancelled" } }).lean();
+  const orders = await Order.find({ createdAt: { $gte: start }, orderStatus: { $ne: "cancelled" } }).lean();
   const byMonth: Record<string, number> = {};
 
   for (let i = 0; i < 6; i++) {
@@ -137,8 +137,8 @@ async function getRevenueByMonth() {
 }
 
 async function getOrdersByStatus(): Promise<{ status: string; count: number }[]> {
-  const statuses = ["pending", "processing", "shipped", "delivered", "cancelled"];
-  const docs = await Order.aggregate([{ $group: { _id: "$status", count: { $sum: 1 } } }]);
+  const statuses = ["pending_confirmation", "payment_review", "confirmed", "processing", "packed", "dispatched", "delivered", "cancelled"];
+  const docs = await Order.aggregate([{ $group: { _id: "$orderStatus", count: { $sum: 1 } } }]);
   const typedDocs = docs as { _id: string; count: number }[];
   const map = new Map(typedDocs.map((d) => [d._id, d.count]));
   return statuses.map((status) => ({

@@ -44,6 +44,14 @@ export type MarketingEvent =
   | "email_click"
   | "newsletter_signup"
   | "coupon_apply"
+  | "coupon_apply_success"
+  | "coupon_apply_failure"
+  | "welcome_offer_view"
+  | "welcome_offer_dismiss"
+  | "welcome_offer_submit"
+  | "welcome_offer_success"
+  | "welcome_offer_error"
+  | "welcome_offer_resend"
   | "review_submit"
   | "fragrance_quiz_start"
   | "fragrance_quiz_complete"
@@ -132,6 +140,8 @@ export function trackMarketing(event: MarketingEvent, params: Record<string, unk
     whatsapp_click: "Contact",
     phone_click: "Contact",
     email_click: "Contact",
+    welcome_offer_success: "Lead",
+    coupon_apply_success: "CustomizeProduct",
   };
   const metaEvent = map[event];
   if (metaEvent) sendMeta(metaEvent, params);

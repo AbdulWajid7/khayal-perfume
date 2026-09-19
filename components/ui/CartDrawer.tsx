@@ -86,7 +86,7 @@ function CartLineItem({ item }: { item: CartItem }) {
 }
 
 export default function CartDrawer() {
-  const { items, isOpen, closeCart, subtotal, currencyCode, checkoutUrl } = useCart();
+  const { items, isOpen, closeCart, subtotal, currencyCode } = useCart();
   const drawerRef = useRef<HTMLDivElement>(null);
   const trackedOpen = useRef(false);
   const remainingForFreeShipping = Math.max(0, siteConfig.freeShippingThreshold - subtotal);
@@ -207,32 +207,23 @@ export default function CartDrawer() {
                         : `Add ${formatPrice(remainingForFreeShipping, "PKR")} more for free delivery.`}
                     </p>
                   </div>
-                  {checkoutUrl ? (
-                    <a
-                      href={checkoutUrl}
-                      onClick={() => {
-                        const analyticsItems = cartToAnalyticsItems(items);
-                        trackCommerce("begin_checkout", {
-                          value: subtotal,
-                          items: analyticsItems,
-                          content_ids: analyticsItems.map((item) => item.item_id),
-                          content_type: "product",
-                          contents: analyticsItems.map((item) => ({ id: item.item_id, quantity: item.quantity, item_price: item.price })),
-                        });
-                      }}
-                      className="block w-full text-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors"
-                    >
-                      Checkout
-                    </a>
-                  ) : (
-                    <button
-                      type="button"
-                      disabled
-                      className="w-full bg-gold/60 text-pure/80 rounded-lg px-6 py-3 text-sm font-medium cursor-not-allowed"
-                    >
-                      Online checkout coming soon
-                    </button>
-                  )}
+                  <Link
+                    href="/checkout"
+                    onClick={() => {
+                      closeCart();
+                      const analyticsItems = cartToAnalyticsItems(items);
+                      trackCommerce("begin_checkout", {
+                        value: subtotal,
+                        items: analyticsItems,
+                        content_ids: analyticsItems.map((item) => item.item_id),
+                        content_type: "product",
+                        contents: analyticsItems.map((item) => ({ id: item.item_id, quantity: item.quantity, item_price: item.price })),
+                      });
+                    }}
+                    className="block w-full text-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors"
+                  >
+                    Checkout
+                  </Link>
                   <a
                     href={getWhatsAppUrl(`Assalamualaikum, I need help with my KHAYAL cart. ${siteConfig.url}`)}
                     target="_blank"

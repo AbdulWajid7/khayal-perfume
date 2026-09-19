@@ -31,6 +31,14 @@ const navGroups = [
       { label: "Sub-Admins", href: "/admin/users" },
     ],
   },
+  {
+    title: "Marketing",
+    links: [
+      { label: "Subscribers", href: "/admin/marketing/subscribers" },
+      { label: "Welcome Offers", href: "/admin/marketing/welcome-offers" },
+      { label: "Welcome Config", href: "/admin/marketing/config" },
+    ],
+  },
 ];
 
 export default function AdminShell({

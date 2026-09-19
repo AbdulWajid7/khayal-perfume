@@ -5,7 +5,7 @@
 - Type checking: `npx tsc --noEmit`
 - Linting: `npm run lint`
 - Production build: `npm run build`
-- No automated test script is currently configured.
+- Tests: `npm run test` (Vitest, `tests/**/*.{test,spec}.{ts,tsx}`)
 
 ## Analytics ownership
 
