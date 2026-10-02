@@ -22,14 +22,22 @@ function mapVariants(variants: { id: string; title: string; price: number; avail
   }));
 }
 
-function deriveMetafields(category: string, tags: string[]): ProductMetafield[] {
+function deriveMetafields(doc: IProduct): ProductMetafield[] {
   const metafields: ProductMetafield[] = [];
-  if (category) {
-    metafields.push({ namespace: "custom", key: "scent_family", value: category });
-  }
-  if (tags.length) {
-    metafields.push({ namespace: "custom", key: "tags", value: tags.join(", ") });
-  }
+  const push = (key: string, value?: string | string[]) => {
+    const v = Array.isArray(value) ? value.join(", ") : value;
+    if (v) metafields.push({ namespace: "custom", key, value: v });
+  };
+  push("scent_family", doc.category);
+  push("tags", doc.tags || []);
+  push("scent_notes_top", doc.scentNotesTop || []);
+  push("scent_notes_heart", doc.scentNotesHeart || []);
+  push("scent_notes_base", doc.scentNotesBase || []);
+  push("longevity", doc.longevity);
+  push("sillage", doc.sillage);
+  push("occasion", doc.occasion);
+  push("concentration", doc.concentration);
+  push("size", doc.sizeMl ? `${doc.sizeMl}ml` : undefined);
   return metafields;
 }
 
@@ -56,7 +64,7 @@ function mapIProductToProduct(doc: IProduct): ProductType {
     featuredImage,
     images,
     variants,
-    metafields: deriveMetafields(doc.category, doc.tags || []),
+    metafields: deriveMetafields(doc),
     tags: doc.tags || [],
     productType: doc.category,
     vendor: "Khayal",
@@ -65,7 +73,7 @@ function mapIProductToProduct(doc: IProduct): ProductType {
   };
 }
 
-function addDerivedFields(product: ProductType): ProductDetails {
+function addDerivedFields(product: ProductType, doc?: IProduct): ProductDetails {
   const getMeta = (namespace: string, key: string): string | undefined =>
     product.metafields.find((m) => m.namespace === namespace && m.key === key)?.value;
 
@@ -77,8 +85,17 @@ function addDerivedFields(product: ProductType): ProductDetails {
     ...product,
     scentNotes: { top, heart, base },
     longevity: getMeta("custom", "longevity") || "",
+    sillage: getMeta("custom", "sillage") || "",
     occasion: getMeta("custom", "occasion") || "",
     scentFamily: getMeta("custom", "scent_family") || product.productType || "",
+    concentration: doc?.concentration,
+    sizeMl: doc?.sizeMl,
+    metaTitle: doc?.metaTitle,
+    metaDescription: doc?.metaDescription,
+    ogImage: doc?.ogImage,
+    canonicalUrl: doc?.canonicalUrl,
+    noIndex: doc?.noIndex,
+    mpn: doc?.mpn,
   };
 }
 
@@ -118,7 +135,7 @@ export async function getProduct(handle: string): Promise<ProductDetails | null>
     if (!product) return null;
     const data = toJSON(product);
     if (!data) return null;
-    return addDerivedFields(mapIProductToProduct(data));
+    return addDerivedFields(mapIProductToProduct(data), data);
   } catch (error) {
     console.error("getProduct error:", error);
     return null;

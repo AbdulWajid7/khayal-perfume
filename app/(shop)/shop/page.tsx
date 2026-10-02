@@ -69,8 +69,24 @@ export default async function ShopPage({
 
   const heading = CATEGORY_META[activeCategory]?.title || "The Collection";
 
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: heading,
+    itemListElement: filtered.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `https://www.khayalparfum.com/shop/${p.handle}`,
+      name: p.title,
+    })),
+  };
+
   return (
     <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+      />
       <ProductListTracker products={filtered} listName={heading} />
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <h1 className="font-serif-display text-ink text-[40px] font-medium tracking-tight">

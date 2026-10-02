@@ -3,6 +3,7 @@ import TrackOrderClient from "@/components/checkout/TrackOrderClient";
 
 export const metadata = {
   title: "Track Order | KHAYAL Parfum",
+  robots: { index: false, follow: false },
 };
 
 export default function TrackOrderPage() {

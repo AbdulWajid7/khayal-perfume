@@ -281,6 +281,7 @@ function addDerivedFields(product: Product): ProductDetails {
     ...product,
     scentNotes,
     longevity: getMeta("custom", "longevity") || "",
+    sillage: getMeta("custom", "sillage") || "",
     occasion: getMeta("custom", "occasion") || "",
     scentFamily: getMeta("custom", "scent_family") || "",
   };

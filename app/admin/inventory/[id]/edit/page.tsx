@@ -117,6 +117,44 @@ export default async function EditProductPage({ params }: Props) {
           className="input-admin"
         />
 
+        <fieldset className="border border-border rounded-xl p-4 space-y-4">
+          <legend className="px-2 text-xs uppercase tracking-[0.15em] text-stone">Fragrance Profile</legend>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input name="concentration" defaultValue={product.concentration || ""} placeholder="Concentration (e.g. Extrait de Parfum)" className="input-admin" />
+            <input name="sizeMl" type="number" defaultValue={product.sizeMl || ""} placeholder="Size (ml)" className="input-admin" />
+            <input name="longevity" defaultValue={product.longevity || ""} placeholder="Longevity (e.g. 8-10 hours)" className="input-admin" />
+            <input name="sillage" defaultValue={product.sillage || ""} placeholder="Sillage (e.g. Strong, Moderate)" className="input-admin" />
+            <input name="occasion" defaultValue={product.occasion || ""} placeholder="Occasion (e.g. Evening, Winter)" className="input-admin md:col-span-2" />
+            <input name="scentNotesTop" defaultValue={product.scentNotesTop?.join(", ") || ""} placeholder="Top notes, comma separated" className="input-admin" />
+            <input name="scentNotesHeart" defaultValue={product.scentNotesHeart?.join(", ") || ""} placeholder="Heart notes, comma separated" className="input-admin" />
+            <input name="scentNotesBase" defaultValue={product.scentNotesBase?.join(", ") || ""} placeholder="Base notes, comma separated" className="input-admin" />
+            <input name="mpn" defaultValue={product.mpn || ""} placeholder="MPN / GTIN (optional)" className="input-admin" />
+          </div>
+        </fieldset>
+
+        <fieldset className="border border-border rounded-xl p-4 space-y-4">
+          <legend className="px-2 text-xs uppercase tracking-[0.15em] text-stone">SEO</legend>
+          <input name="metaTitle" defaultValue={product.metaTitle || ""} placeholder="Meta title (50-60 chars, optional)" className="input-admin" />
+          <textarea name="metaDescription" rows={2} defaultValue={product.metaDescription || ""} placeholder="Meta description (140-160 chars, optional)" className="input-admin" />
+          <input name="ogImage" defaultValue={product.ogImage || ""} placeholder="Social share image URL (1200x630, optional)" className="input-admin" />
+          <input name="canonicalUrl" defaultValue={product.canonicalUrl || ""} placeholder="Canonical URL override (optional)" className="input-admin" />
+          <label className="flex items-center gap-2 text-sm text-stone">
+            <input type="checkbox" name="noIndex" defaultChecked={product.noIndex} className="accent-gold" />
+            Hide this product from search engines (noindex)
+          </label>
+        </fieldset>
+
+        <div>
+          <label className="block text-xs uppercase tracking-[0.15em] text-stone mb-2">Variants (JSON)</label>
+          <textarea
+            name="variantsJson"
+            rows={4}
+            defaultValue={product.variants.length ? JSON.stringify(product.variants, null, 2) : ""}
+            placeholder='[{"title":"50ml","price":4950,"stock":10,"availableForSale":true}]'
+            className="input-admin font-mono text-xs"
+          />
+        </div>
+
         <div className="flex items-center gap-4 pt-2">
           <button
             type="submit"

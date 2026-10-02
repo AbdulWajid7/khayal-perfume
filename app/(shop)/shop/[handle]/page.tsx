@@ -29,6 +29,11 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     description: product.description,
     image: product.featuredImage?.url || "/images/story-teaser.svg",
     handle: product.handle,
+    metaTitle: product.metaTitle,
+    metaDescription: product.metaDescription,
+    ogImage: product.ogImage,
+    canonicalUrl: product.canonicalUrl,
+    noIndex: product.noIndex,
   });
 }
 

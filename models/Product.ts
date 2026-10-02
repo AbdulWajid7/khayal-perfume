@@ -20,6 +20,7 @@ export interface IProduct {
   compareAtPrice?: number;
   cost?: number;
   sku?: string;
+  mpn?: string;
   stock: number;
   lowStockThreshold: number;
   status: "active" | "draft" | "archived";
@@ -27,6 +28,19 @@ export interface IProduct {
   category: string;
   tags: string[];
   variants: IVariant[];
+  concentration?: string;
+  sizeMl?: number;
+  scentNotesTop: string[];
+  scentNotesHeart: string[];
+  scentNotesBase: string[];
+  longevity?: string;
+  sillage?: string;
+  occasion?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  noIndex: boolean;
   createdAt: Date | string;
   updatedAt: Date | string;
 }
@@ -61,6 +75,20 @@ const ProductSchema = new Schema(
     category: { type: String, default: "Unisex" },
     tags: { type: [String], default: [] },
     variants: { type: [VariantSchema], default: [] },
+    mpn: { type: String },
+    concentration: { type: String },
+    sizeMl: { type: Number },
+    scentNotesTop: { type: [String], default: [] },
+    scentNotesHeart: { type: [String], default: [] },
+    scentNotesBase: { type: [String], default: [] },
+    longevity: { type: String },
+    sillage: { type: String },
+    occasion: { type: String },
+    metaTitle: { type: String },
+    metaDescription: { type: String },
+    ogImage: { type: String },
+    canonicalUrl: { type: String },
+    noIndex: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -5,6 +5,11 @@ import OrderConfirmationClient from "@/components/checkout/OrderConfirmationClie
 import type { IOrder } from "@/models/Order";
 
 
+export const metadata = {
+  title: "Order Confirmation | KHAYAL Parfum",
+  robots: { index: false, follow: false },
+};
+
 interface PageProps {
   params: Promise<{ orderNumber: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;

@@ -56,8 +56,17 @@ export interface Product {
 export interface ProductDetails extends Product {
   scentNotes: ScentNotes;
   longevity: string;
+  sillage: string;
   occasion: string;
   scentFamily: string;
+  concentration?: string;
+  sizeMl?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
+  mpn?: string;
 }
 
 export interface CartLineInput {

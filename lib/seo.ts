@@ -66,19 +66,37 @@ export function productMetadata({
   description,
   image,
   handle,
+  metaTitle,
+  metaDescription,
+  ogImage,
+  canonicalUrl,
+  noIndex,
 }: {
   title: string;
   description: string;
   image: string;
   handle: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
 }): Metadata {
   const url = `https://www.khayalparfum.com/shop/${handle}`;
+  const resolvedDescription = metaDescription || description;
+  const truncated =
+    resolvedDescription.length > 160
+      ? `${resolvedDescription.slice(0, 157)}...`
+      : resolvedDescription;
   return {
-    title: `${title} | Khayal Perfumes`,
-    description: description.length > 160 ? `${description.slice(0, 157)}...` : description,
+    title: metaTitle || `${title} | Khayal Perfumes`,
+    description: truncated,
     openGraph: {
-      images: [{ url: image, width: 1200, height: 630 }],
+      title: metaTitle || title,
+      description: truncated,
+      images: [{ url: ogImage || image, width: 1200, height: 630 }],
     },
-    alternates: { canonical: url },
+    robots: noIndex ? { index: false, follow: true } : undefined,
+    alternates: { canonical: canonicalUrl || url },
   };
 }
