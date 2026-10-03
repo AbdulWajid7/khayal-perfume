@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { getProduct, getProductRecommendations } from "@/lib/products";
 import { getBlogPosts } from "@/lib/blog";
-import { getApprovedReviews } from "@/lib/reviews";
 import { productMetadata } from "@/lib/seo";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import ScentPyramid from "@/components/ui/ScentPyramid";
@@ -16,7 +15,7 @@ import StickyBuyBar from "@/components/ui/StickyBuyBar";
 import ProductSchema from "@/components/seo/ProductSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import FAQSchema from "@/components/seo/FAQSchema";
-import ReviewSection from "@/components/reviews/ReviewSection";
+import GoogleReviews from "@/components/reviews/GoogleReviews";
 
 export const dynamic = "force-dynamic";
 
@@ -99,13 +98,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     )
     .slice(0, 3);
   const journalLinks = relatedPosts.length ? relatedPosts : allPosts.slice(0, 3);
-  const reviews = await getApprovedReviews(product.id);
-  const reviewSummary = reviews.length
-    ? {
-        value: reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length,
-        count: reviews.length,
-      }
-    : undefined;
   const faqItems = buildFaqItems(product);
   const images = product.images.length
     ? product.images
@@ -130,7 +122,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             { name: product.title, url: `https://www.khayalparfum.com/shop/${product.handle}` },
           ]}
         />
-        <ProductSchema product={product} rating={reviewSummary} />
+        <ProductSchema product={product} />
         <FAQSchema items={faqItems} />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -197,24 +189,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
 
         <div className="mt-16">
-          <ReviewSection productHandle={product.handle} reviews={reviews} />
+          <GoogleReviews />
         </div>
-
-        {relatedPosts.length > 0 && (
-          <div className="mt-16 max-w-3xl">
-            <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">From the Journal</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {relatedPosts.map((post) => (
-                <Link key={post._id} href={`/journal/${post.slug}`} className="group">
-                  <p className="text-stone text-xs mb-1">{post.tags?.[0] || "Journal"}</p>
-                  <h3 className="text-ink text-sm font-medium leading-snug group-hover:text-gold transition-colors">
-                    {post.title}
-                  </h3>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
 
         {journalLinks.length > 0 && (
           <div className="mt-16 max-w-3xl">

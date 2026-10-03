@@ -16,7 +16,6 @@ const navGroups = [
     links: [
       { label: "Manage Products", href: "/admin/inventory" },
       { label: "Orders", href: "/admin/orders" },
-      { label: "Reviews", href: "/admin/reviews" },
       { label: "Cart Recovery", href: "/admin/recovery" },
     ],
   },
