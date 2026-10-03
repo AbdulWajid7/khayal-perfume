@@ -16,6 +16,7 @@ export interface ProductVariant {
   price: ShopifyMoney;
   availableForSale: boolean;
   sku?: string | null;
+  stock?: number;
 }
 
 export interface ProductMetafield {
@@ -51,6 +52,8 @@ export interface Product {
   vendor?: string;
   publishedAt?: string;
   updatedAt?: string;
+  stock?: number;
+  lowStockThreshold?: number;
 }
 
 export interface ProductDetails extends Product {

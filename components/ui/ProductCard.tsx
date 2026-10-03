@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
+import WishlistButton from "./WishlistButton";
 import { productToAnalyticsItem, trackCommerce } from "@/lib/analytics";
 import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/types/product";
@@ -75,7 +76,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
 
           {scentFamily && (
-            <span className="absolute top-3 right-3 bg-pure/90 backdrop-blur-sm border border-border text-ink text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 rounded-md">
+            <span className="absolute top-3 right-14 bg-pure/90 backdrop-blur-sm border border-border text-ink text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 rounded-md">
               {scentFamily}
             </span>
           )}
@@ -89,6 +90,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           />
         </div>
       </Link>
+      <WishlistButton product={product} />
 
       <div className="p-4">
         <Link href={`/shop/${product.handle}`} onClick={trackSelection}>

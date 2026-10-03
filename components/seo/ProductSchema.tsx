@@ -2,7 +2,13 @@ import type { ProductDetails } from "@/types/product";
 
 const BASE_URL = "https://www.khayalparfum.com";
 
-export default function ProductSchema({ product }: { product: ProductDetails }) {
+export default function ProductSchema({
+  product,
+  rating,
+}: {
+  product: ProductDetails;
+  rating?: { value: number; count: number };
+}) {
   const images = product.images.length
     ? product.images.map((img) => img.url)
     : product.featuredImage
@@ -44,6 +50,15 @@ export default function ProductSchema({ product }: { product: ProductDetails }) 
       .filter((k): k is string => Boolean(k))
       .join(", ") || undefined,
     ...(additionalProperty.length ? { additionalProperty } : {}),
+    ...(rating && rating.count > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: rating.value.toFixed(1),
+            reviewCount: rating.count,
+          },
+        }
+      : {}),
     offers: product.variants.map((variant) => ({
       "@type": "Offer",
       url: productUrl,

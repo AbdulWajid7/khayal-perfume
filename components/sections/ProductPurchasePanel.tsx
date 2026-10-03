@@ -21,8 +21,16 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
     () => productToAnalyticsItem(product, 1, selectedVariant?.id),
     [product, selectedVariant?.id]
   );
+  const variantStock = selectedVariant?.stock ?? product.stock;
+  const lowStock =
+    selectedVariant?.availableForSale !== false &&
+    typeof variantStock === "number" &&
+    variantStock > 0 &&
+    variantStock <= (product.lowStockThreshold ?? 5);
+
   const productUrl = `${siteConfig.url}/shop/${product.handle}`;
-  const whatsappMessage = `Assalamualaikum, I’m interested in KHAYAL ${product.title}. Please help me choose or place an order. ${productUrl}`;
+  const cleanTitle = product.title.replace(/^khayal[\s\-–—:]+/i, "").trim() || product.title;
+  const whatsappMessage = `Assalamualaikum, I’m interested in KHAYAL ${cleanTitle}. Please help me choose or place an order. ${productUrl}`;
   const trackedProduct = useRef("");
 
   useEffect(() => {
@@ -55,7 +63,16 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
             {formatPrice(comparePrice, product.compareAtPriceRange?.maxVariantPrice.currencyCode || product.priceRange.minVariantPrice.currencyCode)}
           </p>
         )}
+        {lowStock && (
+          <span className="text-sm font-medium text-plum bg-plum-pale border border-plum/20 rounded-full px-3 py-1">
+            Only {variantStock} left
+          </span>
+        )}
       </div>
+
+      <p className="mt-3 text-xs text-stone">
+        Karachi delivery within 24 hrs of confirmation · 3–4 working days nationwide
+      </p>
 
       <div className="mt-6">
         <VariantSelector

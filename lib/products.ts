@@ -12,13 +12,14 @@ function mapImage(url: string): ShopifyImage {
   return { url, altText: "" };
 }
 
-function mapVariants(variants: { id: string; title: string; price: number; availableForSale: boolean; sku?: string }[]): ProductVariant[] {
+function mapVariants(variants: { id: string; title: string; price: number; availableForSale: boolean; sku?: string; stock?: number }[]): ProductVariant[] {
   return variants.map((v) => ({
     id: v.id,
     title: v.title,
     price: money(v.price),
     availableForSale: v.availableForSale,
     sku: v.sku || null,
+    stock: v.stock,
   }));
 }
 
@@ -71,6 +72,8 @@ function mapIProductToProduct(doc: IProduct): ProductType {
     vendor: "Khayal",
     publishedAt: doc.createdAt as string,
     updatedAt: doc.updatedAt as string,
+    stock: doc.stock,
+    lowStockThreshold: doc.lowStockThreshold,
   };
 }
 

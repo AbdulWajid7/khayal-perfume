@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { getProduct, getProductRecommendations } from "@/lib/products";
 import { getBlogPosts } from "@/lib/blog";
+import { getApprovedReviews } from "@/lib/reviews";
 import { productMetadata } from "@/lib/seo";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import ScentPyramid from "@/components/ui/ScentPyramid";
@@ -11,9 +12,11 @@ import FAQAccordion, { type FAQItem } from "@/components/ui/FAQAccordion";
 import ProductGallery from "@/components/sections/ProductGallery";
 import ProductPurchasePanel from "@/components/sections/ProductPurchasePanel";
 import RelatedProducts from "@/components/sections/RelatedProducts";
+import StickyBuyBar from "@/components/ui/StickyBuyBar";
 import ProductSchema from "@/components/seo/ProductSchema";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import FAQSchema from "@/components/seo/FAQSchema";
+import ReviewSection from "@/components/reviews/ReviewSection";
 
 export const dynamic = "force-dynamic";
 
@@ -96,6 +99,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
     )
     .slice(0, 3);
   const journalLinks = relatedPosts.length ? relatedPosts : allPosts.slice(0, 3);
+  const reviews = await getApprovedReviews(product.id);
+  const reviewSummary = reviews.length
+    ? {
+        value: reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length,
+        count: reviews.length,
+      }
+    : undefined;
   const faqItems = buildFaqItems(product);
   const images = product.images.length
     ? product.images
@@ -110,7 +120,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   ];
 
   return (
-    <div className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream">
+    <div className="pt-32 pb-28 md:pt-40 md:pb-24 bg-cream">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <Breadcrumb items={breadcrumbItems} />
         <BreadcrumbSchema
@@ -120,7 +130,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             { name: product.title, url: `https://www.khayalparfum.com/shop/${product.handle}` },
           ]}
         />
-        <ProductSchema product={product} />
+        <ProductSchema product={product} rating={reviewSummary} />
         <FAQSchema items={faqItems} />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -139,7 +149,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {product.description}
             </p>
 
-            <div className="mt-6">
+            <div className="mt-6" id="purchase-panel">
               <ProductPurchasePanel product={product} />
             </div>
 
@@ -186,6 +196,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <FAQAccordion items={faqItems} />
         </div>
 
+        <div className="mt-16">
+          <ReviewSection productHandle={product.handle} reviews={reviews} />
+        </div>
+
         {relatedPosts.length > 0 && (
           <div className="mt-16 max-w-3xl">
             <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">From the Journal</h2>
@@ -220,6 +234,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         <RelatedProducts products={related} />
       </div>
+      <StickyBuyBar product={product} />
     </div>
   );
 }

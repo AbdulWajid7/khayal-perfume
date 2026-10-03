@@ -1,9 +1,12 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 import { trackMarketing } from "@/lib/analytics";
 
 export default function WhatsAppButton() {
+  const pathname = usePathname();
+  const isProductPage = /^\/shop\/[^/]+$/.test(pathname);
   const message = `Assalamualaikum, I need help choosing or ordering a KHAYAL fragrance. ${siteConfig.url}`;
 
   return (
@@ -12,7 +15,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       onClick={() => trackMarketing("whatsapp_click", { placement: "floating_button" })}
-      className="fixed bottom-5 right-5 z-[75] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 focus-visible:scale-105 md:bottom-7 md:right-7"
+      className={`fixed ${isProductPage ? "bottom-24" : "bottom-5"} right-5 z-[75] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 focus-visible:scale-105 md:bottom-7 md:right-7`}
       aria-label="Chat with KHAYAL on WhatsApp"
     >
       <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

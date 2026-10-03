@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
 import { createOrder } from "@/lib/checkout";
 import { applyDiscountCode } from "@/lib/discounts";
+import { saveAbandonedCart, markCartRecovered } from "@/lib/cart-abandon";
 import { trackCommerce, trackMarketing } from "@/lib/analytics";
 import { formatPrice } from "@/lib/utils";
 import { siteConfig } from "@/lib/site-config";
@@ -54,6 +55,7 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
   const total = useMemo(() => Math.max(0, subtotal + shipping - discount), [subtotal, shipping, discount]);
   const deliveryMethod = useMemo(() => getDeliveryMethodLabel(form.city), [form.city]);
   const expectedDelivery = useMemo(() => getExpectedDeliveryText(form.city), [form.city]);
+  const cartSessionId = useMemo(() => crypto.randomUUID(), []);
 
   useEffect(() => {
     if (items.length > 0) {
@@ -90,6 +92,27 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
       });
     }
   }, [form.paymentMethod, shipping, subtotal]);
+
+  useEffect(() => {
+    const hasContact = form.phone.trim() || form.email.trim();
+    if (!items.length || !hasContact) return;
+    const timer = setTimeout(() => {
+      saveAbandonedCart({
+        sessionId: cartSessionId,
+        email: form.email.trim() || undefined,
+        phone: form.phone.trim() || undefined,
+        name: form.name.trim() || undefined,
+        items: items.map((item) => ({
+          title: item.title,
+          variantTitle: item.variantTitle,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        subtotal,
+      });
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [items, subtotal, form.phone, form.email, form.name, cartSessionId]);
 
   if (items.length === 0) {
     return (
@@ -185,6 +208,7 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
         return;
       }
 
+      markCartRecovered(cartSessionId);
       clearCart();
       const params = new URLSearchParams();
       params.set("token", await generateOrderAccessToken(result.order.orderNumber));
@@ -344,6 +368,26 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
                 </div>
               </label>
             )}
+          </div>
+          <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-border pt-4">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-cream-dark/40 px-3 py-1.5 text-[11px] text-stone">
+              <svg className="h-3.5 w-3.5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+              Cash on Delivery
+            </span>
+            {bankTransferEnabled && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-cream-dark/40 px-3 py-1.5 text-[11px] text-stone">
+                <svg className="h-3.5 w-3.5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M3 9l9-6 9 6M4 9v10m5-10v10m6-10v10m5-10v10M2 20h20"/></svg>
+                Bank Transfer
+              </span>
+            )}
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-cream-dark/40 px-3 py-1.5 text-[11px] text-stone">
+              <svg className="h-3.5 w-3.5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Secure Checkout
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-cream-dark/40 px-3 py-1.5 text-[11px] text-stone">
+              <svg className="h-3.5 w-3.5 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8zM3 8l9 5 9-5M12 13v8"/></svg>
+              Tester included
+            </span>
           </div>
         </section>
       </div>
