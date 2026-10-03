@@ -63,6 +63,8 @@ export interface ProductDetails extends Product {
   sizeMl?: number;
   metaTitle?: string;
   metaDescription?: string;
+  focusKeyword?: string;
+  keywords?: string[];
   ogImage?: string;
   canonicalUrl?: string;
   noIndex?: boolean;

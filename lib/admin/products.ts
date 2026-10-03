@@ -63,6 +63,8 @@ export async function createProduct(formData: FormData) {
     occasion: getString(formData, "occasion") || undefined,
     metaTitle: getString(formData, "metaTitle") || undefined,
     metaDescription: getString(formData, "metaDescription") || undefined,
+    focusKeyword: getString(formData, "focusKeyword") || undefined,
+    keywords: getTags(formData, [], "keywords"),
     ogImage: getString(formData, "ogImage") || undefined,
     canonicalUrl: getString(formData, "canonicalUrl") || undefined,
     noIndex: formData.get("noIndex") === "on",
@@ -113,6 +115,8 @@ export async function updateProduct(id: string, formData: FormData) {
   product.occasion = getString(formData, "occasion") || product.occasion;
   product.metaTitle = getString(formData, "metaTitle") || product.metaTitle;
   product.metaDescription = getString(formData, "metaDescription") || product.metaDescription;
+  product.focusKeyword = getString(formData, "focusKeyword") || product.focusKeyword;
+  product.keywords = getTags(formData, product.keywords, "keywords");
   product.ogImage = getString(formData, "ogImage") || product.ogImage;
   product.canonicalUrl = getString(formData, "canonicalUrl") || product.canonicalUrl;
   product.noIndex = formData.get("noIndex") === "on";

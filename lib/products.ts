@@ -33,6 +33,7 @@ function deriveMetafields(doc: IProduct): ProductMetafield[] {
   push("scent_notes_top", doc.scentNotesTop || []);
   push("scent_notes_heart", doc.scentNotesHeart || []);
   push("scent_notes_base", doc.scentNotesBase || []);
+  push("keywords", doc.keywords || []);
   push("longevity", doc.longevity);
   push("sillage", doc.sillage);
   push("occasion", doc.occasion);
@@ -92,6 +93,8 @@ function addDerivedFields(product: ProductType, doc?: IProduct): ProductDetails 
     sizeMl: doc?.sizeMl,
     metaTitle: doc?.metaTitle,
     metaDescription: doc?.metaDescription,
+    focusKeyword: doc?.focusKeyword,
+    keywords: doc?.keywords,
     ogImage: doc?.ogImage,
     canonicalUrl: doc?.canonicalUrl,
     noIndex: doc?.noIndex,

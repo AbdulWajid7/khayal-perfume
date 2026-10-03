@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getProducts } from "@/lib/products";
 import ProductCard from "@/components/ui/ProductCard";
 import ProductListTracker from "@/components/analytics/ProductListTracker";
+import type { Product as ProductType } from "@/types/product";
 
 export const dynamic = "force-dynamic";
 
@@ -31,13 +32,38 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
   },
 };
 
+function capitalizeTag(tag: string): string {
+  return tag.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function productKeywords(product: ProductType): string[] {
+  const keywordMeta = product.metafields.find(
+    (m) => m.namespace === "custom" && m.key === "keywords"
+  )?.value;
+  const metaKeywords = keywordMeta
+    ? keywordMeta.split(",").map((k) => k.trim().toLowerCase())
+    : [];
+  return [...product.tags.map((t) => t.toLowerCase()), ...metaKeywords];
+}
+
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; tag?: string }>;
 }): Promise<Metadata> {
-  const { category } = await searchParams;
+  const { category, tag } = await searchParams;
   const key = (category || "").toLowerCase();
+  const activeTag = (tag || "").toLowerCase().trim();
+
+  if (activeTag) {
+    const label = capitalizeTag(activeTag);
+    return {
+      title: `${label} Perfumes`,
+      description: `Explore Khayal's ${activeTag} fragrances — long-lasting niche perfumes crafted in Karachi and delivered across Pakistan.`,
+      alternates: { canonical: `/shop?tag=${encodeURIComponent(activeTag)}` },
+    };
+  }
+
   const meta = CATEGORY_META[key] || {
     title: "The Collection",
     description:
@@ -55,19 +81,30 @@ export async function generateMetadata({
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; tag?: string }>;
 }) {
-  const { category } = await searchParams;
+  const { category, tag } = await searchParams;
   const activeCategory = (category || "").toLowerCase();
+  const activeTag = (tag || "").toLowerCase().trim();
 
   const products = await getProducts();
-  const filtered = CATEGORY_META[activeCategory]
-    ? products.filter(
-        (p) => p.productType?.toLowerCase() === activeCategory
-      )
-    : products;
+  const filtered = activeTag
+    ? products.filter((p) => productKeywords(p).includes(activeTag))
+    : CATEGORY_META[activeCategory]
+      ? products.filter(
+          (p) => p.productType?.toLowerCase() === activeCategory
+        )
+      : products;
 
-  const heading = CATEGORY_META[activeCategory]?.title || "The Collection";
+  const heading = activeTag
+    ? `${capitalizeTag(activeTag)} Fragrances`
+    : CATEGORY_META[activeCategory]?.title || "The Collection";
+
+  const allTags = [
+    ...new Set(
+      products.flatMap((p) => p.tags.map((t) => t.toLowerCase().trim())).filter(Boolean)
+    ),
+  ].slice(0, 12);
 
   const itemListSchema = {
     "@context": "https://schema.org",
@@ -118,6 +155,24 @@ export default async function ShopPage({
           })}
         </nav>
 
+        {allTags.length > 0 && (
+          <nav aria-label="Browse by scent" className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="text-[10px] uppercase tracking-[0.18em] text-stone-light">Scents:</span>
+            {allTags.map((t) => (
+              <Link
+                key={t}
+                href={`/shop?tag=${encodeURIComponent(t)}`}
+                className={[
+                  "text-[11px] uppercase tracking-[0.14em] transition-colors duration-300",
+                  t === activeTag ? "text-gold" : "text-stone hover:text-gold",
+                ].join(" ")}
+              >
+                {capitalizeTag(t)}
+              </Link>
+            ))}
+          </nav>
+        )}
+
         {filtered.length > 0 ? (
           <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filtered.map((product) => (
@@ -126,7 +181,7 @@ export default async function ShopPage({
           </div>
         ) : (
           <p className="mt-10 text-stone">
-            No fragrances in this category yet.{" "}
+            No fragrances {activeTag ? `for "${activeTag}"` : "in this category"} yet.{" "}
             <Link href="/shop" className="text-gold underline underline-offset-4">
               View the full collection
             </Link>

@@ -38,6 +38,8 @@ export interface IProduct {
   occasion?: string;
   metaTitle?: string;
   metaDescription?: string;
+  focusKeyword?: string;
+  keywords: string[];
   ogImage?: string;
   canonicalUrl?: string;
   noIndex: boolean;
@@ -86,6 +88,8 @@ const ProductSchema = new Schema(
     occasion: { type: String },
     metaTitle: { type: String },
     metaDescription: { type: String },
+    focusKeyword: { type: String },
+    keywords: { type: [String], default: [] },
     ogImage: { type: String },
     canonicalUrl: { type: String },
     noIndex: { type: Boolean, default: false },

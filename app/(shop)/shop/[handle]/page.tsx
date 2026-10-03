@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 import { getProduct, getProductRecommendations } from "@/lib/products";
+import { getBlogPosts } from "@/lib/blog";
 import { productMetadata } from "@/lib/seo";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import ScentPyramid from "@/components/ui/ScentPyramid";
@@ -31,6 +33,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     handle: product.handle,
     metaTitle: product.metaTitle,
     metaDescription: product.metaDescription,
+    focusKeyword: product.focusKeyword,
+    keywords: [...(product.keywords || []), ...(product.tags || []), product.productType].filter(
+      (k): k is string => Boolean(k)
+    ),
     ogImage: product.ogImage,
     canonicalUrl: product.canonicalUrl,
     noIndex: product.noIndex,
@@ -77,6 +83,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   const related = await getProductRecommendations(product.id);
+  const allPosts = await getBlogPosts(0);
+  const productTerms = [
+    ...(product.tags || []),
+    product.productType || "",
+    product.scentFamily || "",
+    ...(product.keywords || []),
+  ].map((t) => t.toLowerCase());
+  const relatedPosts = allPosts
+    .filter((p) =>
+      (p.tags || []).some((t) => productTerms.includes(t.toLowerCase()))
+    )
+    .slice(0, 3);
+  const journalLinks = relatedPosts.length ? relatedPosts : allPosts.slice(0, 3);
   const faqItems = buildFaqItems(product);
   const images = product.images.length
     ? product.images
@@ -166,6 +185,38 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">Frequently Asked Questions</h2>
           <FAQAccordion items={faqItems} />
         </div>
+
+        {relatedPosts.length > 0 && (
+          <div className="mt-16 max-w-3xl">
+            <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">From the Journal</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {relatedPosts.map((post) => (
+                <Link key={post._id} href={`/journal/${post.slug}`} className="group">
+                  <p className="text-stone text-xs mb-1">{post.tags?.[0] || "Journal"}</p>
+                  <h3 className="text-ink text-sm font-medium leading-snug group-hover:text-gold transition-colors">
+                    {post.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {journalLinks.length > 0 && (
+          <div className="mt-16 max-w-3xl">
+            <h2 className="font-serif-display text-ink text-2xl font-medium mb-6">From the Journal</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {journalLinks.map((post) => (
+                <Link key={post._id} href={`/journal/${post.slug}`} className="group">
+                  <p className="text-stone text-xs mb-2">{post.tags?.[0] || "Journal"}</p>
+                  <h3 className="text-ink text-sm font-medium leading-snug group-hover:text-gold transition-colors">
+                    {post.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         <RelatedProducts products={related} />
       </div>

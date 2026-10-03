@@ -40,6 +40,9 @@ export default function ProductSchema({ product }: { product: ProductDetails }) 
       name: "Khayal",
     },
     category: "Health & Beauty > Personal Care > Cosmetics > Fragrance",
+    keywords: [product.focusKeyword, ...(product.keywords || []), ...product.tags]
+      .filter((k): k is string => Boolean(k))
+      .join(", ") || undefined,
     ...(additionalProperty.length ? { additionalProperty } : {}),
     offers: product.variants.map((variant) => ({
       "@type": "Offer",

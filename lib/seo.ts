@@ -68,6 +68,8 @@ export function productMetadata({
   handle,
   metaTitle,
   metaDescription,
+  focusKeyword,
+  keywords,
   ogImage,
   canonicalUrl,
   noIndex,
@@ -78,6 +80,8 @@ export function productMetadata({
   handle: string;
   metaTitle?: string;
   metaDescription?: string;
+  focusKeyword?: string;
+  keywords?: string[];
   ogImage?: string;
   canonicalUrl?: string;
   noIndex?: boolean;
@@ -88,9 +92,13 @@ export function productMetadata({
     resolvedDescription.length > 160
       ? `${resolvedDescription.slice(0, 157)}...`
       : resolvedDescription;
+  const allKeywords = [focusKeyword, ...(keywords || [])].filter(
+    (k): k is string => Boolean(k)
+  );
   return {
     title: metaTitle || `${title} | Khayal Perfumes`,
     description: truncated,
+    keywords: allKeywords.length ? allKeywords : undefined,
     openGraph: {
       title: metaTitle || title,
       description: truncated,

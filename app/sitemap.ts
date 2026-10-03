@@ -35,5 +35,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...productRoutes, ...blogRoutes];
+  const categoryRoutes: MetadataRoute.Sitemap = ["men", "women", "unisex"].map((c) => ({
+    url: `${baseUrl}/shop?category=${c}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  const uniqueTags = [
+    ...new Set(
+      products.flatMap((p) => p.tags.map((t) => t.toLowerCase().trim())).filter(Boolean)
+    ),
+  ];
+  const tagRoutes: MetadataRoute.Sitemap = uniqueTags.map((t) => ({
+    url: `${baseUrl}/shop?tag=${encodeURIComponent(t)}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.65,
+  }));
+
+  return [...staticRoutes, ...categoryRoutes, ...tagRoutes, ...productRoutes, ...blogRoutes];
 }

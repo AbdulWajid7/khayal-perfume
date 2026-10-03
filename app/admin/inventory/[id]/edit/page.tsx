@@ -136,6 +136,8 @@ export default async function EditProductPage({ params }: Props) {
           <legend className="px-2 text-xs uppercase tracking-[0.15em] text-stone">SEO</legend>
           <input name="metaTitle" defaultValue={product.metaTitle || ""} placeholder="Meta title (50-60 chars, optional)" className="input-admin" />
           <textarea name="metaDescription" rows={2} defaultValue={product.metaDescription || ""} placeholder="Meta description (140-160 chars, optional)" className="input-admin" />
+          <input name="focusKeyword" defaultValue={product.focusKeyword || ""} placeholder="Focus keyword (e.g. oud perfume for men)" className="input-admin" />
+          <input name="keywords" defaultValue={product.keywords?.join(", ") || ""} placeholder="Keywords, comma separated" className="input-admin" />
           <input name="ogImage" defaultValue={product.ogImage || ""} placeholder="Social share image URL (1200x630, optional)" className="input-admin" />
           <input name="canonicalUrl" defaultValue={product.canonicalUrl || ""} placeholder="Canonical URL override (optional)" className="input-admin" />
           <label className="flex items-center gap-2 text-sm text-stone">
