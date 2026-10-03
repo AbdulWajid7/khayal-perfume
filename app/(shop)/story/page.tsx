@@ -3,9 +3,9 @@ import Reveal from "@/components/ui/Reveal";
 import RevealMask from "@/components/ui/RevealMask";
 
 export const metadata: Metadata = {
-  title: "Our Story | Khayal Parfum",
+  title: "Our Story | Khayal Fragrance",
   description:
-    "Discover the journey of Khayal Parfum — from the first spark of imagination to the final bottle that reaches your hands.",
+    "Discover the journey of Khayal Fragrance — from the first spark of imagination to the final bottle that reaches your hands.",
 };
 
 const steps = [

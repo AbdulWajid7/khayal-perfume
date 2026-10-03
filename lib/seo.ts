@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const defaultMetadata: Metadata = {
   metadataBase: new URL("https://www.khayalparfum.com"),
   title: {
-    template: "%s | Khayal Parfum — Luxury Perfumes & Attars",
+    template: "%s | Khayal Fragrance — Luxury Perfumes & Attars",
     default:
-      "Khayal Parfum — Buy Luxury Oud, Musk & Attar Perfumes Online in Pakistan",
+      "Khayal Fragrance — Buy Luxury Oud, Musk & Attar Perfumes Online in Pakistan",
   },
   description:
-    "Some fragrances become memories. Khayal Parfum crafts premium perfumes and attars in Karachi — long-lasting oud, musk, and rose compositions delivered nationwide across Pakistan.",
+    "Some fragrances become memories. Khayal Fragrance crafts premium perfumes and attars in Karachi — long-lasting oud, musk, and rose compositions delivered nationwide across Pakistan.",
   keywords: [
-    "khayal parfum",
+    "khayal fragrance",
     "luxury perfume online pakistan",
     "niche fragrance brand",
     "oud perfume online pakistan",
@@ -23,17 +23,17 @@ export const defaultMetadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_PK",
-    siteName: "Khayal Parfum",
-    title: "Khayal Parfum — Luxury Oud, Musk & Attar Perfumes",
+    siteName: "Khayal Fragrance",
+    title: "Khayal Fragrance — Luxury Oud, Musk & Attar Perfumes",
     description:
       "Some fragrances become memories. Premium perfumes and attars crafted in Karachi, delivered across Pakistan.",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Khayal Parfum — Luxury Perfumes" }],
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Khayal Fragrance — Luxury Perfumes" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Khayal Parfum — Luxury Oud, Musk & Attar Perfumes",
+    title: "Khayal Fragrance — Luxury Oud, Musk & Attar Perfumes",
     description:
-      "Discover Khayal Parfum's collection of long-lasting oud, musk, and attar eau de parfums.",
+      "Discover Khayal Fragrance's collection of long-lasting oud, musk, and attar eau de parfums.",
     images: ["/og-image.jpg"],
   },
   icons: {
@@ -96,7 +96,7 @@ export function productMetadata({
     (k): k is string => Boolean(k)
   );
   return {
-    title: metaTitle || `${title} | Khayal Perfumes`,
+    title: metaTitle || `${title} | Khayal Fragrance`,
     description: truncated,
     keywords: allKeywords.length ? allKeywords : undefined,
     openGraph: {

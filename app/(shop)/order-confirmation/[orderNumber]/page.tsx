@@ -6,7 +6,7 @@ import type { IOrder } from "@/models/Order";
 
 
 export const metadata = {
-  title: "Order Confirmation | KHAYAL Parfum",
+  title: "Order Confirmation | KHAYAL Fragrance",
   robots: { index: false, follow: false },
 };
 

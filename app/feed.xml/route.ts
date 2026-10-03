@@ -83,7 +83,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
-    <title>Khayal Parfum</title>
+    <title>Khayal Fragrance</title>
     <link>${BASE_URL}</link>
     <description>Luxury oud, musk, and attar perfumes crafted in Karachi, Pakistan.</description>
 ${items}

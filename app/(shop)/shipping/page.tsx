@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Shipping, Returns & Exchanges | Khayal Parfum",
+  title: "Shipping, Returns & Exchanges | Khayal Fragrance",
   description:
     "Delivery times, free-shipping eligibility, tester-based return requests, and exchange policy for KHAYAL fragrance orders in Pakistan.",
 };

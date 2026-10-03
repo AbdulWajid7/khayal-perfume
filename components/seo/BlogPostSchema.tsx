@@ -23,13 +23,13 @@ export default function BlogPostSchema({ post }: { post: BlogPost }) {
     author: {
       "@type": "Organization",
       "@id": `${BASE_URL}/#organization`,
-      name: "Khayal Parfum",
+      name: "Khayal Fragrance",
       url: BASE_URL,
     },
     publisher: {
       "@type": "Organization",
       "@id": `${BASE_URL}/#organization`,
-      name: "Khayal Parfum",
+      name: "Khayal Fragrance",
       url: BASE_URL,
       logo: {
         "@type": "ImageObject",

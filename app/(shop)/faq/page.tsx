@@ -3,14 +3,14 @@ import FAQAccordion from "@/components/ui/FAQAccordion";
 import FAQSchema from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "FAQ | Khayal Parfum",
+  title: "FAQ | Khayal Fragrance",
   description:
-    "Answers to common questions about Khayal Parfum — ordering, shipping, returns, attars, and choosing your fragrance.",
+    "Answers to common questions about Khayal Fragrance — ordering, shipping, returns, attars, and choosing your fragrance.",
 };
 
 const items = [
   {
-    question: "What makes Khayal Parfum different?",
+    question: "What makes Khayal Fragrance different?",
     answer:
       "Khayal creates long-lasting niche perfumes and attars inspired by South Asian, Middle Eastern, and modern Western perfumery. Every composition is built around high-quality ingredients like oud, rose, amber, and musk, blended for projection and character.",
   },

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Khayal Parfum",
+  title: "Terms & Conditions | Khayal Fragrance",
   description:
-    "The terms and conditions for using Khayal Parfum's website and purchasing our products.",
+    "The terms and conditions for using Khayal Fragrance's website and purchasing our products.",
 };
 
 export default function TermsPage() {
@@ -23,7 +23,7 @@ export default function TermsPage() {
             <h2 className="text-ink text-lg font-medium mb-3">1. Introduction</h2>
             <p>
               These terms govern your use of khayalparfum.com and the purchase of products from
-              Khayal Parfum. By placing an order or browsing the site, you agree to these terms.
+              Khayal Fragrance. By placing an order or browsing the site, you agree to these terms.
             </p>
           </div>
 
@@ -54,7 +54,7 @@ export default function TermsPage() {
             <h2 className="text-ink text-lg font-medium mb-3">5. Intellectual Property</h2>
             <p>
               All content, designs, product names, logos, and images on this site are the property of
-              Khayal Parfum. You may not use them for commercial purposes without written permission.
+              Khayal Fragrance. You may not use them for commercial purposes without written permission.
             </p>
           </div>
 

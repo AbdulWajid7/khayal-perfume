@@ -51,7 +51,7 @@ export default function Footer() {
               <div className="relative h-12 w-12 rounded-full overflow-hidden shadow-md">
                 <Image
                   src="/logo.png"
-                  alt="Khayal Perfume"
+                  alt="Khayal Fragrance"
                   fill
                   className="object-cover"
                   sizes="48px"

@@ -72,7 +72,7 @@ export default function ProductSchema({
         : "https://schema.org/OutOfStock",
       seller: {
         "@type": "Organization",
-        name: "Khayal Parfum",
+        name: "Khayal Fragrance",
         url: BASE_URL,
       },
       shippingDetails: {

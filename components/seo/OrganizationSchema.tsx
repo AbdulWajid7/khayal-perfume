@@ -7,14 +7,14 @@ export default function OrganizationSchema() {
       {
         "@type": "Organization",
         "@id": `${baseUrl}/#organization`,
-        name: "Khayal Parfum",
+        name: "Khayal Fragrance",
         url: baseUrl,
         logo: {
           "@type": "ImageObject",
           url: `${baseUrl}/logo.png`,
         },
         description:
-          "Khayal Parfum is a luxury niche fragrance house crafting long-lasting oud, musk, and attar perfumes in Pakistan.",
+          "Khayal Fragrance is a luxury niche fragrance house crafting long-lasting oud, musk, and attar perfumes in Pakistan.",
         email: "official@khayalparfum.com",
         telephone: "+923202704617",
         contactPoint: {
@@ -29,7 +29,7 @@ export default function OrganizationSchema() {
         "@type": "WebSite",
         "@id": `${baseUrl}/#website`,
         url: baseUrl,
-        name: "Khayal Parfum",
+        name: "Khayal Fragrance",
         publisher: { "@id": `${baseUrl}/#organization` },
         inLanguage: "en-PK",
       },
