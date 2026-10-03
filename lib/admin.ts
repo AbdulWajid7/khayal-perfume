@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Post, type IPost } from "@/models/Post";
 import { getSession, requireAuth } from "@/lib/auth";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 import { put } from "@vercel/blob";
 
 function slugify(text: string) {
@@ -36,16 +36,22 @@ function getTags(formData: FormData) {
     .filter(Boolean);
 }
 
+const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
+  allowedTags: ["p", "br", "strong", "em", "u", "s", "a", "h1", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "img"],
+  allowedAttributes: {
+    a: ["href", "title", "target"],
+    img: ["src", "alt", "title"],
+  },
+  allowedSchemes: ["http", "https", "mailto", "tel"],
+};
+
 export async function createPost(formData: FormData) {
   const session = await requireAuth(["admin", "editor"]);
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 
   const html = getString(formData, "content");
-  const cleanHtml = DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ["p", "br", "strong", "em", "u", "s", "a", "h1", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "img"],
-    ALLOWED_ATTR: ["href", "title", "alt", "src", "target"],
-  });
+  const cleanHtml = sanitizeHtml(html, SANITIZE_OPTIONS);
 
   const title = getString(formData, "title") || "Untitled";
   const slugBase = getString(formData, "slug") || slugify(title);
@@ -99,10 +105,7 @@ export async function updatePost(id: string, formData: FormData) {
   if (!post) throw new Error("Post not found");
 
   const html = getString(formData, "content");
-  const cleanHtml = DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ["p", "br", "strong", "em", "u", "s", "a", "h1", "h2", "h3", "h4", "ul", "ol", "li", "blockquote", "img"],
-    ALLOWED_ATTR: ["href", "title", "alt", "src", "target"],
-  });
+  const cleanHtml = sanitizeHtml(html, SANITIZE_OPTIONS);
 
   const title = getString(formData, "title") || post.title;
   const slug = getString(formData, "slug") || post.slug;
