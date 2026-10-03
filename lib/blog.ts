@@ -60,7 +60,8 @@ export async function getBlogPostById(id: string): Promise<BlogPost | null> {
   return mapPost(toJSON(post) as unknown as IPost);
 }
 
-function toIsoString(value: string | Date): string {
+function toIsoString(value: string | Date | undefined | null): string {
+  if (!value) return new Date(0).toISOString();
   if (typeof value === "string") return value;
   return value.toISOString();
 }
@@ -82,9 +83,9 @@ function mapPost(post: IPost): BlogPost {
     schemaType: post.schemaType,
     publishedAt: toIsoString(post.publishedAt),
     updatedAt: toIsoString(post.updatedAt),
-    excerpt: post.excerpt,
+    excerpt: post.excerpt || "",
     coverImage: post.coverImage,
-    content: post.content,
+    content: post.content || "",
     tags: post.tags || [],
     readTime: post.readTime || 5,
     status: post.status,

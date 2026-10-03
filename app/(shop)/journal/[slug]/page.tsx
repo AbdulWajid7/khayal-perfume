@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const post = await getBlogPost(slug);
   if (!post) return {};
 
-  const description = post.metaDescription || truncateText(post.excerpt, 160);
+  const description = post.metaDescription || truncateText(post.excerpt || post.title, 160);
   const canonical = post.canonicalUrl || `https://www.khayalparfum.com/journal/${post.slug}`;
 
   return {
