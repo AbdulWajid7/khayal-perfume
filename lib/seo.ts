@@ -58,6 +58,9 @@ export const defaultMetadata: Metadata = {
   alternates: { canonical: "./" },
   verification: {
     google: "google4063a7c75f45c663",
+    other: {
+      "p:domain_verify": "720950dae548dcf3e4efbce7521ab609",
+    },
   },
 };
 
