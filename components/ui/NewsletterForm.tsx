@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { subscribeToNewsletter } from "@/lib/subscribers";
+import { usePathname } from "next/navigation";
+import { createWelcomeSignup } from "@/lib/welcome-offers";
 import { trackMarketing } from "@/lib/analytics";
 
 export default function NewsletterForm() {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -15,10 +17,11 @@ export default function NewsletterForm() {
     setStatus("submitting");
     setMessage("");
     try {
-      const res = await subscribeToNewsletter(email, "footer");
+      const res = await createWelcomeSignup(email, "footer", pathname);
       if (res.ok) {
         trackMarketing("newsletter_signup", { lead_type: "newsletter", placement: "footer" });
         setStatus("success");
+        setMessage(res.message);
         setEmail("");
       } else {
         setStatus("error");
@@ -33,7 +36,7 @@ export default function NewsletterForm() {
   if (status === "success") {
     return (
       <p className="text-gold text-sm font-medium">
-        Thank you — you&apos;ll hear from us soon.
+        {message || "Thank you — you'll hear from us soon."}
       </p>
     );
   }

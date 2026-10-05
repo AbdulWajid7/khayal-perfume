@@ -113,10 +113,7 @@ export async function createWelcomeSignup(
 
   await dbConnect();
   const config = await getWelcomeDiscountConfig();
-  if (!config || !config.enabled) {
-    return { ok: false, message: "This offer is not currently active." };
-  }
-
+  const offerEnabled = Boolean(config?.enabled);
   const attribution = await captureAttribution();
 
   const subscriber = await Subscriber.findOne({ normalizedEmail }).lean();
@@ -147,7 +144,7 @@ export async function createWelcomeSignup(
     }
   }
 
-  // Create or update subscriber
+  // Create or update subscriber regardless of offer state
   const subscriberDoc = await Subscriber.findOneAndUpdate(
     { normalizedEmail },
     {
@@ -164,7 +161,11 @@ export async function createWelcomeSignup(
     { upsert: true, new: true, setDefaultsOnInsert: true }
   );
 
-  const offer = await createWelcomeOffer(subscriberDoc._id.toString(), normalizedEmail, config);
+  if (!offerEnabled) {
+    return { ok: true, message: "Thank you for subscribing." };
+  }
+
+  const offer = await createWelcomeOffer(subscriberDoc._id.toString(), normalizedEmail, config!);
 
   await Subscriber.findByIdAndUpdate(subscriberDoc._id, {
     welcomeCodeStatus: "issued",

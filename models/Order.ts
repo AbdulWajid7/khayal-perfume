@@ -27,7 +27,7 @@ export type DeliveryMethod = "self_delivery" | "nationwide_courier";
 
 export type Courier = "self_delivery" | "leopards" | "tcs" | "unassigned";
 
-export type SalesChannel = "KHAYAL_WEBSITE";
+export type SalesChannel = "KHAYAL_WEBSITE" | "KHAYAL_WHATSAPP";
 
 export interface IOrderAddress {
   line: string;
@@ -228,7 +228,7 @@ const OrderSchema = new Schema(
   {
     orderNumber: { type: String, required: true, unique: true, index: true },
     idempotencyKey: { type: String, required: true, unique: true, index: true },
-    channel: { type: String, enum: ["KHAYAL_WEBSITE"], default: "KHAYAL_WEBSITE" },
+    channel: { type: String, enum: ["KHAYAL_WEBSITE", "KHAYAL_WHATSAPP"], default: "KHAYAL_WEBSITE" },
     brandId: { type: String, index: true },
     customer: { type: OrderCustomerSchema, required: true },
     items: { type: [OrderItemSchema], required: true },

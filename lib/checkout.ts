@@ -45,6 +45,7 @@ export interface CreateOrderInput {
   paymentMethod: "cod" | "bank_transfer";
   customerNotes?: string;
   discountCode?: string;
+  channel?: "KHAYAL_WEBSITE" | "KHAYAL_WHATSAPP";
 }
 
 const CustomerSchema = z.object({
@@ -76,6 +77,7 @@ const CreateOrderSchema = z.object({
   paymentMethod: z.enum(["cod", "bank_transfer"]),
   customerNotes: z.string().max(500).optional().or(z.literal("")),
   discountCode: z.string().max(50).optional().or(z.literal("")),
+  channel: z.enum(["KHAYAL_WEBSITE", "KHAYAL_WHATSAPP"]).optional(),
 });
 
 export type CheckoutResult =
@@ -234,7 +236,7 @@ export async function createOrder(input: CreateOrderInput): Promise<CheckoutResu
   const order = await Order.create({
     orderNumber,
     idempotencyKey: data.idempotencyKey,
-    channel: "KHAYAL_WEBSITE" as const,
+    channel: data.channel || "KHAYAL_WEBSITE",
     brandId: KHAYAL_BRAND_ID,
     customer,
     items: lineItems,
@@ -269,7 +271,7 @@ export async function createOrder(input: CreateOrderInput): Promise<CheckoutResu
         actor: "customer",
         action: "order_created",
         after: { orderStatus, paymentStatus, total },
-        note: `Order placed via ${data.paymentMethod}`,
+        note: `Order placed via ${data.channel === "KHAYAL_WHATSAPP" ? "WhatsApp" : "website"} (${data.paymentMethod})`,
         createdAt: new Date(),
       },
     ],
