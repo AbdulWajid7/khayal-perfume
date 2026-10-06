@@ -9,21 +9,21 @@ const categories = [
   {
     title: "Men",
     description: "Bold, structured, and commanding.",
-    href: "/shop?category=men",
+    href: "/shop/men",
     image:
       "/images/category-men.png",
   },
   {
     title: "Women",
     description: "Floral, luminous, and unforgettable.",
-    href: "/shop?category=women",
+    href: "/shop/women",
     image:
       "/images/category-women.png",
   },
   {
     title: "Unisex",
     description: "For anyone who wears intention.",
-    href: "/shop?category=unisex",
+    href: "/shop/unisex",
     image:
       "/images/category-unisex.png",
   },

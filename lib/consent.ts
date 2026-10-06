@@ -45,7 +45,14 @@ declare global {
   interface Window {
     dataLayer: Record<string, unknown>[];
     gtag?: (...args: unknown[]) => void;
-    fbq?: ((...args: unknown[]) => void) & { callMethod?: (...args: unknown[]) => void; queue?: unknown[]; push?: unknown; loaded?: boolean; version?: string };
+    fbq?: ((...args: unknown[]) => void) & {
+      callMethod?: (...args: unknown[]) => void;
+      queue?: unknown[];
+      push?: unknown;
+      loaded?: boolean;
+      version?: string;
+      __khayalInit?: boolean;
+    };
     clarity?: ((...args: unknown[]) => void) & { q?: unknown[] };
     _fbq?: unknown;
   }
@@ -114,27 +121,31 @@ export function updateConsentMode(preferences: ConsentPreferences): void {
 }
 
 export function loadMetaPixelScript(pixelId: string): void {
-  if (typeof window === "undefined" || typeof document === "undefined" || window.fbq) return;
+  if (typeof window === "undefined" || typeof document === "undefined") return;
+  if (window.fbq?.__khayalInit) return;
 
-  const script = document.createElement("script");
-  script.async = true;
-  script.src = "https://connect.facebook.net/en_US/fbevents.js";
-  document.head.appendChild(script);
+  if (!window.fbq) {
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = "https://connect.facebook.net/en_US/fbevents.js";
+    document.head.appendChild(script);
 
-  window.fbq = function (...args: unknown[]) {
-    if (window.fbq?.callMethod) {
-      window.fbq.callMethod(...args);
-    } else {
-      window.fbq?.queue?.push(args);
-    }
-  };
+    window.fbq = function (...args: unknown[]) {
+      if (window.fbq?.callMethod) {
+        window.fbq.callMethod(...args);
+      } else {
+        window.fbq?.queue?.push(args);
+      }
+    };
 
-  if (!window._fbq) window._fbq = window.fbq;
-  window.fbq.push = window.fbq;
-  window.fbq.loaded = true;
-  window.fbq.version = "2.0";
-  window.fbq.queue = [];
+    if (!window._fbq) window._fbq = window.fbq;
+    window.fbq.push = window.fbq;
+    window.fbq.loaded = true;
+    window.fbq.version = "2.0";
+    window.fbq.queue = [];
+  }
 
+  window.fbq.__khayalInit = true;
   window.fbq("init", pixelId);
 }
 

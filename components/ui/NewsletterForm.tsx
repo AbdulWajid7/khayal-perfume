@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { usePathname } from "next/navigation";
-import { createWelcomeSignup } from "@/lib/welcome-offers";
+import { subscribeToNewsletter } from "@/lib/subscribers";
 import { trackMarketing } from "@/lib/analytics";
 
 export default function NewsletterForm() {
@@ -17,7 +17,7 @@ export default function NewsletterForm() {
     setStatus("submitting");
     setMessage("");
     try {
-      const res = await createWelcomeSignup(email, "footer", pathname);
+      const res = await subscribeToNewsletter(email, "footer", pathname);
       if (res.ok) {
         trackMarketing("newsletter_signup", { lead_type: "newsletter", placement: "footer" });
         setStatus("success");

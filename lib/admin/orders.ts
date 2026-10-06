@@ -6,7 +6,7 @@ import { Order, type IOrder, type OrderStatus, type PaymentStatus, type Courier 
 import { Product } from "@/models/Product";
 import { StockReservation } from "@/models/StockReservation";
 import { requireOrderPermission } from "@/lib/admin/permissions";
-import { sendOrderNotifications } from "@/lib/notifications";
+import { sendCustomerOrderNotification, sendOrderNotifications } from "@/lib/notifications";
 import { calculateShipping } from "@/lib/shipping";
 
 export type OrderFilters = {
@@ -117,7 +117,7 @@ export async function verifyPayment(id: string, _formData?: FormData) {
   await order.save();
 
   const orderJson = toJSON(order) as unknown as IOrder;
-  await sendOrderNotifications(orderJson);
+  await sendCustomerOrderNotification(orderJson, "confirmed");
   revalidatePath(`/admin/orders/${id}`);
   revalidatePath("/admin/orders");
 }
@@ -141,6 +141,7 @@ export async function rejectPayment(id: string, formData: FormData) {
 
   await pushAudit(id, "payment_rejected", before, { paymentStatus: "rejected", rejectionReason: reason }, { actor: perm.session.name, actorId: perm.session.id, note: reason });
   await order.save();
+  await sendCustomerOrderNotification(toJSON(order) as unknown as IOrder, "payment_rejected", reason);
   revalidatePath(`/admin/orders/${id}`);
   revalidatePath("/admin/orders");
 }
@@ -175,6 +176,9 @@ export async function updateOrderStatus(id: string, formData: FormData) {
 
   await pushAudit(id, "status_changed", before, { orderStatus: status, fulfilmentStatus: order.fulfilmentStatus }, { actor: perm.session.name, actorId: perm.session.id, note });
   await order.save();
+  if (before.orderStatus !== status) {
+    await sendCustomerOrderNotification(toJSON(order) as unknown as IOrder, status, status === "cancelled" ? note : undefined);
+  }
   revalidatePath(`/admin/orders/${id}`);
   revalidatePath("/admin/orders");
 }
@@ -197,6 +201,9 @@ export async function cancelOrder(id: string, formData: FormData) {
 
   await pushAudit(id, "order_cancelled", before, { orderStatus: "cancelled", cancellationReason: reason }, { actor: perm.session.name, actorId: perm.session.id, note: reason });
   await order.save();
+  if (before.orderStatus !== "cancelled") {
+    await sendCustomerOrderNotification(toJSON(order) as unknown as IOrder, "cancelled", reason);
+  }
   revalidatePath(`/admin/orders/${id}`);
   revalidatePath("/admin/orders");
 }
@@ -226,7 +233,7 @@ export async function createOrder(formData: FormData) {
   const shipping = calculateShipping(subtotal, Number(getString(formData, "shipping") || "0"));
   const total = Math.max(0, subtotal + shipping - discount);
 
-  await Order.create({
+  const order = await Order.create({
     orderNumber,
     idempotencyKey: crypto.randomUUID(),
     channel: "KHAYAL_WEBSITE",
@@ -262,6 +269,7 @@ export async function createOrder(formData: FormData) {
     ],
   });
 
+  await sendOrderNotifications(toJSON(order) as unknown as IOrder);
   revalidatePath("/admin/orders");
   revalidatePath("/admin");
 }
@@ -282,6 +290,13 @@ export async function updateOrder(id: string, formData: FormData) {
 
   await pushAudit(id, "order_updated", before, { orderStatus: order.orderStatus, paymentStatus: order.paymentStatus, trackingNumber: order.trackingNumber, notes: order.internalNotes }, { actor: perm.session.name, actorId: perm.session.id });
   await order.save();
+
+  const orderJson = toJSON(order) as unknown as IOrder;
+  if (before.orderStatus !== order.orderStatus) {
+    await sendCustomerOrderNotification(orderJson, order.orderStatus);
+  } else if (before.paymentStatus !== order.paymentStatus && order.paymentStatus === "rejected") {
+    await sendCustomerOrderNotification(orderJson, "payment_rejected");
+  }
 
   revalidatePath("/admin/orders");
   revalidatePath("/admin");

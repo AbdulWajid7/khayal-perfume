@@ -5,50 +5,72 @@ import { Notification, type INotification } from "@/models/Notification";
 import { siteConfig } from "@/lib/site-config";
 import type { IOrder } from "@/models/Order";
 import { formatPrice } from "@/lib/utils";
+import { getEmailFrom, getEmailReplyTo, sendEmail } from "@/lib/email";
+import { getCustomerOrderEmail, type CustomerOrderEvent } from "@/lib/order-email";
 
 export type NotificationResult = { success: boolean; notifications: INotification[] };
 
-function orderSummary(order: IOrder): string {
-  const items = order.items.map((item) => `${item.name} x${item.quantity}`).join("\n");
-  return `Order ${order.orderNumber}\nTotal: ${formatPrice(order.total, order.currency)}\nPayment: ${order.paymentMethod.toUpperCase()}\n${items}`;
-}
+export async function sendCustomerOrderNotification(order: IOrder, event: CustomerOrderEvent, detail?: string): Promise<NotificationResult> {
+  if (!order.customer.email) return { success: true, notifications: [] };
 
-export async function sendOrderNotifications(order: IOrder): Promise<NotificationResult> {
-  await dbConnect();
-  const created: INotification[] = [];
-
-  if (order.customer.email) {
-    const customer = await Notification.create({
-      type: "customer_order_confirmation",
+  try {
+    await dbConnect();
+    const content = getCustomerOrderEmail(order, event, detail);
+    const notification = await Notification.create({
+      type: event === "placed" ? "customer_order_confirmation" : "customer_order_update",
       channel: "email",
       recipient: order.customer.email,
       orderId: order._id.toString(),
-      subject: `Your KHAYAL order ${order.orderNumber}`,
-      body: orderSummary(order),
+      subject: content.subject,
+      body: content.text,
     });
-    created.push(customer as unknown as INotification);
+    const result = await sendEmail({ to: order.customer.email, from: getEmailFrom(), replyTo: getEmailReplyTo(), ...content });
+    notification.status = result.ok ? "sent" : "failed";
+    notification.sentAt = result.ok ? new Date() : undefined;
+    notification.providerResponse = result.ok ? result.providerResponse : undefined;
+    notification.error = result.ok ? undefined : result.error;
+    await notification.save();
+    return { success: result.ok, notifications: [notification as unknown as INotification] };
+  } catch (error) {
+    console.error(`Customer order email failed for ${order.orderNumber}:`, error);
+    return { success: false, notifications: [] };
+  }
+}
+
+export async function sendOrderNotifications(order: IOrder): Promise<NotificationResult> {
+  const customerResult = await sendCustomerOrderNotification(order, "placed");
+  const created = [...customerResult.notifications];
+
+  try {
+    await dbConnect();
+    const admin = await Notification.create({
+      type: "admin_new_order",
+      channel: "whatsapp",
+      recipient: siteConfig.whatsappNumber,
+      orderId: order._id.toString(),
+      body: `New order ${order.orderNumber} from ${order.customer.address.city} for ${formatPrice(order.total, order.currency)} via ${order.paymentMethod.toUpperCase()}. ${order.paymentStatus === "pending_verification" ? "Payment proof requires review." : ""}`,
+    });
+    created.push(admin as unknown as INotification);
+  } catch (error) {
+    console.error(`Admin order notification failed for ${order.orderNumber}:`, error);
   }
 
-  const admin = await Notification.create({
-    type: "admin_new_order",
-    channel: "whatsapp",
-    recipient: siteConfig.whatsappNumber,
-    orderId: order._id.toString(),
-    body: `New order ${order.orderNumber} from ${order.customer.address.city} for ${formatPrice(order.total, order.currency)} via ${order.paymentMethod.toUpperCase()}. ${order.paymentStatus === "pending_verification" ? "Payment proof requires review." : ""}`,
-  });
-  created.push(admin as unknown as INotification);
-
-  return { success: true, notifications: created };
+  return { success: customerResult.success, notifications: created };
 }
 
 export async function sendPaymentProofNotification(order: IOrder): Promise<NotificationResult> {
-  await dbConnect();
-  const admin = await Notification.create({
-    type: "admin_payment_proof",
-    channel: "whatsapp",
-    recipient: siteConfig.whatsappNumber,
-    orderId: order._id.toString(),
-    body: `Payment proof uploaded for order ${order.orderNumber}. Please review and verify.`,
-  });
-  return { success: true, notifications: [admin as unknown as INotification] };
+  try {
+    await dbConnect();
+    const admin = await Notification.create({
+      type: "admin_payment_proof",
+      channel: "whatsapp",
+      recipient: siteConfig.whatsappNumber,
+      orderId: order._id.toString(),
+      body: `Payment proof uploaded for order ${order.orderNumber}. Please review and verify.`,
+    });
+    return { success: true, notifications: [admin as unknown as INotification] };
+  } catch (error) {
+    console.error(`Payment proof notification failed for ${order.orderNumber}:`, error);
+    return { success: false, notifications: [] };
+  }
 }

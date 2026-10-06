@@ -8,9 +8,9 @@ import { useCart } from "@/hooks/useCart";
 
 const navLinks = [
   { label: "Shop", href: "/shop" },
-  { label: "Men", href: "/shop?category=men" },
-  { label: "Women", href: "/shop?category=women" },
-  { label: "Unisex", href: "/shop?category=unisex" },
+  { label: "Men", href: "/shop/men" },
+  { label: "Women", href: "/shop/women" },
+  { label: "Unisex", href: "/shop/unisex" },
   { label: "Journal", href: "/journal" },
   { label: "Story", href: "/story" },
 ];

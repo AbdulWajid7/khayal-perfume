@@ -1,7 +1,9 @@
+import { siteConfig } from "@/lib/site-config";
+
 const socialLinks = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/khayalfragnance/",
+    href: siteConfig.social.instagram,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
         <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -12,7 +14,7 @@ const socialLinks = [
   },
   {
     label: "Facebook",
-    href: "https://www.facebook.com/share/1Kmv75SYta/",
+    href: siteConfig.social.facebook,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
         <path d="M14 9h3V6h-3c-1.66 0-3 1.34-3 3v2H8v3h3v6h3v-6h2.5l.5-3H14V9z" />
@@ -21,7 +23,7 @@ const socialLinks = [
   },
   {
     label: "TikTok",
-    href: "https://www.tiktok.com/@khayal..parfum",
+    href: siteConfig.social.tiktok,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
         <path d="M15 4v9.5a3.5 3.5 0 1 1-3.5-3.5" />

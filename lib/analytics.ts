@@ -43,6 +43,7 @@ export type MarketingEvent =
   | "phone_click"
   | "email_click"
   | "newsletter_signup"
+  | "ai_referral"
   | "coupon_apply"
   | "coupon_apply_success"
   | "coupon_apply_failure"

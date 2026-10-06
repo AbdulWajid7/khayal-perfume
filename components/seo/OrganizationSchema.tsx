@@ -1,5 +1,8 @@
+import { siteConfig } from "@/lib/site-config";
+
 export default function OrganizationSchema() {
-  const baseUrl = "https://www.khayalparfum.com";
+  const baseUrl = siteConfig.url;
+  const { business, social } = siteConfig;
 
   const schema = {
     "@context": "https://schema.org",
@@ -7,7 +10,7 @@ export default function OrganizationSchema() {
       {
         "@type": "Organization",
         "@id": `${baseUrl}/#organization`,
-        name: "Khayal Fragrance",
+        name: business.name,
         url: baseUrl,
         logo: {
           "@type": "ImageObject",
@@ -15,21 +18,33 @@ export default function OrganizationSchema() {
         },
         description:
           "Khayal Fragrance is a luxury niche fragrance house crafting long-lasting oud, musk, and attar perfumes in Pakistan.",
-        email: "official@khayalparfum.com",
-        telephone: "+923202704617",
+        email: siteConfig.email,
+        telephone: siteConfig.phoneDisplay.replace(/\s/g, ""),
+        sameAs: [social.instagram, social.facebook, social.tiktok],
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: business.locality,
+          addressRegion: business.region,
+          addressCountry: business.country,
+        },
+        areaServed: {
+          "@type": "Country",
+          name: business.areaServed,
+        },
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "customer service",
-          email: "official@khayalparfum.com",
-          areaServed: "PK",
-          availableLanguage: ["en", "ur"],
+          email: siteConfig.email,
+          telephone: siteConfig.phoneDisplay.replace(/\s/g, ""),
+          areaServed: business.country,
+          availableLanguage: business.languages,
         },
       },
       {
         "@type": "WebSite",
         "@id": `${baseUrl}/#website`,
         url: baseUrl,
-        name: "Khayal Fragrance",
+        name: business.name,
         publisher: { "@id": `${baseUrl}/#organization` },
         inLanguage: "en-PK",
       },

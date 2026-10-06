@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const categoryRoutes: MetadataRoute.Sitemap = ["men", "women", "unisex"].map((c) => ({
-    url: `${baseUrl}/shop?category=${c}`,
+    url: `${baseUrl}/shop/${c}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.7,

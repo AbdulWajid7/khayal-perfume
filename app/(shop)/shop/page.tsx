@@ -73,7 +73,7 @@ export async function generateMetadata({
     title: meta.title,
     description: meta.description,
     alternates: {
-      canonical: key && CATEGORY_META[key] ? `/shop?category=${key}` : "/shop",
+      canonical: key && CATEGORY_META[key] ? `/shop/${key}` : "/shop",
     },
   };
 }
@@ -140,7 +140,7 @@ export default async function ShopPage({
             return (
               <Link
                 key={c.value || "all"}
-                href={c.value ? `/shop?category=${c.value}` : "/shop"}
+                href={c.value ? `/shop/${c.value}` : "/shop"}
                 aria-current={isActive ? "page" : undefined}
                 className={[
                   "px-4 py-2 rounded-full text-[11px] uppercase tracking-[0.18em] border transition-colors duration-300",

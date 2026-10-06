@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-export type NotificationType = "customer_order_confirmation" | "admin_new_order" | "admin_payment_proof";
+export type NotificationType = "customer_order_confirmation" | "customer_order_update" | "admin_new_order" | "admin_payment_proof";
 export type NotificationChannel = "email" | "sms" | "whatsapp";
 export type NotificationStatus = "pending" | "sent" | "failed";
 
@@ -22,7 +22,7 @@ export interface INotification {
 
 const NotificationSchema = new Schema(
   {
-    type: { type: String, enum: ["customer_order_confirmation", "admin_new_order", "admin_payment_proof"], required: true },
+    type: { type: String, enum: ["customer_order_confirmation", "customer_order_update", "admin_new_order", "admin_payment_proof"], required: true },
     channel: { type: String, enum: ["email", "sms", "whatsapp"], required: true },
     recipient: { type: String, required: true },
     orderId: { type: String, required: true, index: true },

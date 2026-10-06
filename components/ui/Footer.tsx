@@ -7,9 +7,9 @@ import { siteConfig } from "@/lib/site-config";
 
 const shopLinks = [
   { label: "The Collection", href: "/shop" },
-  { label: "For Men", href: "/shop?category=men" },
-  { label: "For Women", href: "/shop?category=women" },
-  { label: "Unisex", href: "/shop?category=unisex" },
+  { label: "For Men", href: "/shop/men" },
+  { label: "For Women", href: "/shop/women" },
+  { label: "Unisex", href: "/shop/unisex" },
 ];
 
 const companyLinks = [
