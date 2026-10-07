@@ -6,7 +6,8 @@ import { Subscriber, type ISubscriber } from "@/models/Subscriber";
 import { WelcomeOffer, type IWelcomeOffer } from "@/models/WelcomeOffer";
 import { WelcomeDiscountConfig } from "@/models/WelcomeDiscountConfig";
 import { Order } from "@/models/Order";
-import { sendEmail, getEmailFrom, getEmailReplyTo } from "@/lib/email";
+import { sendEmail, getEmailFrom, getEmailReplyTo, type EmailResult } from "@/lib/email";
+import { welcomeEmailResult } from "@/lib/welcome-email-result";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { captureAttribution } from "@/lib/attribution";
 import { siteConfig } from "@/lib/site-config";
@@ -131,11 +132,13 @@ export async function createWelcomeSignup(
           // Resend existing active code
           const sendResult = await sendWelcomeEmail(normalizedEmail, sub._id.toString(), offer.codeHash);
           await updateSubscriberEmailStatus(sub._id.toString(), sendResult);
-          await Subscriber.findByIdAndUpdate(sub._id, {
-            welcomeCodeStatus: "resent",
-            updatedAt: new Date(),
-          });
-          return { ok: true, message: "Your welcome code has been resent." };
+          if (sendResult.ok) {
+            await Subscriber.findByIdAndUpdate(sub._id, {
+              welcomeCodeStatus: "resent",
+              updatedAt: new Date(),
+            });
+          }
+          return welcomeEmailResult(sendResult, "Your welcome code has been resent.");
         }
         if (offer.status === "redeemed") {
           return { ok: false, message: "This email has already redeemed a welcome offer." };
@@ -177,7 +180,7 @@ export async function createWelcomeSignup(
   const sendResult = await sendWelcomeEmail(normalizedEmail, subscriberDoc._id.toString(), offer.codeHash);
   await updateSubscriberEmailStatus(subscriberDoc._id.toString(), sendResult);
 
-  return { ok: true, message: "Your welcome code is on its way." };
+  return welcomeEmailResult(sendResult, "Your welcome code is on its way.");
 }
 
 export async function resendWelcomeCode(
@@ -211,9 +214,11 @@ export async function resendWelcomeCode(
 
   const sendResult = await sendWelcomeEmail(normalizedEmail, sub._id.toString(), (offer as unknown as IWelcomeOffer).codeHash);
   await updateSubscriberEmailStatus(sub._id.toString(), sendResult);
-  await Subscriber.findByIdAndUpdate(sub._id, { welcomeCodeStatus: "resent" });
+  if (sendResult.ok) {
+    await Subscriber.findByIdAndUpdate(sub._id, { welcomeCodeStatus: "resent" });
+  }
 
-  return { ok: true, message: "Your welcome code has been resent." };
+  return welcomeEmailResult(sendResult, "Your welcome code has been resent.");
 }
 
 async function createWelcomeOffer(
@@ -263,7 +268,7 @@ async function sendWelcomeEmail(
   to: string,
   subscriberId: string,
   codeHash: string
-): Promise<{ ok: boolean; providerResponse?: string; error?: string }> {
+): Promise<EmailResult> {
   await dbConnect();
   const offer = await WelcomeOffer.findOne({ codeHash }).lean();
   if (!offer) return { ok: false, error: "Offer not found" };

@@ -190,28 +190,42 @@ export default function WelcomePopup() {
     setMessage("");
     trackMarketing("welcome_offer_submit", { placement: "welcome_popup" });
 
-    const result = await createWelcomeSignup(email.trim(), "popup", pathname);
+    try {
+      const result = await createWelcomeSignup(email.trim(), "popup", pathname);
 
-    if (result.ok) {
-      setStatus("success");
-      setPopupState({ status: "signedup", signedUpAt: Date.now() });
-      trackMarketing("welcome_offer_success", { placement: "welcome_popup" });
-    } else {
+      if (result.ok) {
+        setStatus("success");
+        setPopupState({ status: "signedup", signedUpAt: Date.now() });
+        trackMarketing("welcome_offer_success", { placement: "welcome_popup" });
+      } else {
+        setStatus("error");
+        setMessage(result.message);
+        trackMarketing("welcome_offer_error", { placement: "welcome_popup", failure_reason: result.message });
+      }
+    } catch {
+      const failureMessage = "We couldn't create your welcome code. Please try again in a moment.";
       setStatus("error");
-      setMessage(result.message);
-      trackMarketing("welcome_offer_error", { placement: "welcome_popup", failure_reason: result.message });
+      setMessage(failureMessage);
+      trackMarketing("welcome_offer_error", { placement: "welcome_popup", failure_reason: failureMessage });
     }
   }
 
   async function handleResend() {
     if (resendStatus === "sending" || !email.trim()) return;
     setResendStatus("sending");
-    const result = await resendWelcomeCode(email.trim());
-    if (result.ok) {
-      setResendStatus("sent");
-      trackMarketing("welcome_offer_resend", { placement: "welcome_popup" });
-    } else {
+    try {
+      const result = await resendWelcomeCode(email.trim());
+      if (result.ok) {
+        setResendStatus("sent");
+        setMessage(result.message);
+        trackMarketing("welcome_offer_resend", { placement: "welcome_popup" });
+      } else {
+        setResendStatus("error");
+        setMessage(result.message);
+      }
+    } catch {
       setResendStatus("error");
+      setMessage("We couldn't resend the email. Please try again in a moment.");
     }
   }
 
@@ -278,6 +292,9 @@ export default function WelcomePopup() {
                 >
                   {resendStatus === "sending" ? "Resending..." : resendStatus === "sent" ? "Email resent" : "Resend Email"}
                 </button>
+                {resendStatus === "error" && message && (
+                  <p className="mt-3 text-sale text-xs leading-relaxed" role="alert">{message}</p>
+                )}
               </div>
             ) : (
               <>
