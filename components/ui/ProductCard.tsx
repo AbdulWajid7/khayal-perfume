@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "./AddToCartButton";
@@ -19,6 +20,21 @@ function getMetafield(product: Product, key: string): string | undefined {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [hovered, setHovered] = useState(false);
+  const cardRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  // gentle 3D tilt that follows the cursor
+  function handleTilt(e: React.MouseEvent<HTMLElement>) {
+    const el = cardRef.current;
+    if (!el || reduceMotion) return;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `perspective(900px) rotateY(${x * 7}deg) rotateX(${-y * 6}deg) translateY(-4px)`;
+  }
+  function resetTilt() {
+    if (cardRef.current) cardRef.current.style.transform = "";
+  }
   const image = product.featuredImage || product.images[0];
   const hoverImage =
     product.images.length > 1 ? product.images[1] : null;
@@ -37,9 +53,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article
-      className="group relative bg-pure rounded-xl overflow-hidden border border-border transition-all duration-300 hover:shadow-lg hover:border-gold/30"
+      ref={cardRef}
+      className="group relative bg-pure rounded-xl overflow-hidden border border-border transition-[transform,box-shadow,border-color] duration-500 ease-out will-change-transform hover:shadow-[0_28px_60px_-30px_rgba(191,161,95,0.65)] hover:border-gold/40"
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseMove={handleTilt}
+      onMouseLeave={() => { setHovered(false); resetTilt(); }}
     >
       <Link href={`/shop/${product.handle}`} aria-label={`View ${product.title}`} onClick={trackSelection}>
         <div className="relative aspect-[4/5] overflow-hidden bg-cream-dark">

@@ -14,12 +14,12 @@ export default async function HomePage() {
     getBestsellerProducts(),
   ]);
 
-  // The 3D collection shows three products: bestsellers first, then other active products.
-  let featured = bestsellers;
-  if (featured.length < 3) {
+  // The hero slider and 3D carousel use up to six products: bestsellers first, then other active products.
+  let featured = bestsellers.slice(0, 6);
+  if (featured.length < 6) {
     const all = await getProducts();
     const seen = new Set(featured.map((p) => p.id));
-    featured = [...featured, ...all.filter((p) => !seen.has(p.id))].slice(0, 3);
+    featured = [...featured, ...all.filter((p) => !seen.has(p.id))].slice(0, 6);
   }
 
   return (

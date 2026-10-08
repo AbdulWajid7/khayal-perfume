@@ -3,6 +3,12 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import Lenis from "lenis";
 
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
+}
+
 export default function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
 
@@ -18,6 +24,8 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
       smoothWheel: true,
     });
     lenisRef.current = lenis;
+    // Shared so page sections (the 3D homepage) can animate scrolling through Lenis
+    window.__lenis = lenis;
 
     function raf(time: number) {
       lenis.raf(time);
@@ -27,6 +35,7 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
 
     return () => {
       cancelAnimationFrame(rafId);
+      if (window.__lenis === lenis) window.__lenis = undefined;
       lenis.destroy();
     };
   }, []);

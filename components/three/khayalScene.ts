@@ -4,7 +4,9 @@
  * The Gentleman bottle is modelled procedurally from the product photo and
  * moves between scroll "stations" (one per homepage section). Each station
  * also sets the weight of an effect: light beams, mist, golden trails,
- * golden leaves, a liquid-gold swirl and an orbiting ring of light.
+ * golden leaves, golden smoke, a liquid-gold swirl, a dropper pouring into a
+ * gold ripple pool and an orbiting ring of light. The bottle's liquid colours
+ * and label can be switched per product (hero slider).
  *
  * Usage: const scene = createKhayalScene(canvas, { stationIds, getProgress });
  *        scene.dispose() on unmount.
@@ -17,6 +19,13 @@ interface Station {
   x: number; y: number; s: number; z: number; r: number;
   beams: number; motes: number; spray: number; floor: number;
   trails: number; leaves: number; swirl: number; orbit: number;
+  capOff: number; pour: number; smoke: number;
+}
+
+/** Colourway + label for the bottle, switched by the hero slider. */
+export interface BottleVariant {
+  name: string; line: string;
+  top: number; mid: number; low: number; base: number;
 }
 
 export interface KhayalSceneOptions {
@@ -31,6 +40,8 @@ export interface KhayalSceneOptions {
 export interface KhayalScene {
   /** Extra rotation (radians) applied in the 360 station, driven by drag. */
   setDragRotation: (rad: number) => void;
+  /** Smoothly recolour the liquid and reprint the label. */
+  setVariant: (v: BottleVariant) => void;
   dispose: () => void;
 }
 
@@ -49,13 +60,13 @@ function rng(seed: number) {
 
 function stations(mobile: boolean): Record<StationId, Station> {
   const m = mobile;
-  const fx = { beams: 0, motes: 1, spray: 0, floor: 0, trails: 0, leaves: 0, swirl: 0, orbit: 0 };
+  const fx = { beams: 0, motes: 1, spray: 0, floor: 0, trails: 0, leaves: 0, swirl: 0, orbit: 0, capOff: 0, pour: 0, smoke: 0 };
   return {
-    hero: { x: m ? 0 : 1.75, y: m ? 0.75 : -0.25, s: m ? 0.58 : 0.72, z: 0, r: 0, ...fx, beams: 1, spray: 1, floor: 0.6 },
+    hero: { x: m ? 0 : 1.75, y: m ? 1.45 : -0.25, s: m ? 0.42 : 0.72, z: 0, r: 0, ...fx, beams: 1, spray: 1, floor: 0.6 },
     collection: { x: 0, y: 5.5, s: 0.5, z: 0, r: 0.5, ...fx, beams: 0.7 },
-    n360: { x: 0, y: m ? 0.8 : -0.3, s: m ? 0.56 : 0.7, z: 0, r: 1, ...fx, beams: 0.3, motes: 0.8, floor: 0.4, trails: 1 },
-    story: { x: m ? 0 : -1.9, y: m ? 0.9 : -0.1, s: m ? 0.52 : 0.68, z: -0.45, r: 1.6, ...fx, beams: 0.2, motes: 0.8, leaves: 1 },
-    notes: { x: m ? 6 : 10, y: 0.4, s: 0.6, z: -0.8, r: 2, ...fx, motes: 0.6, leaves: 0.25, swirl: 1 },
+    n360: { x: 0, y: m ? 0.8 : -0.3, s: m ? 0.56 : 0.7, z: 0, r: 1, ...fx, beams: 0.3, motes: 0.8, floor: 0.4, trails: 1, smoke: 1 },
+    story: { x: m ? 0 : -1.9, y: m ? 0.9 : -0.1, s: m ? 0.52 : 0.68, z: -0.45, r: 1.6, ...fx, beams: 0.2, motes: 0.8, leaves: 1, capOff: 1 },
+    notes: { x: m ? 6 : 10, y: 0.4, s: 0.6, z: -0.8, r: 2, ...fx, motes: 0.6, leaves: 0.35, swirl: 1, pour: 1 },
     presence: { x: m ? 0 : 1.7, y: m ? 0.75 : -0.25, s: m ? 0.58 : 0.72, z: 0, r: 3, ...fx, beams: 0.8, floor: 1, orbit: 1 },
   };
 }
@@ -99,31 +110,32 @@ function buildBottle(markUrl: string, font: string) {
   glass.renderOrder = 3;
   inner.add(glass);
 
+  const baseMat = new THREE.MeshPhysicalMaterial({ color: 0x1a2a7a, roughness: 0.05, clearcoat: 1, envMapIntensity: 1.4, emissive: 0x1a2a7a, emissiveIntensity: 0.25 });
   inner.add(new THREE.Mesh(
     new THREE.LatheGeometry([V(0, 0.05), V(0.85, 0.05), V(0.93, 0.14), V(0.95, 0.3), V(0.95, 0.84), V(0, 0.84)], 96),
-    new THREE.MeshPhysicalMaterial({ color: 0x1a2a7a, roughness: 0.05, clearcoat: 1, envMapIntensity: 1.4, emissive: 0x1a2a7a, emissiveIntensity: 0.25 }),
+    baseMat,
   ));
 
   // liquid with the Gentleman gradient: light blue -> blue -> near black
   const LT = 3.24;
   const lg = new THREE.LatheGeometry([V(0, 0.84), V(0.95, 0.84), V(0.955, 1.0), V(0.955, 2.7), V(0.94, 2.84), V(0.89, 2.95), V(0.77, 3.04), V(0.62, 3.11), V(0.53, 3.17), V(0.51, LT), V(0, LT)], 128);
-  {
-    const p = lg.attributes.position;
-    const cols = new Float32Array(p.count * 3);
-    const cT = new THREE.Color(0x4fb6e3), cM = new THREE.Color(0x1d5c9e), cL = new THREE.Color(0x0a1230), t = new THREE.Color();
+  lg.setAttribute("color", new THREE.BufferAttribute(new Float32Array(lg.attributes.position.count * 3), 3));
+  const paintLiquid = (cT: THREE.Color, cM: THREE.Color, cL: THREE.Color) => {
+    const p = lg.attributes.position, col = lg.attributes.color as THREE.BufferAttribute, t = new THREE.Color();
     for (let i = 0; i < p.count; i++) {
       const k = (p.getY(i) - 0.84) / (LT - 0.84);
       if (k > 0.62) t.copy(cM).lerp(cT, (k - 0.62) / 0.38);
       else t.copy(cL).lerp(cM, Math.max(0, (k - 0.25) / 0.37));
-      cols[i * 3] = t.r; cols[i * 3 + 1] = t.g; cols[i * 3 + 2] = t.b;
+      col.setXYZ(i, t.r, t.g, t.b);
     }
-    lg.setAttribute("color", new THREE.BufferAttribute(cols, 3));
-  }
+    col.needsUpdate = true;
+  };
   inner.add(new THREE.Mesh(lg, new THREE.MeshPhysicalMaterial({ vertexColors: true, roughness: 0.1, clearcoat: 0.7, envMapIntensity: 1 })));
 
+  const collarMat = new THREE.MeshPhysicalMaterial({ color: 0x4fb6e3, transparent: true, opacity: 0.85, roughness: 0.03, clearcoat: 1, envMapIntensity: 1.8, emissive: 0x1d5c9e, emissiveIntensity: 0.35 });
   inner.add(new THREE.Mesh(
     new THREE.LatheGeometry([V(0, 3.25), V(0.58, 3.25), V(0.65, 3.3), V(0.68, 3.42), V(0.65, 3.54), V(0.57, 3.59), V(0, 3.59)], 96),
-    new THREE.MeshPhysicalMaterial({ color: 0x4fb6e3, transparent: true, opacity: 0.85, roughness: 0.03, clearcoat: 1, envMapIntensity: 1.8, emissive: 0x1d5c9e, emissiveIntensity: 0.35 }),
+    collarMat,
   ));
 
   const chrome = new THREE.MeshStandardMaterial({ color: 0xe2d2b0, metalness: 1, roughness: 0.15, envMapIntensity: 1.6 });
@@ -156,8 +168,12 @@ function buildBottle(markUrl: string, font: string) {
   label.position.y = 1.9; label.renderOrder = 2;
   inner.add(label);
   const img = new Image();
-  img.onload = () => {
+  const imgReady = new Promise<void>((resolve) => { img.onload = () => resolve(); });
+  img.src = markUrl;
+  const drawLabel = async (name: string, line: string) => {
+    await imgReady;
     const g = lc.getContext("2d")!;
+    g.clearRect(0, 0, 640, 1000);
     const w = 300, h = (w * img.height) / img.width;
     g.drawImage(img, (640 - w) / 2, 10, w, h);
     g.fillStyle = "#F2EEE8"; g.textAlign = "center";
@@ -166,14 +182,59 @@ function buildBottle(markUrl: string, font: string) {
       (g as CanvasRenderingContext2D & { letterSpacing?: string }).letterSpacing = `${spacing}px`;
       g.fillText(text, 320 + spacing / 2, y);
     };
-    spaced("THE", 40, 400, 10, 640);
-    spaced("GENTLEMAN", 76, 500, 2, 725);
-    spaced("FOR MEN", 36, 400, 8, 785);
+    const words = name.toUpperCase().replace(/^THE\s+/, "");
+    if (/^the\s/i.test(name)) spaced("THE", 40, 400, 10, 640);
+    spaced(words, words.length > 11 ? Math.max(40, Math.floor(820 / words.length)) : 76, 500, 2, 725);
+    spaced(line.toUpperCase(), 36, 400, 8, 785);
     labelTex.needsUpdate = true;
   };
-  img.src = markUrl;
 
-  return { bottle, cap, nozzle };
+  return { bottle, cap, nozzle, baseMat, collarMat, paintLiquid, drawLabel };
+}
+
+/* ---------------- dropper + gold ripple pool (notes) ---------------- */
+function buildDropper() {
+  const g = new THREE.Group();
+  const glass = new THREE.Mesh(
+    new THREE.LatheGeometry([V(0, -1.6), V(0.03, -1.55), V(0.07, -1.2), V(0.1, -0.2), V(0.1, 0.3), V(0, 0.3)], 48),
+    new THREE.MeshPhysicalMaterial({ color: 0xd9a54a, transparent: true, opacity: 0.55, roughness: 0.05, clearcoat: 1, envMapIntensity: 2 }),
+  );
+  g.add(glass);
+  const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.17, 0.32, 40), new THREE.MeshStandardMaterial({ color: 0xc9a14f, metalness: 1, roughness: 0.18, envMapIntensity: 1.6 }));
+  collar.position.y = 0.42; g.add(collar);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.17, 0.025, 12, 40), collar.material);
+  ring.rotation.x = Math.PI / 2; ring.position.y = 0.28; g.add(ring);
+  const bulb = new THREE.Mesh(
+    new THREE.LatheGeometry([V(0, 0.58), V(0.15, 0.6), V(0.2, 0.75), V(0.21, 1.05), V(0.17, 1.25), V(0.08, 1.33), V(0, 1.34)], 48),
+    new THREE.MeshPhysicalMaterial({ color: 0x0b0b0b, roughness: 0.35, clearcoat: 0.8 }),
+  );
+  g.add(bulb);
+  const tip = new THREE.Object3D(); tip.position.y = -1.62; g.add(tip);
+  return { g, tip };
+}
+
+function buildRipplePool() {
+  const mat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false,
+    uniforms: { uTime: { value: 0 }, uOpacity: { value: 0 } },
+    vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
+    fragmentShader: `
+      varying vec2 vUv; uniform float uTime; uniform float uOpacity;
+      void main(){
+        vec2 p = vUv * 2.0 - 1.0; float r = length(p);
+        if (r > 1.0) discard;
+        float rings = sin(r * 34.0 - uTime * 4.0) * exp(-r * 1.8) * 0.5 + 0.5;
+        vec3 deep = vec3(0.42, 0.28, 0.09), gold = vec3(0.86, 0.66, 0.30), hi = vec3(1.0, 0.92, 0.70);
+        vec3 col = mix(deep, gold, rings);
+        col = mix(col, hi, pow(rings, 10.0) * 0.7);
+        col *= mix(0.55, 1.0, smoothstep(0.0, 0.35, r));
+        float a = smoothstep(1.0, 0.55, r) * uOpacity;
+        gl_FragColor = vec4(col, a);
+      }`,
+  });
+  const m = new THREE.Mesh(new THREE.CircleGeometry(1, 96), mat);
+  m.rotation.x = -Math.PI / 2.35;
+  return { m, mat };
 }
 
 export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOptions): KhayalScene {
@@ -221,9 +282,33 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
     g.fillStyle = y; g.fillRect(0, 0, w, h);
   });
 
-  const { bottle, cap, nozzle } = buildBottle(opts.labelMarkUrl, opts.labelFont);
+  const B = buildBottle(opts.labelMarkUrl, opts.labelFont);
+  const { bottle, cap, nozzle } = B;
   scene.add(bottle);
-  void cap;
+  // colourway state (animated when the hero slider changes product)
+  const vFrom = { top: new THREE.Color(), mid: new THREE.Color(), low: new THREE.Color(), base: new THREE.Color() };
+  const vTo = { top: new THREE.Color(0x4fb6e3), mid: new THREE.Color(0x1d5c9e), low: new THREE.Color(0x0a1230), base: new THREE.Color(0x1a2a7a) };
+  const vCur = { top: vTo.top.clone(), mid: vTo.mid.clone(), low: vTo.low.clone(), base: vTo.base.clone() };
+  let vT = 1, vStart = 0;
+  B.paintLiquid(vCur.top, vCur.mid, vCur.low);
+  B.drawLabel("The Gentleman", "For men");
+
+  /* dropper pouring into a gold ripple pool (notes) */
+  const D = buildDropper();
+  D.g.rotation.z = -0.55;
+  scene.add(D.g);
+  const pool = buildRipplePool();
+  scene.add(pool.m);
+  const pourGold = new THREE.MeshPhysicalMaterial({ color: 0xe0b055, metalness: 0.7, roughness: 0.1, clearcoat: 1, envMapIntensity: 2 });
+  const pourDropGeo = new THREE.SphereGeometry(0.075, 20, 14);
+  const pourDrops = Array.from({ length: 4 }, (_, i) => { const d = new THREE.Mesh(pourDropGeo, pourGold); d.userData = { o: i / 4 }; scene.add(d); return d; });
+
+  /* golden smoke wrapping the bottle (360) */
+  const goldSmoke = Array.from({ length: 10 }, (_, i) => {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: smokeTex, color: 0xcf9a45, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
+    m.userData = { a: (i / 10) * Math.PI * 2, y: (R() - 0.5) * 3.2, s: 1.6 + R() * 1.4, sp: 0.25 + R() * 0.25 };
+    scene.add(m); return m;
+  });
 
   /* atmosphere: beams + gold dust */
   const beams: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>[] = [];
@@ -379,6 +464,53 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
       c.z + Math.sin(t * 0.7) * 0.02 * idle + (1 - drop) * 0.3 + (c.leaves > 0.5 ? Math.sin(t * 0.6) * 0.08 * idle : 0),
     );
 
+    // colourway transition
+    if (vT < 1) {
+      vT = Math.min(1, (performance.now() - vStart) / 700); // real time, so slow devices finish too
+      const e = easeIO(vT);
+      vCur.top.copy(vFrom.top).lerp(vTo.top, e); vCur.mid.copy(vFrom.mid).lerp(vTo.mid, e);
+      vCur.low.copy(vFrom.low).lerp(vTo.low, e); vCur.base.copy(vFrom.base).lerp(vTo.base, e);
+      B.paintLiquid(vCur.top, vCur.mid, vCur.low);
+      B.collarMat.color.copy(vCur.top); B.collarMat.emissive.copy(vCur.mid);
+      B.baseMat.color.copy(vCur.base); B.baseMat.emissive.copy(vCur.base);
+    }
+
+    // cap floats away from the bottle in the story section
+    cap.position.set(c.capOff * 1.15, 3.59 + c.capOff * 1.7 + Math.sin(t * 0.9) * 0.08 * c.capOff * idle, c.capOff * 0.4);
+    cap.rotation.set(c.capOff * 0.35, c.capOff * (0.8 + t * 0.2 * idle), -c.capOff * 0.75);
+
+    // dropper slides in from the right and pours into the ripple pool
+    // tip hangs above the pool: the dropper is tilted so its tip points down-left
+    const poolX = mobile ? 0.9 : 2.45, poolY = mobile ? -0.6 : -1.65;
+    D.g.visible = pool.m.visible = c.pour > 0.02;
+    D.g.rotation.z = -0.55 + Math.sin(t * 0.8) * 0.03 * idle;
+    D.g.scale.setScalar(mobile ? 0.7 : 1);
+    D.g.position.set(lerp(8, poolX + 0.85 * (mobile ? 0.7 : 1), c.pour), poolY + (mobile ? 2.0 : 2.75), 0.3);
+    pool.m.position.set(lerp(8, poolX, c.pour), poolY, 0);
+    pool.m.scale.setScalar((mobile ? 0.8 : 1.35) * Math.max(0.001, c.pour));
+    pool.mat.uniforms.uTime.value = t * idle + (reduce ? 0 : 0);
+    pool.mat.uniforms.uOpacity.value = c.pour;
+    D.tip.getWorldPosition(vA);
+    pourDrops.forEach((d) => {
+      d.visible = c.pour > 0.5;
+      const u = (d.userData.o + t * 0.45 * idle) % 1;
+      const fall = u * u;
+      d.position.set(lerp(vA.x, pool.m.position.x, u), lerp(vA.y, pool.m.position.y + 0.05, fall), lerp(vA.z, 0, u));
+      d.scale.set(0.8, 1.3 + u * 0.6, 0.8);
+    });
+
+    // golden smoke wrapping the bottle
+    goldSmoke.forEach((m) => {
+      const u = m.userData;
+      m.visible = c.smoke > 0.02;
+      if (!m.visible) return;
+      const a = u.a + t * u.sp * idle + dragRot * 0.5;
+      m.position.set(bottle.position.x + Math.cos(a) * 1.25 * c.s, bottle.position.y + u.y * c.s + Math.sin(t * 0.4 + u.a) * 0.2, Math.sin(a) * 0.9);
+      m.scale.setScalar(u.s * c.s);
+      m.lookAt(camera.position);
+      m.material.opacity = c.smoke * 0.4 * (0.6 + 0.4 * Math.sin(a * 2 + t));
+    });
+
     beams.forEach((m) => { m.material.opacity = m.userData.o * c.beams * (0.75 + 0.25 * Math.sin(t * 0.7 + m.userData.ph)); });
     for (let i = 0; i < MN; i++) {
       const s = mSeed[i];
@@ -471,6 +603,12 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
 
   return {
     setDragRotation: (rad) => { dragRot = rad; },
+    setVariant: (v) => {
+      vFrom.top.copy(vCur.top); vFrom.mid.copy(vCur.mid); vFrom.low.copy(vCur.low); vFrom.base.copy(vCur.base);
+      vTo.top.set(v.top); vTo.mid.set(v.mid); vTo.low.set(v.low); vTo.base.set(v.base);
+      vT = 0; vStart = performance.now() - (reduce ? 700 : 0);
+      B.drawLabel(v.name, v.line);
+    },
     dispose: () => {
       cancelAnimationFrame(raf);
       ro.disconnect(); io.disconnect();

@@ -276,3 +276,34 @@ body {
 .input-admin:disabled {
   opacity: 0.6;
 }
+
+/* 3D homepage experience: text fade-up and the floating tilt of the centre product */
+@keyframes kx-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.kx-fade-up {
+  animation: kx-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes kx-float-tilt {
+  0%,
+  100% {
+    transform: scale(1.05) perspective(800px) rotateY(-6deg) translateY(0);
+  }
+  50% {
+    transform: scale(1.08) perspective(800px) rotateY(6deg) translateY(-8px);
+  }
+}
+
+.kx-float-tilt {
+  animation: kx-float-tilt 6s ease-in-out infinite;
+}
+
