@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  /* Light luxury palette */
-  --color-cream: #FAF9F7;
-  --color-cream-dark: #F5F0E8;
-  --color-pure: #FFFFFF;
-  --color-ink: #1A1A1A;
-  --color-stone: #6B6B6B;
-  --color-stone-light: #9A9A9A;
-  --color-gold: #BFA15F;
-  --color-gold-light: #D4B46A;
-  --color-gold-pale: #E8D5A8;
-  --color-plum: #7A3B9A;
-  --color-plum-light: #9B59B6;
-  --color-plum-pale: #F3EAF7;
-  --color-sale: #B91C1C;
-  --color-border: #E8E4DC;
-  --color-border-light: #F0EDE6;
+  /* Black & gold luxury palette (token names kept so every page follows) */
+  --color-cream: #070707;        /* page background */
+  --color-cream-dark: #0F0E0C;   /* alternate section background */
+  --color-pure: #15130F;         /* cards, inputs, drawers; also dark text on gold buttons */
+  --color-ink: #F3EDE3;          /* primary text */
+  --color-stone: #A89F92;
+  --color-stone-light: #776F64;
+  --color-gold: #C9A96A;
+  --color-gold-light: #E3C88A;
+  --color-gold-pale: #3A2F1E;
+  --color-plum: #C9A0DC;
+  --color-plum-light: #DDBDEB;
+  --color-plum-pale: #24152C;
+  --color-sale: #E05A4F;
+  --color-border: #2A251D;
+  --color-border-light: #1C1915;
 
   /* Legacy aliases kept for dark admin pages */
   --color-midnight: #3e1c26;
@@ -28,29 +28,29 @@
   --color-border-subtle: #47232c;
 
   /* Typography */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-serif: var(--font-playfair), ui-serif, Georgia, "Times New Roman", serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, "Times New Roman", serif;
 }
 
 :root {
-  --font-inter: var(--font-inter);
-  --font-playfair: var(--font-playfair);
-  --cream: #FAF9F7;
-  --cream-dark: #F5F0E8;
-  --pure: #FFFFFF;
-  --ink: #1A1A1A;
-  --stone: #6B6B6B;
-  --stone-light: #9A9A9A;
-  --gold: #BFA15F;
-  --gold-light: #D4B46A;
-  --gold-pale: #E8D5A8;
-  --plum: #7A3B9A;
-  --plum-light: #9B59B6;
-  --plum-pale: #F3EAF7;
-  --sale: #B91C1C;
-  --border: #E8E4DC;
-  --border-light: #F0EDE6;
+  color-scheme: dark;
+  --cream: #070707;
+  --cream-dark: #0F0E0C;
+  --pure: #15130F;
+  --ink: #F3EDE3;
+  --stone: #A89F92;
+  --stone-light: #776F64;
+  --gold: #C9A96A;
+  --gold-light: #E3C88A;
+  --gold-pale: #3A2F1E;
+  --gold-deep: #8C6B33;
+  --plum: #C9A0DC;
+  --plum-light: #DDBDEB;
+  --plum-pale: #24152C;
+  --sale: #E05A4F;
+  --border: #2A251D;
+  --border-light: #1C1915;
 }
 
 html {
@@ -275,4 +275,26 @@ body {
 
 .input-admin:disabled {
   opacity: 0.6;
+}
+
+/* Metallic gold for primary buttons and badges across the site */
+.bg-gold {
+  background-image: linear-gradient(135deg, var(--gold-light), var(--gold) 55%, var(--gold-deep));
+}
+.hover\:bg-gold-light:hover,
+.btn-sweep::before {
+  background-image: linear-gradient(135deg, #F1DCA8, var(--gold-light));
+}
+
+/* Gold gradient text for italic headline accents */
+.text-gold-gradient {
+  background: linear-gradient(120deg, var(--gold-light), var(--gold) 60%, var(--gold-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Inputs on the dark theme */
+input, textarea, select {
+  color-scheme: dark;
 }

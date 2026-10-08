@@ -125,7 +125,7 @@ export default function CartDrawer() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[80] bg-ink/20 backdrop-blur-sm"
+            className="fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm"
             onClick={closeCart}
             aria-hidden="true"
           />

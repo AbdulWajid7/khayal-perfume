@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Jost, Cormorant_Garamond } from "next/font/google";
 import { defaultMetadata } from "@/lib/seo";
 import { CartProvider } from "@/hooks/useCart";
 import LoadIntro from "@/components/ui/LoadIntro";
@@ -10,16 +10,19 @@ import ConsentBanner from "@/components/ui/ConsentBanner";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
-const inter = Inter({
+const jost = Jost({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500"],
+  variable: "--font-jost",
   display: "swap",
   preload: true,
 });
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
   display: "swap",
   preload: true,
 });
@@ -32,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${jost.variable} ${cormorant.variable}`}>
       <body className="antialiased bg-cream text-ink">
         {process.env.NODE_ENV === "production" && siteConfig.analytics.gtmId && (
           <noscript>
