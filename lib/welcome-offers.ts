@@ -8,10 +8,9 @@ import { WelcomeDiscountConfig } from "@/models/WelcomeDiscountConfig";
 import { Order } from "@/models/Order";
 import { sendEmail, getEmailFrom, getEmailReplyTo, type EmailResult } from "@/lib/email";
 import { welcomeEmailResult } from "@/lib/welcome-email-result";
+import { renderWelcomeEmail } from "@/lib/khayal-emails";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { captureAttribution } from "@/lib/attribution";
-import { siteConfig } from "@/lib/site-config";
-import { getWhatsAppUrl } from "@/lib/site-config";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // excludes ambiguous chars
@@ -288,19 +287,16 @@ async function sendWelcomeEmail(
     day: "numeric",
   });
 
-  const subject = config?.emailSubject || "Welcome to KHAYAL — Your 5% Code Is Inside";
-  const previewText = config?.emailPreviewText || "A personal welcome offer for your first KHAYAL order.";
-
-  const html = buildWelcomeEmailHtml(rawCode, expiryDate, previewText);
-  const text = buildWelcomeEmailText(rawCode, expiryDate);
+  const emailContent = renderWelcomeEmail({ code: rawCode, expiresAt: expiryDate });
+  const subject = config?.emailSubject || emailContent.subject;
 
   const result = await sendEmail({
     to,
     from: getEmailFrom(),
     replyTo: getEmailReplyTo(),
     subject,
-    html,
-    text,
+    html: emailContent.html,
+    text: emailContent.text,
   });
 
   return result.ok
@@ -422,101 +418,6 @@ export async function redeemWelcomeOffer(
   );
 
   return { ok: true };
-}
-
-function buildWelcomeEmailHtml(code: string, expiryDate: string, previewText: string): string {
-  const shopUrl = `${siteConfig.url}/collection`;
-  const whatsappUrl = getWhatsAppUrl("Need help choosing a fragrance?");
-  const unsubscribeUrl = `${siteConfig.url}/unsubscribe?email={{email}}`; // template handled by provider or app
-
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to KHAYAL</title>
-</head>
-<body style="margin:0;padding:0;background-color:#f8f5f0;font-family:Georgia,serif;color:#1a1a1a;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#f8f5f0;">
-    <tr>
-      <td align="center" style="padding:40px 20px;">
-        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="background-color:#ffffff;max-width:600px;width:100%;">
-          <tr style="display:none;max-height:0;overflow:hidden;mso-hide:all;">
-            <td style="font-size:1px;line-height:1px;max-height:0;overflow:hidden;">${previewText}</td>
-          </tr>
-          <tr>
-            <td align="center" style="padding:48px 32px 16px;">
-              <p style="margin:0;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#6b6b6b;">Welcome to KHAYAL</p>
-              <h1 style="margin:16px 0 0;font-size:28px;font-weight:400;line-height:1.3;">A Fragrance Begins as a Thought</h1>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:0 32px 32px;font-size:15px;line-height:1.6;color:#4a4a4a;">
-              <p>Welcome to KHAYAL—where fragrance, imagination and memory come together.</p>
-              <p>As a welcome, here is your personal code for 5% off your first order:</p>
-              <p style="text-align:center;font-size:24px;letter-spacing:0.1em;font-weight:bold;color:#1a1a1a;padding:20px 0;border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;margin:24px 0;">${code}</p>
-              <p style="font-size:13px;color:#6b6b6b;">Offer details:</p>
-              <ul style="font-size:13px;color:#6b6b6b;padding-left:20px;">
-                <li>5% off your first KHAYAL order</li>
-                <li>Maximum discount PKR 500</li>
-                <li>Valid until ${expiryDate}</li>
-                <li>Available only with this email address</li>
-                <li>One-time use</li>
-                <li>Cannot be combined with another discount</li>
-              </ul>
-              <p style="text-align:center;padding:24px 0;">
-                <a href="${shopUrl}" style="display:inline-block;background-color:#1a1a1a;color:#ffffff;padding:14px 32px;text-decoration:none;font-size:13px;letter-spacing:0.05em;">Discover Your KHAYAL</a>
-              </p>
-              <p style="text-align:center;font-size:13px;">Need help choosing a fragrance? <a href="${whatsappUrl}" style="color:#BFA15F;text-decoration:underline;">Speak with us on WhatsApp</a>.</p>
-            </td>
-          </tr>
-          <tr>
-            <td align="center" style="padding:24px 32px;border-top:1px solid #e5e5e5;font-size:12px;color:#6b6b6b;">
-              <p style="margin:0 0 8px;font-weight:bold;letter-spacing:0.15em;">KHAYAL</p>
-              <p style="margin:0 0 16px;font-style:italic;">A fragrance becomes a memory.</p>
-              <p style="margin:0;">official@khayalparfum.com</p>
-              <p style="margin:16px 0 0;font-size:11px;"><a href="${unsubscribeUrl}" style="color:#6b6b6b;">Unsubscribe</a></p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-  `.trim();
-}
-
-function buildWelcomeEmailText(code: string, expiryDate: string): string {
-  const shopUrl = `${siteConfig.url}/collection`;
-  return `
-Welcome to KHAYAL
-
-A Fragrance Begins as a Thought
-
-Welcome to KHAYAL—where fragrance, imagination and memory come together.
-
-As a welcome, here is your personal code for 5% off your first order:
-
-${code}
-
-Offer details:
-- 5% off your first KHAYAL order
-- Maximum discount PKR 500
-- Valid until ${expiryDate}
-- Available only with this email address
-- One-time use
-- Cannot be combined with another discount
-
-Discover Your KHAYAL: ${shopUrl}
-
-Need help choosing a fragrance? Speak with us on WhatsApp: ${getWhatsAppUrl("Need help choosing a fragrance?")}
-
-KHAYAL
-A fragrance becomes a memory.
-official@khayalparfum.com
-  `.trim();
 }
 
 export { normalizeEmail, hashCode, generateWelcomeCode };

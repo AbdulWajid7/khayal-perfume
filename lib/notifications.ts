@@ -6,16 +6,17 @@ import { siteConfig } from "@/lib/site-config";
 import type { IOrder } from "@/models/Order";
 import { formatPrice } from "@/lib/utils";
 import { getEmailFrom, getEmailReplyTo, sendEmail } from "@/lib/email";
-import { getCustomerOrderEmail, type CustomerOrderEvent } from "@/lib/order-email";
+import { renderOrderEmail, mapOrderToEmailData, type EmailOrderStatus } from "@/lib/khayal-emails";
 
 export type NotificationResult = { success: boolean; notifications: INotification[] };
+export type CustomerOrderEvent = EmailOrderStatus;
 
 export async function sendCustomerOrderNotification(order: IOrder, event: CustomerOrderEvent, detail?: string): Promise<NotificationResult> {
   if (!order.customer.email) return { success: true, notifications: [] };
 
   try {
     await dbConnect();
-    const content = getCustomerOrderEmail(order, event, detail);
+    const content = renderOrderEmail(event, mapOrderToEmailData(order, detail));
     const notification = await Notification.create({
       type: event === "placed" ? "customer_order_confirmation" : "customer_order_update",
       channel: "email",

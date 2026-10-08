@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { getCustomerOrderEmail } from "@/lib/order-email";
+import { renderOrderEmail, renderWelcomeEmail, mapOrderToEmailData } from "@/lib/khayal-emails";
 import type { IOrder } from "@/models/Order";
 
 const order = {
   _id: "order-id",
   orderNumber: "K-20261006-TEST",
+  createdAt: new Date("2026-10-06"),
   customer: {
     name: "Ayesha & Co",
     email: "ayesha@example.com",
@@ -28,33 +29,43 @@ const order = {
 } as IOrder;
 
 describe("customer order emails", () => {
-  it("builds an order placement confirmation with the order summary", () => {
-    const email = getCustomerOrderEmail(order, "placed");
+  it("builds an order placement confirmation with items, address and totals", () => {
+    const email = renderOrderEmail("placed", mapOrderToEmailData(order));
 
     expect(email.subject).toContain(order.orderNumber);
-    expect(email.text).toContain("Oud <Noir> (50ml) × 2");
-    expect(email.text).toContain("Cash on delivery");
+    expect(email.text).toContain("Oud <Noir> (50ml) x2");
+    expect(email.text).toContain("Cash on Delivery");
     expect(email.html).toContain("Oud &lt;Noir&gt;");
     expect(email.html).toContain("Ayesha &amp; Co");
     expect(email.html).toContain("https://www.khayalparfum.com/images/products/oud-imperial.svg");
     expect(email.html).toContain("1 Main Road");
     expect(email.html).toContain("Discount");
-    expect(email.html).toContain("2–3 working days");
-    expect(email.html).toContain("Explore the collection");
+    expect(email.html).toContain("khayal-watermark.png");
   });
 
-  it("includes tracking information when an order is dispatched", () => {
-    const email = getCustomerOrderEmail(order, "dispatched");
+  it("includes tracking and courier when an order is dispatched", () => {
+    const email = renderOrderEmail("dispatched", mapOrderToEmailData(order));
 
-    expect(email.subject).toContain("on the way");
-    expect(email.text).toContain("Tracking number: TCS-12345");
-    expect(email.html).toContain("Tracking number: TCS-12345");
+    expect(email.subject).toContain("On its way");
+    expect(email.text).toContain("Tracking: TCS-12345 (TCS)");
+    expect(email.html).toContain("TCS-12345");
+    expect(email.html).toContain("2–3 working days");
   });
 
   it("includes the reason when payment is rejected", () => {
-    const email = getCustomerOrderEmail(order, "payment_rejected", "Reference number does not match");
+    const email = renderOrderEmail("payment_rejected", mapOrderToEmailData(order, "Reference number does not match"));
 
     expect(email.subject).toContain("Action needed");
-    expect(email.text).toContain("Reference number does not match");
+    expect(email.text).toContain("Reason: Reference number does not match");
+    expect(email.html).toContain("Reference number does not match");
+  });
+
+  it("renders the welcome email with the discount code and expiry", () => {
+    const email = renderWelcomeEmail({ customerName: "Ayesha Khan", code: "KHAYAL-ABCD-EFGH", expiresAt: "13 October 2026" });
+
+    expect(email.subject).toContain("5%");
+    expect(email.html).toContain("KHAYAL-ABCD-EFGH");
+    expect(email.html).toContain("Valid until 13 October 2026");
+    expect(email.text).toContain("Code: KHAYAL-ABCD-EFGH");
   });
 });
