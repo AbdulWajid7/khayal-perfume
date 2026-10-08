@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Black-and-gold 3D homepage experience.
+ * 3D homepage experience in the Khayal cream, gold and plum theme.
  * A sticky WebGL canvas sits behind six full-height sections; the Gentleman
  * bottle travels between them as the visitor scrolls (see khayalScene.ts).
  */
@@ -114,7 +114,7 @@ export default function KhayalExperience({ products }: Props) {
       {/* sticky stage behind every section */}
       <div className="sticky top-0 h-[100svh] -mb-[100svh] z-0 pointer-events-none" aria-hidden="true">
         <canvas ref={canvasRef} className="block h-full w-full" />
-        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_40%,transparent_45%,rgba(0,0,0,.75)_100%)]" />
+        <div className="hero-mist" />
       </div>
 
       <div className="relative z-10">
@@ -123,7 +123,7 @@ export default function KhayalExperience({ products }: Props) {
           <div className={panel}>
             <p className={eyebrow}>Premium niche collection · Karachi</p>
             <h1 className="font-serif-display font-medium text-ink text-[48px] md:text-[72px] lg:text-[100px] leading-[1.0] tracking-tight">
-              Some fragrances become <em className="text-gold-gradient font-normal">memories.</em>
+              Some fragrances become <em className="text-gold-shimmer font-normal">memories.</em>
             </h1>
             <p className={lead}>
               Khayal means a thought, a memory, a feeling that stays with you. Premium perfumes and attars, made in
@@ -143,7 +143,7 @@ export default function KhayalExperience({ products }: Props) {
         <section data-station="collection" className={`${section} flex-col justify-center items-center text-center gap-12`}>
           <Reveal>
             <p className={`${eyebrow} justify-center`}>The signature line</p>
-            <h2 className={h2}>Product <em className="text-gold-gradient font-normal">collection</em></h2>
+            <h2 className={h2}>Product <em className="text-gold-shimmer font-normal">collection</em></h2>
           </Reveal>
           {collection.length > 0 ? (
             <div className="grid w-full max-w-5xl grid-cols-1 sm:grid-cols-3 gap-5 text-left">
@@ -161,7 +161,7 @@ export default function KhayalExperience({ products }: Props) {
         <section data-station="n360" className={`${section} items-center justify-between gap-6 max-md:flex-col max-md:justify-end max-md:items-stretch`}>
           <Reveal className="max-w-[300px] max-md:max-w-none max-md:bg-gradient-to-t max-md:from-cream max-md:to-cream/60 max-md:pt-6">
             <p className={eyebrow}>{featured?.title ?? "The Gentleman"}</p>
-            <h2 className={h2}>Fragrance <em className="text-gold-gradient font-normal">notes</em></h2>
+            <h2 className={h2}>Fragrance <em className="text-gold-shimmer font-normal">notes</em></h2>
             <ul className="mt-7 border-t border-gold/20">
               {facts.map(([k, v]) => (
                 <li key={k} className="flex justify-between gap-4 border-b border-gold/20 py-3.5 text-[13px]">
@@ -189,7 +189,7 @@ export default function KhayalExperience({ products }: Props) {
         <section data-station="story" className={`${section} items-center justify-end max-md:items-end max-md:justify-start`}>
           <Reveal className={panel}>
             <p className={eyebrow}>Our story</p>
-            <h2 className={h2}>A thought, <em className="text-gold-gradient font-normal">bottled.</em></h2>
+            <h2 className={h2}>A thought, <em className="text-gold-shimmer font-normal">bottled.</em></h2>
             <p className={lead}>
               A scent can return you to a person, a place or a single evening years later. Khayal was founded in Karachi
               to make fragrances that do exactly that, crafted with care and kept within reach.
@@ -218,7 +218,7 @@ export default function KhayalExperience({ products }: Props) {
         <section data-station="presence" className={`${section} items-center max-md:items-end`}>
           <Reveal className={panel}>
             <p className={eyebrow}>{featured?.title ?? "The Gentleman"} · Eau de parfum</p>
-            <h2 className={h2}>More than a fragrance. <em className="text-gold-gradient font-normal">A presence.</em></h2>
+            <h2 className={h2}>More than a fragrance. <em className="text-gold-shimmer font-normal">A presence.</em></h2>
             <p className={lead}>Fresh at the first breath, deep by evening. Made for the moments you want to be remembered.</p>
             <div className="flex flex-wrap gap-3">
               <Link href={featuredHref} className={btn}>Shop {featured?.title ?? "now"}</Link>

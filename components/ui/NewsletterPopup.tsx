@@ -58,7 +58,7 @@ export default function NewsletterPopup() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[110] bg-black/75 backdrop-blur-sm"
+            className="fixed inset-0 z-[110] bg-ink/40 backdrop-blur-sm"
             onClick={close}
             aria-hidden="true"
           />

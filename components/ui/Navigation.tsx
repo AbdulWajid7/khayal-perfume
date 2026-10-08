@@ -253,7 +253,7 @@ export default function Navigation() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-[60] bg-ink/20 backdrop-blur-sm lg:hidden"
               onClick={() => setMobileOpen(false)}
               aria-hidden="true"
             />

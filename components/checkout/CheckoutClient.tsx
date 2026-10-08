@@ -299,7 +299,7 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
               <select
                 value={form.province}
                 onChange={(e) => updateField("province", e.target.value)}
-                className="input-admin"
+                className="input-admin bg-white"
               >
                 <option value="">Select province</option>
                 {PAKISTAN_PROVINCES.map((p) => (

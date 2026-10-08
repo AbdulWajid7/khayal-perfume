@@ -81,10 +81,10 @@ export default function CategoryGrid() {
                 />
                 {/* <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/20 to-transparent transition-opacity duration-500 group-hover:from-ink/80" /> */}
                 {/* <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8"> */}
-                  {/* <h3 className="font-serif-display text-white text-3xl md:text-4xl font-medium transition-transform duration-500 group-hover:-translate-y-1">
+                  {/* <h3 className="font-serif-display text-pure text-3xl md:text-4xl font-medium transition-transform duration-500 group-hover:-translate-y-1">
                     {category.title}
                   </h3>
-                  <p className="mt-2 text-white/80 text-sm max-w-xs transition-all duration-500 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
+                  <p className="mt-2 text-pure/80 text-sm max-w-xs transition-all duration-500 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">
                     {category.description}
                   </p>
                   <span className="mt-4 inline-flex items-center text-gold text-sm font-medium gap-2">

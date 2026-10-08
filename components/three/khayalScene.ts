@@ -1,5 +1,5 @@
 /**
- * Khayal homepage 3D scene (plain three.js, framework-agnostic).
+ * Khayal homepage 3D scene (plain three.js, framework-agnostic), styled for the light cream theme.
  *
  * The Gentleman bottle is modelled procedurally from the product photo and
  * moves between scroll "stations" (one per homepage section). Each station
@@ -71,7 +71,7 @@ function canvasTexture(w: number, h: number, draw: (g: CanvasRenderingContext2D,
 
 function studioEnvironment(renderer: THREE.WebGLRenderer) {
   const env = new THREE.Scene();
-  env.add(new THREE.Mesh(new THREE.BoxGeometry(30, 30, 30), new THREE.MeshBasicMaterial({ color: 0x0c0b0a, side: THREE.BackSide })));
+  env.add(new THREE.Mesh(new THREE.BoxGeometry(30, 30, 30), new THREE.MeshBasicMaterial({ color: 0x8a8378, side: THREE.BackSide })));
   const plate = (w: number, h: number, x: number, y: number, z: number, c: number) => {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide }));
     m.position.set(x, y, z); m.lookAt(0, 0, 0); env.add(m);
@@ -228,22 +228,22 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
   /* atmosphere: beams + gold dust */
   const beams: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>[] = [];
   for (let i = 0; i < 5; i++) {
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: beamTex, color: 0xffd9a0, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false }));
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: beamTex, color: 0xd4b46a, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
     m.scale.set(0.6 + R() * 1.4, 14, 1); m.position.set(-1.5 + i * 1.1, 4.5, -3 - R() * 2); m.rotation.z = 0.32 + R() * 0.12;
-    m.userData = { o: 0.1 + R() * 0.1, ph: R() * 6 };
+    m.userData = { o: 0.16 + R() * 0.12, ph: R() * 6 };
     scene.add(m); beams.push(m);
   }
   const MN = 700, mGeo = new THREE.BufferGeometry(), mPos = new Float32Array(MN * 3);
   const mSeed: number[][] = [];
   for (let i = 0; i < MN; i++) mSeed.push([(R() - 0.5) * 16, (R() - 0.5) * 10, -5 + R() * 7, R() * 6, 0.1 + R() * 0.3]);
   mGeo.setAttribute("position", new THREE.BufferAttribute(mPos, 3));
-  const motesMat = new THREE.PointsMaterial({ size: 0.035, map: dotTex, color: 0xf3cf8c, transparent: true, opacity: 0.6, depthWrite: false, blending: THREE.AdditiveBlending });
+  const motesMat = new THREE.PointsMaterial({ size: 0.04, map: dotTex, color: 0xbfa15f, transparent: true, opacity: 0.6, depthWrite: false });
   scene.add(new THREE.Points(mGeo, motesMat));
 
   /* hero mist */
   const SN = 700, sGeo = new THREE.BufferGeometry(), sPos = new Float32Array(SN * 3), sCol = new Float32Array(SN * 4);
   const sSeed = Array.from({ length: SN }, () => ({ o: R(), sp: 0.6 + R() * 0.5, a: R() - 0.5, b: R() - 0.5, w: 0.4 + R() * 0.6 }));
-  for (let i = 0; i < SN; i++) sCol.set([0.95, 0.93, 0.9, 0], i * 4);
+  for (let i = 0; i < SN; i++) sCol.set([0.72, 0.68, 0.62, 0], i * 4);
   sGeo.setAttribute("position", new THREE.BufferAttribute(sPos, 3));
   sGeo.setAttribute("color", new THREE.BufferAttribute(sCol, 4));
   const spray = new THREE.Points(sGeo, new THREE.PointsMaterial({ size: 0.55, map: smokeTex, vertexColors: true, transparent: true, depthWrite: false }));
@@ -252,7 +252,7 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
   /* floor smoke */
   const floor: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial>[] = [];
   for (let i = 0; i < 8; i++) {
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: smokeTex, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: smokeTex, color: 0xc9bca4, transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
     m.userData = { x: (R() - 0.5) * 4, z: (R() - 0.5) * 1.5, s: 2.5 + R() * 2.5, o: 0.35 + R() * 0.25, sp: (R() - 0.5) * 0.15 };
     scene.add(m); floor.push(m);
   }
@@ -260,10 +260,10 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
   /* golden trails (360) */
   const TN = 2200, tGeo = new THREE.BufferGeometry(), tPos = new Float32Array(TN * 3), tCol = new Float32Array(TN * 4);
   const tSeed = Array.from({ length: TN }, (_, i) => { const strand = i % 5; return { strand, u: R(), r: 1.15 + strand * 0.16 + R() * 0.12, j: (R() - 0.5) * 0.12 }; });
-  for (let i = 0; i < TN; i++) { const g = 0.75 + R() * 0.25; tCol.set([g, 0.78 * g, 0.45 * g, 0], i * 4); }
+  for (let i = 0; i < TN; i++) { const g = 0.7 + R() * 0.3; tCol.set([0.8 * g, 0.62 * g, 0.3 * g, 0], i * 4); }
   tGeo.setAttribute("position", new THREE.BufferAttribute(tPos, 3));
   tGeo.setAttribute("color", new THREE.BufferAttribute(tCol, 4));
-  const trails = new THREE.Points(tGeo, new THREE.PointsMaterial({ size: 0.06, map: dotTex, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const trails = new THREE.Points(tGeo, new THREE.PointsMaterial({ size: 0.06, map: dotTex, vertexColors: true, transparent: true, depthWrite: false }));
   scene.add(trails);
 
   /* golden leaves (story) */
@@ -309,10 +309,10 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
     const ring = i < 1000;
     return { ring, a: ring ? (i / 1000) * Math.PI * 2 : R() * Math.PI * 2, j: (R() - 0.5) * (ring ? 0.06 : 2.2), y: (R() - 0.5) * (ring ? 0.05 : 3.6), r: ring ? 0 : 1 + R() * 1.6 };
   });
-  for (let i = 0; i < ON; i++) oCol.set([1, 0.82, 0.5, 0], i * 4);
+  for (let i = 0; i < ON; i++) oCol.set([0.78, 0.58, 0.24, 0], i * 4);
   oGeo.setAttribute("position", new THREE.BufferAttribute(oPos, 3));
   oGeo.setAttribute("color", new THREE.BufferAttribute(oCol, 4));
-  const orbit = new THREE.Points(oGeo, new THREE.PointsMaterial({ size: 0.11, map: dotTex, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const orbit = new THREE.Points(oGeo, new THREE.PointsMaterial({ size: 0.13, map: dotTex, vertexColors: true, transparent: true, depthWrite: false }));
   scene.add(orbit);
 
   /* sizing + interaction */
@@ -406,7 +406,7 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
       const u = m.userData;
       m.position.set(bottle.position.x + u.x + Math.sin(t * u.sp + i) * 0.5, base + 0.15, u.z);
       m.scale.set(u.s, u.s * 0.45, 1); m.lookAt(camera.position);
-      m.material.opacity = u.o * c.floor * 0.26;
+      m.material.opacity = u.o * c.floor * 0.45;
     });
 
     trails.visible = c.trails > 0.02;
@@ -415,7 +415,7 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
         const s = tSeed[i], u = (s.u + t * 0.06 * idle) % 1, ang = u * Math.PI * 4 + s.strand * 1.26 + t * 0.5 * idle + dragRot * 0.6, y = (u - 0.5) * 4.6;
         const rr = s.r * (1 + 0.25 * Math.sin(u * 9 + s.strand)) * c.s;
         tPos[i * 3] = bottle.position.x + Math.cos(ang) * rr + s.j; tPos[i * 3 + 1] = bottle.position.y + y * c.s + s.j; tPos[i * 3 + 2] = Math.sin(ang) * rr * 0.7;
-        tCol[i * 4 + 3] = c.trails * Math.sin(Math.PI * u) * 0.85;
+        tCol[i * 4 + 3] = c.trails * Math.sin(Math.PI * u);
       }
       tGeo.attributes.position.needsUpdate = true; tGeo.attributes.color.needsUpdate = true;
     }
@@ -454,7 +454,7 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
           const ty = y * Math.cos(0.35) - z * Math.sin(0.35), tz = y * Math.sin(0.35) + z * Math.cos(0.35);
           oPos[i * 3] = bottle.position.x + x + s.j; oPos[i * 3 + 1] = bottle.position.y + 0.1 + ty; oPos[i * 3 + 2] = tz;
           const d = (((head - s.a) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-          oCol[i * 4 + 3] = c.orbit * Math.pow(1 - d / (Math.PI * 2), 2.2) * 1.4;
+          oCol[i * 4 + 3] = Math.min(1, c.orbit * Math.pow(1 - d / (Math.PI * 2), 1.6) * 1.8);
         } else {
           const tw = 0.5 + 0.5 * Math.sin(t * 3 + s.a * 7);
           oPos[i * 3] = bottle.position.x + Math.cos(s.a) * s.r; oPos[i * 3 + 1] = bottle.position.y + s.y; oPos[i * 3 + 2] = Math.sin(s.a) * s.r * 0.6 - 0.5;
