@@ -122,6 +122,46 @@ export async function getBestsellerProducts(): Promise<ProductType[]> {
   }
 }
 
+/**
+ * Top sellers ranked by units sold across real (non-draft, non-cancelled, non-returned) orders.
+ * Falls back to Bestseller-tagged, then newest active products so the list is always `limit` long.
+ */
+export async function getTopSellingProducts(limit = 5): Promise<ProductType[]> {
+  const ranked: ProductType[] = [];
+  try {
+    await dbConnect();
+    const { Order } = await import("@/models/Order");
+    const sales = await Order.aggregate<{ _id: string; sold: number }>([
+      { $match: { orderStatus: { $nin: ["draft", "cancelled", "returned"] }, paymentStatus: { $ne: "rejected" } } },
+      { $unwind: "$items" },
+      { $group: { _id: "$items.productId", sold: { $sum: "$items.quantity" } } },
+      { $sort: { sold: -1 } },
+      { $limit: limit * 4 },
+    ]);
+    const ids = sales.map((s) => s._id).filter((id) => /^[a-f\d]{24}$/i.test(id));
+    if (ids.length) {
+      const docs = await Product.find({ _id: { $in: ids }, status: "active" }).lean();
+      const data = toJSON(docs) || [];
+      const byId = new Map(data.map(mapIProductToProduct).map((p) => [p.id, p]));
+      for (const id of ids) {
+        const p = byId.get(id);
+        if (p) ranked.push(p);
+        if (ranked.length >= limit) break;
+      }
+    }
+  } catch (error) {
+    console.error("getTopSellingProducts error:", error);
+  }
+  if (ranked.length < limit) {
+    const seen = new Set(ranked.map((p) => p.id));
+    for (const p of [...(await getBestsellerProducts()), ...(await getProducts())]) {
+      if (ranked.length >= limit) break;
+      if (!seen.has(p.id)) { seen.add(p.id); ranked.push(p); }
+    }
+  }
+  return ranked.slice(0, limit);
+}
+
 export async function getProducts(): Promise<ProductType[]> {
   try {
     await dbConnect();

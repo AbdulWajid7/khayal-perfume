@@ -40,9 +40,17 @@ const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 
 
 interface Props {
   products: Product[];
+  /** Ranked top sellers for the bestseller section (defaults to the first five products). */
+  topSellers?: Product[];
 }
 
-export default function KhayalExperience({ products }: Props) {
+/** "Khayal Cherie — Women's Perfume" → name "Khayal Cherie", sub "Women's Perfume". */
+function splitTitle(title: string): { name: string; sub: string } {
+  const [name, ...rest] = title.split(/\s+[—–-]\s+/);
+  return { name: name.trim(), sub: rest.join(" · ").trim() };
+}
+
+export default function KhayalExperience({ products, topSellers }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
@@ -51,8 +59,8 @@ export default function KhayalExperience({ products }: Props) {
   const goToRef = useRef<(i: number) => void>(() => {});
 
   const slides = products.slice(0, 4);
+  const top = (topSellers?.length ? topSellers : products).slice(0, 5);
   const [heroIdx, setHeroIdx] = useState(0);
-  const [carIdx, setCarIdx] = useState(Math.min(1, Math.max(0, products.length - 1)));
   const [noteTab, setNoteTab] = useState(0);
   const [active, setActive] = useState(0);
 
@@ -83,10 +91,6 @@ export default function KhayalExperience({ products }: Props) {
     if (slides.length < 2) return;
     setHeroIdx((i) => (i + d + slides.length) % slides.length);
   }, [slides.length]);
-  const stepCar = useCallback((d: number) => {
-    if (products.length < 2) return;
-    setCarIdx((i) => (i + d + products.length) % products.length);
-  }, [products.length]);
 
   useEffect(() => {
     const canvas = canvasRef.current, wrap = wrapRef.current;
@@ -237,8 +241,6 @@ export default function KhayalExperience({ products }: Props) {
     };
   }, []);
 
-  // carousel swipe
-  const swipe = useRef<number | null>(null);
 
   const eyebrow = "flex items-center gap-4 text-[11px] tracking-[0.32em] uppercase text-gold font-medium mb-5 before:block before:h-px before:w-10 before:bg-gold";
   const h2 = "font-serif-display font-medium text-ink text-[40px] md:text-[56px] lg:text-[68px] leading-[1.02] tracking-tight";
@@ -316,86 +318,69 @@ export default function KhayalExperience({ products }: Props) {
           </div>
         </section>
 
-        {/* 2 · collection carousel */}
-        <section data-station="collection" className={`${section} flex-col justify-center items-center text-center lg:pt-28 overflow-x-clip`}>
-          <div data-content className="w-full will-change-transform">
-            <p className={`${eyebrow} justify-center`}>The signature line</p>
-            <h2 className="font-serif-display font-medium text-ink text-[40px] md:text-[52px] leading-[1.02] tracking-tight">Product <span className="text-gold-shimmer italic">collection</span></h2>
-            {products.length > 0 && (
-              <>
-                <div
-                  className="relative mx-auto mt-8 h-[450px] md:h-[440px] w-full max-w-5xl [perspective:1400px] select-none"
-                  onPointerDown={(e) => { swipe.current = e.clientX; }}
-                  onPointerUp={(e) => {
-                    if (swipe.current !== null && Math.abs(e.clientX - swipe.current) > 40) stepCar(e.clientX < swipe.current ? 1 : -1);
-                    swipe.current = null;
-                  }}
-                >
-                  {products.map((p, i) => {
-                    const n = products.length;
-                    let k = i - carIdx;
-                    if (k > n / 2) k -= n;
-                    if (k < -n / 2) k += n;
-                    const abs = Math.abs(k);
-                    const img = p.featuredImage || p.images[0];
-                    const centre = k === 0;
-                    return (
-                      <div
-                        key={p.id}
-                        className="absolute left-1/2 top-0 w-[230px] md:w-[250px] transition-all duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
-                        style={{
-                          transform: `translateX(calc(-50% + ${k * 78}%)) translateZ(${centre ? 60 : -120 * abs}px) rotateY(${-k * 22}deg) scale(${centre ? 1 : 0.84})`,
-                          opacity: abs > 2 ? 0 : centre ? 1 : 0.55,
-                          filter: centre ? "none" : "blur(1.5px) saturate(.8)",
-                          zIndex: 10 - abs,
-                          pointerEvents: abs > 1 ? "none" : "auto",
-                        }}
-                      >
-                        <article className={`relative overflow-hidden rounded-2xl border bg-pure text-left transition-shadow duration-500 ${centre ? "border-gold/40 shadow-[0_30px_80px_-30px_rgba(191,161,95,.55)]" : "border-border"}`}>
-                          <button type="button" onClick={() => !centre && setCarIdx(i)} tabIndex={centre ? -1 : 0}
-                            aria-label={centre ? `${p.title}` : `Show ${p.title}`} className="block w-full cursor-pointer">
-                            <div className="relative aspect-[4/5] bg-cream-dark overflow-hidden">
-                              <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_45%,rgba(191,161,95,.28),transparent_70%)]" />
-                              {img && (
-                                <Image src={img.url} alt={img.altText || p.title} fill sizes="300px"
-                                  className={`object-cover ${centre ? "kx-float-tilt" : ""}`} />
-                              )}
-                              {centre && (
-                                <span className="absolute top-3 left-3 bg-gold text-pure text-[10px] uppercase tracking-[0.15em] px-2.5 py-1 rounded-md font-medium">Signature</span>
-                              )}
-                            </div>
-                          </button>
-                          <div className="p-4">
-                            <Link href={`/shop/${p.handle}`} tabIndex={centre ? 0 : -1} className="block">
-                              <h3 className="font-serif-display text-ink text-xl font-medium line-clamp-1">{p.title}</h3>
-                            </Link>
-                            <p className="mt-1 text-gold text-sm font-medium tabular">
+        {/* 2 · top 5 bestsellers */}
+        <section data-station="collection" className={`${section} flex-col justify-center lg:pt-28`}>
+          <div data-content className="mx-auto w-full max-w-7xl will-change-transform">
+            <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className={eyebrow}>Most loved across Pakistan</p>
+                <h2 className="font-serif-display font-medium text-ink text-[40px] md:text-[52px] leading-[1.02] tracking-tight">
+                  Top 5 <span className="text-gold-shimmer italic">bestsellers</span>
+                </h2>
+              </div>
+              <div className="flex flex-col gap-3 md:items-end md:text-right">
+                <p className="max-w-sm text-stone text-[15px] font-light leading-relaxed">The fragrances our customers reorder most, ranked by what leaves the studio.</p>
+                <Link href="/shop" className="link-hover-gold self-start md:self-end text-[11px] uppercase tracking-[0.24em] text-ink">View all fragrances →</Link>
+              </div>
+            </div>
+
+            {top.length > 0 ? (
+              <ol className="mt-9 -mx-4 flex snap-x snap-mandatory scroll-px-4 md:scroll-px-0 gap-4 overflow-x-auto px-4 pb-4 md:mx-0 md:px-0 lg:gap-5 lg:overflow-visible lg:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {top.map((p, i) => {
+                  const img = p.featuredImage || p.images[0];
+                  const { name, sub } = splitTitle(p.title);
+                  const family = metafield(p, "scent_family");
+                  const first = i === 0;
+                  return (
+                    <li key={p.id} className="snap-start shrink-0 w-[72vw] sm:w-[44vw] md:w-[30vw] lg:w-auto lg:flex-1 lg:min-w-0">
+                      <article className={`group flex h-full flex-col overflow-hidden rounded-2xl border bg-pure transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_60px_-30px_rgba(191,161,95,.6)] ${first ? "border-gold/50" : "border-border hover:border-gold/40"}`}>
+                        <Link href={`/shop/${p.handle}`} className="relative block aspect-[4/5] lg:aspect-auto lg:h-[min(34vh,310px)] overflow-hidden bg-cream-dark" aria-label={`View ${p.title}`}>
+                          <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_45%,rgba(191,161,95,.22),transparent_70%)]" aria-hidden="true" />
+                          {img && (
+                            <Image src={img.url} alt={img.altText || p.title} fill sizes="(min-width:1024px) 20vw, 70vw"
+                              className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.06]" />
+                          )}
+                          <span className="absolute left-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-cream/85 backdrop-blur-sm font-serif-display text-[17px] text-ink tabular shadow-sm">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          {first && (
+                            <span className="absolute right-3 top-3 rounded-full bg-gold px-3 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-pure">No.1 seller</span>
+                          )}
+                          <span className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-ink/70 to-transparent px-4 pb-3 pt-8 text-[10px] uppercase tracking-[0.24em] text-pure transition-transform duration-500 group-hover:translate-y-0">
+                            View details
+                          </span>
+                        </Link>
+                        <div className="flex flex-1 flex-col p-4">
+                          <Link href={`/shop/${p.handle}`} className="block">
+                            <h3 className="font-serif-display text-ink text-[19px] font-medium leading-snug line-clamp-2 transition-colors group-hover:text-gold">{name}</h3>
+                          </Link>
+                          <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-stone line-clamp-1">{sub || family || "Eau de parfum"}</p>
+                          <div className="mt-auto pt-3">
+                            <p className="mb-3 text-gold text-[15px] font-medium tabular">
                               {formatPrice(Number.parseFloat(p.priceRange.minVariantPrice.amount), p.priceRange.minVariantPrice.currencyCode)}
                             </p>
-                            <div className={`mt-3 transition-opacity duration-500 ${centre ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-                              <AddToCartButton product={p} fullWidth />
-                            </div>
+                            <AddToCartButton product={p} fullWidth
+                              className="rounded-none! py-2.5! text-[11px]! uppercase tracking-[0.18em] bg-transparent! border border-ink/25 text-ink! hover:bg-gold! hover:border-gold hover:text-pure! transition-all" />
                           </div>
-                        </article>
-                      </div>
-                    );
-                  })}
-                </div>
-                {products.length > 1 && (
-                  <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-                    <button type="button" className={arrow} onClick={() => stepCar(-1)} aria-label="Previous product">←</button>
-                    <div className="flex items-center gap-2">
-                      {products.map((p, i) => (
-                        <button key={p.id} type="button" onClick={() => setCarIdx(i)} aria-label={`Show ${p.title}`} className={dot(i === carIdx)} />
-                      ))}
-                    </div>
-                    <button type="button" className={arrow} onClick={() => stepCar(1)} aria-label="Next product">→</button>
-                    <Link href="/shop" className="ml-2 link-hover-gold text-[11px] uppercase tracking-[0.22em] text-ink">View all fragrances</Link>
-                  </div>
-                )}
-              </>
+                        </div>
+                      </article>
+                    </li>
+                  );
+                })}
+              </ol>
+            ) : (
+              <div className="mt-8"><Link href="/shop" className={ghost}>View all fragrances</Link></div>
             )}
-            {products.length < 2 && <div className="mt-8"><Link href="/shop" className={ghost}>View all fragrances</Link></div>}
           </div>
         </section>
 
