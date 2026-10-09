@@ -276,3 +276,147 @@ body {
 .input-admin:disabled {
   opacity: 0.6;
 }
+
+/* 3D homepage experience: text fade-up and the floating tilt of the centre product */
+@keyframes kx-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.kx-fade-up {
+  animation: kx-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes kx-float-tilt {
+  0%,
+  100% {
+    transform: scale(1.05) perspective(800px) rotateY(-6deg) translateY(0);
+  }
+  50% {
+    transform: scale(1.08) perspective(800px) rotateY(6deg) translateY(-8px);
+  }
+}
+
+.kx-float-tilt {
+  animation: kx-float-tilt 6s ease-in-out infinite;
+}
+
+
+/* Policy pages: comfortable lists and links inside legal sections */
+.legal-body > * + * {
+  margin-top: 1rem;
+}
+.legal-body ul {
+  list-style: none;
+  padding: 0;
+}
+.legal-body li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.legal-body li + li {
+  margin-top: 0.6rem;
+}
+.legal-body li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 0.6rem;
+  height: 1px;
+  background: var(--gold);
+}
+.legal-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 4px;
+}
+
+/* Storefront form fields: quiet, roomy, gold focus */
+.input-lux {
+  width: 100%;
+  background-color: var(--pure);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.input-lux::placeholder {
+  color: var(--stone-light);
+}
+.input-lux:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(191, 161, 95, 0.14);
+}
+
+/* Journal articles: editorial typography */
+.article-body > * + * {
+  margin-top: 1.25rem;
+}
+.article-body > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 4.2em;
+  line-height: 0.85;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--gold);
+}
+.article-body h1,
+.article-body h2,
+.article-body h3 {
+  font-family: var(--font-serif);
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-top: 2.6rem;
+}
+.article-body h1 { font-size: 2rem; }
+.article-body h2 { font-size: 1.75rem; }
+.article-body h3 { font-size: 1.35rem; }
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 4px;
+}
+.article-body img {
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+}
+.article-body blockquote {
+  border-left: 2px solid var(--gold);
+  padding-left: 1.5rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.article-body ul,
+.article-body ol {
+  padding-left: 1.25rem;
+}
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+.article-body li::marker { color: var(--gold); }
+.article-body hr {
+  border-color: var(--border);
+  margin: 3rem 0;
+}
+
+/* Gold radios and checkboxes across the storefront */
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: var(--gold);
+}

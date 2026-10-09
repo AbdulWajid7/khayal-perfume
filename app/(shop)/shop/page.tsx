@@ -1,18 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getProducts } from "@/lib/products";
-import ProductCard from "@/components/ui/ProductCard";
+import ShopHeader from "@/components/shop/ShopHeader";
+import AnimatedProductGrid from "@/components/shop/AnimatedProductGrid";
 import ProductListTracker from "@/components/analytics/ProductListTracker";
 import type { Product as ProductType } from "@/types/product";
 
 export const dynamic = "force-dynamic";
-
-const CATEGORIES = [
-  { label: "All", value: "" },
-  { label: "Men", value: "men" },
-  { label: "Women", value: "women" },
-  { label: "Unisex", value: "unisex" },
-] as const;
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
   men: {
@@ -126,59 +120,16 @@ export default async function ShopPage({
       />
       <ProductListTracker products={filtered} listName={heading} />
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <h1 className="font-serif-display text-ink text-[40px] font-medium tracking-tight">
-          {heading}
-        </h1>
-        <p className="mt-2 text-stone text-base max-w-2xl">
-          Every Khayal fragrance is a composition of rare ingredients, slow craft, and
-          imagination.
-        </p>
-
-        <nav aria-label="Filter by category" className="mt-8 flex flex-wrap gap-2">
-          {CATEGORIES.map((c) => {
-            const isActive = c.value === activeCategory || (!activeCategory && !c.value);
-            return (
-              <Link
-                key={c.value || "all"}
-                href={c.value ? `/shop/${c.value}` : "/shop"}
-                aria-current={isActive ? "page" : undefined}
-                className={[
-                  "px-4 py-2 rounded-full text-[11px] uppercase tracking-[0.18em] border transition-colors duration-300",
-                  isActive
-                    ? "bg-ink text-pure border-ink"
-                    : "bg-transparent text-stone border-border hover:border-gold hover:text-ink",
-                ].join(" ")}
-              >
-                {c.label}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {allTags.length > 0 && (
-          <nav aria-label="Browse by scent" className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span className="text-[10px] uppercase tracking-[0.18em] text-stone-light">Scents:</span>
-            {allTags.map((t) => (
-              <Link
-                key={t}
-                href={`/shop?tag=${encodeURIComponent(t)}`}
-                className={[
-                  "text-[11px] uppercase tracking-[0.14em] transition-colors duration-300",
-                  t === activeTag ? "text-gold" : "text-stone hover:text-gold",
-                ].join(" ")}
-              >
-                {capitalizeTag(t)}
-              </Link>
-            ))}
-          </nav>
-        )}
+        <ShopHeader
+          title={heading}
+          intro="Every Khayal fragrance is a composition of rare ingredients, slow craft, and imagination."
+          count={filtered.length}
+          activeCategory={activeTag ? "none" : CATEGORY_META[activeCategory] ? activeCategory : ""}
+          tags={allTags.map((t) => ({ label: capitalizeTag(t), href: `/shop?tag=${encodeURIComponent(t)}`, active: t === activeTag }))}
+        />
 
         {filtered.length > 0 ? (
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filtered.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <AnimatedProductGrid key={`${activeCategory}|${activeTag}`} products={filtered} />
         ) : (
           <p className="mt-10 text-stone">
             No fragrances {activeTag ? `for "${activeTag}"` : "in this category"} yet.{" "}

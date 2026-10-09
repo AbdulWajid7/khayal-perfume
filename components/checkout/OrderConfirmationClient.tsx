@@ -95,9 +95,18 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
     : `/track-order`;
 
   return (
-    <div className="bg-pure border border-border rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
+    <div className="bg-pure border border-border rounded-[24px] p-6 md:p-8 space-y-6">
       <div className="text-center">
-        <h1 className="font-serif-display text-ink text-2xl md:text-3xl font-medium">
+        {currentOrder.paymentStatus === "rejected" ? (
+          <span className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full border border-sale/40 bg-sale/10 text-sale" aria-hidden="true">
+            <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M12 7v6M12 17h.01" /></svg>
+          </span>
+        ) : (
+          <span className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full border border-gold/40 bg-gold/10 text-gold shadow-[0_14px_34px_-18px_rgba(191,161,95,0.9)]" aria-hidden="true">
+            <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+          </span>
+        )}
+        <h1 className="font-serif-display text-ink text-3xl md:text-[44px] font-medium tracking-tight leading-tight">
           {currentOrder.paymentStatus === "rejected"
             ? "Payment Rejected"
             : currentOrder.paymentMethod === "bank_transfer" && currentOrder.paymentStatus === "pending_verification"
@@ -108,7 +117,7 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
       </div>
 
       <div className="border-t border-border pt-4">
-        <h2 className="text-ink font-medium mb-3">Items</h2>
+        <h2 className="font-serif-display text-ink text-xl font-medium mb-4">Items</h2>
         <ul className="space-y-2 text-sm">
           {currentOrder.items.map((item) => (
             <li key={`${item.productId}-${item.variantId}`} className="flex justify-between">
@@ -125,13 +134,13 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
         <div>
-          <h3 className="text-ink font-medium mb-1">Customer</h3>
+          <h3 className="text-[11px] uppercase tracking-[0.2em] text-gold mb-2">Customer</h3>
           <p className="text-stone">{currentOrder.customer.name}</p>
           <p className="text-stone">{currentOrder.customer.phone}</p>
           {currentOrder.customer.email && <p className="text-stone">{currentOrder.customer.email}</p>}
         </div>
         <div>
-          <h3 className="text-ink font-medium mb-1">Delivery</h3>
+          <h3 className="text-[11px] uppercase tracking-[0.2em] text-gold mb-2">Delivery</h3>
           <p className="text-stone">{currentOrder.customer.address.line}, {currentOrder.customer.address.area}</p>
           <p className="text-stone">{currentOrder.customer.address.city}, {currentOrder.customer.address.province}</p>
           <p className="text-stone mt-1">Expected: {currentOrder.expectedDeliveryText}</p>
@@ -163,26 +172,26 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
                 placeholder="Sender name"
                 value={proof.senderName}
                 onChange={(e) => setProof((p) => ({ ...p, senderName: e.target.value }))}
-                className="input-admin"
+                className="input-lux"
               />
               <input
                 type="text"
                 placeholder="Reference / transaction number"
                 value={proof.referenceNumber}
                 onChange={(e) => setProof((p) => ({ ...p, referenceNumber: e.target.value }))}
-                className="input-admin"
+                className="input-lux"
               />
               <input
                 type="date"
                 value={proof.transferDate}
                 onChange={(e) => setProof((p) => ({ ...p, transferDate: e.target.value }))}
-                className="input-admin"
+                className="input-lux"
               />
               <input
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 onChange={(e) => setFile(e.target.files?.[0] || null)}
-                className="input-admin py-2"
+                className="input-lux py-2"
               />
             </div>
             {proofResult && (
@@ -191,7 +200,7 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
             <button
               type="submit"
               disabled={isPending}
-              className="bg-gold text-pure rounded-lg px-6 py-2.5 text-sm font-medium hover:bg-gold-light transition-colors disabled:opacity-60"
+              className="btn-sweep bg-gold text-pure px-7 py-4 text-[12px] font-medium uppercase tracking-[0.2em] disabled:opacity-60"
             >
               {isPending ? "Submitting..." : "Submit Proof"}
             </button>
@@ -223,7 +232,7 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
       )}
 
       <div className="flex flex-col sm:flex-row gap-3 pt-2">
-        <Link href={trackingHref} className="inline-flex justify-center items-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors">
+        <Link href={trackingHref} className="inline-flex justify-center items-center btn-sweep bg-gold text-pure px-7 py-4 text-[12px] font-medium uppercase tracking-[0.2em]">
           Track Order
         </Link>
         <a

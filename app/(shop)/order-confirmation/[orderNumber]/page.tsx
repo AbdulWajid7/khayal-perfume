@@ -35,8 +35,9 @@ export default async function OrderConfirmationPage({ params, searchParams }: Pa
   const bankConfig = await getEnabledBankTransferConfig();
 
   return (
-    <main className="pt-32 pb-20 md:pt-40 md:pb-28 bg-cream min-h-screen">
-      <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12">
+    <main className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-cream min-h-screen overflow-x-clip">
+      <div className="hero-mist" aria-hidden="true" />
+      <div className="relative mx-auto max-w-3xl px-4 md:px-8 lg:px-12">
         <OrderConfirmationClient order={order} bankConfig={bankConfig || undefined} accessToken={token} />
       </div>
     </main>

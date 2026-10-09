@@ -54,24 +54,24 @@ export default function TrackOrderClient() {
   return (
     <div>
       {!order && (
-        <form onSubmit={handleSubmit} className="mt-8 bg-pure border border-border rounded-2xl p-6 shadow-sm space-y-4">
+        <form onSubmit={handleSubmit} className="mt-8 bg-pure border border-border rounded-[24px] p-6 md:p-8 space-y-4">
           <div>
-            <label className="block text-xs text-stone mb-1">Order number</label>
+            <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Order number</label>
             <input
               type="text"
               value={orderNumber}
               onChange={(e) => setOrderNumber(e.target.value)}
-              className="input-admin"
+              className="input-lux"
               placeholder="K-20260920-ABCD"
             />
           </div>
           <div>
-            <label className="block text-xs text-stone mb-1">Mobile number used at checkout</label>
+            <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Mobile number used at checkout</label>
             <input
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="input-admin"
+              className="input-lux"
               placeholder="03XXXXXXXXX"
             />
           </div>
@@ -79,7 +79,7 @@ export default function TrackOrderClient() {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors disabled:opacity-60"
+            className="w-full btn-sweep bg-gold text-pure px-7 py-4 text-[12px] font-medium uppercase tracking-[0.2em] disabled:opacity-60"
           >
             {isPending ? "Looking up..." : "Track Order"}
           </button>
@@ -87,11 +87,11 @@ export default function TrackOrderClient() {
       )}
 
       {order && (
-        <div className="mt-8 bg-pure border border-border rounded-2xl p-6 md:p-8 shadow-sm space-y-6">
+        <div className="mt-8 bg-pure border border-border rounded-[24px] p-6 md:p-8 space-y-6">
           <div className="flex items-center justify-between border-b border-border pb-4">
             <div>
               <p className="text-stone text-sm">Order number</p>
-              <p className="text-ink font-medium tabular-nums">{order.orderNumber}</p>
+              <p className="font-serif-display text-ink text-2xl tabular-nums">{order.orderNumber}</p>
             </div>
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gold/10 text-gold">
               {statusLabel(order.orderStatus)}
@@ -131,7 +131,7 @@ export default function TrackOrderClient() {
             href={getWhatsAppUrl(`Assalamualaikam, I have a question about my order ${order.orderNumber}.`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full text-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors"
+            className="block w-full text-center btn-sweep bg-gold text-pure px-7 py-4 text-[12px] font-medium uppercase tracking-[0.2em]"
           >
             WhatsApp Support
           </a>

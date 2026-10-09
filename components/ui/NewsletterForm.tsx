@@ -55,12 +55,12 @@ export default function NewsletterForm() {
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder="your@email.com"
-        className="flex-1 bg-pure border border-border rounded-lg px-4 py-3 text-sm text-ink placeholder:text-stone-light focus:border-gold focus:outline-none transition-colors disabled:opacity-60"
+        className="input-lux flex-1 disabled:opacity-60"
       />
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="inline-flex items-center justify-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors disabled:opacity-60"
+        className="btn-sweep inline-flex items-center justify-center bg-gold text-pure px-7 py-3.5 text-[12px] font-medium uppercase tracking-[0.2em] disabled:opacity-60"
       >
         {status === "submitting" ? "Subscribing..." : "Subscribe"}
       </button>
