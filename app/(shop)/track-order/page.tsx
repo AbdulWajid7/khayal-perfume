@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import TrackOrderClient from "@/components/checkout/TrackOrderClient";
+import PageHero from "@/components/ui/PageHero";
 
 export const metadata = {
   title: "Track Order | KHAYAL Fragrance",
@@ -8,9 +9,9 @@ export const metadata = {
 
 export default function TrackOrderPage() {
   return (
-    <main className="pt-32 pb-20 md:pt-40 md:pb-28 bg-cream min-h-screen">
-      <div className="mx-auto max-w-2xl px-4 md:px-8 lg:px-12">
-        <h1 className="font-serif-display text-ink text-3xl md:text-4xl font-medium tracking-tight">Track Your Order</h1>
+    <main className="pb-20 md:pb-28 bg-cream min-h-screen">
+      <PageHero align="center" eyebrow="Order status" title="Track your" accent="order" intro="Enter your order number and the mobile number you used at checkout." />
+      <div className="mx-auto max-w-2xl px-4 md:px-8 lg:px-12 -mt-6">
         <Suspense fallback={<p className="text-stone mt-8">Loading tracking form...</p>}>
           <TrackOrderClient />
         </Suspense>

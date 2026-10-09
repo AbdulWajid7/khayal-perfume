@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import FAQAccordion from "@/components/ui/FAQAccordion";
 import FAQSchema from "@/components/seo/FAQSchema";
+import Link from "next/link";
+import PageHero from "@/components/ui/PageHero";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "FAQ | Khayal Fragrance",
@@ -53,20 +56,49 @@ const items = [
 
 export default function FAQPage() {
   return (
-    <section className="py-20 md:py-28 bg-cream">
+    <div className="bg-cream">
       <FAQSchema items={items} />
-      <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12">
-        <span className="eyebrow">Support</span>
-        <h1 className="mt-3 font-serif-display text-ink text-3xl md:text-5xl font-medium tracking-tight">
-          Frequently Asked Questions
-        </h1>
-        <p className="mt-4 text-stone leading-relaxed">
-          Everything you need to know about ordering, wearing, and caring for your Khayal fragrance.
-        </p>
-        <div className="mt-12">
+      <PageHero
+        eyebrow="Support"
+        title="Frequently asked"
+        accent="questions"
+        intro="Everything you need to know about ordering, wearing, and caring for your Khayal fragrance."
+      />
+      <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12 pb-24 md:pb-32">
+        <div className="grid gap-12 lg:grid-cols-[1.6fr_1fr] lg:gap-20">
           <FAQAccordion items={items} />
+          <aside className="lg:sticky lg:top-32 lg:self-start space-y-4">
+            <div className="rounded-[24px] border border-gold/25 bg-gradient-to-br from-pure via-cream to-cream-dark p-8">
+              <p className="text-[11px] uppercase tracking-[0.3em] text-gold">
+                Still deciding?
+              </p>
+              <h2 className="mt-3 font-serif-display text-ink text-2xl font-medium leading-snug">
+                Find your signature scent in two minutes.
+              </h2>
+              <Link
+                href="/scent-finder"
+                className="btn-sweep mt-6 inline-flex items-center justify-center bg-gold text-pure px-7 py-3.5 text-[12px] font-medium tracking-[0.2em] uppercase"
+              >
+                Take the scent finder
+              </Link>
+            </div>
+            <div className="rounded-[24px] border border-border bg-pure p-8">
+              <p className="text-[11px] uppercase tracking-[0.3em] text-gold">
+                Talk to us
+              </p>
+              <p className="mt-3 text-stone leading-relaxed">
+                We usually reply within 24 hours.
+              </p>
+              <p className="mt-4 font-serif-display text-ink text-lg">
+                {siteConfig.email}
+              </p>
+              <p className="font-serif-display text-ink text-lg">
+                {siteConfig.phoneDisplay}
+              </p>
+            </div>
+          </aside>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -171,9 +171,9 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
   return (
     <div className="mx-auto max-w-2xl">
       {/* Progress bar */}
-      <div className="h-px w-full bg-border mb-10 overflow-hidden">
+      <div className="h-1 w-full rounded-full bg-cream-dark mb-10 overflow-hidden">
         <motion.div
-          className="h-full bg-gold"
+          className="h-full rounded-full bg-gradient-to-r from-gold-light to-gold"
           animate={{ width: `${progress * 100}%` }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         />
@@ -202,7 +202,7 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
                   key={option.label}
                   type="button"
                   onClick={() => selectOption(currentQuestion, option)}
-                  className="group text-left border border-border rounded-xl px-5 py-4 text-ink text-sm font-medium tracking-wide bg-pure hover:border-gold hover:bg-gold/5 transition-colors"
+                  className="group relative text-left border border-border rounded-2xl px-6 py-5 text-ink text-base font-medium bg-cream/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold hover:bg-pure hover:shadow-[0_18px_40px_-24px_rgba(191,161,95,0.7)]"
                 >
                   {option.label}
                   <span className="block mt-2 text-gold text-xs opacity-0 group-hover:opacity-100 transition-opacity">
@@ -236,7 +236,7 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
                   {result.title}
                 </h2>
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-6 items-start">
-                  <div className="relative aspect-[4/5] w-full max-w-[160px] overflow-hidden rounded-xl border border-border bg-cream-dark">
+                  <div className="relative aspect-[4/5] w-full max-w-[160px] overflow-hidden rounded-2xl border border-gold/30 bg-cream-dark shadow-[0_20px_50px_-28px_rgba(191,161,95,0.7)]">
                     {result.featuredImage && (
                       <Image
                         src={result.featuredImage.url}
@@ -258,14 +258,14 @@ export default function ScentQuiz({ products }: ScentQuizProps) {
                     <div className="mt-6 flex flex-wrap gap-4">
                       <Link
                         href={`/shop/${result.handle}`}
-                        className="inline-flex items-center justify-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors"
+                        className="btn-sweep inline-flex items-center justify-center bg-gold text-pure px-7 py-3.5 text-[12px] font-medium tracking-[0.2em] uppercase"
                       >
                         Shop This Fragrance
                       </Link>
                       <button
                         type="button"
                         onClick={restart}
-                        className="inline-flex items-center justify-center border border-stone/50 text-ink rounded-lg px-6 py-3 text-sm font-medium hover:border-gold hover:text-gold transition-colors"
+                        className="btn-sweep inline-flex items-center justify-center border border-ink/30 text-ink px-7 py-3.5 text-[12px] font-medium tracking-[0.2em] uppercase hover:border-gold transition-colors"
                       >
                         Retake the Quiz
                       </button>

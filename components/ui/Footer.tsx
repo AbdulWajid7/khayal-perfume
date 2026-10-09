@@ -28,17 +28,21 @@ const supportLinks = [
 export default function Footer() {
   return (
     <footer className="bg-cream-dark border-t border-border">
-      <div className="border-b border-border">
-        <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12 py-14 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+      <div className="relative overflow-hidden border-b border-border">
+        <div className="hero-mist" aria-hidden="true" />
+        <div className="relative mx-auto max-w-7xl px-4 md:px-8 lg:px-12 py-16 md:py-20 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
           <div>
-            <h2 className="font-serif-display text-ink text-3xl md:text-4xl font-medium tracking-tight">
-              Join the Khayal Circle
+            <p className="flex items-center gap-4 text-[11px] tracking-[0.32em] uppercase text-gold font-medium before:block before:h-px before:w-10 before:bg-gold">
+              Newsletter
+            </p>
+            <h2 className="mt-4 font-serif-display text-ink text-4xl md:text-5xl font-medium tracking-tight">
+              Join the Khayal <span className="text-gold-shimmer italic">Circle</span>
             </h2>
-            <p className="mt-2 text-stone text-sm max-w-md">
+            <p className="mt-3 text-stone max-w-md">
               New fragrances, scent stories, and early access to limited releases.
             </p>
           </div>
-          <div className="w-full lg:w-auto lg:min-w-[400px]">
+          <div className="w-full lg:w-auto lg:min-w-[440px]">
             <NewsletterForm />
           </div>
         </div>
@@ -78,7 +82,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-ink text-xs font-medium tracking-[0.15em] uppercase mb-4">
+            <h3 className="text-gold text-[11px] font-medium tracking-[0.28em] uppercase mb-5">
               Shop
             </h3>
             <ul className="space-y-3">
@@ -86,7 +90,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-stone text-sm hover:text-gold transition-colors"
+                    className="link-hover-gold text-stone text-sm hover:text-ink transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -96,7 +100,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-ink text-xs font-medium tracking-[0.15em] uppercase mb-4">
+            <h3 className="text-gold text-[11px] font-medium tracking-[0.28em] uppercase mb-5">
               Company
             </h3>
             <ul className="space-y-3">
@@ -104,7 +108,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-stone text-sm hover:text-gold transition-colors"
+                    className="link-hover-gold text-stone text-sm hover:text-ink transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -114,7 +118,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-ink text-xs font-medium tracking-[0.15em] uppercase mb-4">
+            <h3 className="text-gold text-[11px] font-medium tracking-[0.28em] uppercase mb-5">
               Support
             </h3>
             <ul className="space-y-3">
@@ -122,7 +126,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-stone text-sm hover:text-gold transition-colors"
+                    className="link-hover-gold text-stone text-sm hover:text-ink transition-colors"
                   >
                     {link.label}
                   </Link>

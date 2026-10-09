@@ -13,6 +13,7 @@ import { calculateShipping, getDeliveryMethodLabel, getExpectedDeliveryText, isK
 import { isValidPakistaniMobile } from "@/lib/phone";
 import type { IBankTransferConfig } from "@/models/BankTransferConfig";
 import Link from "next/link";
+import EmptyState from "@/components/ui/EmptyState";
 
 const PAKISTAN_PROVINCES = ["Sindh", "Punjab", "Khyber Pakhtunkhwa", "Balochistan", "Islamabad Capital Territory", "Gilgit-Baltistan"];
 
@@ -116,9 +117,13 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
 
   if (items.length === 0) {
     return (
-      <div className="mt-8 text-center">
-        <p className="text-stone">Your cart is empty.</p>
-        <Link href="/shop" className="mt-4 inline-block text-gold hover:text-gold-light">Continue shopping</Link>
+      <div className="mt-4">
+        <EmptyState
+          title="Your cart is empty"
+          text="Find a fragrance that feels like yours, and it will be waiting for you here."
+          cta={{ label: "Explore the collection", href: "/shop" }}
+          secondary={{ label: "Find your scent", href: "/scent-finder" }}
+        />
       </div>
     );
   }
@@ -219,38 +224,38 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
   return (
     <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2 space-y-6">
-        <section className="bg-pure border border-border rounded-2xl p-6 shadow-sm">
-          <h2 className="text-ink font-medium mb-4">Customer Information</h2>
+        <section className="bg-pure border border-border rounded-[24px] p-6 md:p-8">
+          <h2 className="font-serif-display text-ink text-2xl font-medium mb-6">Customer Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-xs text-stone mb-1">Full name</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Full name</label>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => updateField("name", e.target.value)}
-                className="input-admin"
+                className="input-lux"
                 placeholder="e.g. Ayesha Khan"
               />
               {fieldErrors.name && <p className="text-sale text-xs mt-1">{fieldErrors.name}</p>}
             </div>
             <div>
-              <label className="block text-xs text-stone mb-1">Mobile number</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Mobile number</label>
               <input
                 type="tel"
                 value={form.phone}
                 onChange={(e) => updateField("phone", e.target.value)}
-                className="input-admin"
+                className="input-lux"
                 placeholder="03XXXXXXXXX"
               />
               {fieldErrors.phone && <p className="text-sale text-xs mt-1">{fieldErrors.phone}</p>}
             </div>
             <div>
-              <label className="block text-xs text-stone mb-1">Email (optional)</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Email (optional)</label>
               <input
                 type="email"
                 value={form.email}
                 onChange={(e) => updateField("email", e.target.value)}
-                className="input-admin"
+                className="input-lux"
                 placeholder="you@example.com"
               />
               {fieldErrors.email && <p className="text-sale text-xs mt-1">{fieldErrors.email}</p>}
@@ -258,48 +263,48 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
           </div>
         </section>
 
-        <section className="bg-pure border border-border rounded-2xl p-6 shadow-sm">
-          <h2 className="text-ink font-medium mb-4">Delivery Address</h2>
+        <section className="bg-pure border border-border rounded-[24px] p-6 md:p-8">
+          <h2 className="font-serif-display text-ink text-2xl font-medium mb-6">Delivery Address</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <label className="block text-xs text-stone mb-1">Address line</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Address line</label>
               <input
                 type="text"
                 value={form.addressLine}
                 onChange={(e) => updateField("addressLine", e.target.value)}
-                className="input-admin"
+                className="input-lux"
                 placeholder="House / building / street"
               />
               {fieldErrors.addressLine && <p className="text-sale text-xs mt-1">{fieldErrors.addressLine}</p>}
             </div>
             <div>
-              <label className="block text-xs text-stone mb-1">Area</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Area</label>
               <input
                 type="text"
                 value={form.area}
                 onChange={(e) => updateField("area", e.target.value)}
-                className="input-admin"
+                className="input-lux"
                 placeholder="e.g. Clifton"
               />
               {fieldErrors.area && <p className="text-sale text-xs mt-1">{fieldErrors.area}</p>}
             </div>
             <div>
-              <label className="block text-xs text-stone mb-1">City</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">City</label>
               <input
                 type="text"
                 value={form.city}
                 onChange={(e) => updateField("city", e.target.value)}
-                className="input-admin"
+                className="input-lux"
                 placeholder="e.g. Karachi"
               />
               {fieldErrors.city && <p className="text-sale text-xs mt-1">{fieldErrors.city}</p>}
             </div>
             <div>
-              <label className="block text-xs text-stone mb-1">Province</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Province</label>
               <select
                 value={form.province}
                 onChange={(e) => updateField("province", e.target.value)}
-                className="input-admin bg-white"
+                className="input-lux"
               >
                 <option value="">Select province</option>
                 {PAKISTAN_PROVINCES.map((p) => (
@@ -309,38 +314,38 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
               {fieldErrors.province && <p className="text-sale text-xs mt-1">{fieldErrors.province}</p>}
             </div>
             <div>
-              <label className="block text-xs text-stone mb-1">Postal code (optional)</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Postal code (optional)</label>
               <input
                 type="text"
                 value={form.postalCode}
                 onChange={(e) => updateField("postalCode", e.target.value)}
-                className="input-admin"
+                className="input-lux"
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-xs text-stone mb-1">Delivery instructions (optional)</label>
+              <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Delivery instructions (optional)</label>
               <textarea
                 value={form.instructions}
                 onChange={(e) => updateField("instructions", e.target.value)}
-                className="input-admin min-h-[80px]"
+                className="input-lux min-h-[80px]"
                 placeholder="Gate code, nearby landmark, preferred time"
               />
             </div>
           </div>
         </section>
 
-        <section className="bg-pure border border-border rounded-2xl p-6 shadow-sm">
-          <h2 className="text-ink font-medium mb-4">Delivery Method</h2>
-          <div className="border border-border rounded-lg p-4 bg-cream-dark/50">
+        <section className="bg-pure border border-border rounded-[24px] p-6 md:p-8">
+          <h2 className="font-serif-display text-ink text-2xl font-medium mb-6">Delivery Method</h2>
+          <div className="border border-gold/30 rounded-2xl p-5 bg-gold/5">
             <p className="text-ink font-medium">{deliveryMethod}</p>
             <p className="text-stone text-sm mt-1">Expected delivery: {expectedDelivery}</p>
           </div>
         </section>
 
-        <section className="bg-pure border border-border rounded-2xl p-6 shadow-sm">
-          <h2 className="text-ink font-medium mb-4">Payment Method</h2>
+        <section className="bg-pure border border-border rounded-[24px] p-6 md:p-8">
+          <h2 className="font-serif-display text-ink text-2xl font-medium mb-6">Payment Method</h2>
           <div className="space-y-3">
-            <label className="flex items-start gap-3 border border-border rounded-lg p-4 cursor-pointer hover:bg-cream-dark/30 transition-colors">
+            <label className="flex items-start gap-4 border border-border rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:border-gold/50 has-[:checked]:border-gold has-[:checked]:bg-gold/5 has-[:checked]:shadow-[0_14px_34px_-22px_rgba(191,161,95,0.8)]">
               <input
                 type="radio"
                 name="payment"
@@ -354,7 +359,7 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
               </div>
             </label>
             {bankTransferEnabled && bankConfig && (
-              <label className="flex items-start gap-3 border border-border rounded-lg p-4 cursor-pointer hover:bg-cream-dark/30 transition-colors">
+              <label className="flex items-start gap-4 border border-border rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:border-gold/50 has-[:checked]:border-gold has-[:checked]:bg-gold/5 has-[:checked]:shadow-[0_14px_34px_-22px_rgba(191,161,95,0.8)]">
                 <input
                   type="radio"
                   name="payment"
@@ -393,8 +398,8 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
       </div>
 
       <div className="space-y-6">
-        <section className="bg-pure border border-border rounded-2xl p-6 shadow-sm sticky top-32">
-          <h2 className="text-ink font-medium mb-4">Order Summary</h2>
+        <section className="bg-pure border border-border rounded-[24px] p-6 md:p-8 sticky top-32">
+          <h2 className="font-serif-display text-ink text-2xl font-medium mb-6">Order Summary</h2>
           <ul className="space-y-3 text-sm">
             {items.map((item) => (
               <li key={item.id} className="flex justify-between">
@@ -425,7 +430,7 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
           </div>
 
           <div className="mt-4">
-            <label className="block text-xs text-stone mb-1">Discount code</label>
+            <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Discount code</label>
             <div className="flex gap-2">
               <input
                 type="text"
@@ -437,7 +442,7 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
                   }
                 }}
                 disabled={discountState.status === "applied"}
-                className="input-admin flex-1"
+                className="input-lux flex-1"
                 placeholder="Enter code"
               />
               {discountState.status !== "applied" ? (
@@ -468,11 +473,11 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
           </div>
 
           <div className="mt-4">
-            <label className="block text-xs text-stone mb-1">Order notes (optional)</label>
+            <label className="block text-[11px] uppercase tracking-[0.18em] text-stone mb-2">Order notes (optional)</label>
             <textarea
               value={form.customerNotes}
               onChange={(e) => updateField("customerNotes", e.target.value)}
-              className="input-admin min-h-[80px]"
+              className="input-lux min-h-[80px]"
               placeholder="Any special requests"
             />
           </div>
@@ -498,7 +503,7 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
           <button
             type="submit"
             disabled={isPending}
-            className="w-full mt-4 bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full mt-4 btn-sweep bg-gold text-pure px-7 py-4 text-[12px] font-medium uppercase tracking-[0.2em] disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {isPending ? "Placing order..." : "Place Order"}
           </button>

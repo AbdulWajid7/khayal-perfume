@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/ui/Reveal";
 import RevealMask from "@/components/ui/RevealMask";
+import Image from "next/image";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Our Story | Khayal Fragrance",
@@ -73,100 +75,133 @@ const values = [
 ];
 
 export default function StoryPage() {
+  const eyebrow = "flex items-center gap-4 text-[11px] tracking-[0.32em] uppercase text-gold font-medium before:block before:h-px before:w-10 before:bg-gold";
+  const h2 = "mt-5 font-serif-display text-ink text-[36px] md:text-[52px] font-medium tracking-tight leading-[1.04]";
   return (
-    <div className="bg-cream">
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_rgba(191,161,95,0.08),_transparent_50%),radial-gradient(circle_at_70%_80%,_rgba(122,59,154,0.06),_transparent_50%)]"
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto max-w-4xl px-4 md:px-8 lg:px-12 text-center">
-          <span className="eyebrow">The House</span>
-          <RevealMask
-            as="h1"
-            className="mt-4 font-serif-display text-ink text-4xl md:text-6xl font-medium tracking-tight"
-          >
-            Our Story
-          </RevealMask>
-          <p className="mt-6 text-stone text-lg leading-relaxed max-w-2xl mx-auto">
-            Khayal means a thought, a memory, a feeling that stays with you. Founded in Karachi,
-            we craft premium fragrances made to become memories.
-          </p>
+    <div className="bg-cream overflow-x-clip">
+      {/* hero: title beside the brand photograph */}
+      <section className="relative pt-36 pb-20 md:pt-44 md:pb-28">
+        <div className="hero-mist" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 md:px-8 lg:grid-cols-[1.05fr_1fr] lg:gap-20 lg:px-12">
+          <div>
+            <p className={eyebrow}>The House</p>
+            <RevealMask
+              as="h1"
+              className="mt-6 font-serif-display text-ink text-[48px] md:text-[76px] lg:text-[92px] font-medium tracking-tight leading-[0.98]"
+            >
+              Our Story
+            </RevealMask>
+            <p className="mt-3 font-serif-display italic text-gold-shimmer text-3xl md:text-4xl">A thought, bottled.</p>
+            <p className="mt-8 text-stone text-lg font-light leading-relaxed max-w-xl">
+              Khayal means a thought, a memory, a feeling that stays with you. Founded in Karachi,
+              we craft premium fragrances made to become memories.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link href="/shop" className="btn-sweep inline-flex items-center justify-center bg-gold text-pure px-8 py-4 text-[12px] font-medium tracking-[0.2em] uppercase">
+                Explore the collection
+              </Link>
+              <Link href="#process" className="btn-sweep inline-flex items-center justify-center border border-ink/30 text-ink px-8 py-4 text-[12px] font-medium tracking-[0.2em] uppercase hover:border-gold transition-colors">
+                How we make it
+              </Link>
+            </div>
+          </div>
+          <Reveal className="relative">
+            <div className="pointer-events-none absolute -inset-8 rounded-[48px] bg-[radial-gradient(55%_50%_at_50%_45%,rgba(191,161,95,0.24),transparent_70%)]" aria-hidden="true" />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] border border-border bg-cream-dark">
+              <Image src="/images/brand-story.png" alt="A Khayal bottle in soft golden light" fill priority sizes="(max-width: 1024px) 100vw, 45vw" className="object-cover hero-kenburns" />
+            </div>
+            <div className="absolute -bottom-7 -left-3 md:-left-8 rounded-2xl border border-gold/30 bg-pure px-6 py-5 shadow-[0_24px_60px_-30px_rgba(191,161,95,0.6)]">
+              <p className="text-[10px] uppercase tracking-[0.28em] text-stone">Founded in</p>
+              <p className="font-serif-display text-ink text-2xl">Karachi, Pakistan</p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="py-16 md:py-20 bg-cream">
-        <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12 text-center">
+      {/* founder */}
+      <section className="relative py-24 md:py-32">
+        <Image src="/images/khayal-watermark.png" alt="" width={520} height={860} aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.07]" />
+        <div className="relative mx-auto max-w-4xl px-4 md:px-8 lg:px-12 text-center">
           <Reveal>
-            <span className="eyebrow">The Founder</span>
-            <blockquote className="mt-6 font-serif-display text-ink text-xl md:text-2xl font-medium leading-relaxed">
-              &ldquo;I started Khayal because fragrance is more than just a pleasant smell — it can
+            <p className={`${eyebrow} justify-center`}>The Founder</p>
+            <span className="mt-6 block font-serif-display text-gold text-[96px] leading-[0.6]" aria-hidden="true">&ldquo;</span>
+            <blockquote className="mt-2 font-serif-display text-ink text-2xl md:text-[34px] font-medium leading-[1.35] text-balance">
+              I started Khayal because fragrance is more than just a pleasant smell — it can
               bring back memories, emotions, and thoughts of someone special. I wanted to create
               premium fragrances that people in Pakistan could connect with emotionally, while
-              keeping them affordable.&rdquo;
+              keeping them affordable.
             </blockquote>
-            <p className="mt-6 text-stone text-sm tracking-[0.2em] uppercase">
-              — Abdul Wajid, Founder · Karachi
+            <p className="mt-8 text-stone text-[11px] tracking-[0.3em] uppercase">
+              Abdul Wajid · Founder · Karachi
             </p>
           </Reveal>
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-cream-dark border-y border-border">
+      {/* process: alternating timeline on a gold line */}
+      <section id="process" className="scroll-mt-28 py-24 md:py-32 bg-cream-dark/60 border-y border-border">
         <div className="mx-auto max-w-6xl px-4 md:px-8 lg:px-12">
           <Reveal>
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="eyebrow">The Process</span>
-              <h2 className="mt-3 font-serif-display text-ink text-3xl md:text-4xl font-medium tracking-tight">
-                From Imagination to Bottle
+            <div className="text-center max-w-2xl mx-auto mb-16 md:mb-24">
+              <p className={`${eyebrow} justify-center`}>The Process</p>
+              <h2 className={h2}>
+                From imagination <span className="text-gold-shimmer italic">to bottle</span>
               </h2>
             </div>
           </Reveal>
 
-          <div className="space-y-12 md:space-y-0">
-            {steps.map((step, index) => (
-              <Reveal key={step.number} delay={index * 0.05}>
-                <div className="md:grid md:grid-cols-[80px_1fr] gap-6 md:gap-10 items-start">
-                  <div className="hidden md:flex items-center justify-center w-20 h-20 rounded-full border border-border bg-pure text-gold font-serif-display text-2xl">
-                    {step.number}
+          <ol className="relative">
+            <span className="absolute left-[27px] top-2 bottom-2 w-px bg-gradient-to-b from-gold/0 via-gold/60 to-gold/0 md:left-1/2" aria-hidden="true" />
+            {steps.map((step, index) => {
+              const right = index % 2 === 1;
+              return (
+                <li key={step.number} className="relative grid grid-cols-[56px_1fr] gap-6 pb-12 md:grid-cols-[1fr_72px_1fr] md:gap-10 md:pb-16 last:pb-0">
+                  <div className={`hidden md:block ${right ? "" : "md:text-right"}`}>
+                    {!right && (
+                      <Reveal>
+                        <h3 className="font-serif-display text-ink text-2xl md:text-[28px] font-medium">{step.title}</h3>
+                        <p className="mt-3 text-stone leading-relaxed md:ml-auto max-w-md">{step.description}</p>
+                      </Reveal>
+                    )}
                   </div>
-                  <div className="border-l border-gold pl-6 md:pl-0 md:border-l-0 md:py-4">
-                    <div className="md:hidden text-gold font-serif-display text-2xl mb-2">
+                  <div className="relative z-10 flex justify-center">
+                    <span className="grid h-14 w-14 place-items-center rounded-full border border-gold/50 bg-pure font-serif-display text-gold text-xl shadow-[0_10px_30px_-14px_rgba(191,161,95,0.8)] md:h-[72px] md:w-[72px] md:text-2xl">
                       {step.number}
-                    </div>
-                    <h3 className="text-ink text-xl md:text-2xl font-medium font-serif-display">
-                      {step.title}
-                    </h3>
-                    <p className="mt-3 text-stone leading-relaxed max-w-2xl">
-                      {step.description}
-                    </p>
+                    </span>
                   </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+                  <div className={right ? "" : "md:hidden"}>
+                    <Reveal>
+                      <h3 className="font-serif-display text-ink text-2xl md:text-[28px] font-medium">{step.title}</h3>
+                      <p className="mt-3 text-stone leading-relaxed max-w-md">{step.description}</p>
+                    </Reveal>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-cream">
+      {/* values */}
+      <section className="py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
           <Reveal>
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="eyebrow">What We Believe</span>
-              <h2 className="mt-3 font-serif-display text-ink text-3xl md:text-4xl font-medium tracking-tight">
-                Our Values
+            <div className="text-center max-w-2xl mx-auto mb-14 md:mb-20">
+              <p className={`${eyebrow} justify-center`}>What We Believe</p>
+              <h2 className={h2}>
+                Our <span className="text-gold-shimmer italic">values</span>
               </h2>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((value, index) => (
               <Reveal key={value.title} delay={index * 0.1}>
-                <div className="bg-pure border border-border rounded-2xl p-8 h-full">
-                  <h3 className="font-serif-display text-ink text-2xl font-medium">{value.title}</h3>
-                  <p className="mt-3 text-stone text-sm leading-relaxed">
-                    {value.description}
-                  </p>
+                <div className="group relative h-full overflow-hidden rounded-[24px] border border-border bg-pure p-8 transition-all duration-500 hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_28px_60px_-30px_rgba(191,161,95,0.6)]">
+                  <span className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+                  <span className="font-serif-display text-gold text-sm tabular">{String(index + 1).padStart(2, "0")}</span>
+                  <h3 className="mt-4 font-serif-display text-ink text-3xl font-medium">{value.title}</h3>
+                  <p className="mt-3 text-stone leading-relaxed">{value.description}</p>
                 </div>
               </Reveal>
             ))}
@@ -174,16 +209,26 @@ export default function StoryPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28 bg-cream-dark border-t border-border">
-        <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12 text-center">
+      {/* closing */}
+      <section className="relative overflow-hidden py-24 md:py-32 bg-cream-dark/60 border-t border-border">
+        <div className="hero-mist" aria-hidden="true" />
+        <div className="relative mx-auto max-w-3xl px-4 md:px-8 lg:px-12 text-center">
           <Reveal>
-            <blockquote className="font-serif-display text-ink text-2xl md:text-3xl font-medium leading-snug">
+            <blockquote className="font-serif-display text-ink text-3xl md:text-[44px] font-medium leading-[1.2] text-balance">
               &ldquo;Every Khayal fragrance is a journey from the invisible world of imagination to the
               visible moment on your skin.&rdquo;
             </blockquote>
-            <p className="mt-6 text-stone text-sm tracking-[0.2em] uppercase">
-              — Abdul Wajid, Founder
+            <p className="mt-8 text-stone text-[11px] tracking-[0.3em] uppercase">
+              Abdul Wajid · Founder
             </p>
+            <div className="mt-12 flex flex-wrap justify-center gap-3">
+              <Link href="/shop" className="btn-sweep inline-flex items-center justify-center bg-gold text-pure px-8 py-4 text-[12px] font-medium tracking-[0.2em] uppercase">
+                Shop the collection
+              </Link>
+              <Link href="/scent-finder" className="btn-sweep inline-flex items-center justify-center border border-ink/30 text-ink px-8 py-4 text-[12px] font-medium tracking-[0.2em] uppercase hover:border-gold transition-colors">
+                Find your scent
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>
