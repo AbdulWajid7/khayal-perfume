@@ -49,8 +49,8 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
 
   return (
     <div>
-      <div className="flex items-center gap-3">
-        <p className="text-gold text-2xl font-medium tabular-nums">
+      <div className="flex flex-wrap items-baseline gap-3">
+        <p className="font-serif-display text-ink text-[34px] font-medium leading-none tabular-nums">
           {selectedVariant
             ? formatPrice(
                 Number.parseFloat(selectedVariant.price.amount),
@@ -59,9 +59,14 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
             : "—"}
         </p>
         {comparePrice && comparePrice > minPrice && (
-          <p className="text-stone-light text-xl line-through tabular-nums">
+          <p className="text-stone-light text-lg line-through tabular-nums">
             {formatPrice(comparePrice, product.compareAtPriceRange?.maxVariantPrice.currencyCode || product.priceRange.minVariantPrice.currencyCode)}
           </p>
+        )}
+        {comparePrice && comparePrice > minPrice && (
+          <span className="rounded-full bg-gold/15 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-gold">
+            Save {Math.round((1 - minPrice / comparePrice) * 100)}%
+          </span>
         )}
         {lowStock && (
           <span className="text-sm font-medium text-plum bg-plum-pale border border-plum/20 rounded-full px-3 py-1">
@@ -70,7 +75,8 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
         )}
       </div>
 
-      <p className="mt-3 text-xs text-stone">
+      <p className="mt-4 flex items-center gap-2 text-xs text-stone">
+        <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" aria-hidden="true" />
         Karachi delivery within 24 hrs of confirmation · 3–4 working days nationwide
       </p>
 
@@ -82,15 +88,20 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
         />
       </div>
 
-      <div className="mt-6">
-        <AddToCartButton product={product} variantId={selectedId} fullWidth />
+      <div className="mt-7">
+        <AddToCartButton
+          product={product}
+          variantId={selectedId}
+          fullWidth
+          className="btn-sweep !rounded-none py-4 text-[12px] uppercase tracking-[0.2em]"
+        />
       </div>
       <a
         href={getWhatsAppUrl(whatsappMessage)}
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackMarketing("whatsapp_click", { placement: "product", item_id: product.id })}
-        className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-gold px-6 py-3 text-sm font-medium text-gold transition-colors hover:bg-gold hover:text-pure"
+        className="mt-3 inline-flex w-full items-center justify-center gap-2 border border-ink/30 px-6 py-4 text-[12px] font-medium uppercase tracking-[0.2em] text-ink transition-colors hover:border-gold hover:text-gold"
         aria-label={`Ask about ${product.title} on WhatsApp`}
       >
         Ask about this fragrance on WhatsApp

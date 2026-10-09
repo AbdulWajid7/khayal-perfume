@@ -15,7 +15,7 @@ import * as THREE from "three";
 
 export type StationId = "hero" | "collection" | "n360" | "story" | "notes" | "presence";
 
-interface Station {
+export interface Station {
   x: number; y: number; s: number; z: number; r: number;
   beams: number; motes: number; spray: number; floor: number;
   trails: number; leaves: number; swirl: number; orbit: number;
@@ -35,6 +35,8 @@ export interface KhayalSceneOptions {
   labelMarkUrl: string;
   labelFont: string;
   reducedMotion: boolean;
+  /** Fixed values that override the stations, e.g. for a product-page viewer. */
+  override?: Partial<Station>;
 }
 
 export interface KhayalScene {
@@ -446,7 +448,7 @@ export function createKhayalScene(canvas: HTMLCanvasElement, opts: KhayalSceneOp
     const dt = Math.min(clock.getDelta(), 0.05);
     if (!visible) return;
     const t = clock.elapsedTime;
-    const tgt = sample(clamp(opts.getProgress(), 0, ids.length - 1));
+    const tgt = { ...sample(clamp(opts.getProgress(), 0, ids.length - 1)), ...opts.override };
     if (!cur) cur = { ...tgt };
     const k = 1 - Math.pow(0.002, dt);
     (Object.keys(tgt) as (keyof Station)[]).forEach((key) => { cur![key] += (tgt[key] - cur![key]) * k; });
