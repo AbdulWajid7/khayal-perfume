@@ -1,8 +1,16 @@
 import Link from "next/link";
 import { getPostsForAdmin } from "@/lib/admin/data";
+import { importGuides } from "@/lib/admin/guides";
+import { guides } from "@/lib/content/guides";
 
-export default async function PostsListPage() {
+export default async function PostsListPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ guides?: string }>;
+}) {
   const posts = await getPostsForAdmin();
+  const { guides: importedGuides } = await searchParams;
+  const pendingGuides = guides.filter((g) => !posts.some((p) => p.slug === g.slug));
 
   return (
     <div className="space-y-6">
@@ -15,6 +23,27 @@ export default async function PostsListPage() {
           + New Post
         </Link>
       </div>
+
+      {importedGuides !== undefined && (
+        <p className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+          {importedGuides} guide{importedGuides === "1" ? "" : "s"} added as draft. Open it, check the text and cover image, then set it to Published.
+        </p>
+      )}
+
+      {pendingGuides.length > 0 && (
+        <form action={importGuides} className="flex flex-col gap-4 rounded-2xl border border-border bg-pure p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm font-medium text-ink">Ready-written guides ({pendingGuides.length})</p>
+            <p className="mt-1 max-w-xl text-xs text-stone">{pendingGuides.map((g) => g.title).join(" · ")}</p>
+          </div>
+          <button
+            type="submit"
+            className="shrink-0 rounded-lg border border-gold px-5 py-2.5 text-sm font-medium text-gold transition-colors hover:bg-gold hover:text-pure"
+          >
+            Import guides as drafts
+          </button>
+        </form>
+      )}
 
       <div className="bg-pure border border-border rounded-2xl overflow-hidden shadow-sm">
         <table className="w-full text-left text-sm">
