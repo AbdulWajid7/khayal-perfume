@@ -59,15 +59,17 @@ export async function generateMetadata({
     const label = capitalizeTag(activeTag);
     return {
       title: `${label} Perfumes`,
-      description: `Explore Khayal's ${activeTag} fragrances — long-lasting niche perfumes crafted in Karachi and delivered across Pakistan.`,
-      alternates: { canonical: `/shop?tag=${encodeURIComponent(activeTag)}` },
+      description: `KHAYAL ${activeTag} perfumes: long-lasting eau de parfums crafted in Karachi and delivered across Pakistan.`,
+      // Filtered views duplicate /shop, so keep them out of the index and point Google at the full collection.
+      robots: { index: false, follow: true },
+      alternates: { canonical: "/shop" },
     };
   }
 
   const meta = CATEGORY_META[key] || {
-    title: "The Collection",
+    title: "Shop Perfumes for Men, Women & Unisex",
     description:
-      "Explore Khayal's luxury niche perfume collection — oud, musk, floral, woody, and fresh unisex fragrances.",
+      "Shop KHAYAL eau de parfums for men, women and unisex: fresh, floral, woody and oud scents. Tester in every order, cash on delivery across Pakistan.",
   };
   return {
     title: meta.title,
@@ -173,6 +175,7 @@ export default async function ShopPage({
           </nav>
         )}
 
+        <h2 className="sr-only">Fragrances</h2>
         {filtered.length > 0 ? (
           <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filtered.map((product) => (

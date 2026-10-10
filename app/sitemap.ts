@@ -42,17 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  const uniqueTags = [
-    ...new Set(
-      products.flatMap((p) => p.tags.map((t) => t.toLowerCase().trim())).filter(Boolean)
-    ),
-  ];
-  const tagRoutes: MetadataRoute.Sitemap = uniqueTags.map((t) => ({
-    url: `${baseUrl}/shop?tag=${encodeURIComponent(t)}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.65,
-  }));
-
-  return [...staticRoutes, ...categoryRoutes, ...tagRoutes, ...productRoutes, ...blogRoutes];
+  // Tag filter pages (/shop?tag=...) are left out on purpose: they repeat the same
+  // products as /shop and the category pages, so they're noindexed as thin duplicates.
+  return [...staticRoutes, ...categoryRoutes, ...productRoutes, ...blogRoutes];
 }

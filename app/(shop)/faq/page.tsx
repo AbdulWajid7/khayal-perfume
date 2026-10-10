@@ -3,16 +3,16 @@ import FAQAccordion from "@/components/ui/FAQAccordion";
 import FAQSchema from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "FAQ | Khayal Fragrance",
+  title: "Perfume FAQ: Delivery, Returns & Longevity",
   description:
-    "Answers to common questions about Khayal Fragrance — ordering, shipping, returns, attars, and choosing your fragrance.",
+    "KHAYAL perfume FAQ: cash on delivery, delivery times, the tester in every order, returns, longevity and how to choose your scent.",
 };
 
 const items = [
   {
     question: "What makes Khayal Fragrance different?",
     answer:
-      "Khayal creates long-lasting niche perfumes and attars inspired by South Asian, Middle Eastern, and modern Western perfumery. Every composition is built around high-quality ingredients like oud, rose, amber, and musk, blended for projection and character.",
+      "KHAYAL makes long-lasting eau de parfums in Karachi, each with its own name and character, from fresh citrus to floral, woody and oud. Every order includes a separate tester, so you can try the scent before opening the full bottle.",
   },
   {
     question: "How do I choose a fragrance?",
@@ -22,17 +22,22 @@ const items = [
   {
     question: "Do you ship across Pakistan?",
     answer:
-      "Yes. Karachi orders are expected within 24 hours after confirmation. Other cities in Pakistan are expected within 3–4 working days. Delivery may be affected by holidays, weather, courier delays or remote-area availability. Delivery is free on orders of PKR 5,000 or more.",
+      "Yes. Karachi orders are expected within 24 hours after confirmation. Other cities in Pakistan are expected within 3–4 working days. Delivery may be affected by holidays, weather, courier delays or remote-area availability. Delivery is PKR 250, and free on orders of PKR 5,000 or more.",
+  },
+  {
+    question: "Do you offer cash on delivery?",
+    answer:
+      "Yes. You can pay cash on delivery anywhere in Pakistan. Bank transfer and QR payment are also offered at checkout when available.",
   },
   {
     question: "How long do Khayal fragrances last?",
     answer:
-      "Our eau de parfums are designed to last 8–12 hours on skin and much longer on fabric. Attars are oil-based and typically last 12+ hours with just a small dab.",
+      "Our eau de parfums are designed to last 6–12 hours on skin depending on the scent, and longer on fabric. Each product page lists that fragrance's longevity.",
   },
   {
-    question: "What is an attar?",
+    question: "Are KHAYAL fragrances attars?",
     answer:
-      "Attars are concentrated, oil-based perfumes traditionally distilled into a base of sandalwood or other natural oils. They are alcohol-free, skin-friendly, and deeply long-lasting.",
+      "No. KHAYAL fragrances are alcohol-based eau de parfum sprays. An attar is a concentrated, oil-based perfume that sits close to the skin; an eau de parfum spreads further and dries faster.",
   },
   {
     question: "What is your return policy?",
@@ -47,7 +52,7 @@ const items = [
   {
     question: "How can I contact Khayal?",
     answer:
-      "Email us at official@khayalparfum.com or send a message through Instagram or WhatsApp. We usually respond within 24 hours.",
+      "Message us on WhatsApp at +92 320 2704617, email official@khayalparfum.com, or send a message on Instagram. We usually respond within 24 hours.",
   },
 ];
 

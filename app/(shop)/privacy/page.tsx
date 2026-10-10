@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Khayal Fragrance",
+  title: "Privacy Policy",
   description:
     "Learn how Khayal Fragrance collects, uses, and protects your personal information when you shop with us.",
 };

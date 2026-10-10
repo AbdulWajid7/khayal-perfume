@@ -21,8 +21,8 @@ export async function GET() {
 
   const body = `# Khayal Fragrance
 
-> Khayal Fragrance is a luxury niche fragrance house crafting oud, musk, and attar
-> eau de parfum in Karachi, Pakistan. Premium perfumes delivered nationwide.
+> KHAYAL is a Karachi fragrance brand making long-lasting eau de parfums for men,
+> women and unisex wear, delivered across Pakistan with cash on delivery.
 
 ## Company
 
@@ -31,7 +31,8 @@ export async function GET() {
 - Email: ${siteConfig.email}
 - WhatsApp: ${siteConfig.phoneDisplay}
 - Currency: PKR
-- Free delivery across Pakistan on orders of PKR ${siteConfig.freeShippingThreshold.toLocaleString("en-PK")} or more
+- Delivery PKR 250; free across Pakistan on orders of PKR ${siteConfig.freeShippingThreshold.toLocaleString("en-PK")} or more
+- Payment: cash on delivery or bank transfer
 - Delivery: Karachi within 24 hours; rest of Pakistan 3-4 working days
 - Every order includes a separate tester so customers can try the scent
   without opening the sealed full-size bottle

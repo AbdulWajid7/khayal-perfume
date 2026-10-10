@@ -62,7 +62,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="mt-4 text-sm text-stone leading-relaxed max-w-sm">
-              Some fragrances become memories. Premium perfumes and attars crafted in Karachi and delivered across Pakistan.
+              Some fragrances become memories. Long-lasting eau de parfums crafted in Karachi and delivered across Pakistan.
             </p>
             <div className="mt-4 flex flex-col gap-1 text-sm">
               <TrackedContactLink href={`mailto:${siteConfig.email}`} event="email_click" className="text-stone hover:text-gold">

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Khayal Fragrance",
+  title: "Terms & Conditions",
   description:
     "The terms and conditions for using Khayal Fragrance's website and purchasing our products.",
 };

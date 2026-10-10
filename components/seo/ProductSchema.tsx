@@ -1,4 +1,6 @@
 import type { ProductDetails } from "@/types/product";
+import { siteConfig } from "@/lib/site-config";
+import { STANDARD_SHIPPING } from "@/lib/shipping";
 
 const BASE_URL = "https://www.khayalparfum.com";
 
@@ -81,9 +83,11 @@ export default function ProductSchema({
           "@type": "DefinedRegion",
           addressCountry: "PK",
         },
+        // Standard delivery is PKR 250; it becomes free only once an order reaches the
+        // free-delivery threshold, which a single bottle does not.
         shippingRate: {
           "@type": "MonetaryAmount",
-          value: "0",
+          value: Number(variant.price.amount) >= siteConfig.freeShippingThreshold ? "0" : String(STANDARD_SHIPPING),
           currency: "PKR",
         },
         deliveryTime: {

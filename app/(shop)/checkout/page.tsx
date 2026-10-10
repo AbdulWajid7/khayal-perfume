@@ -2,7 +2,7 @@ import { getEnabledBankTransferConfig } from "@/lib/admin/bank-config";
 import CheckoutClient from "@/components/checkout/CheckoutClient";
 
 export const metadata = {
-  title: "Checkout | KHAYAL Fragrance",
+  title: "Checkout",
   robots: { index: false, follow: false },
 };
 

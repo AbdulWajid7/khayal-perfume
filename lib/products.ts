@@ -8,8 +8,11 @@ function money(amount: number): { amount: string; currencyCode: string } {
   return { amount: amount.toFixed(2), currencyCode: currency };
 }
 
-function mapImage(url: string): ShopifyImage {
-  return { url, altText: "" };
+function mapImage(url: string, index: number, doc: IProduct): ShopifyImage {
+  const audience = (doc.category || "").toLowerCase();
+  const who = audience === "men" ? "men's" : audience === "women" ? "women's" : "unisex";
+  const base = `KHAYAL ${doc.title} ${who} eau de parfum${doc.sizeMl ? ` ${doc.sizeMl}ml` : ""}`;
+  return { url, altText: index === 0 ? base : `${base}, view ${index + 1}` };
 }
 
 function mapVariants(variants: { id: string; title: string; price: number; availableForSale: boolean; sku?: string; stock?: number }[]): ProductVariant[] {
@@ -44,7 +47,7 @@ function deriveMetafields(doc: IProduct): ProductMetafield[] {
 }
 
 function mapIProductToProduct(doc: IProduct): ProductType {
-  const images: ShopifyImage[] = (doc.images || []).map(mapImage);
+  const images: ShopifyImage[] = (doc.images || []).map((url, i) => mapImage(url, i, doc));
   const featuredImage: ShopifyImage | null = images[0] || null;
   const variants = mapVariants(doc.variants || []);
 

@@ -45,18 +45,32 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   });
 }
 
-function buildFaqItems(product: { title: string; longevity: string }): FAQItem[] {
+function audienceAnswer(title: string, category?: string): string {
+  switch ((category || "").toLowerCase()) {
+    case "men":
+      return `${title} is made for men. Anyone who enjoys its character can wear it.`;
+    case "women":
+      return `${title} is made for women. Anyone who enjoys its character can wear it.`;
+    default:
+      return `${title} is unisex, made to suit men and women alike.`;
+  }
+}
+
+function buildFaqItems(product: { title: string; longevity: string; productType?: string }): FAQItem[] {
   return [
     {
-      question: "How long does the fragrance last?",
-      answer:
-        product.longevity ||
-        "Most Khayal fragrances last 8-12 hours on skin, depending on your skin chemistry and the concentration you choose.",
+      question: `How long does ${product.title} last?`,
+      answer: product.longevity
+        ? `${product.title} lasts about ${product.longevity} on skin, and longer on clothing. Skin type and weather make a difference.`
+        : "Most KHAYAL fragrances last 6–12 hours on skin, depending on the scent, your skin and the weather.",
     },
     {
-      question: "Is this fragrance suitable for both men and women?",
-      answer:
-        "Yes. Every Khayal fragrance is composed to be unisex — we believe scent should be chosen for how it makes you feel, not for gendered marketing.",
+      question: `Is ${product.title} for men or women?`,
+      answer: audienceAnswer(product.title, product.productType),
+    },
+    {
+      question: "Can I pay cash on delivery?",
+      answer: `Yes. Cash on delivery is available across Pakistan. Delivery is PKR 250, free on orders of PKR ${siteConfig.freeShippingThreshold.toLocaleString("en-PK")} or more. Karachi orders arrive within 24 hours of confirmation; other cities in 3–4 working days.`,
     },
     {
       question: "How should I store my perfume?",
@@ -64,9 +78,9 @@ function buildFaqItems(product: { title: string; longevity: string }): FAQItem[]
         "Keep your bottle away from direct sunlight and extreme heat. A cool, dry drawer or cabinet will preserve the fragrance for years.",
     },
     {
-      question: "What is the difference between attar and eau de parfum?",
+      question: "What if the scent doesn't suit me?",
       answer:
-        "Attars are oil-based and highly concentrated, worn close to the skin. Eau de parfum is alcohol-based with lighter sillage and wider projection.",
+        "Every order includes a separate tester. Try it first; if the scent isn't for you, contact us on the day of delivery and return the full bottle unopened and sealed.",
     },
     {
       question: `What is included when I order ${product.title}?`,
@@ -145,12 +159,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <ProductPurchasePanel product={product} />
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone">
+            <p className="mt-6 text-ink text-sm leading-relaxed">
+              Every order includes a tester. Try it first; if the scent isn&apos;t for you, return
+              the sealed bottle on delivery day.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone">
+              <span>Cash on delivery</span>
+              <span aria-hidden="true">·</span>
               <span>Free delivery from PKR {siteConfig.freeShippingThreshold.toLocaleString("en-PK")}</span>
               <span aria-hidden="true">·</span>
-              <span>Secure Checkout</span>
-              <span aria-hidden="true">·</span>
-              <span>Authentic Guarantee</span>
+              <span>Karachi delivery in 24 hours</span>
             </div>
 
             {(product.scentNotes.top?.length ||

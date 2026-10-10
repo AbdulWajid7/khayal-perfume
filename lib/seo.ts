@@ -3,18 +3,18 @@ import type { Metadata } from "next";
 export const defaultMetadata: Metadata = {
   metadataBase: new URL("https://www.khayalparfum.com"),
   title: {
-    template: "%s | Khayal Fragrance — Luxury Perfumes & Attars",
-    default:
-      "Khayal Fragrance — Buy Luxury Oud, Musk & Attar Perfumes Online in Pakistan",
+    template: "%s · KHAYAL",
+    default: "KHAYAL: Long-Lasting Perfumes for Men & Women in Pakistan",
   },
   description:
-    "Some fragrances become memories. Khayal Fragrance crafts premium perfumes and attars in Karachi — long-lasting oud, musk, and rose compositions delivered nationwide across Pakistan.",
+    "Long-lasting eau de parfums for men and women, crafted in Karachi. Tester in every order, cash on delivery and nationwide delivery across Pakistan.",
   keywords: [
     "khayal fragrance",
     "luxury perfume online pakistan",
     "niche fragrance brand",
     "oud perfume online pakistan",
-    "attar perfume online pakistan",
+    "perfume for men pakistan",
+    "perfume for women pakistan",
     "unisex perfume",
     "long lasting perfume",
     "premium eau de parfum",
@@ -24,16 +24,16 @@ export const defaultMetadata: Metadata = {
     type: "website",
     locale: "en_PK",
     siteName: "Khayal Fragrance",
-    title: "Khayal Fragrance — Luxury Oud, Musk & Attar Perfumes",
+    title: "KHAYAL: Long-Lasting Perfumes for Men & Women",
     description:
-      "Some fragrances become memories. Premium perfumes and attars crafted in Karachi, delivered across Pakistan.",
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "Khayal Fragrance — Luxury Perfumes" }],
+      "Some fragrances become memories. Eau de parfums crafted in Karachi, delivered across Pakistan.",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "KHAYAL perfumes" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Khayal Fragrance — Luxury Oud, Musk & Attar Perfumes",
+    title: "KHAYAL: Long-Lasting Perfumes for Men & Women",
     description:
-      "Discover Khayal Fragrance's collection of long-lasting oud, musk, and attar eau de parfums.",
+      "Long-lasting eau de parfums for men and women, crafted in Karachi and delivered across Pakistan.",
     images: ["/og-image.jpg"],
   },
   icons: {
@@ -99,7 +99,8 @@ export function productMetadata({
     (k): k is string => Boolean(k)
   );
   return {
-    title: metaTitle || `${title} | Khayal Fragrance`,
+    // Absolute so the layout template doesn't append the brand a second time.
+    title: { absolute: metaTitle || `${title} Eau de Parfum · KHAYAL` },
     description: truncated,
     keywords: allKeywords.length ? allKeywords : undefined,
     openGraph: {

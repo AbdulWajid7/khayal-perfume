@@ -5,30 +5,51 @@ import ProductListTracker from "@/components/analytics/ProductListTracker";
 import BreadcrumbSchema from "@/components/seo/BreadcrumbSchema";
 import { siteConfig } from "@/lib/site-config";
 
-export const CATEGORY_META: Record<string, { label: string; title: string; description: string; intro: string }> = {
+export const CATEGORY_META: Record<
+  string,
+  { label: string; title: string; metaTitle: string; description: string; intro: string; guide: string[] }
+> = {
   men: {
     label: "Men",
-    title: "Men's Fragrances",
+    title: "Men's Perfumes",
+    metaTitle: "Perfume for Men in Pakistan",
     description:
-      "Explore Khayal's men's collection — bold oud, musk, and woody niche fragrances crafted in Karachi and delivered across Pakistan.",
+      "Long-lasting perfumes for men by KHAYAL: fresh, spicy, woody and warm eau de parfums. Tester in every order, cash on delivery across Pakistan.",
     intro:
-      "Bold oud, musk, and woody compositions — niche fragrances crafted in Karachi for the modern man.",
+      "Fresh, spicy, woody and warm eau de parfums for men, crafted in Karachi.",
+    guide: [
+      "For the office and everyday wear, choose a fresh scent such as THE GENTLEMAN or DARK ICE: citrus, clean woods and musk that stay close without overpowering a room.",
+      "For evenings, weddings and winter, choose a warmer, bolder scent such as DASTAAN or VICTOR, built on spice, woods and amber.",
+      "Every KHAYAL order comes with a separate tester, so you can try the scent before opening the full bottle. Pay cash on delivery, with delivery in Karachi within 24 hours and across Pakistan in 3–4 working days.",
+    ],
   },
   women: {
     label: "Women",
-    title: "Women's Fragrances",
+    title: "Women's Perfumes",
+    metaTitle: "Perfume for Women in Pakistan",
     description:
-      "Explore Khayal's women's collection — floral, musk, and elegant niche fragrances crafted in Karachi and delivered across Pakistan.",
+      "Long-lasting perfumes for women by KHAYAL: floral, fruity and warm eau de parfums. Tester in every order, cash on delivery across Pakistan.",
     intro:
-      "Floral, musk, and elegant compositions — niche fragrances crafted in Karachi for the modern woman.",
+      "Floral, fruity and warm eau de parfums for women, crafted in Karachi.",
+    guide: [
+      "For daytime, work and brunch, choose a light floral such as CHERIE, BAHAAR or CRYSTAL NOOR: soft flowers, fruit and clean musk.",
+      "For weddings, mehndi and evenings out, choose SILK ROYALE, a warm floral with saffron, oud and vanilla that lasts through the night.",
+      "Every KHAYAL order comes with a separate tester, so you can try the scent before opening the full bottle. Pay cash on delivery, with delivery in Karachi within 24 hours and across Pakistan in 3–4 working days.",
+    ],
   },
   unisex: {
     label: "Unisex",
-    title: "Unisex Fragrances",
+    title: "Unisex Perfumes",
+    metaTitle: "Unisex Perfume in Pakistan",
     description:
-      "Explore Khayal's unisex collection — oud, musk, woody, and fresh niche fragrances for everyone, delivered across Pakistan.",
+      "Unisex perfumes by KHAYAL: oud, musk and warm woods made to be shared. Tester in every order, cash on delivery across Pakistan.",
     intro:
-      "Oud, musk, woody, and fresh compositions — niche fragrances crafted for everyone.",
+      "Oud, musk and warm woods, made to be shared by anyone.",
+    guide: [
+      "Unisex fragrances are built around notes that sit well on everyone, such as oud, musk, amber and soft woods. OUD MUSK is a smooth oud for people who find traditional oud too heavy.",
+      "Two sprays are enough: one on the neck and one on the wrist. Warm scents last longest on clothing and fabric.",
+      "Every KHAYAL order comes with a separate tester, so you can try the scent before opening the full bottle. Pay cash on delivery, with delivery in Karachi within 24 hours and across Pakistan in 3–4 working days.",
+    ],
   },
 };
 
@@ -97,6 +118,7 @@ export default async function CategoryLanding({ category }: { category: "men" | 
           })}
         </nav>
 
+        <h2 className="sr-only">{meta.title}</h2>
         {filtered.length > 0 ? (
           <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filtered.map((product) => (
@@ -112,6 +134,17 @@ export default async function CategoryLanding({ category }: { category: "men" | 
             .
           </p>
         )}
+
+        <div className="mt-16 max-w-3xl">
+          <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">
+            How to choose {meta.label === "Unisex" ? "a unisex perfume" : `a perfume for ${meta.label.toLowerCase()}`}
+          </h2>
+          {meta.guide.map((paragraph) => (
+            <p key={paragraph.slice(0, 24)} className="text-stone text-base leading-relaxed mb-4">
+              {paragraph}
+            </p>
+          ))}
+        </div>
       </div>
     </section>
   );
