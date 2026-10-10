@@ -83,6 +83,8 @@ export async function updateProduct(id: string, formData: FormData) {
   const product = await Product.findById(id);
   if (!product) throw new Error("Product not found");
 
+  const previousPrice = product.price;
+  const previousStock = product.stock;
   const handle = getString(formData, "handle") || product.handle;
   const existing = await Product.findOne({ handle, _id: { $ne: id } });
   if (existing) throw new Error("A product with this handle already exists");
@@ -121,7 +123,18 @@ export async function updateProduct(id: string, formData: FormData) {
   product.canonicalUrl = getString(formData, "canonicalUrl") || product.canonicalUrl;
   product.noIndex = formData.get("noIndex") === "on";
   const variants = getVariants(formData);
-  if (variants.length) product.variants = variants;
+  if (variants.length) {
+    product.variants = variants;
+  } else if (product.variants.length === 1) {
+    // Single-size products: keep the one variant in step with the price and stock
+    // edited above, so checkout never charges a stale (or zero) variant price.
+    const [variant] = product.variants;
+    if (variant.price === 0 || variant.price === previousPrice) variant.price = product.price;
+    if (variant.stock === previousStock) {
+      variant.stock = product.stock;
+      variant.availableForSale = product.stock > 0;
+    }
+  }
 
   await product.save();
 

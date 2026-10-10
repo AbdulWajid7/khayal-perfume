@@ -1,0 +1,514 @@
+{
+  "_readme": "KHAYAL product catalog, imported from Admin > Manage Products > Import KHAYAL catalog. New products are created as drafts (finish price, stock and photos in the admin, then set status to Active) unless price, stock and images are filled here. Existing products get the new copy and SEO fields but keep their price, stock, images and status. Scent notes for new products are suggestions: confirm them against the finished oils.",
+  "products": [
+    {
+      "handle": "silk-royale",
+      "title": "SILK ROYALE",
+      "category": "Women",
+      "tags": [
+        "Women",
+        "Floral",
+        "Oud",
+        "Evening",
+        "Wedding",
+        "Gift"
+      ],
+      "scentNotesTop": [
+        "Saffron",
+        "Osmanthus",
+        "Magnolia"
+      ],
+      "scentNotesHeart": [
+        "Tuberose",
+        "Passion fruit",
+        "Patchouli",
+        "Agarwood (oud)"
+      ],
+      "scentNotesBase": [
+        "Madagascar vanilla",
+        "Ambroxan",
+        "Myrrh",
+        "Musk",
+        "Incense",
+        "Cedarwood"
+      ],
+      "description": "SILK ROYALE opens with saffron and soft magnolia, settles into tuberose and a thread of oud, and finishes warm with vanilla and musk. It was made for evenings you want remembered: a mehndi, a valima, a dinner that runs late.",
+      "descriptionHtml": "<p>SILK ROYALE opens with saffron and soft magnolia, settles into tuberose and a thread of oud, and finishes warm with vanilla and musk. It was made for evenings you want remembered: a mehndi, a valima, a dinner that runs late.</p><p>Spray on the neck and wrists and let it settle for a few minutes. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "SILK ROYALE Eau de Parfum 50ml for Women · KHAYAL",
+      "metaDescription": "SILK ROYALE: a warm floral eau de parfum with saffron, tuberose, oud and vanilla. 50 ml, lasts 10–12 hours. Delivered across Pakistan.",
+      "focusKeyword": "perfume for women pakistan",
+      "keywords": [
+        "wedding perfume for women",
+        "oud perfume for women",
+        "long lasting perfume for women pakistan",
+        "saffron perfume"
+      ],
+      "occasion": "Weddings, evenings, gifting",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": "10–12 hours",
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": true
+    },
+    {
+      "handle": "khayal-cherie-womens-perfume",
+      "title": "CHERIE",
+      "category": "Women",
+      "tags": [
+        "Women",
+        "Floral",
+        "Fruity",
+        "Everyday",
+        "Office"
+      ],
+      "scentNotesTop": [
+        "Lemon blossom",
+        "Hyacinth",
+        "Peach"
+      ],
+      "scentNotesHeart": [
+        "Rose",
+        "Orris root",
+        "Lily-of-the-valley",
+        "Cyclamen",
+        "Carnation"
+      ],
+      "scentNotesBase": [
+        "Vanilla",
+        "Sandalwood",
+        "Oakmoss",
+        "Musk",
+        "Cedar"
+      ],
+      "description": "CHERIE is light and easy to love: peach and lemon blossom first, then rose and lily, resting on vanilla and soft woods. Wear it to work, to brunch, or anywhere you want to smell fresh all day.",
+      "descriptionHtml": "<p>CHERIE is light and easy to love: peach and lemon blossom first, then rose and lily, resting on vanilla and soft woods. Wear it to work, to brunch, or anywhere you want to smell fresh all day.</p><p>Spray on the wrists and behind the ears. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "CHERIE Floral Perfume for Women 50ml · KHAYAL",
+      "metaDescription": "KHAYAL CHERIE: a soft floral perfume for women with peach, rose and vanilla. 50 ml, for everyday wear. Delivered across Pakistan.",
+      "focusKeyword": "floral perfume for women pakistan",
+      "keywords": [
+        "everyday perfume for women",
+        "floral perfume",
+        "perfume for women pakistan"
+      ],
+      "occasion": "Everyday, office, brunch",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": "6–8 hours",
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": true
+    },
+    {
+      "handle": "the-gentleman",
+      "title": "THE GENTLEMAN",
+      "category": "Men",
+      "tags": [
+        "Men",
+        "Fresh",
+        "Citrus",
+        "Musky",
+        "Everyday",
+        "Office"
+      ],
+      "scentNotesTop": [
+        "Bergamot",
+        "Lemon",
+        "Pink pepper"
+      ],
+      "scentNotesHeart": [
+        "Lavender",
+        "Cedarwood"
+      ],
+      "scentNotesBase": [
+        "White musk",
+        "Vetiver"
+      ],
+      "description": "THE GENTLEMAN is the scent of a pressed shirt and a calm, confident morning. Bright citrus opens it, clean woods carry it through the day, and a soft musk stays close to the skin long after you've left the room.",
+      "descriptionHtml": "<p>THE GENTLEMAN is the scent of a pressed shirt and a calm, confident morning. Bright citrus opens it, clean woods carry it through the day, and a soft musk stays close to the skin long after you've left the room.</p><p>Made for the office, meetings and everyday wear, it is fresh without being sharp. Spray on the neck and wrists after a shower. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "THE GENTLEMAN Eau de Parfum 50ml for Men · KHAYAL",
+      "metaDescription": "THE GENTLEMAN by KHAYAL: a clean men's eau de parfum with fresh citrus, smooth woods and musk. 50 ml, cash on delivery across Pakistan.",
+      "focusKeyword": "perfume for men pakistan",
+      "keywords": [
+        "office perfume for men",
+        "fresh perfume for men",
+        "citrus perfume for men"
+      ],
+      "occasion": "Office, everyday",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    },
+    {
+      "handle": "oud-musk",
+      "title": "OUD MUSK",
+      "category": "Unisex",
+      "tags": [
+        "Unisex",
+        "Oud",
+        "Musky",
+        "Woody",
+        "Evening",
+        "Wedding"
+      ],
+      "scentNotesTop": [
+        "Saffron",
+        "Cardamom"
+      ],
+      "scentNotesHeart": [
+        "Oud",
+        "Rose"
+      ],
+      "scentNotesBase": [
+        "White musk",
+        "Sandalwood",
+        "Amber"
+      ],
+      "description": "OUD MUSK is oud for people who thought oud was too heavy. Smooth oud meets clean musk and warm woods, so it feels rich up close and soft from a distance. Wear it to a valima, a late dinner, or any evening that deserves a little weight.",
+      "descriptionHtml": "<p>OUD MUSK is oud for people who thought oud was too heavy. Smooth oud meets clean musk and warm woods, so it feels rich up close and soft from a distance. Wear it to a valima, a late dinner, or any evening that deserves a little weight.</p><p>Made to be shared: the same bottle suits him and her. Two sprays are enough, one on the neck and one on the wrist. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "OUD MUSK Unisex Eau de Parfum 50ml · KHAYAL",
+      "metaDescription": "OUD MUSK by KHAYAL: smooth oud, soft musk and warm woods in a unisex eau de parfum. 50 ml, cash on delivery across Pakistan.",
+      "focusKeyword": "oud perfume pakistan",
+      "keywords": [
+        "oud musk perfume",
+        "unisex oud perfume",
+        "oud perfume karachi"
+      ],
+      "occasion": "Evenings, weddings",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    },
+    {
+      "handle": "dastaan",
+      "title": "DASTAAN",
+      "category": "Men",
+      "tags": [
+        "Men",
+        "Woody",
+        "Spicy",
+        "Evening",
+        "Wedding",
+        "Gift"
+      ],
+      "scentNotesTop": [
+        "Lavender",
+        "Mint",
+        "Bergamot"
+      ],
+      "scentNotesHeart": [
+        "Cinnamon",
+        "Clary sage"
+      ],
+      "scentNotesBase": [
+        "Cedarwood",
+        "Tonka bean",
+        "Leather accord"
+      ],
+      "description": "Dastaan means an epic tale, and this is the scent for nights that become one. Aromatic herbs open it, warm spice deepens it, and a dark woody base holds on until the evening ends.",
+      "descriptionHtml": "<p>Dastaan means an epic tale, and this is the scent for nights that become one. Aromatic herbs open it, warm spice deepens it, and a dark woody base holds on until the evening ends.</p><p>Made for the baraat, a winter dinner or a night out. It projects strongly, so two or three sprays are plenty. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "DASTAAN Eau de Parfum 50ml for Men · KHAYAL",
+      "metaDescription": "DASTAAN by KHAYAL: a bold, warm and woody men's eau de parfum for evenings and events. 50 ml, cash on delivery across Pakistan.",
+      "focusKeyword": "long lasting perfume for men pakistan",
+      "keywords": [
+        "woody perfume for men",
+        "evening perfume for men",
+        "wedding perfume for men"
+      ],
+      "occasion": "Evenings, weddings",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    },
+    {
+      "handle": "samandar",
+      "title": "SAMANDAR",
+      "category": "Men",
+      "tags": [
+        "Men",
+        "Fresh",
+        "Woody",
+        "Citrus",
+        "Everyday",
+        "Evening"
+      ],
+      "scentNotesTop": [
+        "Grapefruit",
+        "Lemon",
+        "Mint"
+      ],
+      "scentNotesHeart": [
+        "Ginger",
+        "Jasmine"
+      ],
+      "scentNotesBase": [
+        "Incense",
+        "Cedarwood",
+        "Sandalwood"
+      ],
+      "description": "Samandar means the sea, and this scent moves like it: fresh and bright at first with citrus, then aromatic and woody, leaving a quiet trail of incense that makes people lean in.",
+      "descriptionHtml": "<p>Samandar means the sea, and this scent moves like it: fresh and bright at first with citrus, then aromatic and woody, leaving a quiet trail of incense that makes people lean in.</p><p>One bottle for a man who wants a single signature scent: clean enough for work, deep enough for dinner. Spray on the neck and chest. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "SAMANDAR Eau de Parfum 50ml for Men · KHAYAL",
+      "metaDescription": "SAMANDAR by KHAYAL: fresh citrus, aromatic woods and a trail of incense in a men's eau de parfum. 50 ml, cash on delivery across Pakistan.",
+      "focusKeyword": "signature perfume for men",
+      "keywords": [
+        "fresh perfume for men pakistan",
+        "incense perfume for men",
+        "everyday perfume for men"
+      ],
+      "occasion": "Everyday, evenings",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    },
+    {
+      "handle": "victor",
+      "title": "VICTOR",
+      "category": "Men",
+      "tags": [
+        "Men",
+        "Citrus",
+        "Spicy",
+        "Woody",
+        "Evening",
+        "Gift"
+      ],
+      "scentNotesTop": [
+        "Lemon",
+        "Orange",
+        "Cardamom"
+      ],
+      "scentNotesHeart": [
+        "Cinnamon",
+        "Nutmeg"
+      ],
+      "scentNotesBase": [
+        "Vetiver",
+        "Cedarwood",
+        "Tonka bean"
+      ],
+      "description": "VICTOR is energy in a bottle. A burst of bright citrus gives way to warm spice, then settles into smooth woods that stay with you through the night.",
+      "descriptionHtml": "<p>VICTOR is energy in a bottle. A burst of bright citrus gives way to warm spice, then settles into smooth woods that stay with you through the night.</p><p>Made for dinners, parties and cooler evenings, when a warmer scent feels right. Spray on the neck and wrists. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "VICTOR Eau de Parfum 50ml for Men · KHAYAL",
+      "metaDescription": "VICTOR by KHAYAL: bright citrus, warm spice and smooth woods in a men's eau de parfum. 50 ml, cash on delivery across Pakistan.",
+      "focusKeyword": "spicy perfume for men",
+      "keywords": [
+        "party perfume for men",
+        "warm perfume for men pakistan"
+      ],
+      "occasion": "Evenings, parties",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    },
+    {
+      "handle": "dark-ice",
+      "title": "DARK ICE",
+      "category": "Men",
+      "tags": [
+        "Men",
+        "Fresh",
+        "Spicy",
+        "Everyday",
+        "Office",
+        "Evening"
+      ],
+      "scentNotesTop": [
+        "Grapefruit",
+        "Mint",
+        "Black pepper"
+      ],
+      "scentNotesHeart": [
+        "Ginger",
+        "Sage"
+      ],
+      "scentNotesBase": [
+        "Patchouli",
+        "Suede accord",
+        "Musk"
+      ],
+      "description": "DARK ICE starts cool and turns intriguing. A fresh, icy opening meets a line of spice, then dries down dark and aromatic, the kind of scent people ask about twice.",
+      "descriptionHtml": "<p>DARK ICE starts cool and turns intriguing. A fresh, icy opening meets a line of spice, then dries down dark and aromatic, the kind of scent people ask about twice.</p><p>Easy to wear in Karachi heat, with enough depth for the evening. Spray on the neck and wrists. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "DARK ICE Eau de Parfum 50ml for Men · KHAYAL",
+      "metaDescription": "DARK ICE by KHAYAL: a fresh, spicy and darkly aromatic men's eau de parfum, cool by day and deep by night. 50 ml, cash on delivery.",
+      "focusKeyword": "summer perfume for men pakistan",
+      "keywords": [
+        "fresh spicy perfume for men",
+        "perfume for hot weather"
+      ],
+      "occasion": "Everyday, office, evenings",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    },
+    {
+      "handle": "jazba",
+      "title": "JAZBA",
+      "category": "Men",
+      "tags": [
+        "Men",
+        "Fruity",
+        "Sweet",
+        "Woody",
+        "Evening",
+        "Gift"
+      ],
+      "scentNotesTop": [
+        "Apple",
+        "Pineapple",
+        "Bergamot"
+      ],
+      "scentNotesHeart": [
+        "Cinnamon",
+        "Rose"
+      ],
+      "scentNotesBase": [
+        "Vanilla",
+        "Sandalwood",
+        "Amber"
+      ],
+      "description": "Jazba means passion, and this is its scent. Juicy fruit opens it, a sweet warm heart follows, and soft woods keep it close for the rest of the night.",
+      "descriptionHtml": "<p>Jazba means passion, and this is its scent. Juicy fruit opens it, a sweet warm heart follows, and soft woods keep it close for the rest of the night.</p><p>Made for first dates, dinners and celebrations, whenever you want to be remembered warmly. Spray on the neck and wrists. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "JAZBA Eau de Parfum 50ml for Men · KHAYAL",
+      "metaDescription": "JAZBA by KHAYAL: a fruity, sweet and warm woody men's eau de parfum for dates and nights out. 50 ml, cash on delivery across Pakistan.",
+      "focusKeyword": "sweet perfume for men",
+      "keywords": [
+        "date night perfume for men",
+        "fruity perfume for men"
+      ],
+      "occasion": "Dates, evenings",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    },
+    {
+      "handle": "bahaar",
+      "title": "BAHAAR",
+      "category": "Women",
+      "tags": [
+        "Women",
+        "Floral",
+        "Fresh",
+        "Everyday",
+        "Office",
+        "Gift"
+      ],
+      "scentNotesTop": [
+        "Mandarin",
+        "Green notes"
+      ],
+      "scentNotesHeart": [
+        "Jasmine",
+        "Gardenia",
+        "Rose"
+      ],
+      "scentNotesBase": [
+        "Musk",
+        "Soft vanilla",
+        "Sandalwood"
+      ],
+      "description": "Bahaar means spring, and it smells like a garden just after the rain. Fresh green notes and bright flowers open it, a soft floral heart follows, and a gentle sweetness lingers on the skin.",
+      "descriptionHtml": "<p>Bahaar means spring, and it smells like a garden just after the rain. Fresh green notes and bright flowers open it, a soft floral heart follows, and a gentle sweetness lingers on the skin.</p><p>Easy to love from morning to evening, at work, at brunch or at a dholki. Spray on the wrists and behind the ears. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "BAHAAR Floral Eau de Parfum 50ml for Women · KHAYAL",
+      "metaDescription": "BAHAAR by KHAYAL: a fresh, elegant floral eau de parfum for women with a soft, sweet finish. 50 ml, cash on delivery across Pakistan.",
+      "focusKeyword": "fresh floral perfume for women",
+      "keywords": [
+        "jasmine perfume for women",
+        "everyday perfume for women pakistan"
+      ],
+      "occasion": "Everyday, office, dholki",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    },
+    {
+      "handle": "crystal-noor",
+      "title": "CRYSTAL NOOR",
+      "category": "Women",
+      "tags": [
+        "Women",
+        "Citrus",
+        "Floral",
+        "Fresh",
+        "Everyday",
+        "Wedding"
+      ],
+      "scentNotesTop": [
+        "Yuzu",
+        "Pomegranate"
+      ],
+      "scentNotesHeart": [
+        "Peony",
+        "Magnolia",
+        "Lotus"
+      ],
+      "scentNotesBase": [
+        "White musk",
+        "Amber"
+      ],
+      "description": "Noor means light, and CRYSTAL NOOR wears like sunlight on glass. Sparkling citrus opens it, airy flowers drift through the middle, and clean musk keeps it soft and close.",
+      "descriptionHtml": "<p>Noor means light, and CRYSTAL NOOR wears like sunlight on glass. Sparkling citrus opens it, airy flowers drift through the middle, and clean musk keeps it soft and close.</p><p>Light enough for daytime and pretty enough for a nikkah or a summer wedding. Spray on the wrists and neck. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "CRYSTAL NOOR Eau de Parfum 50ml for Women · KHAYAL",
+      "metaDescription": "CRYSTAL NOOR by KHAYAL: sparkling citrus, airy florals and clean musk in a light women's eau de parfum. 50 ml, cash on delivery.",
+      "focusKeyword": "light perfume for women",
+      "keywords": [
+        "citrus perfume for women",
+        "nikkah perfume",
+        "summer perfume for women"
+      ],
+      "occasion": "Daytime, nikkah, summer weddings",
+      "concentration": "Eau de Parfum",
+      "sizeMl": 50,
+      "longevity": null,
+      "price": null,
+      "compareAtPrice": null,
+      "stock": null,
+      "images": [],
+      "notesConfirmed": false
+    }
+  ]
+}
