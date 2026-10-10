@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   return productMetadata({
     title: product.title,
     description: product.description,
-    image: product.featuredImage?.url || "/images/story-teaser.svg",
+    image: (!product.sampleImages && product.featuredImage?.url) || "/og-image.jpg",
     handle: product.handle,
     metaTitle: product.metaTitle,
     metaDescription: product.metaDescription,

@@ -11,7 +11,9 @@ export default function ProductSchema({
   product: ProductDetails;
   rating?: { value: number; count: number };
 }) {
-  const images = product.images.length
+  const images = product.sampleImages
+    ? []
+    : product.images.length
     ? product.images.map((img) => img.url)
     : product.featuredImage
       ? [product.featuredImage.url]

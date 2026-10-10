@@ -4,6 +4,18 @@ import type { Product as ProductType, ProductDetails, ShopifyImage, ProductVaria
 
 const currency = "PKR";
 
+/**
+ * Temporary sample photos (SILK ROYALE bottle) shown on any product that has no
+ * photos of its own yet. Remove once every fragrance has its own shoot. These
+ * are never sent to Google (structured data or the Merchant feed).
+ */
+const SAMPLE_IMAGES = [
+  "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-46a4467d-2463-441f-a3b8-39421d962911.png",
+  "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-e1b45b4e-4517-4049-9be5-8a487c05f642.png",
+  "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-5787e7db-094f-4166-8232-52a7dd844f78.png",
+  "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-46fa76a2-e92a-48d8-bb35-71866ef96eb8.png",
+];
+
 function money(amount: number): { amount: string; currencyCode: string } {
   return { amount: amount.toFixed(2), currencyCode: currency };
 }
@@ -47,7 +59,19 @@ function deriveMetafields(doc: IProduct): ProductMetafield[] {
 }
 
 function mapIProductToProduct(doc: IProduct): ProductType {
-  const images: ShopifyImage[] = (doc.images || []).map((url, i) => mapImage(url, i, doc));
+  const ownImages = (doc.images || []).filter(Boolean);
+  const isSilkRoyale = doc.handle === "silk-royale";
+  const usesSamples = ownImages.length === 0 && !isSilkRoyale;
+  const imageUrls = isSilkRoyale
+    ? [...ownImages, ...SAMPLE_IMAGES.filter((u) => !ownImages.includes(u))]
+    : usesSamples
+      ? SAMPLE_IMAGES
+      : ownImages;
+  const images: ShopifyImage[] = imageUrls.map((url, i) =>
+    usesSamples
+      ? { url, altText: i === 0 ? `KHAYAL ${doc.title}: sample bottle photo, final photography coming soon` : `KHAYAL sample bottle photo ${i + 1}` }
+      : mapImage(url, i, doc),
+  );
   const featuredImage: ShopifyImage | null = images[0] || null;
   const variants = mapVariants(doc.variants || []);
 
@@ -77,6 +101,7 @@ function mapIProductToProduct(doc: IProduct): ProductType {
     updatedAt: doc.updatedAt as string,
     stock: doc.stock,
     lowStockThreshold: doc.lowStockThreshold,
+    sampleImages: usesSamples,
   };
 }
 
