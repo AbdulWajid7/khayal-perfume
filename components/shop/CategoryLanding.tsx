@@ -92,7 +92,7 @@ export default async function CategoryLanding({ category }: { category: "men" | 
       />
       <ProductListTracker products={filtered} listName={meta.title} />
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <h1 className="font-serif-display text-ink text-[40px] font-medium tracking-tight">
+        <h1 className="font-serif-display text-ink text-[44px] md:text-[64px] font-normal leading-[1.02]">
           {meta.title}
         </h1>
         <p className="mt-2 text-stone text-base max-w-2xl">{meta.intro}</p>
@@ -106,10 +106,10 @@ export default async function CategoryLanding({ category }: { category: "men" | 
                 href={c.href}
                 aria-current={isActive ? "page" : undefined}
                 className={[
-                  "px-4 py-2 rounded-full text-[11px] uppercase tracking-[0.18em] border transition-colors duration-300",
+                  "min-h-[44px] inline-flex items-center px-5 text-[11px] uppercase tracking-[0.2em] border transition-colors duration-300",
                   isActive
-                    ? "bg-ink text-pure border-ink"
-                    : "bg-transparent text-stone border-border hover:border-gold hover:text-ink",
+                    ? "bg-ink text-cream border-ink"
+                    : "bg-transparent text-stone border-border hover:border-ink hover:text-ink",
                 ].join(" ")}
               >
                 {c.label}
@@ -120,7 +120,7 @@ export default async function CategoryLanding({ category }: { category: "men" | 
 
         <h2 className="sr-only">{meta.title}</h2>
         {filtered.length > 0 ? (
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-3 lg:grid-cols-4">
             {filtered.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

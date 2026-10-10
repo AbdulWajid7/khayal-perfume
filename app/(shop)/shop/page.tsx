@@ -128,12 +128,11 @@ export default async function ShopPage({
       />
       <ProductListTracker products={filtered} listName={heading} />
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <h1 className="font-serif-display text-ink text-[40px] font-medium tracking-tight">
+        <h1 className="font-serif-display text-ink text-[44px] md:text-[64px] font-normal leading-[1.02]">
           {heading}
         </h1>
         <p className="mt-2 text-stone text-base max-w-2xl">
-          Every Khayal fragrance is a composition of rare ingredients, slow craft, and
-          imagination.
+          Eleven long-lasting eau de parfums from Karachi. Every bottle arrives with its own tester.
         </p>
 
         <nav aria-label="Filter by category" className="mt-8 flex flex-wrap gap-2">
@@ -145,10 +144,10 @@ export default async function ShopPage({
                 href={c.value ? `/shop/${c.value}` : "/shop"}
                 aria-current={isActive ? "page" : undefined}
                 className={[
-                  "px-4 py-2 rounded-full text-[11px] uppercase tracking-[0.18em] border transition-colors duration-300",
+                  "min-h-[44px] inline-flex items-center px-5 text-[11px] uppercase tracking-[0.2em] border transition-colors duration-300",
                   isActive
-                    ? "bg-ink text-pure border-ink"
-                    : "bg-transparent text-stone border-border hover:border-gold hover:text-ink",
+                    ? "bg-ink text-cream border-ink"
+                    : "bg-transparent text-stone border-border hover:border-ink hover:text-ink",
                 ].join(" ")}
               >
                 {c.label}
@@ -166,7 +165,7 @@ export default async function ShopPage({
                 href={`/shop?tag=${encodeURIComponent(t)}`}
                 className={[
                   "text-[11px] uppercase tracking-[0.14em] transition-colors duration-300",
-                  t === activeTag ? "text-gold" : "text-stone hover:text-gold",
+                  t === activeTag ? "text-gold-deep underline underline-offset-4" : "text-stone hover:text-ink",
                 ].join(" ")}
               >
                 {capitalizeTag(t)}
@@ -177,7 +176,7 @@ export default async function ShopPage({
 
         <h2 className="sr-only">Fragrances</h2>
         {filtered.length > 0 ? (
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-3 lg:grid-cols-4">
             {filtered.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

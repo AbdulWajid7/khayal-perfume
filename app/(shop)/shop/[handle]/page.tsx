@@ -6,7 +6,8 @@ import { getProduct, getProductRecommendations } from "@/lib/products";
 import { getBlogPosts } from "@/lib/blog";
 import { productMetadata } from "@/lib/seo";
 import Breadcrumb from "@/components/ui/Breadcrumb";
-import ScentPyramid from "@/components/ui/ScentPyramid";
+import ScentStory from "@/components/sections/ScentStory";
+import { getFragranceLine } from "@/lib/fragrance-copy";
 import FAQAccordion, { type FAQItem } from "@/components/ui/FAQAccordion";
 import ProductGallery from "@/components/sections/ProductGallery";
 import ProductPurchasePanel from "@/components/sections/ProductPurchasePanel";
@@ -125,8 +126,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
     { label: product.title },
   ];
 
+  const line = getFragranceLine(product.handle);
+  const audience =
+    (product.productType || "").toLowerCase() === "men"
+      ? "For him"
+      : (product.productType || "").toLowerCase() === "women"
+        ? "For her"
+        : "To share";
+
   return (
-    <div className="pt-32 pb-28 md:pt-40 md:pb-24 bg-cream">
+    <div className="bg-cream pb-28 pt-28 md:pb-0 md:pt-32">
       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
         <Breadcrumb items={breadcrumbItems} />
         <BreadcrumbSchema
@@ -139,85 +148,92 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <ProductSchema product={product} />
         <FAQSchema items={faqItems} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 gap-12 pb-20 lg:grid-cols-[1.15fr_1fr] lg:gap-20 md:pb-28">
           <ProductGallery images={images} title={product.title} />
 
-          <div>
-            <h1 className="font-serif-display text-ink text-[32px] font-medium tracking-tight">
+          <div className="flex flex-col gap-6 lg:sticky lg:top-32 lg:self-start">
+            <p className="eyebrow">
+              {audience} · {product.concentration || "Eau de parfum"}
+              {product.sizeMl ? ` · ${product.sizeMl} ml` : ""}
+            </p>
+            <h1 className="font-serif-display text-[48px] font-normal leading-[0.98] tracking-[0.04em] text-ink md:text-[72px]">
               {product.title}
             </h1>
-            {product.scentFamily && (
-              <p className="mt-2 text-stone text-sm uppercase tracking-[0.15em]">
-                {product.scentFamily}
-              </p>
+            {line && (
+              <p className="font-serif-display text-[22px] italic leading-snug text-stone md:text-2xl">{line}</p>
             )}
-            <p className="mt-4 text-stone text-base leading-relaxed">
-              {product.description}
-            </p>
+            <p className="text-base leading-relaxed text-stone">{product.description}</p>
 
-            <div className="mt-6" id="purchase-panel">
+            <div id="purchase-panel">
               <ProductPurchasePanel product={product} />
             </div>
 
-            <p className="mt-6 text-ink text-sm leading-relaxed">
-              Every order includes a tester. Try it first; if the scent isn&apos;t for you, return
-              the sealed bottle on delivery day.
-            </p>
-            <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-stone">
-              <span>Cash on delivery</span>
-              <span aria-hidden="true">·</span>
-              <span>Free delivery from PKR {siteConfig.freeShippingThreshold.toLocaleString("en-PK")}</span>
-              <span aria-hidden="true">·</span>
-              <span>Karachi delivery in 24 hours</span>
+            <div className="flex items-center gap-4 bg-aubergine px-5 py-4 text-cream">
+              <span className="font-serif-display text-[34px] leading-none text-gold-pale">+1</span>
+              <span className="text-sm leading-relaxed">
+                A {product.title} tester travels with your bottle. Wear it first; if it isn&apos;t you, return
+                the sealed bottle on delivery day.
+              </span>
             </div>
 
-            {(product.scentNotes.top?.length ||
-              product.scentNotes.heart?.length ||
-              product.scentNotes.base?.length) && (
-              <div className="mt-8">
-                <ScentPyramid notes={product.scentNotes} />
-              </div>
-            )}
+            <ul className="flex flex-col gap-3 text-sm text-stone">
+              <li className="flex items-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="text-gold-deep" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" /><circle cx="7" cy="18" r="1.6" /><circle cx="17" cy="18" r="1.6" /></svg>
+                Karachi in 24 hours, other cities in 3 to 4 working days
+              </li>
+              <li className="flex items-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="text-gold-deep" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="1" /><circle cx="12" cy="12" r="2.5" /></svg>
+                Cash on delivery, bank transfer or QR
+              </li>
+              <li className="flex items-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="text-gold-deep" aria-hidden="true"><path d="M4 12h16M12 4v16" /></svg>
+                Free delivery from PKR {siteConfig.freeShippingThreshold.toLocaleString("en-PK")}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <ScentStory notes={product.scentNotes} longevity={product.longevity} occasion={product.occasion} />
+
+      <div className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28 lg:px-12">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-20">
+          <div>
+            <p className="eyebrow">About the fragrance</p>
+            <h2 className="mb-6 mt-3 font-serif-display text-[32px] font-normal text-ink md:text-[40px]">
+              The story of {product.title}
+            </h2>
+            <div
+              className="prose text-base leading-relaxed text-stone [&>p]:mb-4"
+              dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+            />
+            <p className="mt-4 text-base leading-relaxed text-stone">
+              Apply to pulse points (wrists, neck and behind the ears) and give it a few minutes to settle
+              before you judge it. Like every KHAYAL eau de parfum, {product.title} opens with its top notes and
+              slowly moves through the heart to the base over the hours you wear it.
+            </p>
+          </div>
+          <div>
+            <p className="eyebrow">Questions</p>
+            <h2 className="mb-6 mt-3 font-serif-display text-[32px] font-normal text-ink md:text-[40px]">
+              Before you order
+            </h2>
+            <FAQAccordion items={faqItems} />
           </div>
         </div>
 
-        <div className="mt-16 max-w-3xl">
-          <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">About This Fragrance</h2>
-          <div
-            className="prose text-stone text-base leading-relaxed [&>p]:mb-4"
-            dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-          />
-          <p className="text-stone text-base leading-relaxed mt-4">
-            {product.title} is composed as part of the Khayal collection — a house built on
-            imagination, rare ingredients, and patient craft. Every bottle is finished by hand and
-            packaged in our signature presentation box, ready to gift or to keep. Whether worn
-            daily or reserved for special occasions, this fragrance is designed to evolve on your
-            skin over several hours, revealing its top, heart, and base notes in turn. We recommend
-            applying to pulse points — wrists, neck, and behind the ears — and allowing the
-            fragrance a few minutes to settle before judging its character. Because our
-            compositions are made in small batches, minor variations in color and scent intensity
-            between production runs are normal and are a mark of authentic, hand-crafted
-            perfumery rather than mass production.
-          </p>
-        </div>
-
-        <div className="mt-16 max-w-3xl">
-          <h2 className="font-serif-display text-ink text-2xl font-medium mb-4">Frequently Asked Questions</h2>
-          <FAQAccordion items={faqItems} />
-        </div>
-
-        <div className="mt-16">
+        <div className="mt-20">
           <GoogleReviews />
         </div>
 
         {journalLinks.length > 0 && (
-          <div className="mt-16 max-w-3xl">
-            <h2 className="font-serif-display text-ink text-2xl font-medium mb-6">From the Journal</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="mt-20 border-t border-border pt-14">
+            <p className="eyebrow">From the journal</p>
+            <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-3">
               {journalLinks.map((post) => (
                 <Link key={post._id} href={`/journal/${post.slug}`} className="group">
-                  <p className="text-stone text-xs mb-2">{post.tags?.[0] || "Journal"}</p>
-                  <h3 className="text-ink text-sm font-medium leading-snug group-hover:text-gold transition-colors">
+                  <p className="mb-2 text-xs uppercase tracking-[0.16em] text-stone">{post.tags?.[0] || "Journal"}</p>
+                  <h3 className="font-serif-display text-xl leading-snug text-ink transition-colors group-hover:text-gold-deep">
                     {post.title}
                   </h3>
                 </Link>
@@ -226,7 +242,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         )}
 
-        <RelatedProducts products={related} />
+        <RelatedProducts products={related} title={`If ${product.title} is you`} />
       </div>
       <StickyBuyBar product={product} />
     </div>

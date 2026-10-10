@@ -7,6 +7,7 @@ import AddToCartButton from "./AddToCartButton";
 import WishlistButton from "./WishlistButton";
 import { productToAnalyticsItem, trackCommerce } from "@/lib/analytics";
 import { formatPrice } from "@/lib/utils";
+import { getFragranceLine } from "@/lib/fragrance-copy";
 import type { Product } from "@/types/product";
 
 interface ProductCardProps {
@@ -37,12 +38,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article
-      className="group relative bg-pure rounded-xl overflow-hidden border border-border transition-all duration-300 hover:shadow-lg hover:border-gold/30"
+      className="group relative overflow-hidden bg-transparent"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <Link href={`/shop/${product.handle}`} aria-label={`View ${product.title}`} onClick={trackSelection}>
-        <div className="relative aspect-[4/5] overflow-hidden bg-cream-dark">
+        <div className="relative aspect-[4/5] overflow-hidden border border-border bg-cream-dark">
           {image ? (
             <>
               <Image
@@ -66,17 +67,20 @@ export default function ProductCard({ product }: ProductCardProps) {
               )}
             </>
           ) : (
-            <div className="h-full w-full bg-cream-dark" aria-hidden="true" />
+            <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-cream-dark">
+              <span aria-hidden="true" className="kh-mark h-24 text-aubergine opacity-20" />
+              <span className="text-[10px] uppercase tracking-[0.3em] text-stone">Photograph coming</span>
+            </div>
           )}
 
           {(badge || isSale) && (
-            <span className="absolute top-3 left-3 bg-gold text-pure text-[10px] uppercase tracking-[0.15em] px-2.5 py-1 rounded-md font-medium">
+            <span className="absolute top-3 left-3 bg-aubergine text-cream text-[10px] uppercase tracking-[0.18em] px-2.5 py-1 font-medium">
               {isSale ? "Sale" : badge}
             </span>
           )}
 
           {scentFamily && (
-            <span className="absolute top-3 right-14 bg-pure/90 backdrop-blur-sm border border-border text-ink text-[10px] uppercase tracking-[0.12em] px-2.5 py-1 rounded-md">
+            <span className="absolute top-3 right-14 bg-cream/90 backdrop-blur-sm text-ink text-[10px] uppercase tracking-[0.16em] px-2.5 py-1">
               {scentFamily}
             </span>
           )}
@@ -92,14 +96,19 @@ export default function ProductCard({ product }: ProductCardProps) {
       </Link>
       <WishlistButton product={product} />
 
-      <div className="p-4">
+      <div className="pt-4">
         <Link href={`/shop/${product.handle}`} onClick={trackSelection}>
-          <h3 className="text-ink text-base font-medium tracking-wide line-clamp-1">
+          <h3 className="font-serif-display text-ink text-xl tracking-[0.08em] line-clamp-1">
             {product.title}
           </h3>
         </Link>
+        {getFragranceLine(product.handle) && (
+          <p className="mt-1 font-serif-display text-sm italic text-stone line-clamp-1">
+            {getFragranceLine(product.handle)}
+          </p>
+        )}
         <div className="mt-1 flex items-center gap-2">
-          <p className="text-gold text-sm font-medium tabular-nums">
+          <p className="text-ink text-sm tabular-nums">
             {formatPrice(minPrice, product.priceRange.minVariantPrice.currencyCode)}
           </p>
           {comparePrice && comparePrice > minPrice && (

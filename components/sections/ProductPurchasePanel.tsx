@@ -49,8 +49,8 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
 
   return (
     <div>
-      <div className="flex items-center gap-3">
-        <p className="text-gold text-2xl font-medium tabular-nums">
+      <div className="flex flex-wrap items-center gap-3 border-y border-border py-5">
+        <p className="font-serif-display text-ink text-[30px] tabular-nums">
           {selectedVariant
             ? formatPrice(
                 Number.parseFloat(selectedVariant.price.amount),
@@ -64,16 +64,13 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
           </p>
         )}
         {lowStock && (
-          <span className="text-sm font-medium text-plum bg-plum-pale border border-plum/20 rounded-full px-3 py-1">
+          <span className="text-xs font-medium uppercase tracking-[0.14em] text-aubergine border border-aubergine/30 px-3 py-1.5">
             Only {variantStock} left
           </span>
         )}
       </div>
 
-      <p className="mt-3 text-xs text-stone">
-        Karachi delivery within 24 hrs of confirmation · 3–4 working days nationwide
-      </p>
-
+      
       <div className="mt-6">
         <VariantSelector
           variants={product.variants}
@@ -90,10 +87,11 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => trackMarketing("whatsapp_click", { placement: "product", item_id: product.id })}
-        className="mt-3 inline-flex w-full items-center justify-center rounded-lg border border-gold px-6 py-3 text-sm font-medium text-gold transition-colors hover:bg-gold hover:text-pure"
-        aria-label={`Ask about ${product.title} on WhatsApp`}
+        className="mt-3 inline-flex min-h-[52px] w-full items-center justify-center gap-2.5 border border-ink/40 px-6 text-xs font-medium uppercase tracking-[0.22em] text-ink transition-colors hover:border-ink hover:bg-ink hover:text-cream"
+        aria-label={`Order ${product.title} on WhatsApp`}
       >
-        Ask about this fragrance on WhatsApp
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20Z" /></svg>
+        Order on WhatsApp
       </a>
       {selectedVariant && !selectedVariant.availableForSale && (
         <button

@@ -27,10 +27,10 @@ export default function VariantSelector({ variants, selectedId, onSelect }: Vari
               disabled={!variant.availableForSale}
               onClick={() => onSelect(variant.id)}
               className={[
-                "rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors tabular-nums",
+                "min-h-[44px] border px-4 py-2.5 text-xs font-medium uppercase tracking-[0.16em] transition-colors tabular-nums",
                 isSelected
-                  ? "bg-gold text-pure border-gold"
-                  : "bg-transparent text-ink border-border hover:border-gold",
+                  ? "bg-ink text-cream border-ink"
+                  : "bg-transparent text-ink border-border hover:border-ink",
                 !variant.availableForSale ? "opacity-40 cursor-not-allowed" : "",
               ].join(" ")}
             >

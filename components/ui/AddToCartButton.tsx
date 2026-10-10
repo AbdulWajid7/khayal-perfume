@@ -60,8 +60,8 @@ export default function AddToCartButton({
       disabled={!selectedVariant || loading}
       onClick={handleAdd}
       className={[
-        "inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-medium transition-colors",
-        "bg-gold text-pure hover:bg-gold-light disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex min-h-[52px] items-center justify-center px-6 text-xs font-medium uppercase tracking-[0.22em] transition-colors",
+        "bg-ink text-cream hover:bg-aubergine disabled:opacity-50 disabled:cursor-not-allowed",
         fullWidth ? "w-full" : "",
         className,
       ].join(" ")}
@@ -93,7 +93,7 @@ export default function AddToCartButton({
           Adding...
         </span>
       ) : (
-        "Add to Cart"
+        "Add to bag"
       )}
     </button>
   );
