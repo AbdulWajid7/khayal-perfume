@@ -105,3 +105,12 @@ export function markRead(messageId: string) {
     }),
   }).catch(() => {});
 }
+
+export function sendImage(to: string, link: string, caption?: string) {
+  return send({
+    messaging_product: "whatsapp",
+    to,
+    type: "image",
+    image: { link, ...(caption ? { caption: caption.slice(0, 1024) } : {}) },
+  });
+}
