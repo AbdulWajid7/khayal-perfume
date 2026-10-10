@@ -17,7 +17,7 @@ export default function OrganizationSchema() {
           url: `${baseUrl}/logo.png`,
         },
         description:
-          "KHAYAL is a Karachi fragrance brand making long-lasting eau de parfums for men and women, delivered across Pakistan with cash on delivery.",
+          "KHAYAL is a Karachi fragrance brand making long-lasting extraits de parfum for men and women, delivered across Pakistan with cash on delivery.",
         email: siteConfig.email,
         telephone: siteConfig.phoneDisplay.replace(/\s/g, ""),
         sameAs: [social.instagram, social.facebook, social.tiktok],

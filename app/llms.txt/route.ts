@@ -21,7 +21,7 @@ export async function GET() {
 
   const body = `# Khayal Fragrance
 
-> KHAYAL is a Karachi fragrance brand making long-lasting eau de parfums for men,
+> KHAYAL is a Karachi fragrance brand making long-lasting extraits de parfum for men,
 > women and unisex wear, delivered across Pakistan with cash on delivery.
 
 ## Company

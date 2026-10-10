@@ -59,7 +59,7 @@ export async function generateMetadata({
     const label = capitalizeTag(activeTag);
     return {
       title: `${label} Perfumes`,
-      description: `KHAYAL ${activeTag} perfumes: long-lasting eau de parfums crafted in Karachi and delivered across Pakistan.`,
+      description: `KHAYAL ${activeTag} perfumes: long-lasting extraits de parfum crafted in Karachi and delivered across Pakistan.`,
       // Filtered views duplicate /shop, so keep them out of the index and point Google at the full collection.
       robots: { index: false, follow: true },
       alternates: { canonical: "/shop" },
@@ -69,7 +69,7 @@ export async function generateMetadata({
   const meta = CATEGORY_META[key] || {
     title: "Shop Perfumes for Men, Women & Unisex",
     description:
-      "Shop KHAYAL eau de parfums for men, women and unisex: fresh, floral, woody and oud scents. Tester in every order, cash on delivery across Pakistan.",
+      "Shop KHAYAL extraits de parfum for men, women and unisex: fresh, floral, woody and oud scents. Tester in every order, cash on delivery across Pakistan.",
   };
   return {
     title: meta.title,
@@ -134,7 +134,7 @@ export default async function ShopPage({
           {heading}
         </h1>
         <p className="mt-2 text-stone text-base max-w-2xl">
-          Eleven long-lasting eau de parfums from Karachi. Every bottle arrives with its own tester.
+          Eleven long-lasting extraits de parfum from Karachi. Every bottle arrives with its own tester.
         </p>
 
         <nav aria-label="Filter by category" className="mt-8 flex flex-wrap gap-2">

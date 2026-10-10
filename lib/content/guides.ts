@@ -23,19 +23,19 @@ export const guides: GuideContent[] = [
     title: "Long-Lasting Perfume for Men in Pakistan: How to Choose One Under PKR 5,000",
     metaTitle: "Long-Lasting Perfume for Men in Pakistan Under 5000",
     metaDescription:
-      "How to pick a men's perfume that survives Pakistani heat: EDP vs attar, the notes that last, how to apply it, and our picks for office, evenings and weddings.",
+      "How to pick a men's perfume that survives Pakistani heat: extrait vs EDP vs attar, the notes that last, how to apply it, and our picks for office, evenings and weddings.",
     focusKeyword: "long lasting perfume for men in Pakistan",
     excerpt:
-      "Why most perfumes fade by lunchtime in Pakistan, what actually makes a scent last, and which KHAYAL eau de parfum to wear for the office, evenings and weddings.",
+      "Why most perfumes fade by lunchtime in Pakistan, what actually makes a scent last, and which KHAYAL extrait de parfum to wear for the office, evenings and weddings.",
     tags: ["Men", "Guides", "Longevity", "Office", "Wedding"],
     readTime: 6,
-    coverImage: { url: "/images/hero/the-gentleman.jpg", alt: "THE GENTLEMAN eau de parfum bottle on dark stone" },
+    coverImage: { url: "/images/hero/the-gentleman.jpg", alt: "THE GENTLEMAN extrait de parfum bottle on dark stone" },
     content: `
-<p>Most men in Pakistan have the same complaint: you spray a perfume at 8 am and by lunch nobody can smell it, not even you. Heat, humidity and long days are hard on fragrance. The good news is that longevity isn't luck. It comes down to three things: how concentrated the perfume is, which notes it is built on, and how you wear it. This guide walks through all three, then suggests a KHAYAL eau de parfum for each part of your week.</p>
+<p>Most men in Pakistan have the same complaint: you spray a perfume at 8 am and by lunch nobody can smell it, not even you. Heat, humidity and long days are hard on fragrance. The good news is that longevity isn't luck. It comes down to three things: how concentrated the perfume is, which notes it is built on, and how you wear it. This guide walks through all three, then suggests a KHAYAL extrait de parfum for each part of your week.</p>
 
-<h2>1. Start with the concentration: eau de parfum, not body spray</h2>
-<p>The label tells you how much perfume oil is in the bottle. A body spray or deodorant has very little and is designed to fade in an hour or two. An eau de toilette (EDT) is lighter and fresher, and usually lasts 3 to 5 hours. An <strong>eau de parfum (EDP)</strong> carries more perfume oil and typically lasts 6 to 12 hours on skin, longer on clothes.</p>
-<p>Attars are different again: oil-based, very concentrated and worn close to the skin. They last well but don't spread far. If you want people around you to notice your scent, an eau de parfum spray is the better everyday choice. Every KHAYAL fragrance is an eau de parfum.</p>
+<h2>1. Start with the concentration: extrait de parfum, not body spray</h2>
+<p>The label tells you how much perfume oil is in the bottle. A body spray or deodorant has very little and is designed to fade in an hour or two. An eau de toilette (EDT, roughly 5 to 15% perfume oil) usually lasts 3 to 5 hours. An eau de parfum (EDP, roughly 15 to 20%) lasts longer. An <strong>extrait de parfum</strong> (20 to 40%) is the strongest spray you can buy, and lasts the longest on skin and clothes.</p>
+<p>Attars are different again: oil-based, very concentrated and worn close to the skin. They last well but don't spread far. If you want people around you to notice your scent, a spray is the better everyday choice. Every KHAYAL fragrance is an extrait de parfum with 38% perfume oil, so you get attar-level strength in a spray.</p>
 
 <h2>2. Choose notes that last in the heat</h2>
 <p>Every fragrance unfolds in three stages. The <strong>top notes</strong> (citrus, mint, pepper) are what you smell first and fade within 15 to 30 minutes. The <strong>heart notes</strong> (lavender, spices, florals) carry the next few hours. The <strong>base notes</strong> (woods, musk, amber, vanilla, oud, leather) are what is still there at night.</p>
@@ -51,7 +51,7 @@ export const guides: GuideContent[] = [
 </ul>
 
 <h2>Our picks for every part of your week</h2>
-<p>All of these are KHAYAL eau de parfums in 50 ml bottles, made in Karachi. Every bottle comes with a separate tester, so you can wear it for a day before you open the full bottle.</p>
+<p>All of these are KHAYAL extraits de parfum in 50 ml bottles, made in Karachi. Every bottle comes with a separate tester, so you can wear it for a day before you open the full bottle.</p>
 
 <h3>For the office: ${link("the-gentleman", "THE GENTLEMAN")} or ${link("dark-ice", "DARK ICE")}</h3>
 <p>THE GENTLEMAN opens with bergamot, lemon and pink pepper, moves to lavender and cedar, and dries down to white musk and vetiver. Clean, polished and never too loud for a meeting room. DARK ICE is the cooler option: grapefruit, mint and black pepper over a smooth base of patchouli, suede and musk.</p>
@@ -67,7 +67,7 @@ export const guides: GuideContent[] = [
 
 <h2>Frequently asked questions</h2>
 <h3>How many hours should a good perfume last?</h3>
-<p>An eau de parfum should give you around 6 to 10 hours on skin in normal conditions, and longer on clothes. In strong heat or if you sweat a lot, expect a little less. That is why a spray on your clothes helps.</p>
+<p>In normal conditions an eau de parfum gives you around 6 to 10 hours on skin, and an extrait de parfum a few hours more, with longer still on clothes. In strong heat or if you sweat a lot, expect a little less. That is why a spray on your clothes helps.</p>
 <h3>Why can't I smell my own perfume after an hour?</h3>
 <p>Your nose gets used to a smell very quickly, so you stop noticing it long before other people do. Before you spray more, ask someone close to you whether they can still smell it.</p>
 <h3>Is it safe to buy perfume online in Pakistan?</h3>

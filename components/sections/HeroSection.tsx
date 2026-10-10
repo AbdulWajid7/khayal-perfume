@@ -86,7 +86,7 @@ export default function HeroSection() {
             className="mt-6 text-stone text-lg md:text-xl font-light max-w-md leading-relaxed"
           >
             Khayal means a thought, a memory, a feeling that stays with you. Long-lasting
-            eau de parfums, made in Karachi and delivered across Pakistan.
+            extraits de parfum, made in Karachi and delivered across Pakistan.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}

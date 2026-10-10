@@ -61,8 +61,8 @@ export default function HeroSlider({ activeHandles }: HeroSliderProps) {
             Some fragrances become <em className="text-gold-deep">memories.</em>
           </h1>
           <p className="kh-in kh-d3 max-w-md text-lg leading-relaxed text-stone">
-            Eleven eau de parfums that last from morning to the last dance. Each one travels with its
-            own tester.
+            Eleven extraits de parfum with 38% perfume oil, made to last from morning to the last dance.
+            Each one travels with its own tester.
           </p>
           <div className="kh-in kh-d4 flex flex-wrap items-center gap-7">
             <Link
@@ -86,7 +86,7 @@ export default function HeroSlider({ activeHandles }: HeroSliderProps) {
               <div key={slide.handle} className="kh-slide" data-active={i === index} aria-hidden={i !== index}>
                 <Image
                   src={slide.image}
-                  alt={`${slide.name} eau de parfum bottle on dark stone`}
+                  alt={`${slide.name} extrait de parfum bottle on dark stone`}
                   fill
                   priority={i === 0}
                   sizes="(max-width: 1024px) 92vw, 560px"

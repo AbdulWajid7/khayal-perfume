@@ -125,7 +125,7 @@ async function resetToMenu(waId: string) {
 async function showMenu(waId: string) {
   await sendButtons(
     waId,
-    "Assalamualaikum! Welcome to *KHAYAL* ✦\nLong-lasting eau de parfums, crafted in Karachi and delivered across Pakistan. Cash on delivery available.\n\nHow can I help you today?",
+    "Assalamualaikum! Welcome to *KHAYAL* ✦\nLong-lasting extraits de parfum, crafted in Karachi and delivered across Pakistan. Cash on delivery available.\n\nHow can I help you today?",
     [
       { id: "menu_browse", title: "Browse Perfumes" },
       { id: "menu_track", title: "Track My Order" },

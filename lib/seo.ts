@@ -7,7 +7,7 @@ export const defaultMetadata: Metadata = {
     default: "KHAYAL: Long-Lasting Perfumes for Men & Women in Pakistan",
   },
   description:
-    "Long-lasting eau de parfums for men and women, crafted in Karachi. Tester in every order, cash on delivery and nationwide delivery across Pakistan.",
+    "Long-lasting extraits de parfum for men and women, crafted in Karachi. Tester in every order, cash on delivery and nationwide delivery across Pakistan.",
   keywords: [
     "khayal fragrance",
     "luxury perfume online pakistan",
@@ -17,7 +17,7 @@ export const defaultMetadata: Metadata = {
     "perfume for women pakistan",
     "unisex perfume",
     "long lasting perfume",
-    "premium eau de parfum",
+    "premium extrait de parfum",
     "buy perfume online pakistan",
   ],
   openGraph: {
@@ -26,14 +26,14 @@ export const defaultMetadata: Metadata = {
     siteName: "Khayal Fragrance",
     title: "KHAYAL: Long-Lasting Perfumes for Men & Women",
     description:
-      "Some fragrances become memories. Eau de parfums crafted in Karachi, delivered across Pakistan.",
+      "Some fragrances become memories. Extraits de parfum crafted in Karachi, delivered across Pakistan.",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: "KHAYAL perfumes" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "KHAYAL: Long-Lasting Perfumes for Men & Women",
     description:
-      "Long-lasting eau de parfums for men and women, crafted in Karachi and delivered across Pakistan.",
+      "Long-lasting extraits de parfum for men and women, crafted in Karachi and delivered across Pakistan.",
     images: ["/og-image.jpg"],
   },
   icons: {
@@ -100,7 +100,7 @@ export function productMetadata({
   );
   return {
     // Absolute so the layout template doesn't append the brand a second time.
-    title: { absolute: metaTitle || `${title} Eau de Parfum · KHAYAL` },
+    title: { absolute: metaTitle || `${title} Extrait de Parfum · KHAYAL` },
     description: truncated,
     keywords: allKeywords.length ? allKeywords : undefined,
     openGraph: {

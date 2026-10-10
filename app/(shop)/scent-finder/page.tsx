@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export const metadata = {
   title: "Perfume Finder Quiz: Find Your Signature Scent",
   description:
-    "Answer five quick questions and get matched with a KHAYAL eau de parfum for your mood, occasion and how strong you like it. Free, two minutes.",
+    "Answer five quick questions and get matched with a KHAYAL extrait de parfum for your mood, occasion and how strong you like it. Free, two minutes.",
 };
 
 export default async function ScentFinderPage() {

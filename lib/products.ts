@@ -14,7 +14,7 @@ function money(amount: number): { amount: string; currencyCode: string } {
 function mapImage(url: string, index: number, doc: IProduct): ShopifyImage {
   const audience = (doc.category || "").toLowerCase();
   const who = audience === "men" ? "men's" : audience === "women" ? "women's" : "unisex";
-  const base = `KHAYAL ${doc.title} ${who} eau de parfum${doc.sizeMl ? ` ${doc.sizeMl}ml` : ""}`;
+  const base = `KHAYAL ${doc.title} ${who} extrait de parfum${doc.sizeMl ? ` ${doc.sizeMl}ml` : ""}`;
   return { url, altText: index === 0 ? base : `${base}, view ${index + 1}` };
 }
 
@@ -53,7 +53,7 @@ function deriveMetafields(doc: IProduct): ProductMetafield[] {
   push("longevity", doc.longevity);
   push("sillage", doc.sillage);
   push("occasion", doc.occasion);
-  push("concentration", doc.concentration);
+  push("concentration", doc.concentration?.replace(/eau de parfum/i, "Extrait de Parfum"));
   push("size", doc.sizeMl ? `${doc.sizeMl}ml` : undefined);
   return metafields;
 }
@@ -118,7 +118,8 @@ function addDerivedFields(product: ProductType, doc?: IProduct): ProductDetails 
     sillage: getMeta("custom", "sillage") || "",
     occasion: getMeta("custom", "occasion") || "",
     scentFamily: getMeta("custom", "scent_family") || product.productType || "",
-    concentration: doc?.concentration,
+    // Every KHAYAL fragrance is an extrait de parfum (38% perfume oil); older records said eau de parfum.
+    concentration: doc?.concentration?.replace(/eau de parfum/i, "Extrait de Parfum"),
     sizeMl: doc?.sizeMl,
     metaTitle: doc?.metaTitle,
     metaDescription: doc?.metaDescription,

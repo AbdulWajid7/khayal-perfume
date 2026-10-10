@@ -76,7 +76,7 @@ export function Signatures({ activeHandles }: { activeHandles: string[] }) {
                 <div className="relative aspect-[3/4] overflow-hidden bg-[#0d1016]">
                   <Image
                     src={f.image}
-                    alt={`${f.name} eau de parfum bottle`}
+                    alt={`${f.name} extrait de parfum bottle`}
                     fill
                     sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
                     className="object-cover"
@@ -137,7 +137,7 @@ export function TesterRitual() {
           <div className="relative aspect-[4/5] w-full max-w-[460px]">
             <Image
               src="/images/hero/oud-musk.jpg"
-              alt="OUD MUSK eau de parfum bottle"
+              alt="OUD MUSK extrait de parfum bottle"
               fill
               sizes="(max-width: 1024px) 90vw, 460px"
               className="object-cover"
@@ -219,7 +219,7 @@ export function HouseStory() {
         </blockquote>
         <p className="max-w-xl text-lg leading-[1.75] text-stone">
           KHAYAL began in Karachi with one idea: that a fragrance can bring back a person, a place, a night. We
-          make eau de parfums to be remembered by, and keep them within reach.
+          make extraits de parfum to be remembered by, and keep them within reach.
         </p>
         <Link
           href="/story"

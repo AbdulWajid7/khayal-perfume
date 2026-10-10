@@ -98,7 +98,7 @@ export async function GET() {
   <channel>
     <title>Khayal Fragrance</title>
     <link>${BASE_URL}</link>
-    <description>Long-lasting eau de parfums crafted in Karachi, Pakistan.</description>
+    <description>Long-lasting extraits de parfum crafted in Karachi, Pakistan.</description>
 ${items}
   </channel>
 </rss>`;

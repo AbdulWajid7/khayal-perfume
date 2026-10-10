@@ -14,9 +14,9 @@ export const CATEGORY_META: Record<
     title: "Men's Perfumes",
     metaTitle: "Perfume for Men in Pakistan",
     description:
-      "Long-lasting perfumes for men by KHAYAL: fresh, spicy, woody and warm eau de parfums. Tester in every order, cash on delivery across Pakistan.",
+      "Long-lasting perfumes for men by KHAYAL: fresh, spicy, woody and warm extraits de parfum. Tester in every order, cash on delivery across Pakistan.",
     intro:
-      "Fresh, spicy, woody and warm eau de parfums for men, crafted in Karachi.",
+      "Fresh, spicy, woody and warm extraits de parfum for men, crafted in Karachi.",
     guide: [
       "For the office and everyday wear, choose a fresh scent such as THE GENTLEMAN or DARK ICE: citrus, clean woods and musk that stay close without overpowering a room.",
       "For evenings, weddings and winter, choose a warmer, bolder scent such as DASTAAN or VICTOR, built on spice, woods and amber.",
@@ -28,9 +28,9 @@ export const CATEGORY_META: Record<
     title: "Women's Perfumes",
     metaTitle: "Perfume for Women in Pakistan",
     description:
-      "Long-lasting perfumes for women by KHAYAL: floral, fruity and warm eau de parfums. Tester in every order, cash on delivery across Pakistan.",
+      "Long-lasting perfumes for women by KHAYAL: floral, fruity and warm extraits de parfum. Tester in every order, cash on delivery across Pakistan.",
     intro:
-      "Floral, fruity and warm eau de parfums for women, crafted in Karachi.",
+      "Floral, fruity and warm extraits de parfum for women, crafted in Karachi.",
     guide: [
       "For daytime, work and brunch, choose a light floral such as CHERIE, BAHAAR or CRYSTAL NOOR: soft flowers, fruit and clean musk.",
       "For weddings, mehndi and evenings out, choose SILK ROYALE, a warm floral with saffron, oud and vanilla that lasts through the night.",

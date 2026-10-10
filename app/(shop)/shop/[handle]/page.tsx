@@ -153,7 +153,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <div className="flex flex-col gap-6 lg:sticky lg:top-32 lg:self-start">
             <p className="eyebrow">
-              {audience} · {product.concentration || "Eau de parfum"}
+              {audience} · Extrait de parfum
               {product.sizeMl ? ` · ${product.sizeMl} ml` : ""}
             </p>
             <h1 className="font-serif-display text-[48px] font-normal leading-[0.98] tracking-[0.04em] text-ink md:text-[72px]">
@@ -177,6 +177,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <ul className="flex flex-col gap-3 text-sm text-stone">
+              <li className="flex items-center gap-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="text-gold-deep" aria-hidden="true"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11Z" /></svg>
+                Extrait de parfum: 38% perfume oil, the strongest spray concentration
+              </li>
               <li className="flex items-center gap-3">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="text-gold-deep" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7" /><circle cx="7" cy="18" r="1.6" /><circle cx="17" cy="18" r="1.6" /></svg>
                 Karachi in 24 hours, other cities in 3 to 4 working days
@@ -209,7 +213,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             />
             <p className="mt-4 text-base leading-relaxed text-stone">
               Apply to pulse points (wrists, neck and behind the ears) and give it a few minutes to settle
-              before you judge it. Like every KHAYAL eau de parfum, {product.title} opens with its top notes and
+              before you judge it. Like every KHAYAL extrait de parfum, {product.title} opens with its top notes and
               slowly moves through the heart to the base over the hours you wear it.
             </p>
           </div>

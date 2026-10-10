@@ -12,7 +12,7 @@ const items = [
   {
     question: "What makes Khayal Fragrance different?",
     answer:
-      "KHAYAL makes long-lasting eau de parfums in Karachi, each with its own name and character, from fresh citrus to floral, woody and oud. Every order includes a separate tester, so you can try the scent before opening the full bottle.",
+      "KHAYAL makes long-lasting extraits de parfum in Karachi, each with its own name and character, from fresh citrus to floral, woody and oud. Every order includes a separate tester, so you can try the scent before opening the full bottle.",
   },
   {
     question: "How do I choose a fragrance?",
@@ -32,12 +32,12 @@ const items = [
   {
     question: "How long do Khayal fragrances last?",
     answer:
-      "Our eau de parfums are designed to last 6–12 hours on skin depending on the scent, and longer on fabric. Each product page lists that fragrance's longevity.",
+      "Our extraits de parfum are designed to last 6–12 hours on skin depending on the scent, and longer on fabric. Each product page lists that fragrance's longevity.",
   },
   {
     question: "Are KHAYAL fragrances attars?",
     answer:
-      "No. KHAYAL fragrances are alcohol-based eau de parfum sprays. An attar is a concentrated, oil-based perfume that sits close to the skin; an eau de parfum spreads further and dries faster.",
+      "No. KHAYAL fragrances are extrait de parfum sprays with 38% perfume oil, the strongest spray concentration. An attar is a pure oil that sits close to the skin; an extrait de parfum is nearly as concentrated but spreads further and dries in seconds.",
   },
   {
     question: "What is your return policy?",
