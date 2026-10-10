@@ -17,6 +17,7 @@ const navGroups = [
       { label: "Manage Products", href: "/admin/inventory" },
       { label: "Orders", href: "/admin/orders" },
       { label: "Cart Recovery", href: "/admin/recovery" },
+      { label: "Payment Settings", href: "/admin/payments" },
     ],
   },
   {
