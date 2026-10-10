@@ -1,20 +1,11 @@
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Product, type IProduct } from "@/models/Product";
+import { SAMPLE_IMAGES, SAMPLE_IMAGES_HANDLE, realImagesFor } from "@/lib/sample-images";
 import type { Product as ProductType, ProductDetails, ShopifyImage, ProductVariant, ProductMetafield } from "@/types/product";
 
 const currency = "PKR";
 
-/**
- * Temporary sample photos (SILK ROYALE bottle) shown on any product that has no
- * photos of its own yet. Remove once every fragrance has its own shoot. These
- * are never sent to Google (structured data or the Merchant feed).
- */
-const SAMPLE_IMAGES = [
-  "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-46a4467d-2463-441f-a3b8-39421d962911.png",
-  "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-e1b45b4e-4517-4049-9be5-8a487c05f642.png",
-  "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-5787e7db-094f-4166-8232-52a7dd844f78.png",
-  "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-46fa76a2-e92a-48d8-bb35-71866ef96eb8.png",
-];
+
 
 function money(amount: number): { amount: string; currencyCode: string } {
   return { amount: amount.toFixed(2), currencyCode: currency };
@@ -68,8 +59,8 @@ function deriveMetafields(doc: IProduct): ProductMetafield[] {
 }
 
 function mapIProductToProduct(doc: IProduct): ProductType {
-  const ownImages = (doc.images || []).filter(Boolean);
-  const isSilkRoyale = doc.handle === "silk-royale";
+  const ownImages = realImagesFor(doc.handle, doc.images);
+  const isSilkRoyale = doc.handle === SAMPLE_IMAGES_HANDLE;
   const usesSamples = ownImages.length === 0 && !isSilkRoyale;
   const imageUrls = isSilkRoyale
     ? [...ownImages, ...SAMPLE_IMAGES.filter((u) => !ownImages.includes(u))]

@@ -104,7 +104,9 @@ export default async function ShopPage({
 
   const allTags = [
     ...new Set(
-      products.flatMap((p) => p.tags.map((t) => t.toLowerCase().trim())).filter(Boolean)
+      products
+        .flatMap((p) => p.tags.map((t) => t.toLowerCase().trim()))
+        .filter((t) => t && !["men", "women", "unisex"].includes(t))
     ),
   ].slice(0, 12);
 

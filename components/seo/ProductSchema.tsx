@@ -63,7 +63,8 @@ export default function ProductSchema({
           },
         }
       : {}),
-    offers: product.variants.map((variant) => ({
+    // Products without a price yet get no offer: a 0.00 offer is invalid for Google.
+    offers: product.variants.filter((variant) => Number(variant.price.amount) > 0).map((variant) => ({
       "@type": "Offer",
       url: productUrl,
       sku: variant.sku || undefined,
