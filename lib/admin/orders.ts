@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { sendReviewRequest } from "@/lib/review-request";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Order, type IOrder, type OrderStatus, type PaymentStatus, type Courier } from "@/models/Order";
 import { Product } from "@/models/Product";
@@ -178,6 +179,13 @@ export async function updateOrderStatus(id: string, formData: FormData) {
   await order.save();
   if (before.orderStatus !== status) {
     await sendCustomerOrderNotification(toJSON(order) as unknown as IOrder, status, status === "cancelled" ? note : undefined);
+    if (status === "delivered") {
+      try {
+        await sendReviewRequest(toJSON(order) as unknown as IOrder);
+      } catch (error) {
+        console.error(`Review request failed for ${order.orderNumber}:`, error);
+      }
+    }
   }
   revalidatePath(`/admin/orders/${id}`);
   revalidatePath("/admin/orders");

@@ -114,3 +114,22 @@ export function sendImage(to: string, link: string, caption?: string) {
     image: { link, ...(caption ? { caption: caption.slice(0, 1024) } : {}) },
   });
 }
+
+/**
+ * Send an approved WhatsApp message template (needed to message a customer outside the
+ * 24-hour window after their last message). `params` fill {{1}}, {{2}}, ... in the body.
+ */
+export function sendTemplate(to: string, name: string, language: string, params: string[] = []) {
+  return send({
+    messaging_product: "whatsapp",
+    to,
+    type: "template",
+    template: {
+      name,
+      language: { code: language },
+      components: params.length
+        ? [{ type: "body", parameters: params.map((text) => ({ type: "text", text })) }]
+        : [],
+    },
+  });
+}

@@ -513,7 +513,7 @@ const STATUS: Record<EmailOrderStatus, StatusConfig> = {
     extra: () =>
       `${label("A small ritual")}<div class="k-ink" style="font-family:${SERIF};font-style:italic;font-size:19px;line-height:27px;color:${C.ink};margin-top:8px;">Spray on wrists and neck. Don't rub, just let the notes unfold.</div>`,
     showItems: false,
-    cta: () => ({ label: "Share your review", href: BRAND.storeUrl }),
+    cta: () => ({ label: "Share your review", href: process.env.GOOGLE_REVIEW_URL || (process.env.GOOGLE_PLACE_ID ? `https://search.google.com/local/writereview?placeid=${process.env.GOOGLE_PLACE_ID}` : BRAND.storeUrl) }),
   },
 
   cancelled: {
