@@ -123,14 +123,14 @@ export async function updateProduct(id: string, formData: FormData) {
   product.canonicalUrl = getString(formData, "canonicalUrl") || product.canonicalUrl;
   product.noIndex = formData.get("noIndex") === "on";
   const variants = getVariants(formData);
-  if (variants.length) {
-    product.variants = variants;
-  } else if (product.variants.length === 1) {
-    // Single-size products: keep the one variant in step with the price and stock
-    // edited above, so checkout never charges a stale (or zero) variant price.
+  if (variants.length) product.variants = variants;
+  if (product.variants.length === 1) {
+    // Single-size products: the edit form re-submits the existing variant JSON, so keep
+    // that one variant in step with the price and stock edited above. Otherwise a variant
+    // left at 0 (or the old price) would override the product price at checkout.
     const [variant] = product.variants;
     if (variant.price === 0 || variant.price === previousPrice) variant.price = product.price;
-    if (variant.stock === previousStock) {
+    if (variant.stock === previousStock || (variant.stock === 0 && product.stock > 0)) {
       variant.stock = product.stock;
       variant.availableForSale = product.stock > 0;
     }

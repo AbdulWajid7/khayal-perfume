@@ -109,7 +109,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
         <div className="mt-1 flex items-center gap-2">
           <p className="text-ink text-sm tabular-nums">
-            {formatPrice(minPrice, product.priceRange.minVariantPrice.currencyCode)}
+            {minPrice > 0 ? formatPrice(minPrice, product.priceRange.minVariantPrice.currencyCode) : "Price coming soon"}
           </p>
           {comparePrice && comparePrice > minPrice && (
             <p className="text-stone-light text-sm line-through tabular-nums">

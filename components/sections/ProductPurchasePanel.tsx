@@ -51,12 +51,12 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
     <div>
       <div className="flex flex-wrap items-center gap-3 border-y border-border py-5">
         <p className="font-serif-display text-ink text-[30px] tabular-nums">
-          {selectedVariant
+          {selectedVariant && Number.parseFloat(selectedVariant.price.amount) > 0
             ? formatPrice(
                 Number.parseFloat(selectedVariant.price.amount),
                 selectedVariant.price.currencyCode
               )
-            : "—"}
+            : "Price coming soon"}
         </p>
         {comparePrice && comparePrice > minPrice && (
           <p className="text-stone-light text-xl line-through tabular-nums">

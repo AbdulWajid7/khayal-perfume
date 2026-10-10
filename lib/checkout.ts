@@ -130,6 +130,23 @@ export async function createOrder(input: CreateOrderInput): Promise<CheckoutResu
       return { success: false, error: `Variant not found for ${product.title}`, field: "items" };
     }
 
+    // A variant left untouched by the catalog import (price 0, stock 0) takes the product's
+    // price and stock; save that back so the atomic stock decrement below works.
+    if (variant && variant.price <= 0 && !variant.stock && product.price > 0) {
+      variant.price = product.price;
+      variant.stock = product.stock;
+      variant.availableForSale = product.stock > 0;
+      await Product.updateOne(
+        { _id: product._id, "variants.id": variant.id },
+        {
+          $set: {
+            "variants.$.price": product.price,
+            "variants.$.stock": product.stock,
+            "variants.$.availableForSale": product.stock > 0,
+          },
+        },
+      );
+    }
     const unitPrice = variant ? variant.price : product.price;
     if (unitPrice <= 0) {
       return { success: false, error: `Invalid price for ${product.title}`, field: "items" };

@@ -27,15 +27,24 @@ function mapImage(url: string, index: number, doc: IProduct): ShopifyImage {
   return { url, altText: index === 0 ? base : `${base}, view ${index + 1}` };
 }
 
-function mapVariants(variants: { id: string; title: string; price: number; availableForSale: boolean; sku?: string; stock?: number }[]): ProductVariant[] {
-  return variants.map((v) => ({
-    id: v.id,
-    title: v.title,
-    price: money(v.price),
-    availableForSale: v.availableForSale,
-    sku: v.sku || null,
-    stock: v.stock,
-  }));
+function mapVariants(
+  variants: { id: string; title: string; price: number; availableForSale: boolean; sku?: string; stock?: number }[],
+  doc: IProduct,
+): ProductVariant[] {
+  return variants.map((v) => {
+    // A variant created by the catalog import keeps price 0 and stock 0 until it is edited;
+    // fall back to the product-level price and stock so the shop shows the real values.
+    const untouched = v.price <= 0 && !v.stock;
+    const stock = untouched ? doc.stock : v.stock;
+    return {
+      id: v.id,
+      title: v.title,
+      price: money(v.price > 0 ? v.price : doc.price),
+      availableForSale: untouched ? doc.stock > 0 : v.availableForSale,
+      sku: v.sku || null,
+      stock,
+    };
+  });
 }
 
 function deriveMetafields(doc: IProduct): ProductMetafield[] {
@@ -73,12 +82,10 @@ function mapIProductToProduct(doc: IProduct): ProductType {
       : mapImage(url, i, doc),
   );
   const featuredImage: ShopifyImage | null = images[0] || null;
-  const variants = mapVariants(doc.variants || []);
+  const variants = mapVariants(doc.variants || [], doc);
 
-  const hasVariant = variants.length > 0;
-  const minPrice = hasVariant
-    ? Math.min(...variants.map((v) => Number(v.price.amount)))
-    : doc.price;
+  const pricedVariants = variants.map((v) => Number(v.price.amount)).filter((p) => p > 0);
+  const minPrice = pricedVariants.length ? Math.min(...pricedVariants) : doc.price;
 
   return {
     id: doc._id.toString(),

@@ -25,6 +25,7 @@ export default function AddToCartButton({
 
   const selectedVariant =
     product.variants.find((v) => v.id === variantId) || product.variants[0];
+  const unpriced = !selectedVariant || Number.parseFloat(selectedVariant.price.amount) <= 0;
 
   async function handleAdd() {
     if (!selectedVariant) return;
@@ -57,7 +58,7 @@ export default function AddToCartButton({
   return (
     <button
       type="button"
-      disabled={!selectedVariant || loading}
+      disabled={unpriced || loading}
       onClick={handleAdd}
       className={[
         "inline-flex min-h-[52px] items-center justify-center px-6 text-xs font-medium uppercase tracking-[0.22em] transition-colors",
@@ -92,6 +93,8 @@ export default function AddToCartButton({
           </svg>
           Adding...
         </span>
+      ) : unpriced ? (
+        "Price coming soon"
       ) : (
         "Add to bag"
       )}
