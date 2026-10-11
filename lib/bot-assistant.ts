@@ -6,7 +6,7 @@ import { faqItems } from "@/lib/content/faq";
 import { siteConfig } from "@/lib/site-config";
 import { STANDARD_SHIPPING } from "@/lib/shipping";
 import { getEnabledBankTransferConfig } from "@/lib/admin/bank-config";
-import { geminiGenerate, parseJsonReply, type GeminiTurn } from "@/lib/gemini";
+import { geminiChatModel, geminiGenerate, parseJsonReply, type GeminiTurn } from "@/lib/gemini";
 import {
   buildKnowledge,
   FAQ_KEYWORDS,
@@ -141,6 +141,8 @@ export async function answerCustomer(waId: string, text: string): Promise<Assist
 
   const knowledge = await buildStoreKnowledge(products, library.live);
   const raw = await geminiGenerate({
+    model: geminiChatModel(),
+    timeoutMs: 12000,
     system: `${ASSISTANT_RULES}\n\nKNOWLEDGE\n${knowledge}`,
     turns: await recentTurns(waId, text),
     responseSchema: RESPONSE_SCHEMA,

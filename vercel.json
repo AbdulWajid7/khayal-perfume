@@ -3,6 +3,14 @@
     {
       "path": "/api/cron/bot-training",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/journal?kind=blog",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/journal?kind=article",
+      "schedule": "30 5 * * *"
     }
   ]
 }

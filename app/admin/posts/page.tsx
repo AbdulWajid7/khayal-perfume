@@ -2,14 +2,27 @@ import Link from "next/link";
 import { getPostsForAdmin } from "@/lib/admin/data";
 import { importGuides } from "@/lib/admin/guides";
 import { guides } from "@/lib/content/guides";
+import { getAutopilot } from "@/lib/content-autopilot";
+import { generateNow, updateAutopilot } from "@/lib/admin/autopilot";
+import { geminiConfigured } from "@/lib/gemini";
+
+// "Generate now" writes a full post with a cover image, which can take a couple of minutes.
+export const maxDuration = 300;
+
+const AUTOPILOT_MESSAGES: Record<string, string> = {
+  published: "Done. The new post is live on the Journal.",
+  draft: "Done. The new post was saved as a draft for you to review.",
+  failed: "Generation failed. See the latest run below for the reason.",
+};
 
 export default async function PostsListPage({
   searchParams,
 }: {
-  searchParams: Promise<{ guides?: string }>;
+  searchParams: Promise<{ guides?: string; autopilot?: string }>;
 }) {
-  const posts = await getPostsForAdmin();
-  const { guides: importedGuides } = await searchParams;
+  const [posts, autopilot] = await Promise.all([getPostsForAdmin(), getAutopilot()]);
+  const { guides: importedGuides, autopilot: autopilotResult } = await searchParams;
+  const aiOn = geminiConfigured();
   const pendingGuides = guides.filter((g) => !posts.some((p) => p.slug === g.slug));
 
   return (
@@ -29,6 +42,76 @@ export default async function PostsListPage({
           {importedGuides} guide{importedGuides === "1" ? "" : "s"} added as draft. Open it, check the text and cover image, then set it to Published.
         </p>
       )}
+
+
+      {autopilotResult && AUTOPILOT_MESSAGES[autopilotResult] && (
+        <p className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+          {AUTOPILOT_MESSAGES[autopilotResult]}
+        </p>
+      )}
+
+      <section className="rounded-2xl border border-border bg-pure p-5 space-y-4">
+        <div className="flex flex-col gap-1">
+          <p className="text-sm font-medium text-ink">Journal autopilot</p>
+          <p className="text-xs text-stone max-w-2xl">
+            Every morning a trending blog post (10:00) and an in-depth SEO article (10:30) are researched, written and
+            given a cover photo, then published. Posts that fail a quality check (too short, missing SEO fields, mentions
+            of other brands) are kept as drafts. {aiOn ? "" : "Needs GEMINI_API_KEY and CRON_SECRET in Vercel to run."}
+          </p>
+        </div>
+        <form action={updateAutopilot} className="flex flex-wrap items-center gap-6 text-sm text-ink">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" name="enabled" value="true" defaultChecked={autopilot.enabled} className="h-4 w-4" />
+            Run daily
+          </label>
+          <label className="flex items-center gap-2">
+            <input type="checkbox" name="autoPublish" value="true" defaultChecked={autopilot.autoPublish} className="h-4 w-4" />
+            Publish automatically (untick to review drafts first)
+          </label>
+          <button type="submit" className="rounded-lg border border-border px-4 py-2 text-sm hover:bg-cream">
+            Save
+          </button>
+        </form>
+        <div className="flex flex-wrap gap-3">
+          {(["blog", "article"] as const).map((kind) => (
+            <form key={kind} action={generateNow}>
+              <input type="hidden" name="kind" value={kind} />
+              <button
+                type="submit"
+                disabled={!aiOn}
+                className="rounded-lg border border-gold px-4 py-2 text-sm font-medium text-gold transition-colors hover:bg-gold hover:text-pure disabled:opacity-40"
+              >
+                Generate a {kind} now
+              </button>
+            </form>
+          ))}
+        </div>
+        {autopilot.runs.length > 0 && (
+          <ul className="divide-y divide-border text-xs">
+            {autopilot.runs.slice(0, 6).map((run, i) => (
+              <li key={i} className="py-2 flex flex-wrap gap-x-3 gap-y-1">
+                <span className="text-stone">
+                  {new Date(run.at).toLocaleString("en-PK", { timeZone: "Asia/Karachi", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}
+                </span>
+                <span className="uppercase tracking-wide text-stone">{run.kind}</span>
+                <span
+                  className={
+                    run.status === "published" ? "text-green-700" : run.status === "draft" ? "text-amber-700" : "text-red-700"
+                  }
+                >
+                  {run.status}
+                </span>
+                {run.postId ? (
+                  <Link href={`/admin/posts/${run.postId}`} className="text-ink underline">
+                    {run.title}
+                  </Link>
+                ) : null}
+                {run.note && <span className="text-stone">{run.note}</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       {pendingGuides.length > 0 && (
         <form action={importGuides} className="flex flex-col gap-4 rounded-2xl border border-border bg-pure p-5 sm:flex-row sm:items-center sm:justify-between">
