@@ -10,8 +10,6 @@ export const BRAND = {
   whatsappUrl: `https://wa.me/${siteConfig.whatsappNumber}`,
   instagram: siteConfig.social.instagram,
   currency: "Rs.",
-  watermarkUrl: `${siteConfig.url}/images/khayal-watermark.png`,
-  watermarkDarkUrl: `${siteConfig.url}/images/khayal-watermark.png`,
 };
 
 const C = {
@@ -133,10 +131,14 @@ function layout(opts: { preheader: string; body: string; accent?: string }) {
   @media (prefers-reduced-motion:reduce){.k-rise,.k-trail,.k-pulse,.k-grow,.k-glow{animation:none!important}}
   @media only screen and (max-width:620px){
     .k-wrap{width:100%!important}
-    .k-pad{padding-left:24px!important;padding-right:24px!important}
+    .k-outer{padding:16px 6px!important}
+    .k-pad{padding-left:22px!important;padding-right:22px!important}
+    .k-tracker-pad{padding-left:16px!important;padding-right:16px!important}
     .k-h1{font-size:34px!important;line-height:40px!important}
-    .k-code{font-size:26px!important;letter-spacing:5px!important}
-    .k-step-label{font-size:8px!important;letter-spacing:.5px!important}
+    .k-code{font-size:22px!important;letter-spacing:3px!important}
+    .k-meta{display:block!important;width:100%!important;padding:0 0 14px!important}
+    .k-steps-full{display:none!important}
+    .k-steps-mini{display:block!important}
     .k-hide-sm{display:none!important}
   }
   @media (prefers-color-scheme:dark){
@@ -146,22 +148,16 @@ function layout(opts: { preheader: string; body: string; accent?: string }) {
     .k-soft{color:#C2AFBA!important}
     .k-line{border-color:#4A2B40!important}
     .k-panel{background:rgba(52,25,43,0.75)!important}
-    .k-wm{background-image:url('${BRAND.watermarkDarkUrl}')!important}
   }
 </style>
 </head>
 <body style="margin:0;padding:0;background:${C.paper};">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;mso-hide:all;">${esc(opts.preheader)}&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="k-bg" style="background:${C.paper};">
-<tr><td align="center" style="padding:40px 12px;">
+<tr><td align="center" class="k-outer" style="padding:40px 12px;">
   <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="k-wrap" style="width:600px;max-width:600px;">
-    <tr><td align="center" style="background:${C.night};padding:30px 20px 24px;">
-      <a href="${BRAND.storeUrl}" style="text-decoration:none;">
-        <div style="font-family:${SERIF};font-size:30px;letter-spacing:12px;color:#F4EEE6;">${BRAND.name}</div>
-        <div style="font-family:${SERIF};font-size:20px;color:${C.goldLight};margin-top:6px;">خیال</div>
-      </a>
-    </td></tr>
-    <tr><td class="k-card k-wm" background="${BRAND.watermarkUrl}" style="background-color:${C.card};background-image:url('${BRAND.watermarkUrl}');background-repeat:no-repeat;background-position:center center;background-size:340px auto;border:1px solid ${C.line};border-top:none;">
+    <tr><td class="k-card" style="background-color:${C.card};border:1px solid ${C.line};">
+      <div class="k-trail" style="height:4px;font-size:0;line-height:4px;background:${C.goldLight};margin:-1px -1px 0 -1px;">&nbsp;</div>
       ${opts.body}
     </td></tr>
     <tr><td align="center" class="k-pad" style="padding:28px 40px 10px;">
@@ -234,16 +230,20 @@ function tracker(current: number, complete = false) {
     const color = now ? C.ink : done ? C.gold : "#B3A898";
     return `<td width="16.66%" align="center" valign="top" style="padding-top:2px;">
       ${dot}
-      <div class="k-step-label ${now ? "k-ink" : ""}" style="font-family:${SANS};font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:${color};margin-top:10px;font-weight:${now ? 500 : 400};">${label}</div>
+      <div class="k-steps-full k-step-label ${now ? "k-ink" : ""}" style="font-family:${SANS};font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:${color};margin-top:10px;font-weight:${now ? 500 : 400};">${label}</div>
     </td>`;
   }).join("");
-  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td class="k-pad" style="padding:34px 48px 6px;">
+  const mini = complete
+    ? "All steps complete — Delivered"
+    : `Step ${current + 1} of ${STEPS.length} — ${STEPS[current]}`;
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td class="k-pad k-tracker-pad" style="padding:34px 48px 6px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="padding:0 8%;">
       <div style="height:2px;background:${C.line};" class="k-panel">
         <div class="k-grow" style="height:2px;width:${pct}%;background:${C.gold};"></div>
       </div>
     </td></tr></table>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:-7px;"><tr>${cells}</tr></table>
+    <div class="k-steps-mini k-ink" style="display:none;text-align:center;font-family:${SANS};font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:${C.ink};margin-top:14px;font-weight:500;">${mini}</div>
   </td></tr></table>`;
 }
 
@@ -260,7 +260,7 @@ function label(t: string) {
 }
 
 function orderMeta(d: OrderEmailData) {
-  const col = (k: string, v: string) => `<td valign="top" style="padding:0 6px;">
+  const col = (k: string, v: string) => `<td valign="top" class="k-meta" style="padding:0 6px;">
       ${label(k)}
       <div class="k-ink" style="font-family:${SERIF};font-size:20px;color:${C.ink};margin-top:6px;">${v}</div>
     </td>`;
