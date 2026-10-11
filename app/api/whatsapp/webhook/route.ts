@@ -3,6 +3,8 @@ import { handleIncomingMessage } from "@/lib/whatsapp-bot";
 import { markRead, whatsappConfigured } from "@/lib/whatsapp";
 
 export const dynamic = "force-dynamic";
+// The assistant may wait up to 8 seconds for the AI reply.
+export const maxDuration = 30;
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);

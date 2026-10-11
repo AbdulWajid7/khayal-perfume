@@ -1,30 +1,40 @@
 export const dynamic = "force-dynamic";
 
-import HeroSection from "@/components/sections/HeroSection";
-import PressStrip from "@/components/sections/PressStrip";
-import CategoryGrid from "@/components/sections/CategoryGrid";
-import BestSellers from "@/components/sections/BestSellers";
-import BrandStoryTeaser from "@/components/sections/BrandStoryTeaser";
+import HeroSlider from "@/components/home/HeroSlider";
+import CollectionRail from "@/components/home/CollectionRail";
+import {
+  NameMarquee,
+  Signatures,
+  Occasions,
+  TesterRitual,
+  Ingredients,
+  HouseStory,
+  FinderBand,
+} from "@/components/home/HomeSections";
 import JournalPreview from "@/components/sections/JournalPreview";
-import ScentFinderCTA from "@/components/sections/ScentFinderCTA";
-import { getBestsellerProducts } from "@/lib/products";
+import { getProducts } from "@/lib/products";
 import { getLatestPosts } from "@/lib/blog";
+import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 
 export default async function HomePage() {
-  const [posts, bestsellers] = await Promise.all([
-    getLatestPosts(3),
-    getBestsellerProducts(),
-  ]);
+  const [posts, products] = await Promise.all([getLatestPosts(3), getProducts()]);
+  const activeHandles = products.map((p) => p.handle);
+  const whatsappHref = getWhatsAppUrl(
+    `Assalamualaikum, I need help choosing a KHAYAL fragrance. ${siteConfig.url}`,
+  );
 
   return (
     <>
-      <HeroSection />
-      <PressStrip />
-      <CategoryGrid />
-      {bestsellers.length > 0 && <BestSellers products={bestsellers} />}
-      <BrandStoryTeaser />
+      <HeroSlider activeHandles={activeHandles} />
+      <NameMarquee />
+      <Signatures activeHandles={activeHandles} />
+      <CollectionRail products={products} />
+      <TesterRitual />
+      <Occasions />
+      <Ingredients />
+      <HouseStory />
       {posts.length > 0 && <JournalPreview posts={posts} />}
-      <ScentFinderCTA />
+      <FinderBand whatsappHref={whatsappHref} />
     </>
   );
 }

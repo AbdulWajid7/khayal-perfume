@@ -8,6 +8,7 @@ import { submitPaymentProof } from "@/lib/orders";
 import { getWhatsAppUrl } from "@/lib/site-config";
 import type { IOrder } from "@/models/Order";
 import type { IBankTransferConfig } from "@/models/BankTransferConfig";
+import { bankDetailsAvailable, qrAvailable } from "@/lib/payment-options";
 
 interface Props {
   order: IOrder;
@@ -140,7 +141,8 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
 
       {currentOrder.paymentMethod === "bank_transfer" && currentOrder.paymentStatus === "pending_verification" && !currentOrder.paymentVerification && bankConfig && (
         <div className="bg-cream-dark/40 border border-border rounded-xl p-5">
-          <h2 className="text-ink font-medium mb-3">Bank Transfer Details</h2>
+          <h2 className="text-ink font-medium mb-3">Payment Details</h2>
+          {bankDetailsAvailable(bankConfig) && (
           <dl className="grid grid-cols-[120px_1fr] gap-y-2 text-sm">
             <dt className="text-stone">Bank</dt>
             <dd className="text-ink">{bankConfig.bankName}</dd>
@@ -153,6 +155,21 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
               <><dt className="text-stone">IBAN</dt><dd className="text-ink tabular-nums">{bankConfig.iban}</dd></>
             )}
           </dl>
+          )}
+          {qrAvailable(bankConfig) && (
+            <div className="mt-4">
+              <p className="text-ink text-sm font-medium">
+                {bankDetailsAvailable(bankConfig) ? "Or scan to pay" : "Scan to pay"}
+                {bankConfig.qrLabel ? ` (${bankConfig.qrLabel})` : ""}
+              </p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={bankConfig.qrImageUrl}
+                alt={`KHAYAL payment QR code${bankConfig.qrLabel ? ` for ${bankConfig.qrLabel}` : ""}`}
+                className="mt-2 h-48 w-48 rounded-lg border border-border bg-pure object-contain"
+              />
+            </div>
+          )}
           {bankConfig.instructions && <p className="text-stone text-sm mt-3">{bankConfig.instructions}</p>}
 
           <form onSubmit={handleProofSubmit} className="mt-5 space-y-3">

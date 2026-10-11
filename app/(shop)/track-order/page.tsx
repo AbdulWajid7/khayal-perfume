@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import TrackOrderClient from "@/components/checkout/TrackOrderClient";
 
 export const metadata = {
-  title: "Track Order | KHAYAL Fragrance",
+  title: "Track Your Order",
   robots: { index: false, follow: false },
 };
 

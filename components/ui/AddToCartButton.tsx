@@ -25,6 +25,7 @@ export default function AddToCartButton({
 
   const selectedVariant =
     product.variants.find((v) => v.id === variantId) || product.variants[0];
+  const unpriced = !selectedVariant || Number.parseFloat(selectedVariant.price.amount) <= 0;
 
   async function handleAdd() {
     if (!selectedVariant) return;
@@ -57,11 +58,11 @@ export default function AddToCartButton({
   return (
     <button
       type="button"
-      disabled={!selectedVariant || loading}
+      disabled={unpriced || loading}
       onClick={handleAdd}
       className={[
-        "inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-medium transition-colors",
-        "bg-gold text-pure hover:bg-gold-light disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex min-h-[52px] items-center justify-center px-6 text-xs font-medium uppercase tracking-[0.22em] transition-colors",
+        "bg-ink text-cream hover:bg-aubergine disabled:opacity-50 disabled:cursor-not-allowed",
         fullWidth ? "w-full" : "",
         className,
       ].join(" ")}
@@ -92,8 +93,10 @@ export default function AddToCartButton({
           </svg>
           Adding...
         </span>
+      ) : unpriced ? (
+        "Price coming soon"
       ) : (
-        "Add to Cart"
+        "Add to bag"
       )}
     </button>
   );

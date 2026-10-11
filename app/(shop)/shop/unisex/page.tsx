@@ -7,10 +7,10 @@ export const dynamic = "force-dynamic";
 const meta = CATEGORY_META.unisex;
 
 export const metadata: Metadata = {
-  title: meta.title,
+  title: meta.metaTitle,
   description: meta.description,
   openGraph: {
-    title: `${meta.title} | Khayal Fragrance`,
+    title: `${meta.metaTitle} · KHAYAL`,
     description: meta.description,
     url: `${siteConfig.url}/shop/unisex`,
   },

@@ -30,7 +30,7 @@ export const demoProducts: Product[] = [
     variants: [
       {
         id: "variant-1-50ml",
-        title: "50ml Eau de Parfum",
+        title: "50ml Extrait de Parfum",
         price: money(14900),
         availableForSale: true,
       },
@@ -45,7 +45,7 @@ export const demoProducts: Product[] = [
       { namespace: "custom", key: "scent_notes_base", value: "Amber, Sandalwood, Musk" },
     ],
     tags: ["Oud", "Men", "Bestseller"],
-    productType: "Eau de Parfum",
+    productType: "Extrait de Parfum",
     vendor: "Khayal",
   },
   {
@@ -70,7 +70,7 @@ export const demoProducts: Product[] = [
     variants: [
       {
         id: "variant-2-50ml",
-        title: "50ml Eau de Parfum",
+        title: "50ml Extrait de Parfum",
         price: money(13200),
         availableForSale: true,
       },
@@ -85,7 +85,7 @@ export const demoProducts: Product[] = [
       { namespace: "custom", key: "scent_notes_base", value: "Suede, Musk" },
     ],
     tags: ["Floral", "Women", "New"],
-    productType: "Eau de Parfum",
+    productType: "Extrait de Parfum",
     vendor: "Khayal",
   },
   {
@@ -111,7 +111,7 @@ export const demoProducts: Product[] = [
     variants: [
       {
         id: "variant-3-50ml",
-        title: "50ml Eau de Parfum",
+        title: "50ml Extrait de Parfum",
         price: money(12500),
         availableForSale: true,
       },
@@ -126,7 +126,7 @@ export const demoProducts: Product[] = [
       { namespace: "custom", key: "scent_notes_base", value: "Vanilla, Tonka Bean" },
     ],
     tags: ["Woody", "Unisex", "Sale"],
-    productType: "Eau de Parfum",
+    productType: "Extrait de Parfum",
     vendor: "Khayal",
   },
   {
@@ -151,7 +151,7 @@ export const demoProducts: Product[] = [
     variants: [
       {
         id: "variant-4-50ml",
-        title: "50ml Eau de Parfum",
+        title: "50ml Extrait de Parfum",
         price: money(11800),
         availableForSale: true,
       },
@@ -166,7 +166,7 @@ export const demoProducts: Product[] = [
       { namespace: "custom", key: "scent_notes_base", value: "White Musk, Amber" },
     ],
     tags: ["Musk", "Unisex", "Bestseller"],
-    productType: "Eau de Parfum",
+    productType: "Extrait de Parfum",
     vendor: "Khayal",
   },
   {
@@ -191,7 +191,7 @@ export const demoProducts: Product[] = [
     variants: [
       {
         id: "variant-5-50ml",
-        title: "50ml Eau de Parfum",
+        title: "50ml Extrait de Parfum",
         price: money(15600),
         availableForSale: true,
       },
@@ -206,7 +206,7 @@ export const demoProducts: Product[] = [
       { namespace: "custom", key: "scent_notes_base", value: "Amber, Tonka, Musk" },
     ],
     tags: ["Oriental", "Men", "New"],
-    productType: "Eau de Parfum",
+    productType: "Extrait de Parfum",
     vendor: "Khayal",
   },
   {
@@ -232,7 +232,7 @@ export const demoProducts: Product[] = [
     variants: [
       {
         id: "variant-6-50ml",
-        title: "50ml Eau de Parfum",
+        title: "50ml Extrait de Parfum",
         price: money(14100),
         availableForSale: true,
       },
@@ -247,7 +247,7 @@ export const demoProducts: Product[] = [
       { namespace: "custom", key: "scent_notes_base", value: "Vanilla, Sandalwood" },
     ],
     tags: ["Floral", "Women", "Sale"],
-    productType: "Eau de Parfum",
+    productType: "Extrait de Parfum",
     vendor: "Khayal",
   },
   {
@@ -272,7 +272,7 @@ export const demoProducts: Product[] = [
     variants: [
       {
         id: "variant-7-50ml",
-        title: "50ml Eau de Parfum",
+        title: "50ml Extrait de Parfum",
         price: money(10900),
         availableForSale: true,
       },
@@ -287,7 +287,7 @@ export const demoProducts: Product[] = [
       { namespace: "custom", key: "scent_notes_base", value: "Cedarwood, White Musk" },
     ],
     tags: ["Citrus", "Unisex", "Bestseller"],
-    productType: "Eau de Parfum",
+    productType: "Extrait de Parfum",
     vendor: "Khayal",
   },
   {

@@ -11,6 +11,8 @@
   --color-gold: #BFA15F;
   --color-gold-light: #D4B46A;
   --color-gold-pale: #E8D5A8;
+  --color-gold-deep: #8A6A2F;
+  --color-aubergine: #371930;
   --color-plum: #7A3B9A;
   --color-plum-light: #9B59B6;
   --color-plum-pale: #F3EAF7;
@@ -28,14 +30,12 @@
   --color-border-subtle: #47232c;
 
   /* Typography */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-serif: var(--font-playfair), ui-serif, Georgia, "Times New Roman", serif;
+  --font-serif: var(--font-display), ui-serif, Georgia, "Times New Roman", serif;
 }
 
 :root {
-  --font-inter: var(--font-inter);
-  --font-playfair: var(--font-playfair);
   --cream: #FAF9F7;
   --cream-dark: #F5F0E8;
   --pure: #FFFFFF;
@@ -119,7 +119,7 @@ body {
   font-size: 12px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--color-gold-deep);
   font-weight: 500;
 }
 
@@ -275,4 +275,150 @@ body {
 
 .input-admin:disabled {
   opacity: 0.6;
+}
+
+/* ---------- KHAYAL homepage (light luxury) ---------- */
+.font-urdu {
+  font-family: var(--font-urdu), "Noto Nastaliq Urdu", serif;
+}
+
+/* Calligraphy mark drawn from the watermark PNG's alpha, tinted with any colour */
+.kh-mark {
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask: url("/images/khayal-watermark.png") center / contain no-repeat;
+  mask: url("/images/khayal-watermark.png") center / contain no-repeat;
+  aspect-ratio: 680 / 1118;
+}
+
+.kh-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.kh-slide img {
+  transform: scale(1.1) translateX(1.5%);
+  transition: transform 7.5s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.kh-slide[data-active="true"] {
+  opacity: 1;
+}
+.kh-slide[data-active="true"] img {
+  transform: scale(1) translateX(0);
+}
+
+.kh-cap {
+  position: absolute;
+  inset: auto 0 0 auto;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  pointer-events: none;
+}
+.kh-cap[data-active="true"] {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.5s;
+  pointer-events: auto;
+}
+
+.kh-bar span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background: color-mix(in srgb, currentColor 30%, transparent);
+}
+.kh-bar span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.kh-bar[data-state="active"] span::after {
+  animation: kh-fill var(--kh-slide-ms, 6000ms) linear forwards;
+}
+.kh-bar[data-state="active"][data-paused="true"] span::after {
+  animation-play-state: paused;
+}
+.kh-bar[data-state="done"] span::after {
+  transform: scaleX(1);
+}
+@keyframes kh-fill {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes kh-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.kh-in {
+  opacity: 0;
+  animation: kh-up 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.kh-d1 { animation-delay: 0.15s; }
+.kh-d2 { animation-delay: 0.35s; }
+.kh-d3 { animation-delay: 0.6s; }
+.kh-d4 { animation-delay: 0.85s; }
+
+.kh-zoom img {
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.kh-zoom:hover img {
+  transform: scale(1.045);
+}
+
+.kh-btn {
+  transition: background-color 0.35s, color 0.35s, letter-spacing 0.35s;
+}
+.kh-btn:hover {
+  letter-spacing: 0.3em;
+}
+
+.kh-occ {
+  transition: background-color 0.35s, color 0.35s;
+}
+.kh-occ:hover {
+  background-color: var(--color-aubergine);
+  color: var(--color-cream);
+}
+.kh-occ:hover .kh-occ-ur {
+  color: var(--color-gold-pale);
+}
+
+@keyframes kh-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.kh-marquee {
+  animation: kh-marquee 45s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kh-slide,
+  .kh-slide img,
+  .kh-cap,
+  .kh-in {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  .kh-slide { opacity: 0; }
+  .kh-slide[data-active="true"] { opacity: 1; }
+  .kh-cap { opacity: 0; }
+  .kh-cap[data-active="true"] { opacity: 1; }
+  .kh-marquee { animation: none; }
 }

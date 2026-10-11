@@ -12,7 +12,7 @@ export const siteConfig = {
     clarityProjectId: process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "ykfeupmawo",
   },
   social: {
-    instagram: "https://www.instagram.com/khayalfragnance/",
+    instagram: "https://www.instagram.com/khayalfragranceofficial/",
     facebook: "https://www.facebook.com/share/1Kmv75SYta/",
     tiktok: "https://www.tiktok.com/@khayal..parfum",
   },

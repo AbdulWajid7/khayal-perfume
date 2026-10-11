@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
   },
+  experimental: {
+    // Admin uploads (e.g. the payment QR code image) go through server actions.
+    serverActions: { bodySizeLimit: "3mb" },
+  },
   typescript: {
     ignoreBuildErrors: false,
   },

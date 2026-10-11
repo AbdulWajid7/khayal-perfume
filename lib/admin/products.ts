@@ -83,6 +83,8 @@ export async function updateProduct(id: string, formData: FormData) {
   const product = await Product.findById(id);
   if (!product) throw new Error("Product not found");
 
+  const previousPrice = product.price;
+  const previousStock = product.stock;
   const handle = getString(formData, "handle") || product.handle;
   const existing = await Product.findOne({ handle, _id: { $ne: id } });
   if (existing) throw new Error("A product with this handle already exists");
@@ -122,6 +124,17 @@ export async function updateProduct(id: string, formData: FormData) {
   product.noIndex = formData.get("noIndex") === "on";
   const variants = getVariants(formData);
   if (variants.length) product.variants = variants;
+  if (product.variants.length === 1) {
+    // Single-size products: the edit form re-submits the existing variant JSON, so keep
+    // that one variant in step with the price and stock edited above. Otherwise a variant
+    // left at 0 (or the old price) would override the product price at checkout.
+    const [variant] = product.variants;
+    if (variant.price === 0 || variant.price === previousPrice) variant.price = product.price;
+    if (variant.stock === previousStock || (variant.stock === 0 && product.stock > 0)) {
+      variant.stock = product.stock;
+      variant.availableForSale = product.stock > 0;
+    }
+  }
 
   await product.save();
 

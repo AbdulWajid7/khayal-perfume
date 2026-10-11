@@ -12,6 +12,7 @@ import { siteConfig } from "@/lib/site-config";
 import { calculateShipping, getDeliveryMethodLabel, getExpectedDeliveryText, isKarachi } from "@/lib/shipping";
 import { isValidPakistaniMobile } from "@/lib/phone";
 import type { IBankTransferConfig } from "@/models/BankTransferConfig";
+import { bankDetailsAvailable, qrAvailable } from "@/lib/payment-options";
 import Link from "next/link";
 
 const PAKISTAN_PROVINCES = ["Sindh", "Punjab", "Khyber Pakhtunkhwa", "Balochistan", "Islamabad Capital Territory", "Gilgit-Baltistan"];
@@ -363,8 +364,19 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
                   className="mt-1"
                 />
                 <div>
-                  <p className="text-ink font-medium">Bank Transfer</p>
-                  <p className="text-stone text-sm">Transfer to {bankConfig.bankName} — {bankConfig.accountTitle}. Instructions shown after placing order.</p>
+                  <p className="text-ink font-medium">
+                    {bankDetailsAvailable(bankConfig) && qrAvailable(bankConfig)
+                      ? "Bank Transfer / QR"
+                      : qrAvailable(bankConfig)
+                        ? "QR Payment"
+                        : "Bank Transfer"}
+                  </p>
+                  <p className="text-stone text-sm">
+                    {bankDetailsAvailable(bankConfig)
+                      ? `Transfer to ${bankConfig.bankName}, ${bankConfig.accountTitle}${qrAvailable(bankConfig) ? `, or scan our ${bankConfig.qrLabel || "QR code"}` : ""}.`
+                      : `Scan our ${bankConfig.qrLabel || "QR code"} to pay.`}{" "}
+                    Payment details are shown after you place the order.
+                  </p>
                 </div>
               </label>
             )}

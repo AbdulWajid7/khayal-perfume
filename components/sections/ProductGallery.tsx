@@ -16,7 +16,7 @@ export default function ProductGallery({
 
   return (
     <div>
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-cream-dark">
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-cream-dark">
         {activeImage ? (
           <Image
             src={activeImage.url}
@@ -27,12 +27,15 @@ export default function ProductGallery({
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         ) : (
-          <div className="h-full w-full bg-cream-dark" aria-hidden="true" />
+          <div className="flex h-full w-full flex-col items-center justify-center gap-5">
+            <span aria-hidden="true" className="kh-mark h-40 text-aubergine opacity-20" />
+            <span className="text-[11px] uppercase tracking-[0.3em] text-stone">Photograph coming</span>
+          </div>
         )}
       </div>
 
       {images.length > 1 && (
-        <div className="mt-4 grid grid-cols-4 gap-3">
+        <div className="mt-3 grid grid-cols-4 gap-3">
           {images.map((image, index) => (
             <button
               key={image.url + index}
@@ -40,8 +43,8 @@ export default function ProductGallery({
               onClick={() => setActiveIndex(index)}
               aria-label={`View image ${index + 1} of ${title}`}
               className={[
-                "relative aspect-square overflow-hidden rounded-xl border transition-colors",
-                index === activeIndex ? "border-gold" : "border-border hover:border-gold/50",
+                "relative aspect-square overflow-hidden border transition-colors",
+                index === activeIndex ? "border-ink" : "border-border hover:border-ink/50",
               ].join(" ")}
             >
               <Image

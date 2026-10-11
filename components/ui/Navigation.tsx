@@ -1,17 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/hooks/useCart";
 
 const navLinks = [
-  { label: "Shop", href: "/shop" },
+  { label: "Fragrances", href: "/shop" },
   { label: "Men", href: "/shop/men" },
   { label: "Women", href: "/shop/women" },
   { label: "Unisex", href: "/shop/unisex" },
-  { label: "Journal", href: "/journal" },
   { label: "Story", href: "/story" },
 ];
 
@@ -146,46 +144,34 @@ export default function Navigation() {
         className={[
           "fixed top-8 left-0 right-0 z-50 h-20 transition-all duration-300 backdrop-blur-xl",
           scrolled
-            ? "bg-pure/80 border-b border-border shadow-[0_8px_30px_rgba(26,26,26,0.06)]"
-            : "bg-cream/40 border-b border-transparent",
+            ? "bg-cream/90 border-b border-border shadow-[0_8px_30px_rgba(26,26,26,0.06)]"
+            : "bg-cream/70 border-b border-transparent",
           hidden && !mobileOpen ? "-translate-y-full opacity-0" : "translate-y-0",
         ].join(" ")}
       >
-        <nav className="mx-auto max-w-7xl h-full px-4 md:px-8 lg:px-12 flex items-center justify-between">
-          <Link
-            href="/"
-            className="flex items-center gap-3"
-            aria-label="Khayal home"
-          >
-            <div className="relative h-12 w-12 rounded-full overflow-hidden shadow-md">
-              <Image
-                src="/logo.png"
-                alt="Khayal Fragrance"
-                fill
-                className="object-cover"
-                sizes="48px"
-                priority
-              />
-            </div>
-            <span className="hidden sm:block font-serif-display text-ink text-base font-medium tracking-[0.3em] uppercase">
-              Khayal
-            </span>
-          </Link>
-
-          <ul className="hidden lg:flex items-center gap-9">
+        <nav className="mx-auto grid h-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 md:px-8 lg:px-12">
+          <ul className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="link-hover-gold text-ink text-[11px] font-medium tracking-[0.22em] uppercase transition-colors hover:text-gold"
+                  className="link-hover-gold text-ink text-[11px] font-medium tracking-[0.22em] uppercase transition-colors hover:text-gold-deep"
                 >
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
+          <span className="lg:hidden" />
 
-          <div className="flex items-center gap-5">
+          <Link href="/" className="flex flex-col items-center gap-0.5 text-aubergine" aria-label="KHAYAL home">
+            <span aria-hidden="true" className="kh-mark h-9" />
+            <span className="font-serif-display text-ink text-[17px] tracking-[0.5em] pl-[0.5em] leading-none">
+              KHAYAL
+            </span>
+          </Link>
+
+          <div className="flex items-center justify-end gap-4 sm:gap-5">
             <Link
               href="/scent-finder"
               aria-label="Find your scent"

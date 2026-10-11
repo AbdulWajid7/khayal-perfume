@@ -1,4 +1,6 @@
 import type { ProductDetails } from "@/types/product";
+import { siteConfig } from "@/lib/site-config";
+import { STANDARD_SHIPPING } from "@/lib/shipping";
 
 const BASE_URL = "https://www.khayalparfum.com";
 
@@ -9,7 +11,9 @@ export default function ProductSchema({
   product: ProductDetails;
   rating?: { value: number; count: number };
 }) {
-  const images = product.images.length
+  const images = product.sampleImages
+    ? []
+    : product.images.length
     ? product.images.map((img) => img.url)
     : product.featuredImage
       ? [product.featuredImage.url]
@@ -59,7 +63,8 @@ export default function ProductSchema({
           },
         }
       : {}),
-    offers: product.variants.map((variant) => ({
+    // Products without a price yet get no offer: a 0.00 offer is invalid for Google.
+    offers: product.variants.filter((variant) => Number(variant.price.amount) > 0).map((variant) => ({
       "@type": "Offer",
       url: productUrl,
       sku: variant.sku || undefined,
@@ -81,9 +86,11 @@ export default function ProductSchema({
           "@type": "DefinedRegion",
           addressCountry: "PK",
         },
+        // Standard delivery is PKR 250; it becomes free only once an order reaches the
+        // free-delivery threshold, which a single bottle does not.
         shippingRate: {
           "@type": "MonetaryAmount",
-          value: "0",
+          value: Number(variant.price.amount) >= siteConfig.freeShippingThreshold ? "0" : String(STANDARD_SHIPPING),
           currency: "PKR",
         },
         deliveryTime: {

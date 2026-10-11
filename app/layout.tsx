@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Bodoni_Moda, Jost, Noto_Nastaliq_Urdu } from "next/font/google";
 import { defaultMetadata } from "@/lib/seo";
 import { CartProvider } from "@/hooks/useCart";
 import LoadIntro from "@/components/ui/LoadIntro";
@@ -10,18 +10,28 @@ import ConsentBanner from "@/components/ui/ConsentBanner";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
-const inter = Inter({
+const jost = Jost({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-body",
   display: "swap",
   preload: true,
 });
 
-const playfair = Playfair_Display({
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  variable: "--font-display",
   display: "swap",
   preload: true,
+});
+
+const urdu = Noto_Nastaliq_Urdu({
+  subsets: ["arabic"],
+  weight: ["500"],
+  variable: "--font-urdu",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = defaultMetadata;
@@ -32,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${jost.variable} ${bodoni.variable} ${urdu.variable}`}>
       <body className="antialiased bg-cream text-ink">
         {process.env.NODE_ENV === "production" && siteConfig.analytics.gtmId && (
           <noscript>

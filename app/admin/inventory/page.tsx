@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { getProducts, deleteProduct } from "@/lib/admin/products";
+import { importCatalog } from "@/lib/admin/catalog";
 
-export default async function InventoryPage() {
+export default async function InventoryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ imported?: string }>;
+}) {
   const products = await getProducts();
+  const { imported } = await searchParams;
+  const [createdCount, updatedCount] = (imported || "").split("-").map(Number);
 
   return (
     <div className="space-y-6">
@@ -18,6 +25,33 @@ export default async function InventoryPage() {
           + New Product
         </Link>
       </div>
+
+      {imported && (
+        <p className="bg-green-50 border border-green-200 text-green-800 rounded-xl px-4 py-3 text-sm">
+          Catalog imported: {createdCount || 0} new {createdCount === 1 ? "product" : "products"} added as drafts,{" "}
+          {updatedCount || 0} existing updated. Open each draft, add its price, stock and photos, then set status to Active.
+        </p>
+      )}
+
+      <form
+        action={importCatalog}
+        className="bg-pure border border-border rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+      >
+        <div>
+          <p className="text-ink text-sm font-medium">KHAYAL catalog (11 fragrances)</p>
+          <p className="text-stone text-xs mt-1 max-w-xl">
+            Adds any missing fragrances as drafts with their descriptions, scent notes, tags and SEO
+            fields, and refreshes the copy on existing ones. Prices, stock, photos and status of
+            existing products are never changed. Safe to run more than once.
+          </p>
+        </div>
+        <button
+          type="submit"
+          className="shrink-0 border border-gold text-gold rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-gold hover:text-pure transition-colors"
+        >
+          Import KHAYAL catalog
+        </button>
+      </form>
 
       <div className="bg-pure border border-border rounded-2xl overflow-hidden shadow-sm">
         <table className="w-full text-left text-sm">

@@ -12,7 +12,8 @@ interface SendPayload {
   [key: string]: unknown;
 }
 
-async function send(payload: SendPayload): Promise<void> {
+/** Sends a message; resolves to true when Meta accepted it. */
+async function send(payload: SendPayload): Promise<boolean> {
   try {
     const res = await fetch(`https://graph.facebook.com/v21.0/${PHONE_ID()}/messages`, {
       method: "POST",
@@ -24,9 +25,12 @@ async function send(payload: SendPayload): Promise<void> {
     });
     if (!res.ok) {
       console.error("WhatsApp send error:", res.status, await res.text());
+      return false;
     }
+    return true;
   } catch (error) {
     console.error("WhatsApp send failed:", error);
+    return false;
   }
 }
 
@@ -104,4 +108,32 @@ export function markRead(messageId: string) {
       message_id: messageId,
     }),
   }).catch(() => {});
+}
+
+export function sendImage(to: string, link: string, caption?: string) {
+  return send({
+    messaging_product: "whatsapp",
+    to,
+    type: "image",
+    image: { link, ...(caption ? { caption: caption.slice(0, 1024) } : {}) },
+  });
+}
+
+/**
+ * Send an approved WhatsApp message template (needed to message a customer outside the
+ * 24-hour window after their last message). `params` fill {{1}}, {{2}}, ... in the body.
+ */
+export function sendTemplate(to: string, name: string, language: string, params: string[] = []) {
+  return send({
+    messaging_product: "whatsapp",
+    to,
+    type: "template",
+    template: {
+      name,
+      language: { code: language },
+      components: params.length
+        ? [{ type: "body", parameters: params.map((text) => ({ type: "text", text })) }]
+        : [],
+    },
+  });
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Khayal Fragrance",
+  title: "Privacy Policy",
   description:
     "Learn how Khayal Fragrance collects, uses, and protects your personal information when you shop with us.",
 };
@@ -51,6 +51,12 @@ export default function PrivacyPage() {
             <p>
               We use trusted payment processors and courier partners to fulfill your orders. These
               providers only receive the information necessary to complete their services.
+            </p>
+            <p className="mt-3">
+              Our WhatsApp assistant uses an AI service (Google Gemini) to answer the questions you type, such as
+              which scent to choose or how delivery works. Only the text of those questions is sent, with phone
+              numbers and email addresses removed; your name, address and order details are never shared with it.
+              WhatsApp chat messages are kept for up to 180 days so our team can follow up and improve answers.
             </p>
           </div>
 

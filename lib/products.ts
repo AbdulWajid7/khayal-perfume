@@ -1,26 +1,41 @@
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Product, type IProduct } from "@/models/Product";
+import { SAMPLE_IMAGES, SAMPLE_IMAGES_HANDLE, realImagesFor } from "@/lib/sample-images";
 import type { Product as ProductType, ProductDetails, ShopifyImage, ProductVariant, ProductMetafield } from "@/types/product";
 
 const currency = "PKR";
+
+
 
 function money(amount: number): { amount: string; currencyCode: string } {
   return { amount: amount.toFixed(2), currencyCode: currency };
 }
 
-function mapImage(url: string): ShopifyImage {
-  return { url, altText: "" };
+function mapImage(url: string, index: number, doc: IProduct): ShopifyImage {
+  const audience = (doc.category || "").toLowerCase();
+  const who = audience === "men" ? "men's" : audience === "women" ? "women's" : "unisex";
+  const base = `KHAYAL ${doc.title} ${who} extrait de parfum${doc.sizeMl ? ` ${doc.sizeMl}ml` : ""}`;
+  return { url, altText: index === 0 ? base : `${base}, view ${index + 1}` };
 }
 
-function mapVariants(variants: { id: string; title: string; price: number; availableForSale: boolean; sku?: string; stock?: number }[]): ProductVariant[] {
-  return variants.map((v) => ({
-    id: v.id,
-    title: v.title,
-    price: money(v.price),
-    availableForSale: v.availableForSale,
-    sku: v.sku || null,
-    stock: v.stock,
-  }));
+function mapVariants(
+  variants: { id: string; title: string; price: number; availableForSale: boolean; sku?: string; stock?: number }[],
+  doc: IProduct,
+): ProductVariant[] {
+  return variants.map((v) => {
+    // A variant created by the catalog import keeps price 0 and stock 0 until it is edited;
+    // fall back to the product-level price and stock so the shop shows the real values.
+    const untouched = v.price <= 0 && !v.stock;
+    const stock = untouched ? doc.stock : v.stock;
+    return {
+      id: v.id,
+      title: v.title,
+      price: money(v.price > 0 ? v.price : doc.price),
+      availableForSale: untouched ? doc.stock > 0 : v.availableForSale,
+      sku: v.sku || null,
+      stock,
+    };
+  });
 }
 
 function deriveMetafields(doc: IProduct): ProductMetafield[] {
@@ -38,20 +53,30 @@ function deriveMetafields(doc: IProduct): ProductMetafield[] {
   push("longevity", doc.longevity);
   push("sillage", doc.sillage);
   push("occasion", doc.occasion);
-  push("concentration", doc.concentration);
+  push("concentration", doc.concentration?.replace(/eau de parfum/i, "Extrait de Parfum"));
   push("size", doc.sizeMl ? `${doc.sizeMl}ml` : undefined);
   return metafields;
 }
 
 function mapIProductToProduct(doc: IProduct): ProductType {
-  const images: ShopifyImage[] = (doc.images || []).map(mapImage);
+  const ownImages = realImagesFor(doc.handle, doc.images);
+  const isSilkRoyale = doc.handle === SAMPLE_IMAGES_HANDLE;
+  const usesSamples = ownImages.length === 0 && !isSilkRoyale;
+  const imageUrls = isSilkRoyale
+    ? [...ownImages, ...SAMPLE_IMAGES.filter((u) => !ownImages.includes(u))]
+    : usesSamples
+      ? SAMPLE_IMAGES
+      : ownImages;
+  const images: ShopifyImage[] = imageUrls.map((url, i) =>
+    usesSamples
+      ? { url, altText: i === 0 ? `KHAYAL ${doc.title}: sample bottle photo, final photography coming soon` : `KHAYAL sample bottle photo ${i + 1}` }
+      : mapImage(url, i, doc),
+  );
   const featuredImage: ShopifyImage | null = images[0] || null;
-  const variants = mapVariants(doc.variants || []);
+  const variants = mapVariants(doc.variants || [], doc);
 
-  const hasVariant = variants.length > 0;
-  const minPrice = hasVariant
-    ? Math.min(...variants.map((v) => Number(v.price.amount)))
-    : doc.price;
+  const pricedVariants = variants.map((v) => Number(v.price.amount)).filter((p) => p > 0);
+  const minPrice = pricedVariants.length ? Math.min(...pricedVariants) : doc.price;
 
   return {
     id: doc._id.toString(),
@@ -74,6 +99,7 @@ function mapIProductToProduct(doc: IProduct): ProductType {
     updatedAt: doc.updatedAt as string,
     stock: doc.stock,
     lowStockThreshold: doc.lowStockThreshold,
+    sampleImages: usesSamples,
   };
 }
 
@@ -92,7 +118,8 @@ function addDerivedFields(product: ProductType, doc?: IProduct): ProductDetails 
     sillage: getMeta("custom", "sillage") || "",
     occasion: getMeta("custom", "occasion") || "",
     scentFamily: getMeta("custom", "scent_family") || product.productType || "",
-    concentration: doc?.concentration,
+    // Every KHAYAL fragrance is an extrait de parfum (38% perfume oil); older records said eau de parfum.
+    concentration: doc?.concentration?.replace(/eau de parfum/i, "Extrait de Parfum"),
     sizeMl: doc?.sizeMl,
     metaTitle: doc?.metaTitle,
     metaDescription: doc?.metaDescription,

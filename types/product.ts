@@ -54,6 +54,8 @@ export interface Product {
   updatedAt?: string;
   stock?: number;
   lowStockThreshold?: number;
+  /** True when the product is showing temporary sample photos instead of its own. */
+  sampleImages?: boolean;
 }
 
 export interface ProductDetails extends Product {
