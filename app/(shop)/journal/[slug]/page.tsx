@@ -19,12 +19,14 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   const description = post.metaDescription || truncateText(post.excerpt || post.title, 160);
   const canonical = post.canonicalUrl || `https://www.khayalparfum.com/journal/${post.slug}`;
+  // The site template already appends "· KHAYAL", so drop any brand suffix stored on the post.
+  const title = (post.metaTitle || post.title).replace(/\s*[|·–-]\s*(khayal journal|khayal)\s*$/i, "");
 
   return {
-    title: post.metaTitle || post.title,
+    title,
     description,
     openGraph: {
-      title: post.metaTitle || post.title,
+      title,
       description,
       images: post.ogImage ? [post.ogImage] : post.coverImage?.url ? [post.coverImage.url] : undefined,
     },
