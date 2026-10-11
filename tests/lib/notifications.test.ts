@@ -40,7 +40,7 @@ describe("customer order emails", () => {
     expect(email.html).toContain("https://www.khayalparfum.com/images/products/oud-imperial.svg");
     expect(email.html).toContain("1 Main Road");
     expect(email.html).toContain("Discount");
-    expect(email.html).toContain("khayal-watermark.png");
+    expect(email.html).toContain("k-trail");
   });
 
   it("includes tracking and courier when an order is dispatched", () => {
