@@ -12,7 +12,8 @@ interface SendPayload {
   [key: string]: unknown;
 }
 
-async function send(payload: SendPayload): Promise<void> {
+/** Sends a message; resolves to true when Meta accepted it. */
+async function send(payload: SendPayload): Promise<boolean> {
   try {
     const res = await fetch(`https://graph.facebook.com/v21.0/${PHONE_ID()}/messages`, {
       method: "POST",
@@ -24,9 +25,12 @@ async function send(payload: SendPayload): Promise<void> {
     });
     if (!res.ok) {
       console.error("WhatsApp send error:", res.status, await res.text());
+      return false;
     }
+    return true;
   } catch (error) {
     console.error("WhatsApp send failed:", error);
+    return false;
   }
 }
 

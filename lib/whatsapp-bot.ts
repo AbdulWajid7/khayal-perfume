@@ -16,9 +16,10 @@ import { calculateShipping, isKarachi, getExpectedDeliveryText } from "@/lib/shi
 import { getEnabledBankTransferConfig } from "@/lib/admin/bank-config";
 import { bankDetailsAvailable, qrAvailable } from "@/lib/payment-options";
 import type { IBankTransferConfig } from "@/models/BankTransferConfig";
-
-const TESTER_LINE =
-  "Every order includes a tester. Try it first; if the scent isn't for you, return the sealed bottle on delivery day.";
+import { WhatsAppMessage } from "@/models/WhatsAppMessage";
+import { answerCustomer, logMessage, TESTER_LINE, type AssistantReply } from "@/lib/bot-assistant";
+import { buttonTitle } from "@/lib/bot-knowledge";
+import { sendEmail, getEmailFrom } from "@/lib/email";
 
 const PROVINCES: { match: RegExp; name: string }[] = [
   { match: /\bsindh\b/i, name: "Sindh" },
@@ -300,10 +301,10 @@ async function askMarketingOptIn(waId: string) {
   );
 }
 
-async function recordOptIn(waId: string, optedIn: boolean) {
+async function recordOptIn(waId: string, optedIn: boolean, source = "whatsapp_bot_after_order") {
   await WhatsAppOptIn.findOneAndUpdate(
     { waId },
-    { $set: { optedIn, decidedAt: new Date() }, $setOnInsert: { waId, source: "whatsapp_bot_after_order" } },
+    { $set: { optedIn, decidedAt: new Date() }, $setOnInsert: { waId, source } },
     { upsert: true }
   );
 }
@@ -332,6 +333,75 @@ async function handleTrack(waId: string, text: string, session: IWhatsAppSession
   }
 }
 
+
+/** States where the customer types personal details; those messages are logged without their text. */
+const PRIVATE_STATES = new Set<WhatsAppBotState>(["name", "city_province", "address"]);
+/** States where typed text is a question rather than an answer to the order flow. */
+const QUESTION_STATES = new Set<WhatsAppBotState>(["menu", "browse", "product"]);
+const HUMAN_WORDS = ["human", "agent", "person", "insaan", "banda", "representative"];
+
+async function markInbound(id: string | undefined, patch: Record<string, unknown>) {
+  if (!id) return;
+  await WhatsAppMessage.updateOne({ _id: id }, { $set: patch }).catch(() => {});
+}
+
+async function alertTeam(waId: string, text: string) {
+  const to = process.env.ADMIN_EMAIL;
+  if (!to) return;
+  const last4 = waId.slice(-4);
+  await sendEmail({
+    to,
+    from: getEmailFrom(),
+    subject: `WhatsApp customer needs a reply (…${last4})`,
+    text: `A customer on WhatsApp needs a person to reply.\n\nTheir message:\n"${text.slice(0, 500)}"\n\nReply from the admin inbox: ${siteConfig.url}/admin/whatsapp`,
+  }).catch((error) => console.error("WhatsApp team alert failed:", error));
+}
+
+async function sendHumanHandoff(waId: string) {
+  await sendText(
+    waId,
+    `Our team is happy to help. A KHAYAL team member will reply in this chat shortly.\n\nYou can also reach us at:\n📞 ${siteConfig.phoneDisplay}\n✉️ ${siteConfig.email}`
+  );
+}
+
+/** Answers a typed question with the assistant; if nothing can answer it, hands it to the team. */
+async function handleFreeText(waId: string, text: string, inboundId?: string) {
+  let result: AssistantReply;
+  try {
+    result = await answerCustomer(waId, text);
+  } catch (error) {
+    console.error("WhatsApp assistant error:", error);
+    result = { reply: "", products: [], needsHuman: false, answered: false, source: "none" };
+  }
+
+  if (result.source === "none" || !result.reply) {
+    await markInbound(inboundId, { handledBy: "fallback", unanswered: true, needsHuman: true });
+    await sendButtons(
+      waId,
+      "Thank you for your message. A KHAYAL team member will reply here shortly. Meanwhile, you can browse our fragrances:",
+      [
+        { id: "menu_browse", title: "Browse Perfumes" },
+        { id: "menu_track", title: "Track My Order" },
+      ]
+    );
+    await alertTeam(waId, text);
+    return;
+  }
+
+  await markInbound(inboundId, {
+    handledBy: result.source,
+    unanswered: !result.answered,
+    needsHuman: result.needsHuman,
+  });
+
+  const buttons = result.products.map((p) => ({ id: `prod_${p.id}`, title: buttonTitle(p.title) }));
+  if (result.needsHuman) buttons.push({ id: "menu_human", title: "Talk to a Human" });
+  if (buttons.length < 3) buttons.push({ id: "menu_browse", title: "Browse Perfumes" });
+  await sendButtons(waId, result.reply, buttons.slice(0, 3));
+  await logMessage({ waId, direction: "out", text: result.reply, handledBy: result.source });
+  if (result.needsHuman) await alertTeam(waId, text);
+}
+
 export async function handleIncomingMessage(
   waId: string,
   messageId: string,
@@ -347,9 +417,24 @@ export async function handleIncomingMessage(
 
   const lowered = text.trim().toLowerCase();
   const input = replyId || text.trim();
+  const isTyped = !replyId && Boolean(text.trim());
+  const inbound = await logMessage({
+    waId,
+    direction: "in",
+    text: PRIVATE_STATES.has(session.state) ? "[customer details]" : text.slice(0, 2000),
+    replyId,
+    handledBy: isTyped && QUESTION_STATES.has(session.state) ? undefined : "flow",
+  });
+  const inboundId = inbound?._id ? String(inbound._id) : undefined;
 
   // Global shortcuts
-  if (MENU_KEYWORDS.some((k) => lowered === k || lowered.startsWith(k + " ")) || input === "menu_main") {
+  // A bare greeting ("hi", "salam", "hello there") opens the menu; a greeting with a question goes to the assistant.
+  const isGreeting =
+    MENU_KEYWORDS.some((k) => lowered === k || lowered.startsWith(k + " ")) &&
+    lowered.split(/\s+/).length <= 3 &&
+    !lowered.includes("?");
+  if (isGreeting || input === "menu_main") {
+    await markInbound(inboundId, { handledBy: "flow" });
     await resetToMenu(waId);
     await showMenu(waId);
     return;
@@ -369,11 +454,16 @@ export async function handleIncomingMessage(
     await sendText(waId, "You won't receive offers from KHAYAL on WhatsApp. We'll still message you about your orders.");
     return;
   }
-  if (input === "menu_human") {
-    await sendText(
-      waId,
-      `Our team is happy to help.\n\n📞 ${siteConfig.phoneDisplay}\n✉️ ${siteConfig.email}\n\nOr keep chatting here — we reply on this number too.`
-    );
+  if (lowered === "notify") {
+    await recordOptIn(waId, true, "whatsapp_price_notify");
+    await markInbound(inboundId, { handledBy: "flow" });
+    await sendText(waId, "Done. We'll message you here as soon as prices are live. Reply STOP anytime.");
+    return;
+  }
+  if (input === "menu_human" || HUMAN_WORDS.includes(lowered)) {
+    await markInbound(inboundId, { handledBy: "flow", needsHuman: true });
+    await sendHumanHandoff(waId);
+    await alertTeam(waId, input === "menu_human" ? "(tapped Talk to a Human)" : text);
     return;
   }
   if (input === "menu_track") {
@@ -390,6 +480,8 @@ export async function handleIncomingMessage(
     case "menu": {
       if (input.startsWith("prod_")) {
         await showProduct(waId, input.slice(5));
+      } else if (isTyped) {
+        await handleFreeText(waId, text, inboundId);
       } else {
         await showMenu(waId);
       }
@@ -399,6 +491,8 @@ export async function handleIncomingMessage(
     case "browse": {
       if (input.startsWith("prod_")) {
         await showProduct(waId, input.slice(5));
+      } else if (isTyped) {
+        await handleFreeText(waId, text, inboundId);
       } else {
         await showProducts(waId);
       }
@@ -413,6 +507,8 @@ export async function handleIncomingMessage(
         await askQuantity(waId, product?.price);
       } else if (input.startsWith("prod_")) {
         await showProduct(waId, input.slice(5));
+      } else if (isTyped) {
+        await handleFreeText(waId, text, inboundId);
       } else {
         await showProduct(waId, session.productId!);
       }
