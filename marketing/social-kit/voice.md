@@ -105,6 +105,10 @@ elevate), cures/therapy/aphrodisiac/pheromones, "stop scrolling", "tag someone".
 - **Launch:** Tue 20 Oct 2026.
 - **Offers:** {{none confirmed}}
 
+## Pinterest boards (created 12 Oct)
+
+KHAYAL Collection · Wedding Perfume Ideas · Oud and Saffron · Fresh Office Scents · How to Wear Perfume
+
 ## The ask
 
 - One ask per post. Default: "WhatsApp us" or "Try the scent finder" (bio link).
