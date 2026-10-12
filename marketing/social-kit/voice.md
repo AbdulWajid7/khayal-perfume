@@ -109,7 +109,8 @@ elevate), cures/therapy/aphrodisiac/pheromones, "stop scrolling", "tag someone".
   North Nazimabad, Karachi. Sat 17 and Sun 18 Oct, 5 pm to 12 am. Smell all eleven free,
   take a tester home.
 - **Launch:** Tue 20 Oct 2026.
-- **Offers:** {{none confirmed}}
+- **Offers:** code **TERRACE15**, 15% off, Sat 17 Oct to Tue 27 Oct, up to 300 orders (live once
+  the owner presses Create in Admin > Discount Codes). For Terrace visitors and first buyers.
 
 ## Pinterest boards (created 12 Oct)
 

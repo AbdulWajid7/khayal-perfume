@@ -39,6 +39,7 @@ const navGroups = [
     title: "Marketing",
     links: [
       { label: "Subscribers", href: "/admin/marketing/subscribers" },
+      { label: "Discount Codes", href: "/admin/coupons" },
       { label: "Welcome Offers", href: "/admin/marketing/welcome-offers" },
       { label: "Welcome Config", href: "/admin/marketing/config" },
     ],
