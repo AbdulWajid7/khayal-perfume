@@ -1,0 +1,143 @@
+/**
+ * Fragrance cost and profit maths, matching the owner's
+ * "KHAYAL Fragrance Cost Profit Calculator" spreadsheet cell for cell.
+ * Pure functions: used by the admin Cost & Profit page and its tests.
+ */
+
+export interface CostRow {
+  realName: string;
+  khayalName: string;
+  /** Quantity bought from the maker, in mL. */
+  makerQtyMl: number;
+  /** Price paid to the maker for that quantity, PKR. */
+  makerPrice: number;
+  bottleMl: number;
+  boxPrice: number;
+  packagingPrice: number;
+  otherCost: number;
+  sellingPrice: number;
+  /** 0.1 = 10%. */
+  commissionRate: number;
+}
+
+export interface CostRowResult extends CostRow {
+  unitCostPerMl: number;
+  fragranceCostPerBottle: number;
+  totalCostBeforeCommission: number;
+  commissionAmount: number;
+  profitAfterCommission: number;
+  profitMargin: number;
+}
+
+export interface CostTotals {
+  makerPrice: number;
+  fragranceCostPerBottle: number;
+  boxPrice: number;
+  packagingPrice: number;
+  otherCost: number;
+  totalCostBeforeCommission: number;
+  sellingPrice: number;
+  commissionAmount: number;
+  profitAfterCommission: number;
+  profitMargin: number;
+}
+
+const num = (v: unknown) => {
+  const n = typeof v === "number" ? v : parseFloat(String(v ?? "").replace(/,/g, ""));
+  return Number.isFinite(n) ? n : 0;
+};
+
+/** Same as Excel IFERROR(a/b, 0). */
+const safeDiv = (a: number, b: number) => (b ? a / b : 0);
+
+export function computeRow(row: CostRow): CostRowResult {
+  const unitCostPerMl = safeDiv(num(row.makerPrice), num(row.makerQtyMl)); // E = D / C
+  const fragranceCostPerBottle = unitCostPerMl * num(row.bottleMl); // G = E * F
+  const totalCostBeforeCommission =
+    fragranceCostPerBottle + num(row.boxPrice) + num(row.packagingPrice) + num(row.otherCost); // K = G+H+I+J
+  const commissionAmount = num(row.sellingPrice) * num(row.commissionRate); // N = L * M
+  const profitAfterCommission = num(row.sellingPrice) - totalCostBeforeCommission - commissionAmount; // O = L-K-N
+  const profitMargin = safeDiv(profitAfterCommission, num(row.sellingPrice)); // P = IFERROR(O/L,0)
+  return {
+    ...row,
+    unitCostPerMl,
+    fragranceCostPerBottle,
+    totalCostBeforeCommission,
+    commissionAmount,
+    profitAfterCommission,
+    profitMargin,
+  };
+}
+
+export function computeTotals(rows: CostRowResult[]): CostTotals {
+  const sum = (k: keyof CostRowResult) => rows.reduce((s, r) => s + num(r[k]), 0);
+  const profitAfterCommission = sum("profitAfterCommission");
+  const sellingPrice = sum("sellingPrice");
+  return {
+    makerPrice: sum("makerPrice"),
+    fragranceCostPerBottle: sum("fragranceCostPerBottle"),
+    boxPrice: sum("boxPrice"),
+    packagingPrice: sum("packagingPrice"),
+    otherCost: sum("otherCost"),
+    totalCostBeforeCommission: sum("totalCostBeforeCommission"),
+    sellingPrice,
+    commissionAmount: sum("commissionAmount"),
+    profitAfterCommission,
+    profitMargin: safeDiv(profitAfterCommission, sellingPrice),
+  };
+}
+
+/** Supplier quote check: itemised total (sum of maker prices) against the supplier's stated total. */
+export function supplierSummary(rows: CostRow[], statedTotal: number) {
+  const itemized = rows.reduce((s, r) => s + num(r.makerPrice), 0);
+  return { itemized, stated: num(statedTotal), difference: itemized - num(statedTotal) };
+}
+
+/** Cleans untrusted input (form JSON) into a valid row. */
+export function sanitizeRow(input: Partial<Record<keyof CostRow, unknown>>): CostRow {
+  const text = (v: unknown) => String(v ?? "").trim().slice(0, 80);
+  const rate = num(input.commissionRate);
+  return {
+    realName: text(input.realName),
+    khayalName: text(input.khayalName),
+    makerQtyMl: Math.max(0, num(input.makerQtyMl)),
+    makerPrice: Math.max(0, num(input.makerPrice)),
+    bottleMl: Math.max(0, num(input.bottleMl)),
+    boxPrice: Math.max(0, num(input.boxPrice)),
+    packagingPrice: Math.max(0, num(input.packagingPrice)),
+    otherCost: Math.max(0, num(input.otherCost)),
+    sellingPrice: Math.max(0, num(input.sellingPrice)),
+    // Accept 10 or 0.1 for 10%.
+    commissionRate: Math.min(1, Math.max(0, rate > 1 ? rate / 100 : rate)),
+  };
+}
+
+/** The owner's spreadsheet as uploaded on 13 Oct 2026 (values unchanged). */
+export const DEFAULT_SUPPLIER_TOTAL = 151500;
+
+const r = (realName: string, khayalName: string, makerQtyMl: number, makerPrice: number): CostRow => ({
+  realName,
+  khayalName,
+  makerQtyMl,
+  makerPrice,
+  bottleMl: 50,
+  boxPrice: 0,
+  packagingPrice: 0,
+  otherCost: 0,
+  sellingPrice: 0,
+  commissionRate: 0,
+});
+
+export const DEFAULT_COST_ROWS: CostRow[] = [
+  r("Jack", "LEGEND NOIR", 1000, 21500),
+  r("Office for Men", "THE GENTLEMAN", 1000, 22500),
+  r("Charlie", "CHERIE", 500, 8700),
+  r("Gucci Flora", "BLOOM", 500, 9300),
+  r("Azzaro Wanted", "VICTOR", 1000, 17500),
+  r("Dunhill Desire", "JUNOON", 1000, 15800),
+  r("Hugo Boss Dark Blue", "NIGHTFALL", 500, 9200),
+  r("White Oud", "OUD MUSK", 1000, 17000),
+  r("Dior Sauvage", "SAUVAGE DIOR", 500, 10000),
+  r("Bleu de Chanel", "BLEU NOIR", 500, 10000),
+  r("Versace Bright Crystal", "CRYSTAL NOOR", 500, 10000),
+];

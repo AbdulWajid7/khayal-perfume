@@ -18,6 +18,7 @@ const navGroups = [
       { label: "Orders", href: "/admin/orders" },
       { label: "Cart Recovery", href: "/admin/recovery" },
       { label: "Payment Settings", href: "/admin/payments" },
+      { label: "Cost & Profit", href: "/admin/costs" },
       { label: "WhatsApp Assistant", href: "/admin/whatsapp" },
     ],
   },
