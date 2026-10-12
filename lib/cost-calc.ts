@@ -112,7 +112,25 @@ export function sanitizeRow(input: Partial<Record<keyof CostRow, unknown>>): Cos
   };
 }
 
-/** The owner's spreadsheet as uploaded on 13 Oct 2026 (values unchanged). */
+/**
+ * Launch price list (13 Oct 2026), set against the Pakistan market: THE NOTE. extrait from
+ * Rs 1,799, Sesky Rs 2,000-5,800 with a free tester, J. 50 ml EDP Rs 2,900-3,500.
+ * Signature scents carry the photos, films and the highest oil cost.
+ */
+export const SIGNATURE_PRICE = 3999;
+export const STANDARD_PRICE = 3499;
+export const SIGNATURE_NAMES = ["THE GENTLEMAN", "SILK ROYALE", "OUD MUSK"];
+
+export function launchPrice(khayalName: string): number {
+  return SIGNATURE_NAMES.includes(khayalName.trim().toUpperCase()) ? SIGNATURE_PRICE : STANDARD_PRICE;
+}
+
+/** Per-bottle costs the owner gave on 13 Oct 2026 (same for every fragrance). */
+export const DEFAULT_BOX_PRICE = 400;
+export const DEFAULT_PACKAGING_PRICE = 150;
+export const DEFAULT_OTHER_COST = 220;
+
+/** The owner's spreadsheet as uploaded on 13 Oct 2026, with the costs and prices above. */
 export const DEFAULT_SUPPLIER_TOTAL = 151500;
 
 const r = (realName: string, khayalName: string, makerQtyMl: number, makerPrice: number): CostRow => ({
@@ -121,10 +139,10 @@ const r = (realName: string, khayalName: string, makerQtyMl: number, makerPrice:
   makerQtyMl,
   makerPrice,
   bottleMl: 50,
-  boxPrice: 0,
-  packagingPrice: 0,
-  otherCost: 0,
-  sellingPrice: 0,
+  boxPrice: DEFAULT_BOX_PRICE,
+  packagingPrice: DEFAULT_PACKAGING_PRICE,
+  otherCost: DEFAULT_OTHER_COST,
+  sellingPrice: launchPrice(khayalName),
   commissionRate: 0,
 });
 

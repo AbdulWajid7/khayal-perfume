@@ -82,11 +82,17 @@ elevate), cures/therapy/aphrodisiac/pheromones, "stop scrolling", "tag someone".
 
 - Other brands, designer comparisons, "smells like X". Internally we know the references;
   publicly they do not exist.
-- Prices until confirmed in admin (as of 12 Oct, 8 scents are unpriced). Write
-  `{{price}}` and flag it.
+- Prices other than the list below, and any discount the owner has not announced.
 - Customer quotes, counts, reviews, "sold out", "bestseller" unless real and consented.
 - AI-generated people presented as real customers. No fake UGC.
 - Politics, religion debates, celebrities.
+
+## Prices (set 13 Oct 2026, 50 ml extrait)
+
+- THE GENTLEMAN, SILK ROYALE, OUD MUSK: **Rs 3,999**
+- DASTAAN, SAMANDAR, VICTOR, DARK ICE, JAZBA, CHERIE, BAHAAR, CRYSTAL NOOR: **Rs 3,499**
+- Live on the site once the owner runs Admin > Manage Products > Import KHAYAL catalog.
+  Always check the live price before quoting. No fake "was" prices.
 
 ## Proof we can use (real only)
 

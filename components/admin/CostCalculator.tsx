@@ -5,6 +5,12 @@ import { saveCostSheet } from "@/lib/admin/costs";
 import {
   computeRow,
   computeTotals,
+  DEFAULT_BOX_PRICE,
+  DEFAULT_OTHER_COST,
+  DEFAULT_PACKAGING_PRICE,
+  launchPrice,
+  SIGNATURE_PRICE,
+  STANDARD_PRICE,
   supplierSummary,
   type CostRow,
 } from "@/lib/cost-calc";
@@ -64,6 +70,11 @@ export default function CostCalculator({
   const [rows, setRows] = useState<CostRow[]>(initialRows);
   const [stated, setStated] = useState<number>(initialStatedTotal);
   const [dirty, setDirty] = useState(false);
+  const [bulk, setBulk] = useState({
+    boxPrice: DEFAULT_BOX_PRICE,
+    packagingPrice: DEFAULT_PACKAGING_PRICE,
+    otherCost: DEFAULT_OTHER_COST,
+  });
   const [state, formAction, saving] = useActionState(saveCostSheet, null);
 
   const results = useMemo(() => rows.map(computeRow), [rows]);
@@ -165,6 +176,55 @@ export default function CostCalculator({
               {supplier.difference === 0 ? " · matches" : ""}
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Fill every row at once */}
+      <div className="bg-pure border border-border rounded-2xl p-6 shadow-sm">
+        <h2 className="font-serif-display text-xl text-ink mb-1">Fill all fragrances at once</h2>
+        <p className="text-sm text-stone mb-4">
+          Same box, packaging and other cost for every bottle, or the launch price list
+          (signatures Rs {SIGNATURE_PRICE.toLocaleString("en-PK")}, others Rs {STANDARD_PRICE.toLocaleString("en-PK")}).
+          Then press Save.
+        </p>
+        <div className="flex flex-wrap items-end gap-3">
+          {([
+            ["boxPrice", "Box (PKR)"],
+            ["packagingPrice", "Packaging (PKR)"],
+            ["otherCost", "Other (PKR)"],
+          ] as const).map(([key, label]) => (
+            <label key={key} className="text-xs text-stone">
+              {label}
+              <input
+                type="number"
+                min={0}
+                step="any"
+                className={`${inputCls} mt-1 max-w-[130px]`}
+                value={bulk[key]}
+                onChange={(e) => setBulk((b) => ({ ...b, [key]: Number(e.target.value) || 0 }))}
+              />
+            </label>
+          ))}
+          <button
+            type="button"
+            onClick={() => {
+              setDirty(true);
+              setRows((p) => p.map((r) => ({ ...r, ...bulk })));
+            }}
+            className="border border-border text-ink rounded-lg px-4 py-2 text-sm hover:bg-cream transition-colors"
+          >
+            Apply costs to all
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setDirty(true);
+              setRows((p) => p.map((r) => ({ ...r, sellingPrice: launchPrice(r.khayalName) })));
+            }}
+            className="border border-border text-ink rounded-lg px-4 py-2 text-sm hover:bg-cream transition-colors"
+          >
+            Apply launch prices
+          </button>
         </div>
       </div>
 

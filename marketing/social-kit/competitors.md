@@ -19,6 +19,14 @@ pages on 12 Oct 2026; prices change, so re-check before using them in a decision
 | **Saeed Ghani, Rawaha** | Attars, oud, oils | Wide | | Heritage, oud credibility. |
 | **Lattafa, other Arabic houses** | Big-bottle Arabic perfumes | Mid | | Strong on TikTok; oud/vanilla trend. |
 
+## Price check (13 Oct 2026)
+
+- THE NOTE.: extrait from Rs 1,799. Sesky: Rs 2,000-5,800 by size, free tester, free
+  delivery over Rs 3,000-3,999. J.: 50 ml EDP Rs 2,900-3,500, 100 ml Rs 4,500-7,700.
+  Colish: 100 ml extraits Rs 25,000. Starting prices: Khaadi 900, WB 805, Gul Ahmed 1,490,
+  Rivaj 2,100, Cambridge 3,995, Amir Adnan 5,000.
+- KHAYAL set at Rs 3,499 (Rs 3,999 signatures): level with J.'s 50 ml EDP, but extrait.
+
 ## What it means for KHAYAL
 
 1. **Price:** our 50 ml extrait will be compared with THE NOTE. at about Rs 1,700 and

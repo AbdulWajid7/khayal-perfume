@@ -17,9 +17,18 @@ describe("cost and profit calculator", () => {
     const totals = computeTotals(rows);
     expect(totals.makerPrice).toBe(151500);
     expect(totals.fragranceCostPerBottle).toBeCloseTo(10435);
-    expect(totals.profitAfterCommission).toBeCloseTo(-10435);
-    expect(totals.profitMargin).toBe(0);
+    expect(totals.totalCostBeforeCommission).toBeCloseTo(10435 + 11 * 770);
     expect(supplierSummary(DEFAULT_COST_ROWS, DEFAULT_SUPPLIER_TOTAL)).toEqual({ itemized: 151500, stated: 151500, difference: 0 });
+  });
+
+  it("prices signatures at Rs 3,999 and the rest at Rs 3,499, all profitable", () => {
+    const rows = DEFAULT_COST_ROWS.map(computeRow);
+    const gentleman = rows.find((r) => r.khayalName === "THE GENTLEMAN")!;
+    expect(gentleman.sellingPrice).toBe(3999);
+    expect(gentleman.totalCostBeforeCommission).toBe(1895);
+    expect(gentleman.profitAfterCommission).toBe(2104);
+    expect(rows.find((r) => r.khayalName === "VICTOR")!.profitAfterCommission).toBe(3499 - 1645);
+    for (const r of rows) expect(r.profitMargin).toBeGreaterThan(0.45);
   });
 
   it("works out profit with a price, packaging and commission", () => {
