@@ -1,8 +1,8 @@
 ---
 name: kh-plan
 description: >-
-  Plan KHAYAL's week across Instagram, Facebook, TikTok, Threads, Google
-  Business Profile and WhatsApp status: what to post, which format, when, and
+  Plan KHAYAL's week across Instagram, Facebook, TikTok, Threads, Pinterest,
+  Google Business Profile and WhatsApp status: what to post, which format, when, and
   which accounts to engage with, then load the approved posts into Metricool
   as drafts. Use for "plan the week", "content calendar", "what should we post",
   "schedule these", "put this in Metricool", or on Mondays.
@@ -14,6 +14,9 @@ The week, decided once, so each day is just making the thing.
 
 ## Read first
 
+0. Run `kh-research` for the week: competitors (`competitors.md`), trends
+   (`swipe.md`), search demand and seasonal moments. Every slot in the plan
+   names the evidence it is based on.
 1. `marketing/social-kit/voice.md`: dates (Terrace Sat 17-Sun 18 Oct, launch
    Tue 20 Oct), offers, what is unconfirmed.
 2. `marketing/social-kit/log.md` and `swipe.md`: what ran, what is working.
@@ -30,6 +33,7 @@ The week, decided once, so each day is just making the thing.
 | Single photo with a strong caption | 1 | Instagram + Facebook |
 | Threads posts (opinions, questions, behind the scenes) | 4-5 | Threads |
 | Google Business update (`kh-gbp`) | 1 | GBP |
+| Pins (`kh-pin`) | 5-10 | Pinterest |
 | Stories / WhatsApp status (`kh-story`) | daily | IG, FB, WhatsApp |
 | Engagement block (`kh-engage`) | 20 min daily | IG, TikTok, Threads |
 

@@ -31,6 +31,27 @@ const socialLinks = [
       </svg>
     ),
   },
+  {
+    label: "Pinterest",
+    href: siteConfig.social.pinterest,
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M11 8.5c2.6-.6 4.7.9 4.4 3.2-.3 2.2-2.1 3.2-3.4 2.6-.8-.4-1-1.2-.9-1.9" />
+        <path d="M11.6 11 10 20" />
+      </svg>
+    ),
+  },
+  {
+    label: "Threads",
+    href: siteConfig.social.threads,
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+        <path d="M16.5 11.2c-.4-2.3-2-3.6-4.3-3.6-2.6 0-4.2 1.8-4.2 4.4 0 2.8 1.7 4.6 4.3 4.6 2 0 3.5-1.1 3.5-2.8 0-1.9-1.9-2.7-4-2.4-1.5.2-2.3 1-2.2 2 .1 1 1 1.6 2.2 1.5 1.9-.1 2.8-1.6 2.8-4" />
+        <path d="M19 12c0 4.4-2.8 7-7 7s-7-2.6-7-7 2.8-7 7-7c3.1 0 5.4 1.4 6.4 4" />
+      </svg>
+    ),
+  },
 ];
 
 export default function SocialIcons({ className = "" }: { className?: string }) {

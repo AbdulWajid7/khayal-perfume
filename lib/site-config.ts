@@ -13,8 +13,11 @@ export const siteConfig = {
   },
   social: {
     instagram: "https://www.instagram.com/khayalfragranceofficial/",
-    facebook: "https://www.facebook.com/share/1Kmv75SYta/",
-    tiktok: "https://www.tiktok.com/@khayal..parfum",
+    facebook: "https://www.facebook.com/1244547532083670",
+    tiktok: "https://www.tiktok.com/@khayalfregnance",
+    pinterest: "https://www.pinterest.com/khayalfregnance/",
+    // Threads usernames always match the Instagram username.
+    threads: "https://www.threads.com/@khayalfragranceofficial",
   },
   business: {
     name: "Khayal Fragrance",

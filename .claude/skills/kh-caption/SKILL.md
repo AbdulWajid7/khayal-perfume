@@ -26,6 +26,9 @@ behaves differently, update that file.
 
 ## Before writing
 
+0. **Research first.** Run `kh-research` (or reuse its brief if one exists for this
+   piece today). No brief, no draft.
+
 Read `marketing/social-kit/voice.md`. Know the scent, the occasion, the one ask
 and which facts are still unconfirmed (prices, tester size, offers).
 

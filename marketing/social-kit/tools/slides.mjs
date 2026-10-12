@@ -10,7 +10,7 @@
  * deck.json
  *   {
  *     "name": "silk-notes",              // file prefix
- *     "format": "carousel",              // carousel 1080x1350 | story 1080x1920 | square 1080x1080
+ *     "format": "carousel",              // carousel 1080x1350 | story 1080x1920 | square 1080x1080 | pin 1000x1500
  *     "theme": "silk",                   // gentleman | silk | oud | cream | ink
  *     "out": "../out/silk-notes",        // optional, relative to the JSON file
  *     "slides": [
@@ -35,7 +35,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ASSETS = path.join(HERE, "..", "assets");
 
-const SIZES = { carousel: [1080, 1350], story: [1080, 1920], square: [1080, 1080] };
+const SIZES = { carousel: [1080, 1350], story: [1080, 1920], square: [1080, 1080], pin: [1000, 1500] };
 const THEMES = {
   gentleman: { bg: "#0B0F17", ink: "#FAF9F7", accent: "#BFD3E6", mark: "mark-gold.png" },
   silk: { bg: "#1E1611", ink: "#FAF9F7", accent: "#E8D5A8", mark: "mark-gold.png" },

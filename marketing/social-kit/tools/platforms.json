@@ -64,5 +64,14 @@
     "hashtag_ideal": "1 to 3 in the description",
     "links_clickable": false,
     "notes": "Title does the search work. Keep the keyword in the first 40 characters."
+  },
+  "pinterest": {
+    "label": "Pinterest pin description",
+    "limit": 500,
+    "truncate": 60,
+    "hashtag_max": 0,
+    "hashtag_ideal": "none; Pinterest is search, use keywords in title and description",
+    "links_clickable": true,
+    "notes": "Title up to 100 characters with the search keyword first. Description 500 characters, plain keywords (perfume gift for wife, wedding perfume Pakistan). 2:3 image (1000x1500), real product photo, text overlay of 3-6 words. Every pin links to the matching product or journal page. Pins keep getting traffic for months."
   }
 }

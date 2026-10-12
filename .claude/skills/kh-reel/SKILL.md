@@ -26,6 +26,9 @@ python3 marketing/social-kit/tools/humanize.py script.txt --report  # strip mach
 
 ## Before writing
 
+0. **Research first.** Run `kh-research` (or reuse its brief if one exists for this
+   piece today). No brief, no draft.
+
 1. Read `marketing/social-kit/voice.md`: the scents and their notes, words we
    never use, dates, what is still unconfirmed.
 2. Read `marketing/social-kit/tools/hooks.json`. Formulas 27-34 were written

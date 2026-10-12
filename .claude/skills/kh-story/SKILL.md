@@ -19,6 +19,9 @@ node marketing/social-kit/tools/slides.mjs story.json   # with "format": "story"
 
 ## Before writing
 
+0. **Research first.** Run `kh-research` (or reuse its brief if one exists for this
+   piece today). No brief, no draft.
+
 Read `marketing/social-kit/voice.md` (dates, offers, the ask).
 
 ## A daily sequence (3-6 frames)

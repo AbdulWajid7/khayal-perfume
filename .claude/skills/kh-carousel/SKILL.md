@@ -22,6 +22,9 @@ if Chrome is not found.)
 
 ## Before writing
 
+0. **Research first.** Run `kh-research` (or reuse its brief if one exists for this
+   piece today). No brief, no draft.
+
 Read `marketing/social-kit/voice.md` (notes per scent, rules, dates).
 
 ## The shape (5-8 slides)

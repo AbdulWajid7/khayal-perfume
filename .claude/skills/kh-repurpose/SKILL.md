@@ -13,6 +13,10 @@ description: >-
 One good asset should feed a week. Each cut must work for someone who never
 saw the original.
 
+## Research first
+
+Run `kh-research` before making anything; no brief, no draft.
+
 ## Input
 
 The asset (video file, link, article, photos) and what is true about it
