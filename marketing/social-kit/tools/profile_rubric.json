@@ -1,0 +1,218 @@
+{
+  "_note": "Profile score out of 100 per platform, used by kh-profile. Score each item 0, half or full points from what is actually on the profile (screenshots or the live page), never from memory. Fix in the order of points lost.",
+  "instagram": [
+    {
+      "item": "Name field",
+      "points": 10,
+      "full": "Name field carries the search term: 'KHAYAL | Perfume Karachi' style. The name field is searchable; the bio is not."
+    },
+    {
+      "item": "Handle",
+      "points": 5,
+      "full": "Spelled the way people will type it; matches the other platforms."
+    },
+    {
+      "item": "Profile photo",
+      "points": 5,
+      "full": "The gold خیال mark, centred, readable at 40px."
+    },
+    {
+      "item": "Bio line 1",
+      "points": 15,
+      "full": "Says what it is and for whom in under 60 characters: extraits de parfum, made in Karachi, 38% oil."
+    },
+    {
+      "item": "Bio proof",
+      "points": 10,
+      "full": "One checkable reason: free tester with every order, cash on delivery."
+    },
+    {
+      "item": "One link",
+      "points": 10,
+      "full": "khayalparfum.com or the scent finder; works on mobile; no link-tree maze."
+    },
+    {
+      "item": "Contact buttons",
+      "points": 5,
+      "full": "WhatsApp and call buttons set; category 'Health/beauty' or 'Perfume'."
+    },
+    {
+      "item": "Highlights",
+      "points": 10,
+      "full": "4-6 highlights with branded covers: Scents, How to order, Testers, Reviews (real), Events, FAQ."
+    },
+    {
+      "item": "Pinned posts",
+      "points": 10,
+      "full": "3 pinned: the collection, how ordering works, the best-performing reel."
+    },
+    {
+      "item": "First 9 grid",
+      "points": 10,
+      "full": "Real product photography and faces/hands; consistent colour; at least 3 Reels."
+    },
+    {
+      "item": "Consistency",
+      "points": 5,
+      "full": "Posted in the last 7 days; at least 3 posts a week."
+    },
+    {
+      "item": "Location",
+      "points": 5,
+      "full": "Karachi on the profile; posts tagged with real Karachi locations."
+    }
+  ],
+  "tiktok": [
+    {
+      "item": "Name and handle",
+      "points": 15,
+      "full": "Spelled correctly (fix khayalfregnance), includes 'perfume' in the name."
+    },
+    {
+      "item": "Bio",
+      "points": 15,
+      "full": "80 characters: what, where, the ask. Searchable words: perfume, Karachi, extrait."
+    },
+    {
+      "item": "Link",
+      "points": 10,
+      "full": "Website link (needs a business account) or the WhatsApp link."
+    },
+    {
+      "item": "Profile photo",
+      "points": 5,
+      "full": "The gold mark, readable small."
+    },
+    {
+      "item": "Pinned videos",
+      "points": 15,
+      "full": "3 pinned: the best hook video, how ordering works, the notes reveal."
+    },
+    {
+      "item": "Video covers",
+      "points": 10,
+      "full": "Covers with a readable title so the grid works as a menu."
+    },
+    {
+      "item": "Search captions",
+      "points": 15,
+      "full": "Recent captions and on-screen text use what people search: perfume for men Pakistan, long lasting perfume."
+    },
+    {
+      "item": "Consistency",
+      "points": 15,
+      "full": "4+ videos a week; posted in the last 3 days."
+    }
+  ],
+  "facebook": [
+    {
+      "item": "Page name and username",
+      "points": 10,
+      "full": "KHAYAL Perfume, username matches Instagram."
+    },
+    {
+      "item": "Category and intro",
+      "points": 15,
+      "full": "Category Perfume/Beauty; intro says extraits, Karachi, cash on delivery."
+    },
+    {
+      "item": "Action button",
+      "points": 15,
+      "full": "WhatsApp or Shop Now button, tested."
+    },
+    {
+      "item": "Contact and hours",
+      "points": 10,
+      "full": "Phone, WhatsApp, website, city; response time shown."
+    },
+    {
+      "item": "Cover",
+      "points": 10,
+      "full": "Real bottles, readable on mobile, current message."
+    },
+    {
+      "item": "Reviews/recommendations",
+      "points": 10,
+      "full": "Turned on; replied to."
+    },
+    {
+      "item": "Pinned post",
+      "points": 10,
+      "full": "Current offer or how to order."
+    },
+    {
+      "item": "Activity",
+      "points": 20,
+      "full": "Posted in the last 7 days; Reels cross-posted; comments answered within a day."
+    }
+  ],
+  "threads": [
+    {
+      "item": "Name and bio",
+      "points": 25,
+      "full": "Correct spelling (fix khayalfragnance); a human, specific bio."
+    },
+    {
+      "item": "Link",
+      "points": 10,
+      "full": "Website link."
+    },
+    {
+      "item": "Voice",
+      "points": 30,
+      "full": "Recent posts read like a person: opinions, questions, behind the scenes, not ads."
+    },
+    {
+      "item": "Replies",
+      "points": 20,
+      "full": "Replying to others in fragrance and Karachi conversations daily."
+    },
+    {
+      "item": "Consistency",
+      "points": 15,
+      "full": "Posting most days."
+    }
+  ],
+  "gbp": [
+    {
+      "item": "Name",
+      "points": 10,
+      "full": "Real business name only (KHAYAL); no keyword stuffing, which risks suspension."
+    },
+    {
+      "item": "Categories",
+      "points": 15,
+      "full": "Primary 'Perfume store' (or closest); relevant secondaries."
+    },
+    {
+      "item": "Description",
+      "points": 10,
+      "full": "750 characters: extraits, 38% oil, made in Karachi, delivery across Pakistan. No phone or links."
+    },
+    {
+      "item": "Contact and links",
+      "points": 10,
+      "full": "Phone, website, WhatsApp; service area Karachi and Pakistan; hours."
+    },
+    {
+      "item": "Photos",
+      "points": 15,
+      "full": "Logo, cover, 10+ real product and packaging photos; new photos monthly."
+    },
+    {
+      "item": "Products",
+      "points": 10,
+      "full": "All live scents added with photo, description and link."
+    },
+    {
+      "item": "Reviews",
+      "points": 20,
+      "full": "Asking every customer (WhatsApp review template); every review answered within 48 hours."
+    },
+    {
+      "item": "Updates",
+      "points": 10,
+      "full": "A post every week; events (Terrace weekend) added as Event posts."
+    }
+  ]
+}

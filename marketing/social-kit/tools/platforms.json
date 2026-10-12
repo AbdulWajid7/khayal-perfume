@@ -1,0 +1,68 @@
+{
+  "_note": "Platform limits used by caption.py and the kh-* skills. Platforms change these. When something here disagrees with what the app does today, the app is right: update this file and the date. 'verify' marks a number taken from third-party guides rather than the platform's own help pages.",
+  "updated": "2026-10-12",
+  "instagram": {
+    "label": "Instagram post / Reel caption",
+    "limit": 2200,
+    "truncate": 125,
+    "hashtag_max": 5,
+    "hashtag_ideal": "3 to 5 specific tags, below the fold",
+    "links_clickable": false,
+    "notes": "Hashtag cap cut from 30 to 5 on 18 Dec 2025. Links in captions are dead; use the bio link or a DM keyword."
+  },
+  "facebook": {
+    "label": "Facebook page post / Reel",
+    "limit": 63206,
+    "truncate": 125,
+    "hashtag_max": 3,
+    "hashtag_ideal": "0 to 3; Facebook barely uses them",
+    "links_clickable": true,
+    "notes": "Feed shows roughly the first 2-3 lines before 'See more' (verify). Links work, but posts with links usually reach fewer people than native photos and Reels."
+  },
+  "tiktok": {
+    "label": "TikTok caption",
+    "limit": 4000,
+    "truncate": 90,
+    "hashtag_max": 5,
+    "hashtag_ideal": "3 to 5 searchable tags",
+    "links_clickable": false,
+    "notes": "About 80-100 characters show before 'more' (verify). TikTok is a search engine for under-30s: put the words people would type in the caption and say them in the video."
+  },
+  "threads": {
+    "label": "Threads post",
+    "limit": 500,
+    "truncate": 500,
+    "hashtag_max": 1,
+    "hashtag_ideal": "one topic tag per post",
+    "links_clickable": true,
+    "notes": "500 characters per post; one topic tag per post (verify). Conversation first: a question or an opinion travels, an ad does not."
+  },
+  "gbp": {
+    "label": "Google Business Profile update",
+    "limit": 1500,
+    "truncate": 100,
+    "hashtag_max": 0,
+    "hashtag_ideal": "none",
+    "links_clickable": true,
+    "no_phone_numbers": true,
+    "notes": "Phone numbers in the text or image get posts rejected; use the Call button. Write for local search: Karachi, North Nazimabad, perfume, extrait de parfum. Add a button (Order online / Learn more)."
+  },
+  "whatsapp_status": {
+    "label": "WhatsApp status caption",
+    "limit": 700,
+    "truncate": 120,
+    "hashtag_max": 0,
+    "hashtag_ideal": "none",
+    "links_clickable": true,
+    "notes": "Seen only by people who saved the number. Short, personal, one link or 'reply to this status'. (Caption limit verify.)"
+  },
+  "youtube_shorts": {
+    "label": "YouTube Shorts title",
+    "limit": 100,
+    "truncate": 60,
+    "hashtag_max": 3,
+    "hashtag_ideal": "1 to 3 in the description",
+    "links_clickable": false,
+    "notes": "Title does the search work. Keep the keyword in the first 40 characters."
+  }
+}
