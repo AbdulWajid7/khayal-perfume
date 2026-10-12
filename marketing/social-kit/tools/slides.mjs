@@ -74,7 +74,7 @@ i,em{color:${t.accent}}
 function slideHtml(s, t, size, i, n, base, safeTop, safeBottom) {
   const [, h] = size;
   const top = `<div class="word" style="top:${safeTop}px">KHAYAL</div>`;
-  const page = n > 1 && s.type !== "cta" ? `<div class="page" style="bottom:${h - safeBottom + 10}px">${i + 1} / ${n}</div>` : "";
+  const page = n > 1 && s.type !== "cta" && s.pageNumber !== false ? `<div class="page" style="bottom:${h - safeBottom + 10}px">${i + 1} / ${n}</div>` : "";
   const img = imageUrl(s.image, base);
   if (s.type === "cover") {
     return `${img ? `<div style="position:absolute;inset:0;background:url('${img}') center/cover"></div>
@@ -82,7 +82,7 @@ function slideHtml(s, t, size, i, n, base, safeTop, safeBottom) {
       ${top}
       <div style="position:absolute;left:80px;right:80px;bottom:${h - safeBottom + 70}px">
         ${s.kicker ? `<div class="kicker">${esc(s.kicker)}</div>` : ""}
-        <div class="serif" style="font-size:${s.size || 92}px;line-height:1.02;margin-top:22px">${esc(s.title)}</div>
+        ${s.title ? `<div class="serif" style="font-size:${s.size || 92}px;line-height:1.02;margin-top:22px">${esc(s.title)}</div>` : ""}
         ${s.body ? `<div style="font-size:32px;line-height:1.45;margin-top:26px;opacity:.9">${esc(s.body)}</div>` : ""}
       </div>${page}`;
   }
@@ -150,7 +150,7 @@ async function main() {
   const page = await browser.newPage({ viewport: { width: size[0], height: size[1] } });
   const files = [];
   for (const [i, s] of deck.slides.entries()) {
-    const html = `<!doctype html><html><head><meta charset="utf-8"><style>${css(t, size)}</style></head><body>${slideHtml(s, t, size, i, deck.slides.length, base, safeTop, safeBottom)}</body></html>`;
+    const html = `<!doctype html><html><head><meta charset="utf-8"><style>${css(t, size)}</style></head><body>${slideHtml({ ...s, pageNumber: deck.format === "pin" || deck.pageNumbers === false ? false : s.pageNumber }, t, size, i, deck.slides.length, base, safeTop, safeBottom)}</body></html>`;
     const tmp = path.join(out, `.slide-${i}.html`);
     fs.writeFileSync(tmp, html);
     await page.goto(pathToFileURL(tmp).href, { waitUntil: "networkidle" });

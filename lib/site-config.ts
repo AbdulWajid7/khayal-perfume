@@ -8,7 +8,7 @@ export const siteConfig = {
   analytics: {
     ga4Id: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID || "G-FTPHVPR128",
     gtmId: process.env.NEXT_PUBLIC_GTM_ID || "GTM-MCGCTF27",
-    metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || "1799327554592941",
+    metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || "1376042894320095",
     clarityProjectId: process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID || "ykfeupmawo",
   },
   social: {
