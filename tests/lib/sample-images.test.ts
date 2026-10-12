@@ -7,9 +7,9 @@ describe("sample images", () => {
     expect(isSampleImage("https://example.com/own.jpg")).toBe(false);
   });
 
-  it("keeps sample photos only on SILK ROYALE", () => {
+  it("never shows sample photos, not even on SILK ROYALE (the label names another brand)", () => {
     const mixed = ["https://example.com/own.jpg", SAMPLE_IMAGES[1]];
-    expect(realImagesFor("silk-royale", mixed)).toEqual(mixed);
+    expect(realImagesFor("silk-royale", mixed)).toEqual(["https://example.com/own.jpg"]);
     expect(realImagesFor("dastaan", mixed)).toEqual(["https://example.com/own.jpg"]);
     expect(realImagesFor("dastaan", SAMPLE_IMAGES)).toEqual([]);
     expect(realImagesFor("dastaan", undefined)).toEqual([]);

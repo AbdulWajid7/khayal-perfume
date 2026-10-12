@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ScentPoster from "@/components/ui/ScentPoster";
 import AddToCartButton from "./AddToCartButton";
 import WishlistButton from "./WishlistButton";
 import { productToAnalyticsItem, trackCommerce } from "@/lib/analytics";
@@ -67,10 +68,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               )}
             </>
           ) : (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-cream-dark">
-              <span aria-hidden="true" className="kh-mark h-24 text-aubergine opacity-20" />
-              <span className="text-[10px] uppercase tracking-[0.3em] text-stone">Photograph coming</span>
-            </div>
+            <ScentPoster handle={product.handle} name={product.title} line={getFragranceLine(product.handle)} />
           )}
 
           {(badge || isSale) && (

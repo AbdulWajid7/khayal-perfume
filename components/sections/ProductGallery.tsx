@@ -3,13 +3,18 @@
 import { useState } from "react";
 import Image from "next/image";
 import type { ShopifyImage } from "@/types/product";
+import ScentPoster from "@/components/ui/ScentPoster";
 
 export default function ProductGallery({
   images,
   title,
+  handle,
+  line,
 }: {
   images: ShopifyImage[];
   title: string;
+  handle?: string;
+  line?: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeImage = images[activeIndex];
@@ -27,10 +32,7 @@ export default function ProductGallery({
             sizes="(max-width: 1024px) 100vw, 50vw"
           />
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-5">
-            <span aria-hidden="true" className="kh-mark h-40 text-aubergine opacity-20" />
-            <span className="text-[11px] uppercase tracking-[0.3em] text-stone">Photograph coming</span>
-          </div>
+          <ScentPoster handle={handle || ""} name={title} line={line} size="hero" />
         )}
       </div>
 

@@ -149,7 +149,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <FAQSchema items={faqItems} />
 
         <div className="grid grid-cols-1 gap-12 pb-20 lg:grid-cols-[1.15fr_1fr] lg:gap-20 md:pb-28">
-          <ProductGallery images={images} title={product.title} />
+          <ProductGallery images={images} title={product.title} handle={product.handle} line={line} />
 
           <div className="flex flex-col gap-6 lg:sticky lg:top-32 lg:self-start">
             <p className="eyebrow">

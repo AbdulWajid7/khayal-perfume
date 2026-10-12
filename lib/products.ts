@@ -1,6 +1,7 @@
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Product, type IProduct } from "@/models/Product";
-import { SAMPLE_IMAGES, SAMPLE_IMAGES_HANDLE, realImagesFor } from "@/lib/sample-images";
+import { realImagesFor } from "@/lib/sample-images";
+import { SIGNATURE_PHOTOS } from "@/lib/scent-moods";
 import type { Product as ProductType, ProductDetails, ShopifyImage, ProductVariant, ProductMetafield } from "@/types/product";
 
 const currency = "PKR";
@@ -60,18 +61,11 @@ function deriveMetafields(doc: IProduct): ProductMetafield[] {
 
 function mapIProductToProduct(doc: IProduct): ProductType {
   const ownImages = realImagesFor(doc.handle, doc.images);
-  const isSilkRoyale = doc.handle === SAMPLE_IMAGES_HANDLE;
-  const usesSamples = ownImages.length === 0 && !isSilkRoyale;
-  const imageUrls = isSilkRoyale
-    ? [...ownImages, ...SAMPLE_IMAGES.filter((u) => !ownImages.includes(u))]
-    : usesSamples
-      ? SAMPLE_IMAGES
-      : ownImages;
-  const images: ShopifyImage[] = imageUrls.map((url, i) =>
-    usesSamples
-      ? { url, altText: i === 0 ? `KHAYAL ${doc.title}: sample bottle photo, final photography coming soon` : `KHAYAL sample bottle photo ${i + 1}` }
-      : mapImage(url, i, doc),
-  );
+  // No photos yet: the three signatures fall back to their real bottle photo; the rest
+  // show a scent poster (no image) rather than a photo of another bottle.
+  const imageUrls = ownImages.length ? ownImages : SIGNATURE_PHOTOS[doc.handle] ? [SIGNATURE_PHOTOS[doc.handle]] : [];
+  const usesSamples = false;
+  const images: ShopifyImage[] = imageUrls.map((url, i) => mapImage(url, i, doc));
   const featuredImage: ShopifyImage | null = images[0] || null;
   const variants = mapVariants(doc.variants || [], doc);
 

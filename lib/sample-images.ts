@@ -1,7 +1,7 @@
 /**
- * Temporary sample photos (all show the SILK ROYALE bottle). Products with no photos of
- * their own display these until real photography is ready. They are never sent to Google
- * (structured data, the Merchant feed) or used for link previews on other products.
+ * Old sample photos (a SILK ROYALE bottle whose label shows "Eau de Parfum" and another
+ * brand's name). Never displayed: products without photography show their real signature
+ * photo or a scent poster instead. Kept only so saved copies in the database are filtered.
  */
 export const SAMPLE_IMAGES = [
   "https://maiaai-media.s3.us-east-1.amazonaws.com/blogs/exec-46a4467d-2463-441f-a3b8-39421d962911.png",
@@ -17,8 +17,10 @@ export function isSampleImage(url: string): boolean {
   return SAMPLE_IMAGES.includes(url);
 }
 
-/** A product's own photos, excluding sample photos that show a different fragrance. */
-export function realImagesFor(handle: string, images: string[] = []): string[] {
-  const clean = images.filter(Boolean);
-  return handle === SAMPLE_IMAGES_HANDLE ? clean : clean.filter((u) => !isSampleImage(u));
+/**
+ * A product's own photos, with every sample photo removed. The sample bottle's label
+ * shows "Eau de Parfum" and another brand's name, so it is never shown anywhere.
+ */
+export function realImagesFor(_handle: string, images: string[] = []): string[] {
+  return images.filter(Boolean).filter((u) => !isSampleImage(u));
 }

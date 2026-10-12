@@ -422,3 +422,109 @@ body {
   .kh-cap[data-active="true"] { opacity: 1; }
   .kh-marquee { animation: none; }
 }
+
+/* ---------- Cinematic scent posters and collection (Oct 2026) ---------- */
+.kh-poster-glow {
+  position: absolute;
+  width: 90%;
+  aspect-ratio: 1;
+  left: 5%;
+  top: 30%;
+  border-radius: 9999px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 34%, transparent) 0%, transparent 62%);
+  filter: blur(18px);
+  animation: kh-glow-drift 11s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+.kh-poster-glow--2 {
+  width: 70%;
+  left: 30%;
+  top: 4%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--mid) 70%, transparent) 0%, transparent 65%);
+  animation-duration: 15s;
+  animation-direction: reverse;
+}
+@keyframes kh-glow-drift {
+  0%, 100% { transform: translate3d(-6%, 4%, 0) scale(1); opacity: 0.75; }
+  50% { transform: translate3d(7%, -6%, 0) scale(1.15); opacity: 1; }
+}
+.kh-mote {
+  opacity: 0;
+  letter-spacing: 0.06em;
+  animation: kh-mote-rise 9s ease-in-out infinite;
+  white-space: nowrap;
+}
+@keyframes kh-mote-rise {
+  0% { opacity: 0; transform: translate3d(0, 18px, 0); filter: blur(4px); }
+  25%, 60% { opacity: 0.55; filter: blur(0); }
+  100% { opacity: 0; transform: translate3d(8px, -26px, 0); filter: blur(3px); }
+}
+
+.kh-stage {
+  position: relative;
+  isolation: isolate;
+  background: #0d080c;
+  color: #f4ede2;
+}
+.kh-stage-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(60% 55% at var(--gx, 50%) var(--gy, 40%), color-mix(in srgb, var(--stage, #5a2a4c) 55%, transparent), transparent 70%);
+  transition: background 0.9s ease;
+}
+.kh-stage-grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.kh-card {
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.7s;
+  transform-style: preserve-3d;
+}
+.kh-card:hover,
+.kh-card:focus-visible {
+  transform: translateY(-10px);
+  box-shadow: 0 30px 70px -30px var(--card-accent, rgba(191, 161, 95, 0.5));
+}
+.kh-card .kh-card-media img {
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1), filter 1.2s;
+  filter: saturate(0.92) brightness(0.92);
+}
+.kh-card:hover .kh-card-media img,
+.kh-card:focus-visible .kh-card-media img {
+  transform: scale(1.07);
+  filter: saturate(1.05) brightness(1);
+}
+.kh-card-notes {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.kh-card:hover .kh-card-notes,
+.kh-card:focus-visible .kh-card-notes {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: none) {
+  .kh-card-notes { opacity: 1; transform: none; }
+}
+.kh-card-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.14) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 1.1s ease;
+}
+.kh-card:hover .kh-card-sheen { transform: translateX(120%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .kh-poster-glow, .kh-mote { animation: none; }
+  .kh-mote { opacity: 0.4; }
+  .kh-card, .kh-card .kh-card-media img, .kh-card-sheen { transition: none; }
+}
