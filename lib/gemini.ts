@@ -13,7 +13,40 @@ export const DEFAULT_GEMINI_MODEL = "gemini-flash-latest";
 export const DEFAULT_GEMINI_CHAT_MODEL = "gemini-flash-lite-latest";
 /** "Nano Banana" image model. */
 export const DEFAULT_GEMINI_IMAGE_MODEL = "gemini-2.5-flash-image";
+/** Used when the main model is unavailable (not found, quota, overloaded). */
+export const FALLBACK_GEMINI_MODEL = "gemini-2.5-flash";
 const ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models";
+
+let lastError: string | null = null;
+
+/** Why the most recent Gemini call returned null, in plain words (for admin run logs). */
+export function geminiLastError(): string | null {
+  return lastError;
+}
+
+/** Turns a Gemini HTTP error body into a short readable reason. */
+export function describeGeminiError(status: number, body: string): string {
+  let message = "";
+  try {
+    message = (JSON.parse(body) as { error?: { message?: string } }).error?.message || "";
+  } catch {
+    message = body;
+  }
+  message = message.replace(/\s+/g, " ").trim().slice(0, 180);
+  const hint =
+    status === 400 && /api key/i.test(message)
+      ? "the GEMINI_API_KEY in Vercel is not valid"
+      : status === 403
+        ? "the API key is not allowed to use Gemini (check the key's project in AI Studio)"
+        : status === 404
+          ? "the model name is not available to this key"
+          : status === 429
+            ? "Gemini free-tier quota reached, try again later"
+            : status >= 500
+              ? "Gemini is temporarily unavailable"
+              : "";
+  return `Gemini ${status}${hint ? `: ${hint}` : ""}${message ? ` (${message})` : ""}`;
+}
 
 export function geminiConfigured(): boolean {
   return Boolean(process.env.GEMINI_API_KEY);
@@ -53,10 +86,15 @@ interface GenerateOptions {
 /** Returns the model's text, or null when Gemini is not configured, times out or errors. */
 export async function geminiGenerate(options: GenerateOptions): Promise<string | null> {
   const key = process.env.GEMINI_API_KEY;
-  if (!key) return null;
+  lastError = null;
+  if (!key) {
+    lastError = "GEMINI_API_KEY is not set";
+    return null;
+  }
 
+  const timeoutMs = options.timeoutMs ?? 8000;
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), options.timeoutMs ?? 8000);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const res = await fetch(`${ENDPOINT}/${encodeURIComponent(options.model || geminiModel())}:generateContent`, {
       method: "POST",
@@ -76,16 +114,25 @@ export async function geminiGenerate(options: GenerateOptions): Promise<string |
       }),
     });
     if (!res.ok) {
-      console.error("Gemini error:", res.status, (await res.text()).slice(0, 300));
+      const body = await res.text();
+      lastError = describeGeminiError(res.status, body);
+      console.error("Gemini error:", res.status, body.slice(0, 300));
       return null;
     }
     const data = (await res.json()) as {
-      candidates?: { content?: { parts?: { text?: string }[] } }[];
+      candidates?: { content?: { parts?: { text?: string; thought?: boolean }[] }; finishReason?: string }[];
+      promptFeedback?: { blockReason?: string };
     };
-    const text = data.candidates?.[0]?.content?.parts?.map((p) => p.text || "").join("") || "";
+    const candidate = data.candidates?.[0];
+    const text = candidate?.content?.parts?.filter((p) => !p.thought).map((p) => p.text || "").join("") || "";
+    if (candidate?.finishReason === "MAX_TOKENS") lastError = "Gemini stopped early: the reply was longer than the token limit";
+    else if (!text.trim())
+      lastError = `Gemini returned no text (${data.promptFeedback?.blockReason || candidate?.finishReason || "no candidates"})`;
     return text.trim() || null;
   } catch (error) {
-    console.error("Gemini request failed:", error instanceof Error ? error.message : error);
+    const aborted = error instanceof Error && error.name === "AbortError";
+    lastError = aborted ? `Gemini did not answer within ${Math.round(timeoutMs / 1000)}s` : `Gemini request failed (${error instanceof Error ? error.message : String(error)})`;
+    console.error("Gemini request failed:", lastError);
     return null;
   } finally {
     clearTimeout(timer);

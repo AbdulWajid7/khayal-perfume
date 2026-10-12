@@ -5,6 +5,8 @@ const runs: Record<string, unknown>[] = [];
 let settings = { enabled: true, autoPublish: true, runs: [] as Record<string, unknown>[] };
 let topicReply: string | null = null;
 let postReply: string | null = null;
+let postReplies: (string | null)[] = [];
+const models: (string | undefined)[] = [];
 let imageReply: { mimeType: string; data: Buffer } | null = null;
 const prompts: string[] = [];
 
@@ -37,9 +39,11 @@ vi.mock("@/lib/bot-assistant", () => ({
 vi.mock("@/lib/gemini", async (orig) => ({
   ...(await orig<typeof import("@/lib/gemini")>()),
   geminiConfigured: () => true,
-  geminiGenerate: vi.fn(async (o: { googleSearch?: boolean; turns: { text: string }[] }) => {
+  geminiGenerate: vi.fn(async (o: { googleSearch?: boolean; model?: string; turns: { text: string }[] }) => {
     prompts.push(o.turns[0].text);
-    return o.googleSearch ? topicReply : postReply;
+    if (o.googleSearch) return topicReply;
+    models.push(o.model);
+    return postReplies.length ? postReplies.shift()! : postReply;
   }),
   geminiImage: vi.fn(async () => imageReply),
 }));
@@ -64,6 +68,8 @@ describe("runAutopilot", () => {
     created.length = 0;
     runs.length = 0;
     prompts.length = 0;
+    models.length = 0;
+    postReplies = [];
     settings = { enabled: true, autoPublish: true, runs: [] };
     topicReply = JSON.stringify({ topic: "Winter wedding scents", focusKeyword: "wedding perfume Pakistan" });
     postReply = JSON.stringify(goodPost);
@@ -105,6 +111,21 @@ describe("runAutopilot", () => {
     topicReply = null;
     await runAutopilot("article");
     expect(prompts[1]).toContain("Focus keyword: extrait de parfum vs eau de parfum");
+  });
+
+  it("retries with the fallback model when the main model fails", async () => {
+    postReplies = [null, JSON.stringify(goodPost)];
+    const r = await runAutopilot("blog");
+    expect(r.status).toBe("published");
+    expect(models).toEqual(["gemini-flash-latest", "gemini-2.5-flash"]);
+  });
+
+  it("explains the failure when both models fail", async () => {
+    postReply = "not json";
+    const r = await runAutopilot("blog");
+    expect(r.status).toBe("failed");
+    expect(r.note).toContain("gemini-flash-latest: reply was not valid JSON");
+    expect(r.note).toContain("gemini-2.5-flash");
   });
 
   it("does not run twice in one day", async () => {

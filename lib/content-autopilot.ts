@@ -5,7 +5,15 @@ import { Post } from "@/models/Post";
 import { User } from "@/models/User";
 import { ContentAutopilot, type AutopilotKind, type IAutopilotRun, type IContentAutopilot } from "@/models/ContentAutopilot";
 import { buildStoreKnowledge, loadKnowledgeProducts } from "@/lib/bot-assistant";
-import { geminiConfigured, geminiGenerate, geminiImage, parseJsonReply } from "@/lib/gemini";
+import {
+  FALLBACK_GEMINI_MODEL,
+  geminiConfigured,
+  geminiGenerate,
+  geminiImage,
+  geminiLastError,
+  geminiModel,
+  parseJsonReply,
+} from "@/lib/gemini";
 import {
   checkQuality,
   clamp,
@@ -50,7 +58,7 @@ async function findTopic(kind: AutopilotKind, covered: string[]): Promise<Topic>
       : "an EVERGREEN, high-search-intent topic: a question Pakistani shoppers search on Google about perfume (choosing, longevity, notes, concentration, storage, gifting, budget), with a clear focus keyword a small brand can rank for.";
   const raw = await geminiGenerate({
     googleSearch: true,
-    timeoutMs: 20000,
+    timeoutMs: 40000,
     maxOutputTokens: 2048,
     system:
       "You are the SEO and content strategist for KHAYAL, a Karachi fragrance brand selling extraits de parfum online across Pakistan. " +
@@ -93,11 +101,30 @@ const POST_SCHEMA = {
 };
 
 /** Step 2: write the post from the topic and the live store knowledge. */
-async function writePost(kind: AutopilotKind, topic: Topic, knowledge: string, links: string[]): Promise<GeneratedPost | null> {
+async function writePost(
+  kind: AutopilotKind,
+  topic: Topic,
+  knowledge: string,
+  links: string[]
+): Promise<{ post: GeneratedPost | null; problem?: string }> {
+  // Try the main model, then a stable fallback model if the first one fails.
+  const models = [...new Set([geminiModel(), FALLBACK_GEMINI_MODEL])];
+  const problems: string[] = [];
+  for (const model of models) {
+    const raw = await writeWith(model, kind, topic, knowledge, links);
+    const post = parseJsonReply<GeneratedPost>(raw);
+    if (post?.contentHtml && post.title) return { post };
+    problems.push(`${model}: ${geminiLastError() || (raw ? "reply was not valid JSON" : "no reply")}`);
+  }
+  return { post: null, problem: problems.join("; ") };
+}
+
+function writeWith(model: string, kind: AutopilotKind, topic: Topic, knowledge: string, links: string[]) {
   const spec = SPEC[kind];
-  const raw = await geminiGenerate({
-    timeoutMs: 45000,
-    maxOutputTokens: 8192,
+  return geminiGenerate({
+    model,
+    timeoutMs: 100000,
+    maxOutputTokens: 24576,
     temperature: 0.7,
     responseSchema: POST_SCHEMA,
     system: `You write the KHAYAL Journal: helpful, specific fragrance writing for readers in Pakistan, in clear British English.
@@ -123,7 +150,6 @@ Pages you may link: ${links.join(", ")}`,
       },
     ],
   });
-  return parseJsonReply<GeneratedPost>(raw);
 }
 
 /** Step 3: a photographic cover image, stored on Vercel Blob. Falls back to a site image. */
@@ -187,8 +213,8 @@ export async function runAutopilot(kind: AutopilotKind, opts: { force?: boolean 
     const products = await loadKnowledgeProducts();
     const knowledge = await buildStoreKnowledge(products);
     const links = ["/scent-finder", "/faq", "/journal", ...products.filter((p) => p.orderable).map((p) => `/shop/${p.handle}`)];
-    const draft = await writePost(kind, topic, knowledge, links);
-    if (!draft?.contentHtml || !draft.title) throw new Error("The AI did not return a usable post");
+    const { post: draft, problem } = await writePost(kind, topic, knowledge, links);
+    if (!draft) throw new Error(`The AI did not return a usable post. ${problem || ""}`.trim());
 
     const post: GeneratedPost = {
       ...draft,
