@@ -48,6 +48,6 @@ export const faqItems: FaqItem[] = [
   {
     question: "How can I contact Khayal?",
     answer:
-      "Message us on WhatsApp at +92 320 2704617, email official@khayalparfum.com, or send a message on Instagram. We usually respond within 24 hours.",
+      "To choose a scent or place an order, WhatsApp our order assistant at +92 304 3190718 any time. For help with an order you have already placed, WhatsApp the team at +92 320 2704617, email official@khayalparfum.com, or message us on Instagram. We usually respond within 24 hours.",
   },
 ];

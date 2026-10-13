@@ -1,7 +1,11 @@
 export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.khayalparfum.com",
+  /** The team's number: owner order alerts, phone calls, help with an existing order. */
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923202704617",
   phoneDisplay: "+92 320 2704617",
+  /** The WhatsApp order assistant: customers choose a scent and order without waiting for a person. */
+  orderBotNumber: process.env.NEXT_PUBLIC_WHATSAPP_ORDER_NUMBER || "923043190718",
+  orderBotDisplay: "+92 304 3190718",
   email: process.env.NEXT_PUBLIC_BUSINESS_EMAIL || "official@khayalparfum.com",
   currency: "PKR",
   freeShippingThreshold: Number(process.env.NEXT_PUBLIC_FREE_SHIPPING_THRESHOLD || 5000),
@@ -29,6 +33,11 @@ export const siteConfig = {
   },
 } as const;
 
-export function getWhatsAppUrl(message: string): string {
-  return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
+/**
+ * WhatsApp chat link. Shopping questions and orders go to the order assistant (default);
+ * help with an order already placed goes to the team ("support").
+ */
+export function getWhatsAppUrl(message: string, to: "orders" | "support" = "orders"): string {
+  const number = to === "support" ? siteConfig.whatsappNumber : siteConfig.orderBotNumber;
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }

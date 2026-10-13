@@ -230,7 +230,7 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
         <div className="bg-red-50 border border-red-100 rounded-xl p-5 text-sm">
           <p className="text-sale">Your payment proof was rejected. Please contact us on WhatsApp to complete your order.</p>
           <a
-            href={getWhatsAppUrl(`Assalamualaikam, my order ${currentOrder.orderNumber} payment was rejected. Please help.`)}            target="_blank"
+            href={getWhatsAppUrl(`Assalamualaikam, my order ${currentOrder.orderNumber} payment was rejected. Please help.`, "support")}            target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-3 text-gold hover:text-gold-light"
           >
@@ -244,7 +244,7 @@ export default function OrderConfirmationClient({ order, bankConfig, accessToken
           Track Order
         </Link>
         <a
-          href={getWhatsAppUrl(`Assalamualaikam, I have a question about my order ${currentOrder.orderNumber}.`)}
+          href={getWhatsAppUrl(`Assalamualaikam, I have a question about my order ${currentOrder.orderNumber}.`, "support")}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex justify-center items-center border border-border text-ink rounded-lg px-6 py-3 text-sm font-medium hover:bg-cream transition-colors"

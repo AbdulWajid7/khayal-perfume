@@ -10,7 +10,7 @@ export default function TrackedContactLink({
   className,
 }: {
   href: string;
-  event: Extract<MarketingEvent, "phone_click" | "email_click">;
+  event: Extract<MarketingEvent, "phone_click" | "email_click" | "whatsapp_click">;
   children: ReactNode;
   className?: string;
 }) {

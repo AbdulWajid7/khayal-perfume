@@ -128,7 +128,7 @@ export default function TrackOrderClient() {
           </div>
 
           <a
-            href={getWhatsAppUrl(`Assalamualaikam, I have a question about my order ${order.orderNumber}.`)}
+            href={getWhatsAppUrl(`Assalamualaikam, I have a question about my order ${order.orderNumber}.`, "support")}
             target="_blank"
             rel="noopener noreferrer"
             className="block w-full text-center bg-gold text-pure rounded-lg px-6 py-3 text-sm font-medium hover:bg-gold-light transition-colors"

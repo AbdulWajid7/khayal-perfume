@@ -71,6 +71,9 @@ export default function Footer() {
               <TrackedContactLink href={`tel:+${siteConfig.whatsappNumber}`} event="phone_click" className="text-stone hover:text-gold">
                 {siteConfig.phoneDisplay}
               </TrackedContactLink>
+              <TrackedContactLink href={`https://wa.me/${siteConfig.orderBotNumber}`} event="whatsapp_click" className="text-stone hover:text-gold">
+                Order on WhatsApp: {siteConfig.orderBotDisplay}
+              </TrackedContactLink>
             </div>
             <div className="mt-6">
               <SocialIcons />
