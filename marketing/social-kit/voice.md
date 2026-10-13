@@ -14,6 +14,8 @@ Last updated: 12 Oct 2026
   order gets one free tester ({{tester size and whether it is a different scent: confirm}}). Cash on delivery across Pakistan.
 - **Website:** khayalparfum.com (scent finder at /scent-finder)
 - **WhatsApp:** +92 320 2704617 (never in Google Business posts; use the Call button there)
+- **WhatsApp order bot:** +92 304 3190718 (customers order with the assistant, no human needed).
+  Use it for "order on WhatsApp" asks and QR codes (wa.me/923043190718).
 - **Handles (as connected in Metricool, 12 Oct):** Instagram @khayalfragranceofficial
   (Threads uses the same username), Facebook page 1244547532083670, TikTok
   @khayalfregnance, Pinterest pinterest.com/khayalfregnance (both confirmed live by the
