@@ -145,7 +145,12 @@
       "price": 3999,
       "compareAtPrice": null,
       "stock": null,
-      "images": [],
+      "images": [
+        "/images/products/the-gentleman/02-hero.jpg",
+        "/images/products/the-gentleman/01-packshot.jpg",
+        "/images/products/the-gentleman/03-notes.jpg",
+        "/images/products/the-gentleman/04-details.jpg"
+      ],
       "notesConfirmed": false
     },
     {
