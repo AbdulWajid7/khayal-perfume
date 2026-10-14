@@ -1,0 +1,112 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Bodoni;src:url(../social/bodoni-moda-latin-400-normal.woff2)}
+@font-face{font-family:Bodoni;font-style:italic;src:url(../social/bodoni-moda-latin-400-italic.woff2)}
+@font-face{font-family:Jost;src:url(../social/jost-latin-400-normal.woff2)}
+@font-face{font-family:Jost;font-weight:500;src:url(../social/jost-latin-500-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:2400px;background:#070d16;color:#e9eef5;font-family:Jost;padding:70px 64px 60px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #2a3a52;padding-bottom:34px}
+.eyebrow{font-size:20px;letter-spacing:.42em;color:#bfa15f;text-transform:uppercase}
+h1{white-space:nowrap;font-family:Bodoni;font-weight:400;font-size:70px;letter-spacing:.06em;margin-top:14px}
+h1 em{color:#bcd6ee}
+.spec{text-align:right;font-size:22px;line-height:1.7;color:#a9b8cc}
+.spec b{color:#fff;font-weight:500}
+.rules{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:28px;margin:34px 0 40px}
+.rule{background:#0d1726;border:1px solid #22324a;border-radius:6px;padding:24px 28px;font-size:19px;line-height:1.55;color:#c8d3e2}
+.rule h3{font-weight:500;font-size:16px;letter-spacing:.3em;text-transform:uppercase;color:#bfa15f;margin-bottom:10px}
+.rule.warn{border-color:#8a6a2f;background:#17130c}
+.rule b{color:#fff;font-weight:500}
+.sw{display:inline-block;width:20px;height:20px;border-radius:50%;vertical-align:-4px;margin-right:6px;border:1px solid #445}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.card{background:#0b1421;border:1px solid #1f2e45;border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.frame{position:relative;aspect-ratio:9/16;background:#000}
+.frame img{width:100%;height:100%;object-fit:cover;display:block}
+.num{position:absolute;top:18px;left:18px;font-family:Bodoni;font-size:58px;color:#fff;text-shadow:0 2px 12px #000}
+.time{position:absolute;top:30px;right:18px;font-size:19px;letter-spacing:.12em;background:#000a;padding:6px 12px;border-radius:3px}
+.tag{position:absolute;left:0;right:0;bottom:0;padding:12px 18px;font-size:17px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+.gen{background:#1f4b7add;color:#fff}
+.i2v{background:#2f6a5add;color:#fff}
+.real{background:#8a6a2fee;color:#fff}
+.ost{position:absolute;left:30px;right:60px;top:30%;text-align:center;font-family:Jost;font-weight:500;font-size:26px;letter-spacing:.14em;color:#faf6ef;text-shadow:0 2px 14px #000c;text-transform:uppercase;line-height:1.3}
+.body{padding:20px 22px 24px;font-size:17.5px;line-height:1.5;color:#c3cfdf}
+.body h2{font-family:Bodoni;font-weight:400;font-size:34px;color:#fff;margin-bottom:8px}
+.body .k{font-size:13.5px;letter-spacing:.26em;text-transform:uppercase;color:#bfa15f;margin-top:12px;display:block}
+.prompt{background:#060b13;border-left:3px solid #1f4b7a;padding:12px 14px;margin-top:6px;font-size:16px;line-height:1.5;color:#dfe7f2}
+.vo{font-family:Bodoni;font-style:italic;font-size:21px;color:#fff}
+.end{margin-top:36px;display:flex;justify-content:space-between;font-size:18px;color:#7f8fa6;letter-spacing:.08em}
+.flow{grid-column:4;display:flex;flex-direction:column;gap:30px}
+.mini{background:#0d1726;border:1px solid #22324a;border-radius:6px;padding:26px 28px;font-size:18.5px;line-height:1.6;color:#c8d3e2}
+.mini h3{font-weight:500;font-size:16px;letter-spacing:.3em;text-transform:uppercase;color:#bfa15f;margin-bottom:12px}
+.mini ol{padding-left:24px}
+.mini code{font-family:Jost;color:#fff;background:#060b13;padding:2px 6px;border-radius:3px}
+.mark{font-family:Bodoni;font-size:44px;color:#bfa15f;letter-spacing:.2em}
+</style></head><body>
+
+<div class="top">
+  <div>
+    <div class="eyebrow">KHAYAL · Scents highlight · Story 01</div>
+    <h1>THE GENTLEMAN <em>· AI video storyboard</em></h1>
+  </div>
+  <div class="spec"><b>9:16 vertical</b> · 1080 × 1920 · 24 fps<br><b>16 seconds</b> · 7 shots · slow motion, macro, no handheld<br>Notes: bergamot, lemon, pink pepper · lavender, cedarwood · white musk, vetiver</div>
+</div>
+
+<div class="rules">
+  <div class="rule warn"><h3>Rule for the AI generator</h3><b>Never generate, redraw or animate the perfume bottle.</b> Shots 1–5 are ingredients and mood only. Shots 6–7 are the real bottle photo; they are added in the edit, not by AI. Every AI shot: no bottles, no text, no logos, no people, no hands.</div>
+  <div class="rule"><h3>Look</h3><span class="sw" style="background:#08121f"></span>Midnight navy <span class="sw" style="background:#1f4b7a"></span>Steel blue <span class="sw" style="background:#bcd6ee"></span>Ice blue <span class="sw" style="background:#e2a15a"></span>Amber (citrus only)<br>Low-key studio light, cool blue rim from behind, one warm side light on the ingredient, thin low mist, deep blacks, photoreal luxury fragrance commercial.</div>
+  <div class="rule"><h3>Negative prompt</h3>perfume bottle, bottle, glass flask, packaging, label, logo, text, letters, watermark, people, hands, face, cartoon, 3D-render look, oversaturated, neon, camera shake, warped or melting fruit, blurry, low resolution</div>
+</div>
+
+<div class="grid">
+
+<div class="card"><div class="frame"><img src="frames/shot1-bergamot.jpg"><span class="num">1</span><span class="time">0:00 – 0:03</span><div class="ost">Your 9 am meeting can smell you first</div><span class="tag gen">AI · text to video · 5 s</span></div>
+<div class="body"><h2>The cut</h2>A knife slices a green bergamot in half in extreme macro; citrus-oil mist bursts toward the lens, lit gold against navy black.
+<span class="k">Prompt</span><div class="prompt">Extreme macro close-up, a sharp knife slicing through a fresh green bergamot in one smooth stroke, the halves parting to reveal a juicy pale-yellow cut face, a fine mist of citrus oil droplets bursting toward the camera in warm golden side light, deep midnight-navy background, cool blue rim light, slow motion, shallow depth of field, photoreal luxury fragrance commercial, vertical 9:16, very slow push in</div>
+<span class="k">Voiceover</span><div class="vo">“Your 9 am meeting can smell you first.”</div></div></div>
+
+<div class="card"><div class="frame"><img src="frames/shot2-lemon-pepper.jpg"><span class="num">2</span><span class="time">0:03 – 0:05</span><div class="ost">Bergamot · Lemon · Pink pepper</div><span class="tag gen">AI · text to video · 5 s</span></div>
+<div class="body"><h2>Splash and spark</h2>A thin lemon slice drops onto black glass water with a slow crown splash; pink peppercorns rain down and bounce.
+<span class="k">Prompt</span><div class="prompt">Macro slow motion, a thin translucent lemon slice falling into dark still water, a clean crown splash with droplets glowing amber in warm backlight, then pink peppercorns falling and bouncing on a glossy black glass surface, midnight-navy background, cool blue rim light, shallow depth of field, photoreal luxury fragrance commercial, vertical 9:16, locked-off camera</div>
+<span class="k">Voiceover</span><div class="vo">“Bergamot, cut fresh. Lemon. Pink pepper.”</div></div></div>
+
+<div class="card"><div class="frame"><img src="frames/shot3-cedar.jpg"><span class="num">3</span><span class="time">0:05 – 0:07</span><div class="ost">Lavender · Cedarwood</div><span class="tag gen">AI · text to video · 5 s</span></div>
+<div class="body"><h2>The heart</h2>Lavender sways in a cool blue breeze with dust in the light; the camera drifts to raw cedarwood as a pale shaving curls off.
+<span class="k">Prompt</span><div class="prompt">Cinematic close-up, fresh purple lavender sprigs swaying gently in a slow breeze, fine dust floating in a cool blue light beam, camera drifts slowly right to a raw cedarwood block with warm grain as a long pale wood shaving curls off in slow motion, midnight-navy studio, soft low mist, warm accent light on the wood, photoreal, shallow depth of field, vertical 9:16</div>
+<span class="k">Voiceover</span><div class="vo">“Then lavender, and dry cedarwood.”</div></div></div>
+
+<div class="card"><div class="frame"><img src="frames/shot4-vetiver.jpg"><span class="num">4</span><span class="time">0:07 – 0:09</span><div class="ost">White musk · Vetiver</div><span class="tag gen">AI · text to video · 5 s</span></div>
+<div class="body"><h2>On the collar</h2>A sheet of crisp white shirt cotton floats down in slow motion and settles over dried vetiver roots in a cool mist.
+<span class="k">Prompt</span><div class="prompt">Slow motion, a sheet of crisp white cotton shirt fabric floating down and settling softly over a bundle of dried golden-brown vetiver roots and lavender, cool blue mist rolling low across a dark slate floor, one soft overhead light making the white fabric glow, midnight-navy background, minimal, masculine, photoreal, shallow depth of field, vertical 9:16, static camera</div>
+<span class="k">Voiceover</span><div class="vo">“White musk and vetiver settle close, right on the collar.”</div></div></div>
+
+<div class="card"><div class="frame"><img src="frames/shot5-slate-empty.jpg"><span class="num">5</span><span class="time">0:09 – 0:11</span><span class="tag i2v">AI · image to video · use this frame</span></div>
+<div class="body"><h2>The stage</h2>Upload this exact frame as the start image. Only the mist and light move. The camera is locked so the real bottle can be laid in later.
+<span class="k">Prompt</span><div class="prompt">The exact same scene, completely static locked-off camera, no camera movement and no zoom, soft blue mist slowly rolling across the floor from left to right, faint light beams shimmering from above, fine dust drifting, nothing else moves, no new objects appear, the top of the slate pedestal stays empty, photoreal, vertical 9:16</div>
+<span class="k">Voiceover</span><div class="vo">(silence, one low piano note)</div></div></div>
+
+<div class="card"><div class="frame"><img src="frames/shot6-bottle-slate.jpg"><span class="num">6</span><span class="time">0:11 – 0:13</span><div class="ost" style="top:79%">THE GENTLEMAN<br><span style="font-size:18px;letter-spacing:.2em">Extrait de parfum · 38% perfume oil</span></div><span class="tag real">Real bottle · edit only · do not generate</span></div>
+<div class="body"><h2>The reveal</h2>Shot 5's moving mist with the real bottle photo laid onto the slate, a slow 6% push-in and a soft light sweep across the glass. Done in the edit by KHAYAL, not by AI.
+<span class="k">Voiceover</span><div class="vo">“THE GENTLEMAN. 38% perfume oil.”</div>
+<span class="k">Sound</span>Low whoosh, the piano note resolves.</div></div>
+
+<div class="card"><div class="frame"><img src="frames/shot7-bottle-mirror.jpg"><span class="num">7</span><span class="time">0:13 – 0:16</span><div class="ost" style="top:74%">Rs 3,999 · 50 ml<br><span style="font-size:20px">Order on WhatsApp</span></div><span class="tag real">Real bottle · edit only · do not generate</span></div>
+<div class="body"><h2>End card</h2>The real mirror photo with a slow 4% pull-out and smoke drifting behind the cap. Story link sticker to wa.me/923043190718. Cuts back to Shot 1 as a loop.
+<span class="k">Voiceover</span><div class="vo">“Order on WhatsApp before your next meeting.”</div>
+<span class="k">Sound</span>Music tails off.</div></div>
+
+<div class="flow">
+  <div class="mini"><h3>How to use with Gemini</h3><ol>
+    <li>Upload this board and say: “Generate shot 1 only, as described, 9:16, 5 seconds.”</li>
+    <li>Repeat for shots 2, 3 and 4, one at a time.</li>
+    <li>Shot 5: upload <code>shot5-slate-empty.jpg</code> as the start frame and use its prompt.</li>
+    <li>Skip shots 6 and 7. Send the five clips back to KHAYAL's editor.</li>
+  </ol></div>
+  <div class="mini"><h3>Check every clip</h3>No bottle, no text or logo, no hands or faces, fruit not melting or merging, same navy colour as the others. Reject and regenerate anything that fails.</div>
+  <div class="mini"><h3>Audio</h3>Soft piano with a low pulse from the Instagram or TikTok library. Effects: knife cut, splash, pepper ticks on glass, fabric rustle, whoosh.</div>
+  <div class="mini" style="text-align:center;padding:40px 20px"><div class="mark">KHAYAL</div><div style="margin-top:8px;font-size:16px;letter-spacing:.3em;color:#7f8fa6">A SCENT TO REMEMBER</div></div>
+</div>
+
+</div>
+<div class="end"><span>Keyframes 1–5 are mood references cut from KHAYAL's own scene plates. Frames 6–7 show the real bottle.</span><span>khayalparfum.com · 15 Oct 2026</span></div>
+</body></html>
