@@ -12,7 +12,7 @@ describe("cost and profit calculator", () => {
   it("matches the owner's spreadsheet values", () => {
     const rows = DEFAULT_COST_ROWS.map(computeRow);
     expect(rows).toHaveLength(11);
-    expect(rows[0]).toMatchObject({ khayalName: "LEGEND NOIR", unitCostPerMl: 21.5, fragranceCostPerBottle: 1075 });
+    expect(rows[0]).toMatchObject({ khayalName: "DASTAAN", unitCostPerMl: 21.5, fragranceCostPerBottle: 1075 });
     expect(rows[2].fragranceCostPerBottle).toBeCloseTo(870);
     const totals = computeTotals(rows);
     expect(totals.makerPrice).toBe(151500);
@@ -47,6 +47,16 @@ describe("cost and profit calculator", () => {
 
   it("treats a zero maker quantity like Excel IFERROR, not Infinity", () => {
     expect(computeRow({ ...DEFAULT_COST_ROWS[0], makerQtyMl: 0 }).unitCostPerMl).toBe(0);
+  });
+
+  it("uses the website names, also for sheets saved with the old names", () => {
+    expect(sanitizeRow({ khayalName: "legend noir" }).khayalName).toBe("DASTAAN");
+    expect(sanitizeRow({ khayalName: "NIGHTFALL" }).khayalName).toBe("DARK ICE");
+    expect(sanitizeRow({ khayalName: "THE GENTLEMAN" }).khayalName).toBe("THE GENTLEMAN");
+    const names = DEFAULT_COST_ROWS.map((r) => r.khayalName);
+    for (const n of ["DASTAAN", "SAMANDAR", "BAHAAR", "JAZBA", "DARK ICE", "THE GENTLEMAN", "CHERIE", "VICTOR", "OUD MUSK", "CRYSTAL NOOR"]) {
+      expect(names).toContain(n);
+    }
   });
 
   it("cleans untrusted rows from the form", () => {

@@ -95,13 +95,31 @@ export function supplierSummary(rows: CostRow[], statedTotal: number) {
   return { itemized, stated: num(statedTotal), difference: itemized - num(statedTotal) };
 }
 
+/**
+ * Sheet names the owner replaced with the final launch names (16 Oct 2026), so the
+ * cost sheet matches the website, Instagram and orders. Applied whenever a sheet is
+ * read, so a sheet saved with the old names is corrected automatically.
+ */
+export const SHEET_RENAMES: Record<string, string> = {
+  "LEGEND NOIR": "DASTAAN",
+  "BLEU NOIR": "SAMANDAR",
+  BLOOM: "BAHAAR",
+  JUNOON: "JAZBA",
+  NIGHTFALL: "DARK ICE",
+};
+
+export function websiteName(name: string): string {
+  const key = name.trim().toUpperCase();
+  return SHEET_RENAMES[key] ?? name.trim();
+}
+
 /** Cleans untrusted input (form JSON) into a valid row. */
 export function sanitizeRow(input: Partial<Record<keyof CostRow, unknown>>): CostRow {
   const text = (v: unknown) => String(v ?? "").trim().slice(0, 80);
   const rate = num(input.commissionRate);
   return {
     realName: text(input.realName),
-    khayalName: text(input.khayalName),
+    khayalName: websiteName(text(input.khayalName)),
     makerQtyMl: Math.max(0, num(input.makerQtyMl)),
     makerPrice: Math.max(0, num(input.makerPrice)),
     bottleMl: Math.max(0, num(input.bottleMl)),
@@ -132,7 +150,7 @@ export const DEFAULT_BOX_PRICE = 400;
 export const DEFAULT_PACKAGING_PRICE = 150;
 export const DEFAULT_OTHER_COST = 220;
 
-/** The owner's spreadsheet as uploaded on 13 Oct 2026, with the costs and prices above. */
+/** The owner's spreadsheet as uploaded on 13 Oct 2026, with the costs and prices above and the final names. */
 export const DEFAULT_SUPPLIER_TOTAL = 151500;
 
 const r = (realName: string, khayalName: string, makerQtyMl: number, makerPrice: number): CostRow => ({
@@ -149,15 +167,15 @@ const r = (realName: string, khayalName: string, makerQtyMl: number, makerPrice:
 });
 
 export const DEFAULT_COST_ROWS: CostRow[] = [
-  r("Jack", "LEGEND NOIR", 1000, 21500),
+  r("Jack", "DASTAAN", 1000, 21500),
   r("Office for Men", "THE GENTLEMAN", 1000, 22500),
   r("Charlie", "CHERIE", 500, 8700),
-  r("Gucci Flora", "BLOOM", 500, 9300),
+  r("Gucci Flora", "BAHAAR", 500, 9300),
   r("Azzaro Wanted", "VICTOR", 1000, 17500),
-  r("Dunhill Desire", "JUNOON", 1000, 15800),
-  r("Hugo Boss Dark Blue", "NIGHTFALL", 500, 9200),
+  r("Dunhill Desire", "JAZBA", 1000, 15800),
+  r("Hugo Boss Dark Blue", "DARK ICE", 500, 9200),
   r("White Oud", "OUD MUSK", 1000, 17000),
   r("Dior Sauvage", "SAUVAGE DIOR", 500, 10000),
-  r("Bleu de Chanel", "BLEU NOIR", 500, 10000),
+  r("Bleu de Chanel", "SAMANDAR", 500, 10000),
   r("Versace Bright Crystal", "CRYSTAL NOOR", 500, 10000),
 ];
