@@ -5,10 +5,10 @@
  */
 import { dbConnect } from "@/lib/mongoose";
 import { CostSheet } from "@/models/CostSheet";
-import { DEFAULT_COST_ROWS, sanitizeRow, type CostRow } from "@/lib/cost-calc";
+import { DEFAULT_COST_ROWS, sanitizeRow, withMissingDefaults, type CostRow } from "@/lib/cost-calc";
 
 export async function loadCostRows(): Promise<CostRow[]> {
   await dbConnect();
   const doc = await CostSheet.findOne().lean();
-  return doc ? doc.rows.map((r) => sanitizeRow(r)) : DEFAULT_COST_ROWS;
+  return doc ? withMissingDefaults(doc.rows.map((r) => sanitizeRow(r))) : DEFAULT_COST_ROWS;
 }

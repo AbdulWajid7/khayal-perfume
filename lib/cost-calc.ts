@@ -178,4 +178,17 @@ export const DEFAULT_COST_ROWS: CostRow[] = [
   r("Dior Sauvage", "SAUVAGE DIOR", 500, 10000),
   r("Bleu de Chanel", "SAMANDAR", 500, 10000),
   r("Versace Bright Crystal", "CRYSTAL NOOR", 500, 10000),
+  // Original given 16 Oct 2026; maker quantity and price still to be entered by the owner.
+  r("Queen of Silk", "SILK ROYALE", 0, 0),
 ];
+
+/** Adds default rows for fragrances a saved sheet does not have yet (e.g. SILK ROYALE). */
+export function withMissingDefaults(rows: CostRow[]): CostRow[] {
+  const have = new Set(rows.map((r) => r.khayalName.trim().toUpperCase()));
+  return [...rows, ...DEFAULT_COST_ROWS.filter((d) => !have.has(d.khayalName.toUpperCase()))];
+}
+
+/** A row only has a real cost once the maker quantity and price are filled in. */
+export function hasCost(row: CostRow): boolean {
+  return num(row.makerQtyMl) > 0 && num(row.makerPrice) > 0;
+}

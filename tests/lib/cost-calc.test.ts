@@ -6,18 +6,21 @@ import {
   DEFAULT_SUPPLIER_TOTAL,
   sanitizeRow,
   supplierSummary,
+  withMissingDefaults,
+  hasCost,
 } from "@/lib/cost-calc";
+import { costIndex } from "@/lib/commission";
 
 describe("cost and profit calculator", () => {
   it("matches the owner's spreadsheet values", () => {
     const rows = DEFAULT_COST_ROWS.map(computeRow);
-    expect(rows).toHaveLength(11);
+    expect(rows).toHaveLength(12); // 11 launch scents + the old 12th sheet row
     expect(rows[0]).toMatchObject({ khayalName: "DASTAAN", unitCostPerMl: 21.5, fragranceCostPerBottle: 1075 });
     expect(rows[2].fragranceCostPerBottle).toBeCloseTo(870);
     const totals = computeTotals(rows);
     expect(totals.makerPrice).toBe(151500);
     expect(totals.fragranceCostPerBottle).toBeCloseTo(10435);
-    expect(totals.totalCostBeforeCommission).toBeCloseTo(10435 + 11 * 770);
+    expect(totals.totalCostBeforeCommission).toBeCloseTo(10435 + 12 * 770);
     expect(supplierSummary(DEFAULT_COST_ROWS, DEFAULT_SUPPLIER_TOTAL)).toEqual({ itemized: 151500, stated: 151500, difference: 0 });
   });
 
@@ -47,6 +50,16 @@ describe("cost and profit calculator", () => {
 
   it("treats a zero maker quantity like Excel IFERROR, not Infinity", () => {
     expect(computeRow({ ...DEFAULT_COST_ROWS[0], makerQtyMl: 0 }).unitCostPerMl).toBe(0);
+  });
+
+  it("adds SILK ROYALE to an older saved sheet and treats it as cost unknown until priced", () => {
+    const old = DEFAULT_COST_ROWS.filter((r) => r.khayalName !== "SILK ROYALE");
+    const rows = withMissingDefaults(old);
+    const silk = rows.find((r) => r.khayalName === "SILK ROYALE")!;
+    expect(silk.realName).toBe("Queen of Silk");
+    expect(hasCost(silk)).toBe(false);
+    expect(costIndex(rows).has("SILKROYALE")).toBe(false);
+    expect(costIndex(rows).has("THEGENTLEMAN")).toBe(true);
   });
 
   it("uses the website names, also for sheets saved with the old names", () => {

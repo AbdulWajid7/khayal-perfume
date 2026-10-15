@@ -4,7 +4,7 @@
  * price. Shipping is not part of profit. Pure functions, used by the admin
  * commission page, the promoter dashboards and their tests.
  */
-import { computeRow, type CostRow } from "@/lib/cost-calc";
+import { computeRow, hasCost, type CostRow } from "@/lib/cost-calc";
 
 /** Fragrance names are compared without case, spaces or punctuation. */
 export function nameKey(name: string): string {
@@ -16,7 +16,8 @@ export function costIndex(rows: CostRow[]): Map<string, number> {
   const map = new Map<string, number>();
   for (const row of rows) {
     const key = nameKey(row.khayalName);
-    if (key) map.set(key, computeRow(row).totalCostBeforeCommission);
+    // No maker price yet = cost unknown, so commission waits instead of being overpaid.
+    if (key && hasCost(row)) map.set(key, computeRow(row).totalCostBeforeCommission);
   }
   return map;
 }

@@ -8,6 +8,7 @@ import {
   DEFAULT_COST_ROWS,
   DEFAULT_SUPPLIER_TOTAL,
   sanitizeRow,
+  withMissingDefaults,
   type CostRow,
 } from "@/lib/cost-calc";
 
@@ -33,7 +34,7 @@ export async function getCostSheet(): Promise<CostSheetData> {
   }
   return {
     supplierStatedTotal: doc.supplierStatedTotal,
-    rows: doc.rows.map((r) => sanitizeRow(r)),
+    rows: withMissingDefaults(doc.rows.map((r) => sanitizeRow(r))),
     updatedAt: doc.updatedAt ? new Date(doc.updatedAt).toISOString() : null,
   };
 }
