@@ -114,6 +114,9 @@ elevate), cures/therapy/aphrodisiac/pheromones, "stop scrolling", "tag someone".
 - **Launch:** Tue 20 Oct 2026.
 - **Offers:** code **TERRACE15**, 15% off, Sat 17 Oct to Tue 27 Oct, up to 300 orders (live once
   the owner presses Create in Admin > Discount Codes). For Terrace visitors and first buyers.
+- **Standee code:** **TERRACE** (no number on purpose) is printed on the permanent gate standee
+  (16 Oct). The discount amount is never printed or posted; the owner sets and changes it in Admin >
+  Discount Codes with no end date. Never quote a percentage for TERRACE unless the owner confirms it.
 
 ## Pinterest boards (created 12 Oct)
 
