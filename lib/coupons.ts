@@ -12,14 +12,24 @@ export async function validateCoupon(code: string | undefined, subtotal: number)
   if (!code) return { valid: false, reason: "No coupon provided" };
 
   const coupon = await Coupon.findOne({ code: code.toUpperCase().trim() }).lean();
-  if (!coupon) return { valid: false, reason: "Coupon not found" };
+  if (!coupon) return { valid: false, reason: "This code is not valid. Check the spelling and try again." };
 
   const now = new Date();
-  if (!coupon.enabled) return { valid: false, reason: "Coupon is disabled" };
-  if (coupon.startsAt && now < new Date(coupon.startsAt)) return { valid: false, reason: "Coupon not active yet" };
-  if (coupon.expiresAt && now > new Date(coupon.expiresAt)) return { valid: false, reason: "Coupon expired" };
+  if (!coupon.enabled) return { valid: false, reason: "This code is not available right now." };
+  if (coupon.startsAt && now < new Date(coupon.startsAt)) {
+    const when = new Date(coupon.startsAt).toLocaleString("en-PK", {
+      timeZone: "Asia/Karachi",
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+    return { valid: false, reason: `This code starts on ${when}.` };
+  }
+  if (coupon.expiresAt && now > new Date(coupon.expiresAt)) return { valid: false, reason: "This code has ended." };
   if (coupon.maxUses !== undefined && coupon.maxUses !== null && coupon.usedCount >= coupon.maxUses) {
-    return { valid: false, reason: "Coupon usage limit reached" };
+    return { valid: false, reason: "This code has been fully used." };
   }
   if (coupon.minimumOrderAmount !== undefined && coupon.minimumOrderAmount !== null && subtotal < coupon.minimumOrderAmount) {
     return { valid: false, reason: `Minimum order amount is PKR ${coupon.minimumOrderAmount.toLocaleString("en-PK")}` };
