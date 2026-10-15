@@ -7,6 +7,7 @@ import { Order, type IOrder, type OrderStatus, type PaymentStatus, type Courier 
 import { Product } from "@/models/Product";
 import { StockReservation } from "@/models/StockReservation";
 import { requireOrderPermission } from "@/lib/admin/permissions";
+import { takeSuppliesForOrder } from "@/lib/stock-usage";
 import { sendCustomerOrderNotification, sendOrderNotifications } from "@/lib/notifications";
 import { calculateShipping } from "@/lib/shipping";
 
@@ -177,6 +178,14 @@ export async function updateOrderStatus(id: string, formData: FormData) {
 
   await pushAudit(id, "status_changed", before, { orderStatus: status, fulfilmentStatus: order.fulfilmentStatus }, { actor: perm.session.name, actorId: perm.session.id, note });
   await order.save();
+  // Packing takes the box, bag, free tester and other supplies out of stock (once per order).
+  if (["packed", "dispatched", "delivered"].includes(status)) {
+    try {
+      await takeSuppliesForOrder(id, perm.session.name);
+    } catch (error) {
+      console.error(`Supply usage failed for ${order.orderNumber}:`, error);
+    }
+  }
   if (before.orderStatus !== status) {
     await sendCustomerOrderNotification(toJSON(order) as unknown as IOrder, status, status === "cancelled" ? note : undefined);
     if (status === "delivered") {

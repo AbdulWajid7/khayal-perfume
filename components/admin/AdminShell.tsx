@@ -17,6 +17,7 @@ const navGroups = [
     links: [
       { label: "Manage Products", href: "/admin/inventory" },
       { label: "Orders", href: "/admin/orders" },
+      { label: "Stock & Supplies", href: "/admin/stock" },
       { label: "Cart Recovery", href: "/admin/recovery" },
       { label: "Payment Settings", href: "/admin/payments" },
       { label: "Cost & Profit", href: "/admin/costs" },
@@ -52,10 +53,12 @@ const navGroups = [
 export default function AdminShell({
   user,
   sections,
+  badges = {},
   children,
 }: {
   user: { name: string; email: string; role: string } | null;
   sections: AdminSection[];
+  badges?: Record<string, number>;
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
@@ -99,6 +102,11 @@ export default function AdminShell({
                         }`}
                       >
                         {link.label}
+                        {badges[link.href] ? (
+                          <span className="ml-2 inline-flex min-w-5 justify-center rounded-full bg-sale px-1.5 text-[10px] font-semibold text-pure">
+                            {badges[link.href]}
+                          </span>
+                        ) : null}
                       </Link>
                     </li>
                   );

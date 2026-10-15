@@ -2,6 +2,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import AdminShell from "@/components/admin/AdminShell";
 import { getAdminUser } from "@/lib/admin/access";
+import { lowStockCount } from "@/lib/admin/stock";
 import { ADMIN_SECTIONS, homeFor, sectionForPath } from "@/lib/admin-sections";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -12,11 +13,20 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const user = await getAdminUser();
   const section = sectionForPath(pathname);
   const allowed = !user || !section || user.sections.includes(section);
+  let lowStock = 0;
+  if (user?.sections.includes("stock")) {
+    try {
+      lowStock = await lowStockCount();
+    } catch {
+      lowStock = 0;
+    }
+  }
 
   return (
     <AdminShell
       user={user ? { name: user.name, email: user.email, role: user.role } : null}
       sections={user?.sections ?? []}
+      badges={lowStock ? { "/admin/stock": lowStock } : {}}
     >
       {allowed ? (
         children

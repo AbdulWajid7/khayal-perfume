@@ -11,6 +11,7 @@ export const ADMIN_SECTIONS = [
   { key: "dashboard", label: "Dashboard", paths: ["/admin"], exact: true },
   { key: "products", label: "Manage Products", paths: ["/admin/inventory"] },
   { key: "orders", label: "Orders", paths: ["/admin/orders"] },
+  { key: "stock", label: "Stock & Supplies", paths: ["/admin/stock"] },
   { key: "recovery", label: "Cart Recovery", paths: ["/admin/recovery"] },
   { key: "payments", label: "Payment Settings", paths: ["/admin/payments"] },
   { key: "commission", label: "Price & Commission", paths: ["/admin/commission"] },

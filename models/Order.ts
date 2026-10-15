@@ -127,6 +127,8 @@ export interface IOrder {
   trackingNumber?: string;
   customerNotes?: string;
   internalNotes?: string;
+  /** When packing supplies (box, bag, tester...) were taken out of stock for this order. */
+  suppliesUsedAt?: Date;
   attribution: IOrderAttribution;
   paymentVerification?: IPaymentVerification;
   auditHistory: IOrderAuditEntry[];
@@ -276,6 +278,7 @@ const OrderSchema = new Schema(
     trackingNumber: { type: String },
     customerNotes: { type: String },
     internalNotes: { type: String },
+    suppliesUsedAt: { type: Date },
     attribution: { type: AttributionSchema, default: {} },
     paymentVerification: { type: PaymentVerificationSchema },
     auditHistory: { type: [AuditEntrySchema], default: [] },
