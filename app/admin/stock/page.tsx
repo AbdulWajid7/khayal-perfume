@@ -13,6 +13,7 @@ import {
   updateStockItem,
 } from "@/lib/admin/stock";
 import { CATEGORY_LABELS, CATEGORY_ORDER, USAGE_LABELS } from "@/lib/stock";
+import { MONEY_ACCOUNTS } from "@/lib/accounts";
 import { formatPrice } from "@/lib/utils";
 import type { StockCategory } from "@/models/StockItem";
 
@@ -104,7 +105,12 @@ export default async function StockPage({ searchParams }: { searchParams: Promis
                 <input name="unitPrice" type="number" step="any" min="0" placeholder="Price per unit (Rs)" className="input-admin" />
                 <input name="totalPrice" type="number" step="any" min="0" placeholder="or total paid (Rs)" className="input-admin" />
               </div>
-              <input name="supplier" placeholder="Supplier" className="input-admin" />
+              <div className="grid grid-cols-2 gap-3">
+                <input name="supplier" placeholder="Supplier" className="input-admin" />
+                <select name="paidFrom" defaultValue="cash" className="input-admin">
+                  {MONEY_ACCOUNTS.filter((a) => a.key !== "courier").map((a) => <option key={a.key} value={a.key}>Paid from: {a.label}</option>)}
+                </select>
+              </div>
               <input name="note" placeholder="Note, invoice no. (optional)" className="input-admin" />
               <button className={btn}>Add to stock</button>
             </form>

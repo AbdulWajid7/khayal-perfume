@@ -10,6 +10,7 @@ import {
   updatePromoter,
 } from "@/lib/admin/promoters";
 import { formatPrice } from "@/lib/utils";
+import { MONEY_ACCOUNTS } from "@/lib/accounts";
 
 export const metadata: Metadata = { title: "Promoter | Khayal Admin" };
 export const dynamic = "force-dynamic";
@@ -147,7 +148,10 @@ export default async function PromoterPage({ params }: { params: Promise<{ id: s
           <form action={addPayout.bind(null, p._id)} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <input name="amount" type="number" min={1} step="1" required placeholder="Amount (Rs)" className="input-admin" />
             <input name="paidAt" type="date" className="input-admin" />
-            <input name="note" placeholder="Note (e.g. cash, JazzCash)" className="input-admin" />
+            <input name="note" placeholder="Note (optional)" className="input-admin" />
+            <select name="account" defaultValue="cash" className="input-admin sm:col-span-3">
+              {MONEY_ACCOUNTS.filter((a) => a.key !== "courier").map((a) => <option key={a.key} value={a.key}>Paid from: {a.label}</option>)}
+            </select>
             <button className="bg-gold text-pure rounded-lg px-4 py-2 text-sm font-medium sm:col-span-3">Record payout</button>
           </form>
         </div>

@@ -9,6 +9,7 @@ import { Promoter, type IPromoter } from "@/models/Promoter";
 import { Coupon } from "@/models/Coupon";
 import { Order } from "@/models/Order";
 import { promoterReport, type PromoterReport } from "@/lib/promoter-report";
+import { cleanAccount } from "@/lib/accounts";
 
 export type PromoterView = Omit<IPromoter, "passwordHash"> & { hasPassword: boolean };
 
@@ -142,6 +143,7 @@ export async function addPayout(id: string, formData: FormData) {
           amount: Math.round(amount * 100) / 100,
           paidAt: date ? new Date(`${date}T12:00:00+05:00`) : new Date(),
           note: text(formData, "note") || undefined,
+          account: cleanAccount(text(formData, "account")),
           recordedBy: admin.email,
         },
       },

@@ -129,6 +129,10 @@ export interface IOrder {
   internalNotes?: string;
   /** When packing supplies (box, bag, tester...) were taken out of stock for this order. */
   suppliesUsedAt?: Date;
+  /** When the money actually reached us (COD collected / settled, transfer received). */
+  paymentReceivedAt?: Date;
+  /** Money account it went into (cash, bank, jazzcash...). */
+  paymentAccount?: string;
   attribution: IOrderAttribution;
   paymentVerification?: IPaymentVerification;
   auditHistory: IOrderAuditEntry[];
@@ -279,6 +283,8 @@ const OrderSchema = new Schema(
     customerNotes: { type: String },
     internalNotes: { type: String },
     suppliesUsedAt: { type: Date },
+    paymentReceivedAt: { type: Date },
+    paymentAccount: { type: String },
     attribution: { type: AttributionSchema, default: {} },
     paymentVerification: { type: PaymentVerificationSchema },
     auditHistory: { type: [AuditEntrySchema], default: [] },

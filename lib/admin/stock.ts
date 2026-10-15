@@ -7,6 +7,7 @@ import { StockItem, type IStockItem, type StockCategory, type UsageBasis } from 
 import { StockMovement, type IStockMovement } from "@/models/StockMovement";
 import { Product } from "@/models/Product";
 import { isLow, purchasePrice, standardSupplies, weightedAverage } from "@/lib/stock";
+import { cleanAccount } from "@/lib/accounts";
 
 const PAGE = "/admin/stock";
 const CATEGORIES: StockCategory[] = ["oil", "bottle", "box", "tester", "packaging", "shipping", "other"];
@@ -209,6 +210,7 @@ export async function recordPurchase(formData: FormData) {
     unitCost: price.unitCost,
     totalCost: price.totalCost,
     supplier,
+    paidFrom: cleanAccount(text(formData, "paidFrom")),
     note: text(formData, "note") || undefined,
     date: dateOf(formData),
     by: user.name,

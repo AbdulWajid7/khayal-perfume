@@ -13,6 +13,12 @@ const navGroups = [
     ],
   },
   {
+    title: "Finance",
+    links: [
+      { label: "Accounts", href: "/admin/accounts" },
+    ],
+  },
+  {
     title: "Product Management",
     links: [
       { label: "Manage Products", href: "/admin/inventory" },

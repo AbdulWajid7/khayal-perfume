@@ -21,6 +21,7 @@ export const ADMIN_SECTIONS = [
   { key: "coupons", label: "Discount Codes", paths: ["/admin/coupons"] },
   { key: "promoters", label: "Promoters", paths: ["/admin/promoters"] },
   { key: "marketing", label: "Welcome Offers", paths: ["/admin/marketing"] },
+  { key: "accounts", label: "Accounts", paths: ["/admin/accounts"], ownerOnly: true },
   { key: "costs", label: "Cost & Profit", paths: ["/admin/costs"], ownerOnly: true },
   { key: "users", label: "Sub-Admins", paths: ["/admin/users"], ownerOnly: true },
 ] as const;

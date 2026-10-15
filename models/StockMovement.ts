@@ -19,6 +19,8 @@ export interface IStockMovement {
   unitCost?: number;
   totalCost?: number;
   supplier?: string;
+  /** Money account a purchase was paid from. */
+  paidFrom?: string;
   reason?: string;
   note?: string;
   orderNumber?: string;
@@ -40,6 +42,7 @@ const StockMovementSchema = new Schema(
     unitCost: { type: Number },
     totalCost: { type: Number },
     supplier: { type: String },
+    paidFrom: { type: String },
     reason: { type: String },
     note: { type: String },
     orderNumber: { type: String, index: true },

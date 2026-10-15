@@ -10,6 +10,7 @@ export interface IPromoterPayout {
   amount: number;
   paidAt: Date | string;
   note?: string;
+  account?: string;
   recordedBy?: string;
 }
 
@@ -39,6 +40,7 @@ const PayoutSchema = new Schema(
     amount: { type: Number, required: true, min: 0 },
     paidAt: { type: Date, required: true },
     note: { type: String },
+    account: { type: String },
     recordedBy: { type: String },
   },
   { _id: true }
