@@ -1,5 +1,5 @@
+import { requireSection } from "@/lib/admin/access";
 import type { Metadata } from "next";
-import { requireAuth } from "@/lib/auth";
 import { listCoupons, toggleCoupon } from "@/lib/admin/coupons";
 import CouponForm, { type CouponDefaults } from "@/components/admin/CouponForm";
 
@@ -33,7 +33,7 @@ function when(iso: string | null) {
 }
 
 export default async function CouponsPage() {
-  const session = await requireAuth(["admin"]);
+  const session = await requireSection("coupons");
   if (!session) {
     return <p className="text-stone">Only the owner account can manage discount codes.</p>;
   }

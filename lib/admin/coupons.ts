@@ -1,13 +1,13 @@
 "use server";
 
+import { requireSection } from "@/lib/admin/access";
 import { revalidatePath } from "next/cache";
-import { requireAuth } from "@/lib/auth";
 import { dbConnect } from "@/lib/mongoose";
 import { Coupon, type ICoupon } from "@/models/Coupon";
 
 /** Discount codes change revenue: full admins only. */
 async function guard() {
-  const session = await requireAuth(["admin"]);
+  const session = await requireSection("coupons");
   if (!session) throw new Error("Only the owner account can manage discount codes");
 }
 

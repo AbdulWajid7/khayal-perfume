@@ -1,6 +1,7 @@
 /**
  * Fragrance cost and profit maths, matching the owner's
- * "KHAYAL Fragrance Cost Profit Calculator" spreadsheet cell for cell.
+ * "KHAYAL Fragrance Cost Profit Calculator" spreadsheet, except that commission is a
+ * share of profit (selling price minus cost), not of the selling price.
  * Pure functions: used by the admin Cost & Profit page and its tests.
  */
 
@@ -55,7 +56,8 @@ export function computeRow(row: CostRow): CostRowResult {
   const fragranceCostPerBottle = unitCostPerMl * num(row.bottleMl); // G = E * F
   const totalCostBeforeCommission =
     fragranceCostPerBottle + num(row.boxPrice) + num(row.packagingPrice) + num(row.otherCost); // K = G+H+I+J
-  const commissionAmount = num(row.sellingPrice) * num(row.commissionRate); // N = L * M
+  // Commission is a share of the profit, not of the selling price (owner's rule, 16 Oct 2026).
+  const commissionAmount = Math.max(0, num(row.sellingPrice) - totalCostBeforeCommission) * num(row.commissionRate);
   const profitAfterCommission = num(row.sellingPrice) - totalCostBeforeCommission - commissionAmount; // O = L-K-N
   const profitMargin = safeDiv(profitAfterCommission, num(row.sellingPrice)); // P = IFERROR(O/L,0)
   return {

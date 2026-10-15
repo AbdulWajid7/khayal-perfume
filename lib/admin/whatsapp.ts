@@ -12,7 +12,7 @@ const PAGE = "/admin/whatsapp";
 const DAY = 24 * 60 * 60 * 1000;
 
 async function guard() {
-  const perm = await requireOrderPermission("orders.update");
+  const perm = await requireOrderPermission("orders.update", "whatsapp");
   if (!perm.allowed) throw new Error(perm.error);
 }
 

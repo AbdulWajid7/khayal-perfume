@@ -20,6 +20,10 @@ export interface IUser {
   passwordHash: string;
   role: UserRole;
   permissions?: OrderPermission[];
+  /** Admin sections a sub-admin may open (see lib/admin-sections). Unset = legacy editor set. */
+  sections?: string[];
+  /** False blocks sign-in without deleting the account. */
+  active?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -31,6 +35,8 @@ const UserSchema = new Schema(
     passwordHash: { type: String, required: true },
     role: { type: String, enum: ["admin", "editor"], default: "editor" },
     permissions: { type: [String], default: undefined },
+    sections: { type: [String], default: undefined },
+    active: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

@@ -29,7 +29,7 @@ export async function getEnabledBankTransferConfig(): Promise<IBankTransferConfi
 }
 
 export async function upsertBankTransferConfig(formData: FormData) {
-  const perm = await requireOrderPermission("orders.update");
+  const perm = await requireOrderPermission("orders.update", "payments");
   if (!perm.allowed) throw new Error(perm.error);
 
   await dbConnect();

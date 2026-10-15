@@ -1,15 +1,15 @@
 "use server";
 
+import { requireSection } from "@/lib/admin/access";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { dbConnect } from "@/lib/mongoose";
 import { Post } from "@/models/Post";
-import { requireAuth } from "@/lib/auth";
 import { guides } from "@/lib/content/guides";
 
 /** Create any ready-written guides that don't exist yet, as drafts. Existing posts are left alone. */
 export async function importGuides() {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("posts");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 

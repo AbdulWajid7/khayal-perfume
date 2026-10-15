@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { logout } from "@/lib/session";
+import { sectionForPath, type AdminSection } from "@/lib/admin-sections";
 
 const navGroups = [
   {
@@ -19,6 +20,7 @@ const navGroups = [
       { label: "Cart Recovery", href: "/admin/recovery" },
       { label: "Payment Settings", href: "/admin/payments" },
       { label: "Cost & Profit", href: "/admin/costs" },
+      { label: "Price & Commission", href: "/admin/commission" },
       { label: "WhatsApp Assistant", href: "/admin/whatsapp" },
     ],
   },
@@ -40,6 +42,7 @@ const navGroups = [
     links: [
       { label: "Subscribers", href: "/admin/marketing/subscribers" },
       { label: "Discount Codes", href: "/admin/coupons" },
+      { label: "Promoters", href: "/admin/promoters" },
       { label: "Welcome Offers", href: "/admin/marketing/welcome-offers" },
       { label: "Welcome Config", href: "/admin/marketing/config" },
     ],
@@ -48,12 +51,23 @@ const navGroups = [
 
 export default function AdminShell({
   user,
+  sections,
   children,
 }: {
   user: { name: string; email: string; role: string } | null;
+  sections: AdminSection[];
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const visibleGroups = navGroups
+    .map((group) => ({
+      ...group,
+      links: group.links.filter((link) => {
+        const section = sectionForPath(link.href);
+        return !section || sections.includes(section);
+      }),
+    }))
+    .filter((group) => group.links.length > 0);
 
   return (
     <div className="min-h-screen bg-cream flex">
@@ -66,7 +80,7 @@ export default function AdminShell({
         </div>
 
         <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-6">
-          {navGroups.map((group) => (
+          {visibleGroups.map((group) => (
             <div key={group.title}>
               <p className="px-3 text-[10px] font-semibold tracking-[0.15em] uppercase text-stone mb-2">
                 {group.title}
@@ -120,7 +134,7 @@ export default function AdminShell({
           <div className="flex items-center gap-4">
             <div className="text-right">
               <p className="text-sm font-medium text-ink">{user?.name || "Admin"}</p>
-              <p className="text-xs text-stone capitalize">{user?.role}</p>
+              <p className="text-xs text-stone">{user?.role === "admin" ? "Owner" : "Sub-admin"}</p>
             </div>
             <div className="h-9 w-9 rounded-full bg-gold/20 text-gold flex items-center justify-center text-sm font-medium">
               {(user?.name || "A")[0]}

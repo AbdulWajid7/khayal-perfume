@@ -51,7 +51,7 @@ export async function authenticateUser(
 ): Promise<SessionUser | null> {
   await dbConnect();
   const user = await User.findOne({ email: email.toLowerCase().trim() }).lean();
-  if (!user) return null;
+  if (!user || user.active === false) return null;
   const match = await verifyPassword(password, user.passwordHash);
   if (!match) return null;
   return {

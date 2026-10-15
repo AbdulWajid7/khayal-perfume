@@ -1,9 +1,9 @@
+import { requireSection } from "@/lib/admin/access";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Post, type IPost } from "@/models/Post";
-import { requireAuth } from "@/lib/auth";
 
 export async function getPostsForAdmin() {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("posts");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
   const posts = await Post.find().sort({ createdAt: -1 }).lean();
@@ -11,7 +11,7 @@ export async function getPostsForAdmin() {
 }
 
 export async function getPostById(id: string) {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("posts");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
   const post = await Post.findById(id).lean();

@@ -1,7 +1,7 @@
 "use server";
 
+import { requireSection } from "@/lib/admin/access";
 import { dbConnect, toJSON } from "@/lib/mongoose";
-import { requireAuth } from "@/lib/auth";
 import { Product } from "@/models/Product";
 import { Order, type IOrder } from "@/models/Order";
 import { Subscriber } from "@/models/Subscriber";
@@ -25,7 +25,7 @@ export interface DashboardStats {
 }
 
 export async function getDashboardStats(): Promise<DashboardStats> {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("dashboard");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 

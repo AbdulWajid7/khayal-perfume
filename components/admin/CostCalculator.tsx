@@ -48,7 +48,7 @@ const NUM_COLS_3: { key: NumField; label: string; percent?: boolean }[] = [
 ];
 const NUM_COLS_4: { key: NumField; label: string; percent?: boolean }[] = [
   { key: "sellingPrice", label: "Selling price (PKR)" },
-  { key: "commissionRate", label: "Commission rate (%)", percent: true },
+  { key: "commissionRate", label: "Commission (% of profit)", percent: true },
 ];
 
 const inputCls =
@@ -289,7 +289,7 @@ export default function CostCalculator({
                 {NUM_COLS_3.map((c) => <th key={c.key} className={th}>{c.label}</th>)}
                 <th className={th}>Total cost before commission</th>
                 {NUM_COLS_4.map((c) => <th key={c.key} className={th}>{c.label}</th>)}
-                <th className={th}>Commission amount</th>
+                <th className={th}>Commission (on profit)</th>
                 <th className={th}>Profit after commission</th>
                 <th className={th}>Profit margin</th>
                 <th className={th}><span className="sr-only">Remove</span></th>

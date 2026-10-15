@@ -1,9 +1,10 @@
 "use server";
 
+import { requireSection } from "@/lib/admin/access";
 import { revalidatePath } from "next/cache";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Post, type IPost } from "@/models/Post";
-import { getSession, requireAuth } from "@/lib/auth";
+import { requireAuth } from "@/lib/auth";
 import sanitizeHtml from "sanitize-html";
 import { put } from "@vercel/blob";
 
@@ -46,7 +47,7 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
 };
 
 export async function createPost(formData: FormData) {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("posts");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 
@@ -97,7 +98,7 @@ export async function createPost(formData: FormData) {
 }
 
 export async function updatePost(id: string, formData: FormData) {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("posts");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 
@@ -158,7 +159,7 @@ export async function deletePost(id: string) {
 }
 
 export async function uploadCoverImage(formData: FormData) {
-  const session = await getSession();
+  const session = await requireSection("posts");
   if (!session) throw new Error("Unauthorized");
 
   const file = formData.get("file") as File | null;

@@ -1,14 +1,14 @@
 "use server";
 
+import { requireSection } from "@/lib/admin/access";
 import { dbConnect, toJSON } from "@/lib/mongoose";
-import { requireAuth } from "@/lib/auth";
 import { Subscriber, type ISubscriber } from "@/models/Subscriber";
 import { WelcomeOffer, type IWelcomeOffer } from "@/models/WelcomeOffer";
 import { WelcomeDiscountConfig } from "@/models/WelcomeDiscountConfig";
 import { Order } from "@/models/Order";
 
 export async function getSubscribers(): Promise<ISubscriber[]> {
-  const session = await requireAuth(["admin"]);
+  const session = await requireSection("subscribers");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
   const subscribers = await Subscriber.find().sort({ createdAt: -1 }).lean();
@@ -16,7 +16,7 @@ export async function getSubscribers(): Promise<ISubscriber[]> {
 }
 
 export async function getWelcomeOffers(): Promise<IWelcomeOffer[]> {
-  const session = await requireAuth(["admin"]);
+  const session = await requireSection("marketing");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
   const offers = await WelcomeOffer.find().sort({ createdAt: -1 }).lean();
@@ -36,7 +36,7 @@ export interface WelcomeMetrics {
 }
 
 export async function getWelcomeMetrics(): Promise<WelcomeMetrics> {
-  const session = await requireAuth(["admin"]);
+  const session = await requireSection("marketing");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 
@@ -74,7 +74,7 @@ export async function getWelcomeMetrics(): Promise<WelcomeMetrics> {
 }
 
 export async function updateWelcomeConfig(formData: FormData) {
-  const session = await requireAuth(["admin"]);
+  const session = await requireSection("marketing");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 

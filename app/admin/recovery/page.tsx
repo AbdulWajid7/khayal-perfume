@@ -1,6 +1,6 @@
+import { requireSection } from "@/lib/admin/access";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { AbandonedCart, type IAbandonedCart } from "@/models/AbandonedCart";
-import { requireAuth } from "@/lib/auth";
 import { formatPrice } from "@/lib/utils";
 import { siteConfig } from "@/lib/site-config";
 
@@ -11,7 +11,7 @@ export const metadata = {
 };
 
 async function getOpenCarts(): Promise<IAbandonedCart[]> {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("recovery");
   if (!session) return [];
   await dbConnect();
   const carts = await AbandonedCart.find({ status: "open" })

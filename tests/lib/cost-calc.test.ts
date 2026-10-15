@@ -34,9 +34,15 @@ describe("cost and profit calculator", () => {
   it("works out profit with a price, packaging and commission", () => {
     const r = computeRow({ ...DEFAULT_COST_ROWS[1], boxPrice: 150, packagingPrice: 50, otherCost: 25, sellingPrice: 4000, commissionRate: 0.1 });
     expect(r.totalCostBeforeCommission).toBe(1350); // 1125 + 150 + 50 + 25
-    expect(r.commissionAmount).toBe(400);
-    expect(r.profitAfterCommission).toBe(2250);
-    expect(r.profitMargin).toBeCloseTo(0.5625);
+    // 10% of the profit (4000 - 1350 = 2650), not of the price.
+    expect(r.commissionAmount).toBeCloseTo(265);
+    expect(r.profitAfterCommission).toBeCloseTo(2385);
+    expect(r.profitMargin).toBeCloseTo(0.59625);
+  });
+
+  it("pays no commission when a bottle sells at or below cost", () => {
+    const r = computeRow({ ...DEFAULT_COST_ROWS[1], sellingPrice: 1500, commissionRate: 0.2 });
+    expect(r.commissionAmount).toBe(0);
   });
 
   it("treats a zero maker quantity like Excel IFERROR, not Infinity", () => {

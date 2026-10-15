@@ -1,8 +1,8 @@
 "use server";
 
+import { requireSection } from "@/lib/admin/access";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Subscriber, type ISubscriber } from "@/models/Subscriber";
-import { requireAuth } from "@/lib/auth";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -44,7 +44,7 @@ export async function subscribeToNewsletter(
 }
 
 export async function getSubscribersForAdmin(): Promise<ISubscriber[]> {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("subscribers");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
   const subscribers = await Subscriber.find().sort({ createdAt: -1 }).lean();

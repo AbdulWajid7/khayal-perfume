@@ -1,12 +1,13 @@
 "use server";
 
+import { requireSection } from "@/lib/admin/access";
 import { revalidatePath } from "next/cache";
 import { dbConnect, toJSON } from "@/lib/mongoose";
 import { Product, type IProduct } from "@/models/Product";
 import { requireAuth } from "@/lib/auth";
 
 export async function getProducts(): Promise<IProduct[]> {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("products");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
   const products = await Product.find().sort({ createdAt: -1 }).lean();
@@ -14,7 +15,7 @@ export async function getProducts(): Promise<IProduct[]> {
 }
 
 export async function getProductById(id: string): Promise<IProduct | null> {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("products");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
   const product = await Product.findById(id).lean();
@@ -22,7 +23,7 @@ export async function getProductById(id: string): Promise<IProduct | null> {
 }
 
 export async function createProduct(formData: FormData) {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("products");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 
@@ -76,7 +77,7 @@ export async function createProduct(formData: FormData) {
 }
 
 export async function updateProduct(id: string, formData: FormData) {
-  const session = await requireAuth(["admin", "editor"]);
+  const session = await requireSection("products");
   if (!session) throw new Error("Unauthorized");
   await dbConnect();
 
