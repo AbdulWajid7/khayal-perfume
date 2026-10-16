@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ProductImagesField from "@/components/admin/ProductImagesField";
 import { createProduct } from "@/lib/admin/products";
 
 export default function NewProductPage() {
@@ -45,11 +46,7 @@ export default function NewProductPage() {
           placeholder="Short description"
           className="input-admin"
         />
-        <input
-          name="images"
-          placeholder="Image URLs, comma separated"
-          className="input-admin"
-        />
+        <ProductImagesField />
         <input
           name="tags"
           placeholder="Tags, comma separated"

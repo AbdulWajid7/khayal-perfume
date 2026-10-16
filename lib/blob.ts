@@ -2,8 +2,10 @@
 
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
+import { assertSection } from "@/lib/admin/access";
 
 export async function uploadImage(formData: FormData) {
+  await assertSection("posts");
   const file = formData.get("file") as File | null;
   if (!file) throw new Error("No file provided");
 

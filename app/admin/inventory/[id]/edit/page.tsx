@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductById, updateProduct } from "@/lib/admin/products";
+import ProductImagesField from "@/components/admin/ProductImagesField";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -104,12 +105,7 @@ export default async function EditProductPage({ params }: Props) {
           placeholder="Short description"
           className="input-admin"
         />
-        <input
-          name="images"
-          defaultValue={product.images.join(", ")}
-          placeholder="Image URLs, comma separated"
-          className="input-admin"
-        />
+        <ProductImagesField initial={product.images} handle={product.handle} />
         <input
           name="tags"
           defaultValue={product.tags.join(", ")}

@@ -41,7 +41,7 @@ export default async function InventoryPage({
           <p className="text-ink text-sm font-medium">KHAYAL catalog (11 fragrances)</p>
           <p className="text-stone text-xs mt-1 max-w-xl">
             Adds any missing fragrances as drafts and refreshes copy, scent notes, SEO fields and
-            photos on existing ones. Sets the launch prices (Signature Rs 3,499, Classic Rs 2,999,
+            photos on existing ones (photos you uploaded are kept). Sets the launch prices (Signature Rs 3,499, Classic Rs 2,999,
             with the regular price shown struck through) and copies them to the Cost &amp; Profit
             sheet. Stock and status are never changed. Safe to run more than once.
           </p>
