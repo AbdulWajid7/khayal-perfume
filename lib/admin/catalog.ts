@@ -90,7 +90,7 @@ export async function importCatalog(): Promise<void> {
       if (hasValue(p.compareAtPrice)) existing.compareAtPrice = p.compareAtPrice;
       if (hasValue(p.stock)) existing.stock = p.stock;
       // Photos the owner uploaded in the admin always win over the catalog's built-in ones.
-      const uploaded = (existing.images || []).some((u) => /blob\.vercel-storage\.com/.test(u));
+      const uploaded = (existing.images || []).some((u) => /blob\.vercel-storage\.com|^\/api\/images\//.test(u));
       if (p.images.length && !uploaded) existing.images = p.images;
       if ((hasValue(p.price) || hasValue(p.stock)) && existing.variants.length === 1) {
         const variant = existing.variants[0];
