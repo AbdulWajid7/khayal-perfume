@@ -247,9 +247,9 @@
     {
       "handle": "samandar",
       "title": "SAMANDAR",
-      "category": "Men",
+      "category": "Unisex",
       "tags": [
-        "Men",
+        "Unisex",
         "Fresh",
         "Woody",
         "Citrus",
@@ -271,14 +271,14 @@
         "Sandalwood"
       ],
       "description": "Samandar means the sea, and this scent moves like it: fresh and bright at first with citrus, then aromatic and woody, leaving a quiet trail of incense that makes people lean in.",
-      "descriptionHtml": "<p>Samandar means the sea, and this scent moves like it: fresh and bright at first with citrus, then aromatic and woody, leaving a quiet trail of incense that makes people lean in.</p><p>One bottle for a man who wants a single signature scent: clean enough for work, deep enough for dinner. Spray on the neck and chest. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
-      "metaTitle": "SAMANDAR Extrait de Parfum 50ml for Men · KHAYAL",
-      "metaDescription": "SAMANDAR by KHAYAL: fresh citrus, aromatic woods and a trail of incense in a men's extrait de parfum. 50 ml, cash on delivery across Pakistan.",
-      "focusKeyword": "signature perfume for men",
+      "descriptionHtml": "<p>Samandar means the sea, and this scent moves like it: fresh and bright at first with citrus, then aromatic and woody, leaving a quiet trail of incense that makes people lean in.</p><p>One bottle for anyone who wants a single signature scent, him or her: clean enough for work, deep enough for dinner. Spray on the neck and chest. Each bottle is hand-finished and comes in the KHAYAL presentation box, ready to gift.</p>",
+      "metaTitle": "SAMANDAR Extrait de Parfum 50ml, Unisex · KHAYAL",
+      "metaDescription": "SAMANDAR by KHAYAL: fresh citrus, aromatic woods and a trail of incense in a unisex extrait de parfum. 50 ml, cash on delivery across Pakistan.",
+      "focusKeyword": "unisex fresh perfume",
       "keywords": [
-        "fresh perfume for men pakistan",
-        "incense perfume for men",
-        "everyday perfume for men"
+        "unisex perfume pakistan",
+        "fresh citrus perfume",
+        "incense perfume"
       ],
       "occasion": "Everyday, evenings",
       "concentration": "Extrait de Parfum",
@@ -287,7 +287,9 @@
       "price": 3499,
       "compareAtPrice": null,
       "stock": null,
-      "images": [],
+      "images": [
+        "/images/products/samandar/01-bottle.jpg"
+      ],
       "notesConfirmed": false
     },
     {

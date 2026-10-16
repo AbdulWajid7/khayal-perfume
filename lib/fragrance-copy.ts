@@ -13,7 +13,7 @@ export const fragranceCopy: Record<string, FragranceCopy> = {
   "oud-musk": { line: "Rose and oud, softened with amber.", audience: "To share" },
   dastaan: { line: "Lavender and cinnamon on soft leather.", audience: "For him" },
   "khayal-cherie-womens-perfume": { line: "Peach, rose and powdery orris.", audience: "For her" },
-  samandar: { line: "Grapefruit and ginger, a sea breeze.", audience: "For him" },
+  samandar: { line: "Grapefruit and ginger, a sea breeze.", audience: "To share" },
   bahaar: { line: "Jasmine and gardenia in spring.", audience: "For her" },
   victor: { line: "Orange and spice for the evening.", audience: "For him" },
   "crystal-noor": { line: "Pomegranate and peony, sunlit.", audience: "For her" },

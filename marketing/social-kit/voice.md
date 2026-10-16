@@ -41,7 +41,7 @@ Last updated: 12 Oct 2026
 | SILK ROYALE | Women | Warm floral, evenings, weddings | Saffron, osmanthus, magnolia · tuberose, passion fruit, patchouli, oud · Madagascar vanilla, ambroxan, myrrh, musk, incense, cedarwood |
 | OUD MUSK | Unisex | Smooth oud, evenings, weddings | Saffron, cardamom · oud, rose · white musk, sandalwood, amber |
 | DASTAAN | Men | Bold, warm, woody | Lavender, mint, bergamot · cinnamon, clary sage · cedarwood, tonka, leather |
-| SAMANDAR | Men | Fresh citrus, incense trail | Grapefruit, lemon, mint · ginger, jasmine · incense, cedarwood, sandalwood |
+| SAMANDAR | Unisex | Fresh citrus, incense trail | Grapefruit, lemon, mint · ginger, jasmine · incense, cedarwood, sandalwood |
 | VICTOR | Men | Citrus and spice | Lemon, orange, cardamom · cinnamon, nutmeg · vetiver, cedarwood, tonka |
 | DARK ICE | Men | Fresh by day, dark by night | Grapefruit, mint, black pepper · ginger, sage · patchouli, suede, musk |
 | JAZBA | Men | Fruity, sweet, dates and nights out | Apple, pineapple, bergamot · cinnamon, rose · vanilla, sandalwood, amber |
