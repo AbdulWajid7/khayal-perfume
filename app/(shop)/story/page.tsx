@@ -117,26 +117,70 @@ export default function StoryPage() {
         </div>
       </section>
 
-      <section className="pb-16 md:pb-20 bg-cream" aria-labelledby="team-heading">
-        <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12">
+      <section
+        className="relative overflow-hidden bg-aubergine py-20 md:py-28 text-cream"
+        aria-labelledby="team-heading"
+      >
+        <div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(191,161,95,0.18),_transparent_60%)]"
+          aria-hidden="true"
+        />
+        <div className="relative mx-auto max-w-5xl px-4 md:px-8 lg:px-12">
           <Reveal>
-            <h2 id="team-heading" className="eyebrow block text-center">The Team</h2>
-            <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {team.map((person) => (
-                <li key={person.name} className="bg-pure border border-border rounded-2xl p-8 text-center">
-                  <span
-                    className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-gold/40 font-serif-display text-xl text-gold"
-                    aria-hidden="true"
-                  >
-                    {person.name.split(" ").map((w) => w[0]).join("")}
-                  </span>
-                  <p className="mt-5 font-serif-display text-ink text-2xl font-medium">{person.name}</p>
-                  <p className="mt-2 text-gold text-xs tracking-[0.2em] uppercase">{person.title}</p>
-                  {person.subtitle && <p className="mt-1 text-stone text-sm">{person.subtitle}</p>}
-                </li>
-              ))}
-            </ul>
+            <div className="text-center">
+              <span className="text-[11px] font-medium uppercase tracking-[0.32em] text-gold-pale">The Team</span>
+              <h2
+                id="team-heading"
+                className="mt-4 font-serif-display text-3xl md:text-5xl font-normal leading-tight"
+              >
+                The people behind <span className="italic text-gold-light">Khayal</span>
+              </h2>
+              <div className="mx-auto mt-6 flex items-center justify-center gap-3" aria-hidden="true">
+                <span className="h-px w-12 bg-gold/50" />
+                <span className="h-1.5 w-1.5 rotate-45 bg-gold" />
+                <span className="h-px w-12 bg-gold/50" />
+              </div>
+            </div>
           </Reveal>
+
+          <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 md:gap-10" role="list">
+            {team.map((person, i) => (
+              <Reveal key={person.name} delay={i * 0.12}>
+                <div className="group relative h-full" role="listitem">
+                  <div className="relative overflow-hidden border border-gold/30 bg-gradient-to-b from-[#4a2341] to-[#1f0d1b] transition-transform duration-500 group-hover:-translate-y-1.5">
+                    <div className="pointer-events-none absolute inset-3 border border-gold/20" aria-hidden="true" />
+                    <div className="relative flex aspect-square items-center justify-center">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src="/images/khayal-watermark.png"
+                        alt=""
+                        aria-hidden="true"
+                        className="absolute right-[-12%] top-1/2 h-[90%] -translate-y-1/2 opacity-[0.07] invert"
+                      />
+                      <span
+                        className="relative font-serif-display italic text-[96px] md:text-[120px] leading-none text-transparent bg-clip-text bg-gradient-to-b from-gold-pale via-gold to-gold-deep"
+                        aria-hidden="true"
+                      >
+                        {person.name.split(" ").map((w) => w[0]).join("")}
+                      </span>
+                      <span className="absolute left-6 top-6 text-[10px] uppercase tracking-[0.3em] text-gold-pale/70">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <div className="relative flex min-h-[150px] flex-col items-center justify-center border-t border-gold/20 bg-[#1f0d1b]/80 px-6 py-7 text-center backdrop-blur">
+                      <p className="font-serif-display text-2xl md:text-3xl text-cream">{person.name}</p>
+                      <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.3em] text-gold">{person.title}</p>
+                      {person.subtitle && (
+                        <p className="mt-2 font-serif-display italic text-base text-cream/70">{person.subtitle}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <p className="mt-12 text-center text-xs uppercase tracking-[0.3em] text-cream/50">Karachi, Pakistan</p>
         </div>
       </section>
 
