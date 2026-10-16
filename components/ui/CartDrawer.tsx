@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { bottleCount, duoSaving, DUO_SAVING } from "@/lib/bundles";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -188,12 +189,30 @@ export default function CartDrawer() {
                   ))}
                 </ul>
                 <div className="border-t border-border p-6 flex-shrink-0">
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-2">
                     <span className="text-stone text-sm">Subtotal</span>
                     <span className="text-ink text-base font-medium tabular-nums">
                       {formatPrice(subtotal, currencyCode)}
                     </span>
                   </div>
+                  {duoSaving(bottleCount(items)) > 0 && (
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-stone text-sm">Duo saving</span>
+                      <span className="text-emerald-600 text-sm tabular-nums">
+                        -{formatPrice(duoSaving(bottleCount(items)), currencyCode)}
+                      </span>
+                    </div>
+                  )}
+                  {bottleCount(items) % 2 === 1 && (
+                    <Link
+                      href="/shop/duos"
+                      onClick={closeCart}
+                      className="mb-2 block border border-gold/40 bg-gold/5 px-3 py-2 text-center text-xs text-ink hover:border-gold"
+                    >
+                      Add one more bottle and save {formatPrice(DUO_SAVING, currencyCode)} with the Duo offer
+                    </Link>
+                  )}
+                  <div className="mb-2" />
                   <div className="mb-4">
                     <div className="h-1.5 overflow-hidden rounded-full bg-cream-dark">
                       <div

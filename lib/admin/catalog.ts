@@ -6,6 +6,8 @@ import { dbConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
 import { requireAuth } from "@/lib/auth";
 import catalogFile from "@/lib/catalog/khayal-products.json";
+import { CostSheet } from "@/models/CostSheet";
+import { nameKey } from "@/lib/commission";
 
 interface CatalogProduct {
   handle: string;
@@ -91,6 +93,7 @@ export async function importCatalog(): Promise<void> {
       if ((hasValue(p.price) || hasValue(p.stock)) && existing.variants.length === 1) {
         const variant = existing.variants[0];
         if (hasValue(p.price)) variant.price = p.price;
+        if (hasValue(p.compareAtPrice)) variant.compareAtPrice = p.compareAtPrice;
         if (hasValue(p.stock)) {
           variant.stock = p.stock;
           variant.availableForSale = p.stock > 0;
@@ -114,12 +117,48 @@ export async function importCatalog(): Promise<void> {
       status: isReadyToSell(p) ? "active" : "draft",
       images: p.images,
       tags: p.tags,
-      variants: [{ id: "50ml", title: "50 ml", price, sku, stock, availableForSale: stock > 0 }],
+      variants: [
+        {
+          id: "50ml",
+          title: "50 ml",
+          price,
+          ...(hasValue(p.compareAtPrice) ? { compareAtPrice: p.compareAtPrice } : {}),
+          sku,
+          stock,
+          availableForSale: stock > 0,
+        },
+      ],
     });
     created += 1;
   }
 
+  await syncSheetPrices();
+
   revalidatePath("/admin/inventory");
+  revalidatePath("/admin/costs");
   revalidatePath("/shop");
   redirect(`/admin/inventory?imported=${created}-${updated}`);
+}
+
+/**
+ * Keeps the Cost & Profit sheet's selling price equal to the website price, so profit and
+ * commission are worked out on what customers actually pay. Only rows whose KHAYAL name
+ * matches a catalog fragrance change; nothing else on the sheet is touched.
+ */
+async function syncSheetPrices(): Promise<void> {
+  const sheet = await CostSheet.findOne();
+  if (!sheet) return;
+  const prices = new Map(catalog.filter((p) => hasValue(p.price)).map((p) => [nameKey(p.title), p.price as number]));
+  let changed = false;
+  for (const row of sheet.rows) {
+    const price = prices.get(nameKey(row.khayalName || ""));
+    if (price !== undefined && row.sellingPrice !== price) {
+      row.sellingPrice = price;
+      changed = true;
+    }
+  }
+  if (changed) {
+    sheet.markModified("rows");
+    await sheet.save();
+  }
 }

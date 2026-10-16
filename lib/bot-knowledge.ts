@@ -5,6 +5,7 @@
  */
 
 import type { FaqItem } from "@/lib/content/faq";
+import { DUO_SAVING } from "@/lib/bundles";
 
 export interface KnowledgeProduct {
   id: string;
@@ -80,6 +81,7 @@ export function buildKnowledge(
     "DELIVERY AND PAYMENT",
     `Karachi: within 24 hours after the order is confirmed. Other cities in Pakistan: 3-4 working days after confirmation.`,
     `Delivery fee ${pkr(facts.shippingFee)}, free on orders of ${pkr(facts.freeShippingThreshold)} or more.`,
+    `Duo offer: any two bottles in one order save ${pkr(DUO_SAVING)} (for every pair), ready-made pairs or the customer's own choice at ${facts.siteUrl}/shop/duos. It does not combine with discount codes; the bigger saving applies.`,
     `Payment: cash on delivery anywhere in Pakistan${facts.bankTransferAvailable ? ", or bank transfer / QR" : ""}.`,
     "",
     "CONTACT",

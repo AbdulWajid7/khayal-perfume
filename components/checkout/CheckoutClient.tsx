@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/hooks/useCart";
 import { createOrder } from "@/lib/checkout";
 import { applyDiscountCode } from "@/lib/discounts";
+import { bestDiscount, bottleCount, DUO_SAVING } from "@/lib/bundles";
 import { saveAbandonedCart, markCartRecovered } from "@/lib/cart-abandon";
 import { trackCommerce, trackMarketing } from "@/lib/analytics";
 import { formatPrice } from "@/lib/utils";
@@ -51,7 +52,10 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
     agreed: false,
   });
 
-  const discount = discountState.status === "applied" ? discountState.discount : 0;
+  const codeDiscount = discountState.status === "applied" ? discountState.discount : 0;
+  const bottles = bottleCount(items);
+  const best = bestDiscount(codeDiscount, bottles);
+  const discount = best.amount;
   const shipping = useMemo(() => calculateShipping(subtotal), [subtotal]);
   const total = useMemo(() => Math.max(0, subtotal + shipping - discount), [subtotal, shipping, discount]);
   const deliveryMethod = useMemo(() => getDeliveryMethodLabel(form.city), [form.city]);
@@ -422,7 +426,7 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
             </div>
             {discount > 0 && (
               <div className="flex justify-between">
-                <span className="text-stone">Discount</span>
+                <span className="text-stone">{best.source === "duo" ? "Duo saving" : "Discount"}</span>
                 <span className="text-emerald-600 tabular-nums">-{formatPrice(discount, siteConfig.currency)}</span>
               </div>
             )}
@@ -471,8 +475,18 @@ export default function CheckoutClient({ bankTransferEnabled, bankConfig }: Chec
                 </button>
               )}
             </div>
-            {discountState.status === "applied" && discountState.message && (
-              <p className="text-emerald-600 text-xs mt-1">{discountState.message}</p>
+            {discountState.status === "applied" && best.source === "duo" ? (
+              <p className="text-stone text-xs mt-1">
+                Your duo saving is bigger than this code, so we applied the duo saving. Offers don&apos;t combine.
+              </p>
+            ) : (
+              discountState.status === "applied" &&
+              discountState.message && <p className="text-emerald-600 text-xs mt-1">{discountState.message}</p>
+            )}
+            {bottles % 2 === 1 && (
+              <p className="text-stone text-xs mt-2">
+                Add one more bottle and save {formatPrice(DUO_SAVING, siteConfig.currency)} with the Duo offer.
+              </p>
             )}
             {discountState.status === "rejected" && (
               <p className="text-sale text-xs mt-1">{discountState.message}</p>

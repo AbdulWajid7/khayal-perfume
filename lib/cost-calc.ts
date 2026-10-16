@@ -133,16 +133,31 @@ export function sanitizeRow(input: Partial<Record<keyof CostRow, unknown>>): Cos
 }
 
 /**
- * Launch price list (13 Oct 2026), set against the Pakistan market: THE NOTE. extrait from
- * Rs 1,799, Sesky Rs 2,000-5,800 with a free tester, J. 50 ml EDP Rs 2,900-3,500.
- * Signature scents carry the photos, films and the highest oil cost.
+ * Price list (16 Oct 2026), checked against 13 Pakistani impression brands: most sell 50 ml
+ * at Rs 2,200-2,500 (Planet Mist, Fragrance Hub, Scentiments, AR, Scentyque, Rawaha, Sesky
+ * 60 ml), the top end at Rs 3,499 (Nyx & Co). KHAYAL is 38% oil with a box and a free tester.
+ *
+ * Signature = impressions of niche originals; Classic = impressions of designer originals.
+ * The launch price is what customers pay now; the regular price shows struck through.
+ * Lowest safe price for a sale that came from an ad is about Rs 2,270, so nothing goes below
+ * Rs 2,999 and the Duo offer (lib/bundles.ts) never stacks with a code.
  */
-export const SIGNATURE_PRICE = 3999;
-export const STANDARD_PRICE = 3499;
-export const SIGNATURE_NAMES = ["THE GENTLEMAN", "SILK ROYALE", "OUD MUSK"];
+export const SIGNATURE_REGULAR_PRICE = 3999;
+export const SIGNATURE_PRICE = 3499; // launch
+export const CLASSIC_REGULAR_PRICE = 3499;
+export const STANDARD_PRICE = 2999; // launch, Classic
+export const SIGNATURE_NAMES = ["THE GENTLEMAN", "SILK ROYALE", "OUD MUSK", "DASTAAN"];
 
+const isSignature = (khayalName: string) => SIGNATURE_NAMES.includes(khayalName.trim().toUpperCase());
+
+/** What the customer pays during the launch offer. */
 export function launchPrice(khayalName: string): number {
-  return SIGNATURE_NAMES.includes(khayalName.trim().toUpperCase()) ? SIGNATURE_PRICE : STANDARD_PRICE;
+  return isSignature(khayalName) ? SIGNATURE_PRICE : STANDARD_PRICE;
+}
+
+/** Price after the launch offer ends (shown struck through until then). */
+export function regularPrice(khayalName: string): number {
+  return isSignature(khayalName) ? SIGNATURE_REGULAR_PRICE : CLASSIC_REGULAR_PRICE;
 }
 
 /** Per-bottle costs the owner gave on 13 Oct 2026 (same for every fragrance). */

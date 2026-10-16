@@ -44,6 +44,7 @@ export async function GET() {
 - Men's Fragrances: ${baseUrl}/shop/men
 - Women's Fragrances: ${baseUrl}/shop/women
 - Unisex Fragrances: ${baseUrl}/shop/unisex
+- Duos (any two fragrances, save Rs 500): ${baseUrl}/shop/duos
 - Journal (fragrance guides): ${baseUrl}/journal
 - Our Story: ${baseUrl}/story
 - Scent Finder (quiz): ${baseUrl}/scent-finder

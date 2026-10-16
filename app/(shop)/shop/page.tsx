@@ -12,6 +12,7 @@ const CATEGORIES = [
   { label: "Men", value: "men" },
   { label: "Women", value: "women" },
   { label: "Unisex", value: "unisex" },
+  { label: "Duos", value: "duos" },
 ] as const;
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {

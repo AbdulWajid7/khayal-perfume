@@ -25,7 +25,7 @@ pages on 12 Oct 2026; prices change, so re-check before using them in a decision
   delivery over Rs 3,000-3,999. J.: 50 ml EDP Rs 2,900-3,500, 100 ml Rs 4,500-7,700.
   Colish: 100 ml extraits Rs 25,000. Starting prices: Khaadi 900, WB 805, Gul Ahmed 1,490,
   Rivaj 2,100, Cambridge 3,995, Amir Adnan 5,000.
-- KHAYAL set at Rs 3,499 (Rs 3,999 signatures): level with J.'s 50 ml EDP, but extrait.
+- KHAYAL launch (16 Oct 2026): Classic Rs 2,999 (regular Rs 3,499), Signature Rs 3,499 (regular Rs 3,999), any two save Rs 500. Above the Rs 2,200-2,500 middle of the market, below Nyx & Co's Rs 3,499 for its Bleu impression, with 38% oil, a box and a tester.
 
 ## What it means for KHAYAL
 

@@ -184,7 +184,7 @@ export default function CostCalculator({
         <h2 className="font-serif-display text-xl text-ink mb-1">Fill all fragrances at once</h2>
         <p className="text-sm text-stone mb-4">
           Same box, packaging and other cost for every bottle, or the launch price list
-          (signatures Rs {SIGNATURE_PRICE.toLocaleString("en-PK")}, others Rs {STANDARD_PRICE.toLocaleString("en-PK")}).
+          (Signature Rs {SIGNATURE_PRICE.toLocaleString("en-PK")}, Classic Rs {STANDARD_PRICE.toLocaleString("en-PK")}).
           Then press Save.
         </p>
         <div className="flex flex-wrap items-end gap-3">

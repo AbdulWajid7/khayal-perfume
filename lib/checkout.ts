@@ -14,6 +14,7 @@ import { redeemWelcomeOffer } from "@/lib/welcome-offers";
 import { sendOrderNotifications } from "@/lib/notifications";
 import { captureAttribution } from "@/lib/attribution";
 import { siteConfig } from "@/lib/site-config";
+import { bestDiscount, bottleCount } from "@/lib/bundles";
 
 const MAX_QUANTITY_PER_ITEM = 10;
 const BANK_TRANSFER_RESERVATION_HOURS = Number(process.env.BANK_TRANSFER_RESERVATION_HOURS || "24");
@@ -195,6 +196,16 @@ export async function createOrder(input: CreateOrderInput): Promise<CheckoutResu
       subscriberId = discountResult.subscriberId;
       codeHash = discountResult.codeHash;
     }
+  }
+
+  // Duo offer: Rs 500 off every two bottles. A code and the duo saving never stack;
+  // the bigger one applies. The code stays on the order either way, so promoters are credited.
+  const best = bestDiscount(discount, bottleCount(lineItems));
+  if (best.source === "duo") {
+    discount = best.amount;
+    discountType = data.discountCode ? "DUO_SAVING_OVER_CODE" : "DUO_SAVING";
+    discountPercentage = undefined;
+    discountMaxAmount = undefined;
   }
 
   // Calculate shipping and total using pre-discount subtotal

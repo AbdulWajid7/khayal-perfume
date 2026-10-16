@@ -105,14 +105,17 @@ export default function ProductCard({ product }: ProductCardProps) {
             {getFragranceLine(product.handle)}
           </p>
         )}
-        <div className="mt-1 flex items-center gap-2">
+        <div className="mt-1 flex flex-wrap items-center gap-x-2">
           <p className="text-ink text-sm tabular-nums">
             {minPrice > 0 ? formatPrice(minPrice, product.priceRange.minVariantPrice.currencyCode) : "Price coming soon"}
           </p>
           {comparePrice && comparePrice > minPrice && (
-            <p className="text-stone-light text-sm line-through tabular-nums">
-              {formatPrice(comparePrice, product.compareAtPriceRange?.maxVariantPrice.currencyCode || product.priceRange.minVariantPrice.currencyCode)}
-            </p>
+            <>
+              <p className="text-stone-light text-sm line-through tabular-nums">
+                {formatPrice(comparePrice, product.compareAtPriceRange?.maxVariantPrice.currencyCode || product.priceRange.minVariantPrice.currencyCode)}
+              </p>
+              <p className="text-[10px] uppercase tracking-[0.16em] text-aubergine">Launch price</p>
+            </>
           )}
         </div>
 

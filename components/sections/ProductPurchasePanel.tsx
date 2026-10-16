@@ -59,9 +59,14 @@ export default function ProductPurchasePanel({ product }: { product: Product }) 
             : "Price coming soon"}
         </p>
         {comparePrice && comparePrice > minPrice && (
-          <p className="text-stone-light text-xl line-through tabular-nums">
-            {formatPrice(comparePrice, product.compareAtPriceRange?.maxVariantPrice.currencyCode || product.priceRange.minVariantPrice.currencyCode)}
-          </p>
+          <>
+            <p className="text-stone-light text-xl line-through tabular-nums">
+              {formatPrice(comparePrice, product.compareAtPriceRange?.maxVariantPrice.currencyCode || product.priceRange.minVariantPrice.currencyCode)}
+            </p>
+            <span className="text-xs font-medium uppercase tracking-[0.14em] text-aubergine">
+              Launch price · save {formatPrice(comparePrice - minPrice, product.priceRange.minVariantPrice.currencyCode)}
+            </span>
+          </>
         )}
         {lowStock && (
           <span className="text-xs font-medium uppercase tracking-[0.14em] text-aubergine border border-aubergine/30 px-3 py-1.5">

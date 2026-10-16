@@ -90,12 +90,24 @@ elevate), cures/therapy/aphrodisiac/pheromones, "stop scrolling", "tag someone".
 - AI-generated people presented as real customers. No fake UGC.
 - Politics, religion debates, celebrities.
 
-## Prices (set 13 Oct 2026, 50 ml extrait)
+## Prices (set 16 Oct 2026, 50 ml extrait)
 
-- THE GENTLEMAN, SILK ROYALE, OUD MUSK: **Rs 3,999**
-- DASTAAN, SAMANDAR, VICTOR, DARK ICE, JAZBA, CHERIE, BAHAAR, CRYSTAL NOOR: **Rs 3,499**
-- Live on the site once the owner runs Admin > Manage Products > Import KHAYAL catalog.
-  Always check the live price before quoting. No fake "was" prices.
+Checked against 13 Pakistani impression brands: most sell 50 ml at Rs 2,200-2,500, the top
+end at Rs 3,499. Lowest safe price for a sale that came from an ad is about Rs 2,270.
+
+| Tier | Scents | Launch price | Regular price |
+|---|---|---|---|
+| Signature | THE GENTLEMAN, SILK ROYALE, OUD MUSK, DASTAAN | **Rs 3,499** | Rs 3,999 |
+| Classic | SAMANDAR, VICTOR, DARK ICE, JAZBA, CHERIE, BAHAAR, CRYSTAL NOOR | **Rs 2,999** | Rs 3,499 |
+
+- **Duo offer:** any two bottles in one order save **Rs 500** (Rs 500 per pair), ready-made
+  pairs or build your own at /shop/duos. Two bottles also clear the Rs 5,000 free-delivery line.
+  It does not stack with codes: the order gets whichever saving is bigger.
+- The regular price shows struck through with a "Launch price" label. It is only honest if
+  prices really go back to the regular price when the launch offer ends: {{launch offer end
+  date: owner to confirm}}. Never call it a sale or invent a "was" price beyond this list.
+- Live on the site once the owner runs Admin > Manage Products > Import KHAYAL catalog
+  (that also copies the prices into Cost & Profit). Always check the live price before quoting.
 
 ## Proof we can use (real only)
 

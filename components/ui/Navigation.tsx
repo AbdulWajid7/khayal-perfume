@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Men", href: "/shop/men" },
   { label: "Women", href: "/shop/women" },
   { label: "Unisex", href: "/shop/unisex" },
+  { label: "Duos", href: "/shop/duos" },
   { label: "Story", href: "/story" },
 ];
 

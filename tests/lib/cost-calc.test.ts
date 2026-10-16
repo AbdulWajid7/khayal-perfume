@@ -24,14 +24,14 @@ describe("cost and profit calculator", () => {
     expect(supplierSummary(DEFAULT_COST_ROWS, DEFAULT_SUPPLIER_TOTAL)).toEqual({ itemized: 151500, stated: 151500, difference: 0 });
   });
 
-  it("prices signatures at Rs 3,999 and the rest at Rs 3,499, all profitable", () => {
+  it("launch prices: Signature Rs 3,499, Classic Rs 2,999, all profitable", () => {
     const rows = DEFAULT_COST_ROWS.map(computeRow);
     const gentleman = rows.find((r) => r.khayalName === "THE GENTLEMAN")!;
-    expect(gentleman.sellingPrice).toBe(3999);
+    expect(gentleman.sellingPrice).toBe(3499);
     expect(gentleman.totalCostBeforeCommission).toBe(1895);
-    expect(gentleman.profitAfterCommission).toBe(2104);
-    expect(rows.find((r) => r.khayalName === "VICTOR")!.profitAfterCommission).toBe(3499 - 1645);
-    for (const r of rows) expect(r.profitMargin).toBeGreaterThan(0.45);
+    expect(gentleman.profitAfterCommission).toBe(3499 - 1895);
+    expect(rows.find((r) => r.khayalName === "VICTOR")!.profitAfterCommission).toBe(2999 - 1645);
+    for (const r of rows) expect(r.profitMargin).toBeGreaterThan(0.4);
   });
 
   it("works out profit with a price, packaging and commission", () => {

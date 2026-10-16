@@ -10,6 +10,7 @@ const shopLinks = [
   { label: "For Men", href: "/shop/men" },
   { label: "For Women", href: "/shop/women" },
   { label: "Unisex", href: "/shop/unisex" },
+  { label: "Duos: any two, save Rs 500", href: "/shop/duos" },
 ];
 
 const companyLinks = [

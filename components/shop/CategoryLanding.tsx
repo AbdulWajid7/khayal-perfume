@@ -46,7 +46,7 @@ export const CATEGORY_META: Record<
     intro:
       "Oud, musk and warm woods, made to be shared by anyone.",
     guide: [
-      "Unisex fragrances are built around notes that sit well on everyone, such as oud, musk, amber and soft woods. OUD MUSK is a smooth oud for people who find traditional oud too heavy.",
+      "Unisex fragrances are built around notes that sit well on everyone, such as oud, musk, amber and soft woods. OUD MUSK is a smooth oud for people who find traditional oud too heavy, and SAMANDAR is a fresh citrus and incense scent that suits anyone.",
       "Two sprays are enough: one on the neck and one on the wrist. Warm scents last longest on clothing and fabric.",
       "Every KHAYAL order comes with a separate tester, so you can try the scent before opening the full bottle. Pay cash on delivery, with delivery in Karachi within 24 hours and across Pakistan in 3–4 working days.",
     ],
@@ -58,6 +58,7 @@ const NAV_ITEMS = [
   { label: "Men", href: "/shop/men", value: "men" },
   { label: "Women", href: "/shop/women", value: "women" },
   { label: "Unisex", href: "/shop/unisex", value: "unisex" },
+  { label: "Duos", href: "/shop/duos", value: "duos" },
 ] as const;
 
 export default async function CategoryLanding({ category }: { category: "men" | "women" | "unisex" }) {
