@@ -72,6 +72,11 @@ const values = [
   },
 ];
 
+const team: { name: string; title: string; subtitle?: string }[] = [
+  { name: "Abdul Wajid", title: "Founder" },
+  { name: "Ammar Bukhari", title: "Co-Founder", subtitle: "Sales Team Lead" },
+];
+
 export default function StoryPage() {
   return (
     <div className="bg-cream">
@@ -108,6 +113,29 @@ export default function StoryPage() {
             <p className="mt-6 text-stone text-sm tracking-[0.2em] uppercase">
               — Abdul Wajid, Founder · Karachi
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="pb-16 md:pb-20 bg-cream" aria-labelledby="team-heading">
+        <div className="mx-auto max-w-3xl px-4 md:px-8 lg:px-12">
+          <Reveal>
+            <h2 id="team-heading" className="eyebrow block text-center">The Team</h2>
+            <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {team.map((person) => (
+                <li key={person.name} className="bg-pure border border-border rounded-2xl p-8 text-center">
+                  <span
+                    className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-gold/40 font-serif-display text-xl text-gold"
+                    aria-hidden="true"
+                  >
+                    {person.name.split(" ").map((w) => w[0]).join("")}
+                  </span>
+                  <p className="mt-5 font-serif-display text-ink text-2xl font-medium">{person.name}</p>
+                  <p className="mt-2 text-gold text-xs tracking-[0.2em] uppercase">{person.title}</p>
+                  {person.subtitle && <p className="mt-1 text-stone text-sm">{person.subtitle}</p>}
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </section>

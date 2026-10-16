@@ -23,6 +23,7 @@ Last updated: 12 Oct 2026
   owner 12 Oct), Google Business Profile: KHAYAL. Misspelt
   "fregnance/fragnance" names should be fixed by the owner.
 - **Founder:** Abdul Wajid, Karachi.
+- **Co-Founder:** Ammar Bukhari, Sales Team Lead (on the website Story page since 16 Oct 2026).
 
 ## Who we talk to
 
